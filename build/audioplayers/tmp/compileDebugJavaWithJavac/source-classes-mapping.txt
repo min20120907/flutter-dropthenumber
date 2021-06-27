@@ -1,0 +1,15 @@
+xyz/luan/audioplayers/ReleaseMode.java
+ xyz.luan.audioplayers.ReleaseMode
+xyz/luan/audioplayers/AudioplayersPlugin.java
+ xyz.luan.audioplayers.AudioplayersPlugin
+ xyz.luan.audioplayers.AudioplayersPlugin$1
+ xyz.luan.audioplayers.AudioplayersPlugin$UpdateCallback
+xyz/luan/audioplayers/WrappedMediaPlayer.java
+ xyz.luan.audioplayers.WrappedMediaPlayer
+xyz/luan/audioplayers/Player.java
+ xyz.luan.audioplayers.Player
+xyz/luan/audioplayers/BuildConfig.java
+ xyz.luan.audioplayers.BuildConfig
+xyz/luan/audioplayers/WrappedSoundPool.java
+ xyz.luan.audioplayers.WrappedSoundPool
+ xyz.luan.audioplayers.WrappedSoundPool$1

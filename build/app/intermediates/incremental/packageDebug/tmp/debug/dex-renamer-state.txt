@@ -1,0 +1,4 @@
+#Mon Jun 28 01:52:37 CST 2021
+base.0=/mnt/Cloud-1/Flutter-Projects/flutter-dropthenumber/build/app/intermediates/dex/debug/mergeDexDebug/classes.dex
+renamed.0=classes.dex
+path.0=classes.dex

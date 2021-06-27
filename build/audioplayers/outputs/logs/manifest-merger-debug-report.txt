@@ -1,0 +1,31 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /home/min20120907/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/audioplayers-0.15.1/android/src/main/AndroidManifest.xml:1:1-4:35
+INJECTED from /home/min20120907/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/audioplayers-0.15.1/android/src/main/AndroidManifest.xml:1:1-4:35
+INJECTED from /home/min20120907/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/audioplayers-0.15.1/android/src/main/AndroidManifest.xml:1:1-4:35
+INJECTED from /home/min20120907/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/audioplayers-0.15.1/android/src/main/AndroidManifest.xml:1:1-4:35
+INJECTED from /home/min20120907/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/audioplayers-0.15.1/android/src/main/AndroidManifest.xml:1:1-4:35
+INJECTED from /home/min20120907/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/audioplayers-0.15.1/android/src/main/AndroidManifest.xml:1:1-4:35
+INJECTED from /home/min20120907/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/audioplayers-0.15.1/android/src/main/AndroidManifest.xml:1:1-4:35
+	package
+		ADDED from /home/min20120907/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/audioplayers-0.15.1/android/src/main/AndroidManifest.xml:2:5-36
+		INJECTED from /home/min20120907/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/audioplayers-0.15.1/android/src/main/AndroidManifest.xml
+		INJECTED from /home/min20120907/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/audioplayers-0.15.1/android/src/main/AndroidManifest.xml
+	android:versionName
+		ADDED from /home/min20120907/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/audioplayers-0.15.1/android/src/main/AndroidManifest.xml:4:5-32
+		INJECTED from /home/min20120907/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/audioplayers-0.15.1/android/src/main/AndroidManifest.xml
+		INJECTED from /home/min20120907/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/audioplayers-0.15.1/android/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /home/min20120907/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/audioplayers-0.15.1/android/src/main/AndroidManifest.xml:1:11-69
+	android:versionCode
+		ADDED from /home/min20120907/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/audioplayers-0.15.1/android/src/main/AndroidManifest.xml:3:5-28
+		INJECTED from /home/min20120907/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/audioplayers-0.15.1/android/src/main/AndroidManifest.xml
+		INJECTED from /home/min20120907/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/audioplayers-0.15.1/android/src/main/AndroidManifest.xml
+uses-sdk
+INJECTED from /home/min20120907/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/audioplayers-0.15.1/android/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /home/min20120907/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/audioplayers-0.15.1/android/src/main/AndroidManifest.xml
+INJECTED from /home/min20120907/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/audioplayers-0.15.1/android/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /home/min20120907/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/audioplayers-0.15.1/android/src/main/AndroidManifest.xml
+		ADDED from /home/min20120907/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/audioplayers-0.15.1/android/src/main/AndroidManifest.xml
+		INJECTED from /home/min20120907/snap/flutter/common/flutter/.pub-cache/hosted/pub.dartlang.org/audioplayers-0.15.1/android/src/main/AndroidManifest.xml
