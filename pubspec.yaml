@@ -1,7 +1,6 @@
 name: dropthenumber
 description: A game to play 2048 vertically.
-publish_to: 'none' 
-
+publish_to: "none"
 
 version: 1.0.0+1
 
@@ -18,8 +17,5 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-
 flutter:
-
   uses-material-design: true
-
