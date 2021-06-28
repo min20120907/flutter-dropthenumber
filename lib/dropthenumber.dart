@@ -1,5 +1,5 @@
 // @dart=2.11
-import 'dart:ui';
+import 'dart:ui' as UI;
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
@@ -35,17 +35,17 @@ class DropTheNumber extends Game {
       ..strokeWidth = 10;
     canvas.drawRect(Rect2, rect2Paint);
     //draw three horizontal lines
-    DrawLine(Colors.white, canvas, 50, 75, 450, 75, 5);
-    DrawLine(Colors.white, canvas, 50, 125, 450, 125, 5);
-    DrawLine(Colors.white, canvas, 75, 220, 425, 220, 5);
+    drawLine(Colors.white, canvas, 50, 75, 450, 75, 5);
+    drawLine(Colors.white, canvas, 50, 125, 450, 125, 5);
+    drawLine(Colors.white, canvas, 75, 220, 425, 220, 5);
     // draw five vertical lines
     for (double i = 0; i < 5; i++)
-      DrawLine(Colors.white, canvas, 75 + i * 70, 150, 75 + i * 70, 650, 5);
+      drawLine(Colors.white, canvas, 75 + i * 70, 150, 75 + i * 70, 650, 5);
+
     drawText(canvas, 'Hello world!');///////////////////////////////////////////debug
   }
 
-  // ignore: non_constant_identifier_names
-  void DrawLine(Color c, Canvas canvas, double p1x, double p1y, double p2x,
+  void drawLine(Color c, Canvas canvas, double p1x, double p1y, double p2x,
       double p2y, double width) {
     final p1 =
         Offset(screenSize.width * p1x / 500, screenSize.height * p1y / 750);
@@ -68,6 +68,10 @@ class DropTheNumber extends Game {
       );
       Offset offset = Offset(0.0,0.0);
       textPainter.paint(canvas, Offset(0.0,0.0));
+  }
+
+  void drawImage(Paint p, Canvas canvas, UI.Image img, double x, double y) {
+    canvas.drawImage(img, Offset(x, y), p);
   }
 
   void update(double t) {}
