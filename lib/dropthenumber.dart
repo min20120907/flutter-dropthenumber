@@ -5,6 +5,7 @@ import 'dart:ui' as UI;
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart' as widgets;
 
 class DropTheNumber extends Game {
   Size screenSize;
@@ -47,7 +48,8 @@ class DropTheNumber extends Game {
 
     drawText(canvas, 'Hello world!', 100, 100);
 
-    drawImage(Paint(), canvas, "img/bg3.jpg", 0, 0);
+    drawImage(Paint(), canvas, "/img/bg3.jpg", 0, 0, screenSize.width,
+        screenSize.height);
   }
 
   Future<UI.Image> loadUiImage(String imageAssetPath) async {
@@ -84,11 +86,14 @@ class DropTheNumber extends Game {
         Offset(screenSize.width * x / 500, screenSize.height * y / 750));
   }
 
-  void drawImage(Paint p, Canvas canvas, String imgPath, double x, double y) {
-    UI.Image img;
-    loadUiImage(imgPath).then((value) => img = value);
-    canvas.drawImage(img,
-        Offset(screenSize.width * x / 500, screenSize.height * y / 750), p);
+  void drawImage(Paint p, Canvas canvas, String imgPath, double x, double y,
+      double sx, double sy) {
+    widgets.Image img = widgets.Image.asset(imgPath);
+    paintImage(
+        canvas: canvas,
+        rect: Rect.fromLTWH(
+            screenSize.width * x / 500, screenSize.height * y / 750, sx, sy),
+        image: img);
   }
 
   void update(double t) {}
