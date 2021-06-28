@@ -17,6 +17,10 @@ class DropTheNumber extends Game {
     Paint rect1Paint = Paint();
     rect1Paint.color = Color(0xffffffff);
     canvas.drawRect(Rect1, rect1Paint);
+    // pygame.draw.lines(screen, white, True,[(50,75), (450,75)],5)
+
+    // pygame.draw.lines(screen, white, True,[(50,125),(450,125)],5)
+    // pygame.draw.lines(screen, white, True,[(75,220),(425,220)],5)
   }
 
   void update(double t) {}
