@@ -43,16 +43,10 @@ class DropTheNumber extends Game {
     canvas.drawRect(Rect2, rect2Paint);
 
     //draw three horizontal lines
-<<<<<<< HEAD
-    DrawLine(Colors.white, canvas, 50, 75, 450, 75, 5);
-    DrawLine(Colors.white, canvas, 50, 125, 450, 125, 5);
-    DrawLine(Colors.white, canvas, 75, 220, 425, 220, 5);
-    
-=======
     drawLine(Colors.white, canvas, 50, 75, 450, 75, 5);
     drawLine(Colors.white, canvas, 50, 125, 450, 125, 5);
     drawLine(Colors.white, canvas, 75, 220, 425, 220, 5);
->>>>>>> 184ca7cb9ca7532f0ec3805b077acb899da3ef5d
+
     // draw five vertical lines
     for (double i = 0; i < 5; i++)
       drawLine(Colors.white, canvas, 75 + i * 70, 150, 75 + i * 70, 650, 5);
