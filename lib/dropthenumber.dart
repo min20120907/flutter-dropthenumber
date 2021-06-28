@@ -15,13 +15,15 @@ class DropTheNumber extends Game {
     Rect Rect1 = Rect.fromLTWH(screenSize.width / 10, screenSize.height / 30,
         screenSize.width * 4 / 5, screenSize.height * 650 / 750);
     Paint rect1Paint = Paint()
-    ..strokeWidth = 4;
+    ..color = Color(0xff995588)
+    ..strokeWidth = 1;
     canvas.drawRect(Rect1, rect1Paint);
     //pygame.draw.rect(screen, white, (75,150,350,500), 5)
     Rect Rect2 = Rect.fromLTWH(screenSize.width* 75/ 500, screenSize.height *15/ 75,
         screenSize.width * 35/ 50, screenSize.height * 50 / 75);
-    Paint rect2Paint = Paint();
-    rect2Paint.color = Color(0000000000);
+    Paint rect2Paint = Paint()
+    ..color = Color(0xff995588)
+    ..strokeWidth = 1;
     canvas.drawRect(Rect2, rect2Paint);
 
     // pygame.draw.lines(screen, white, True,[(50,75), (450,75)],5)
