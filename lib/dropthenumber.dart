@@ -82,11 +82,7 @@ class DropTheNumber extends Game {
 
   void drawImage(Paint p, Canvas canvas, String imgPath, double x, double y,
       double sx, double sy) {
-    // Image img = Image(image: AssetImage('img/bg3.jpg'));
-
-    loadUiImage("img/bg3.jpg").then((value) {
-      this.img = value;
-    }).whenComplete(() => print("done"));
+    loadUiImage("img/bg3.jpg").then((value) => this.img = value);
 
     canvas.drawImageRect(
         this.img,
