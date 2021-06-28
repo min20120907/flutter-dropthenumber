@@ -5,6 +5,7 @@ import 'dart:ui' as UI;
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter/widgets.dart' as widgets;
 
 class DropTheNumber extends Game {
   Size screenSize;
@@ -51,7 +52,8 @@ class DropTheNumber extends Game {
     for (double i = 0; i < 5; i++)
       drawLine(Colors.white, canvas, 75 + i * 70, 150, 75 + i * 70, 650, 5);
 
-    drawImage(Paint(), canvas, bgImage, 0, 0);
+    drawImage(Paint(), canvas, "/img/bg3.jpg", 0, 0, screenSize.width,
+        screenSize.height);
     drawText(canvas, 'Hello world!', 10, 10);
   }
 
@@ -78,19 +80,23 @@ class DropTheNumber extends Game {
 
   void drawText(Canvas canvas, String text, double x, double y) {
     TextPainter(
-      text:TextSpan(text:text, style:TextStyle(color:Colors.white)),
+      text: TextSpan(text: text, style: TextStyle(color: Colors.white)),
       textAlign: TextAlign.center,
       textDirection: TextDirection.ltr,
     )
-      ..layout(minWidth:screenSize.height, maxWidth:screenSize.height)
-      ..paint(canvas, Offset(screenSize.width * x / 500, screenSize.height * y / 750));
+      ..layout(minWidth: screenSize.height, maxWidth: screenSize.height)
+      ..paint(canvas,
+          Offset(screenSize.width * x / 500, screenSize.height * y / 750));
   }
 
-  void drawImage(Paint p, Canvas canvas, String imgPath, double x, double y) {
-    UI.Image img;
-    loadUiImage(imgPath).then((value) => img = value);
-    canvas.drawImage(img,
-        Offset(screenSize.width * x / 500, screenSize.height * y / 750), p);
+  void drawImage(Paint p, Canvas canvas, String imgPath, double x, double y,
+      double sx, double sy) {
+    widgets.Image img = widgets.Image.asset(imgPath);
+    paintImage(
+        canvas: canvas,
+        rect: Rect.fromLTWH(
+            screenSize.width * x / 500, screenSize.height * y / 750, sx, sy),
+        image: img);
   }
 
   void update(double t) {}
