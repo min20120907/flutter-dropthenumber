@@ -1,5 +1,5 @@
 // @dart=2.11
-import 'dart:ui';
+import 'dart:ui' as UI;
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 
@@ -54,6 +54,10 @@ class DropTheNumber extends Game {
       ..color = c
       ..strokeWidth = screenSize.height * width / 750;
     canvas.drawLine(p1, p2, paint);
+  }
+
+  void DrawImage(Paint p, Canvas canvas, UI.Image img, double x, double y) {
+    canvas.drawImage(img, Offset(x, y), p);
   }
 
   void update(double t) {}
