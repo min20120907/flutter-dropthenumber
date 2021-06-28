@@ -46,6 +46,7 @@ class DropTheNumber extends Game {
       drawLine(Colors.white, canvas, 75 + i * 70, 150, 75 + i * 70, 650, 5);
 
     drawImage(Paint(), canvas, bgImage, 0, 0);
+    drawText(canvas, 'Hello world!');
   }
 
   Future<UI.Image> loadUiImage(String imageAssetPath) async {
@@ -67,6 +68,18 @@ class DropTheNumber extends Game {
       ..color = c
       ..strokeWidth = screenSize.height * width / 750;
     canvas.drawLine(p1, p2, paint);
+  }
+
+  void drawText(Canvas canvas, String text) {
+    TextPainter textPainter = TextPainter(
+      textAlign: TextAlign.center,
+      textDirection: TextDirection.ltr,
+    );
+    textPainter.text = new TextSpan(
+      text: text,
+      style: TextStyle(color: Colors.white),
+    );
+    textPainter.paint(canvas, Offset(0.0, 0.0));
   }
 
   void drawImage(Paint p, Canvas canvas, UI.Image img, double x, double y) {
