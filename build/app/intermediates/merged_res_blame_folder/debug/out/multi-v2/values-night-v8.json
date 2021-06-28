@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/mnt/Cloud-1/Flutter-Projects/dropthenumber/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-night-v8/values-night-v8.xml",
+            "outputFile": "/Users/wangchuan/flutter-dropthenumber/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-night-v8/values-night-v8.xml",
             "map": [
                 {
-                    "source": "/mnt/Cloud-1/Flutter-Projects/dropthenumber/android/app/src/main/res/values-night/styles.xml",
+                    "source": "/Users/wangchuan/flutter-dropthenumber/android/app/src/main/res/values-night/styles.xml",
                     "from": {
                         "startLines": "3,14",
                         "startColumns": "4,4",

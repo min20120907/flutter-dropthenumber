@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "/mnt/Cloud-1/Flutter-Projects/dropthenumber/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-fr/values-fr.xml",
+            "outputFile": "/Users/wangchuan/flutter-dropthenumber/build/app/intermediates/incremental/mergeDebugResources/merged.dir/values-fr/values-fr.xml",
             "map": [
                 {
-                    "source": "/home/min20120907/.gradle/caches/transforms-2/files-2.1/4dd99a6b5536cfa133c3ee528020b056/core-1.6.0-rc01/res/values-fr/values-fr.xml",
+                    "source": "/Users/wangchuan/.gradle/caches/transforms-2/files-2.1/4dd99a6b5536cfa133c3ee528020b056/core-1.6.0-rc01/res/values-fr/values-fr.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
