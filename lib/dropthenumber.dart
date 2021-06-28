@@ -45,8 +45,9 @@ class DropTheNumber extends Game {
     for (double i = 0; i < 5; i++)
       drawLine(Colors.white, canvas, 75 + i * 70, 150, 75 + i * 70, 650, 5);
 
-    drawImage(Paint(), canvas, bgImage, 0, 0);
     drawText(canvas, 'Hello world!', 100, 100);
+
+    drawImage(Paint(), canvas, "img/bg3.jpg", 0, 0);
   }
 
   Future<UI.Image> loadUiImage(String imageAssetPath) async {
@@ -83,8 +84,11 @@ class DropTheNumber extends Game {
         Offset(screenSize.width * x / 500, screenSize.height * y / 750));
   }
 
-  void drawImage(Paint p, Canvas canvas, UI.Image img, double x, double y) {
-    canvas.drawImage(img, Offset(x, y), p);
+  void drawImage(Paint p, Canvas canvas, String imgPath, double x, double y) {
+    UI.Image img;
+    loadUiImage(imgPath).then((value) => img = value);
+    canvas.drawImage(img,
+        Offset(screenSize.width * x / 500, screenSize.height * y / 750), p);
   }
 
   void update(double t) {}
