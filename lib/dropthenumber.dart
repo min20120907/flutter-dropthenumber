@@ -34,11 +34,9 @@ class DropTheNumber extends Game {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 10;
     canvas.drawRect(Rect2, rect2Paint);
-    // pygame.draw.lines(screen, white, True,[(50,75), (450,75)],5)
+    //draw three horizontal lines
     DrawLine(Colors.white, canvas, 50, 75, 450, 75, 5);
-    // pygame.draw.lines(screen, white, True,[(50,125),(450,125)],5)
     DrawLine(Colors.white, canvas, 50, 125, 450, 125, 5);
-    // pygame.draw.lines(screen, white, True,[(75,220),(425,220)],5)
     DrawLine(Colors.white, canvas, 75, 220, 425, 220, 5);
   }
 
