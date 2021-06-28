@@ -41,6 +41,7 @@ class DropTheNumber extends Game {
     // draw five vertical lines
     for (double i = 0; i < 5; i++)
       DrawLine(Colors.white, canvas, 75 + i * 70, 150, 75 + i * 70, 650, 5);
+    drawText(canvas, 'Hello world!');///////////////////////////////////////////debug
   }
 
   // ignore: non_constant_identifier_names
@@ -54,6 +55,19 @@ class DropTheNumber extends Game {
       ..color = c
       ..strokeWidth = screenSize.height * width / 750;
     canvas.drawLine(p1, p2, paint);
+  }
+
+  void drawText(Canvas canvas, String text) {
+      TextPainter textPainter = TextPainter(
+          textAlign: TextAlign.center,
+          textDirection: TextDirection.ltr,
+      );
+      textPainter.text = new TextSpan(
+          text: text,
+          style: TextStyle(color: Colors.white),
+      );
+      Offset offset = Offset(0.0,0.0);
+      textPainter.paint(canvas, Offset(0.0,0.0));
   }
 
   void update(double t) {}
