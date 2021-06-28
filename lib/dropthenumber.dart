@@ -12,9 +12,13 @@ class DropTheNumber extends Game {
     Paint bgPaint = Paint();
     bgPaint.color = Color(0xff000000);
     canvas.drawRect(bgRect, bgPaint);
+
     // pygame.draw.rect(screen, white, (50,25,400,650), 5)
-    Rect Rect1 = Rect.fromLTWH(screenSize.width / 10, screenSize.height / 30,
-        screenSize.width * 4 / 5, screenSize.height * 650 / 750);
+    Rect Rect1 = Rect.fromLTWH(
+      screenSize.width / 10, 
+      screenSize.height / 30,
+      screenSize.width * 4 / 5,
+      screenSize.height * 650 / 750);
 
     Paint rect1Paint = Paint()
       ..color = Color(0xffffffff)
@@ -34,10 +38,12 @@ class DropTheNumber extends Game {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 10;
     canvas.drawRect(Rect2, rect2Paint);
+
     //draw three horizontal lines
     DrawLine(Colors.white, canvas, 50, 75, 450, 75, 5);
     DrawLine(Colors.white, canvas, 50, 125, 450, 125, 5);
     DrawLine(Colors.white, canvas, 75, 220, 425, 220, 5);
+    
     // draw five vertical lines
     for (double i = 0; i < 5; i++)
       DrawLine(Colors.white, canvas, 75 + i * 70, 150, 75 + i * 70, 650, 5);
