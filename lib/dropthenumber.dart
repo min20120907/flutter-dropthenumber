@@ -4,7 +4,7 @@ import 'package:flame/game.dart';
 
 class DropTheNumber extends Game {
   Size screenSize = Size(500, 750);
-  
+
   void render(Canvas canvas) {
     // draw background
     Rect bgRect = Rect.fromLTWH(0, 0, screenSize.width, screenSize.height);
@@ -15,19 +15,22 @@ class DropTheNumber extends Game {
     Rect Rect1 = Rect.fromLTWH(screenSize.width / 10, screenSize.height / 30,
         screenSize.width * 4 / 5, screenSize.height * 650 / 750);
     Paint rect1Paint = Paint()
-    ..color = Color(0xff995588)
-    ..strokeWidth = 1;
+      ..color = Color(0xff995588)
+      ..strokeWidth = 1;
     canvas.drawRect(Rect1, rect1Paint);
     //pygame.draw.rect(screen, white, (75,150,350,500), 5)
-    Rect Rect2 = Rect.fromLTWH(screenSize.width* 75/ 500, screenSize.height *15/ 75,
-        screenSize.width * 35/ 50, screenSize.height * 50 / 75);
+    Rect Rect2 = Rect.fromLTWH(
+        screenSize.width * 75 / 500,
+        screenSize.height * 15 / 75,
+        screenSize.width * 35 / 50,
+        screenSize.height * 50 / 75);
     Paint rect2Paint = Paint()
-    ..color = Color(0xff995588)
-    ..strokeWidth = 1;
+      ..color = Color(0xff995588)
+      ..strokeWidth = 1;
     canvas.drawRect(Rect2, rect2Paint);
 
     // pygame.draw.lines(screen, white, True,[(50,75), (450,75)],5)
-    
+
     // pygame.draw.lines(screen, white, True,[(50,125),(450,125)],5)
     // pygame.draw.lines(screen, white, True,[(75,220),(425,220)],5)
   }
