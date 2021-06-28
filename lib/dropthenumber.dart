@@ -1,11 +1,14 @@
 // @dart=2.11
+import 'dart:async';
+import 'dart:typed_data';
 import 'dart:ui' as UI;
 import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class DropTheNumber extends Game {
-  Size screenSize = Size(500, 750);
-
+  Size screenSize;
+  UI.Image bgImage;
   void render(Canvas canvas) {
     // draw background
     Rect bgRect = Rect.fromLTWH(0, 0, screenSize.width, screenSize.height);
@@ -41,6 +44,17 @@ class DropTheNumber extends Game {
     // draw five vertical lines
     for (double i = 0; i < 5; i++)
       drawLine(Colors.white, canvas, 75 + i * 70, 150, 75 + i * 70, 650, 5);
+
+    drawImage(Paint(), canvas, bgImage, 0, 0);
+  }
+
+  Future<UI.Image> loadUiImage(String imageAssetPath) async {
+    final ByteData data = await rootBundle.load(imageAssetPath);
+    final Completer<UI.Image> completer = Completer();
+    UI.decodeImageFromList(Uint8List.view(data.buffer), (UI.Image img) {
+      return completer.complete(img);
+    });
+    return completer.future;
   }
 
   void drawLine(Color c, Canvas canvas, double p1x, double p1y, double p2x,
