@@ -11,12 +11,14 @@ class DropTheNumber extends Game {
     Paint bgPaint = Paint();
     bgPaint.color = Color(0xff000000);
     canvas.drawRect(bgRect, bgPaint);
-    // pygame.draw.rect(screen, white, (50,25,400,650), 5)
-    Rect Rect1 = Rect.fromLTWH(screenSize.width / 10, screenSize.height / 30,
-        screenSize.width * 4 / 5, screenSize.height * 650 / 750);
-    Paint rect1Paint = Paint();
-    rect1Paint.color = Color(0xffffffff);
-    canvas.drawRect(Rect1, rect1Paint);
+    // draw box
+    double screenCenterX = screenSize.width / 2;
+    double screenCenterY = screenSize.height / 2;
+    Rect boxRect =
+        Rect.fromLTWH(screenCenterX - 75, screenCenterY - 75, 150, 150);
+    Paint boxPaint = Paint();
+    boxPaint.color = Color(0xffffffff);
+    canvas.drawRect(boxRect, boxPaint);
   }
 
   void update(double t) {}
