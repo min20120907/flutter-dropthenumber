@@ -149,7 +149,44 @@ class DropTheNumber extends Game {
       ..paint(canvas,
           Offset(screenSize.width * x / 500, screenSize.height * y / 750));
   }
-
+ /*   bool lastLoopPaused=false;
+    bool pause=false;
+    double startTime;
+    double stopTimeText;
+    double startTimeOfPause;
+    double duration;
+    double cooldown_time_hor;
+    double cooldown_time_vert;
+void drawTime(Canvas canvas){
+   
+    if (lastLoopPaused != pause){
+        if (pause){
+            startTimeOfPause = DateTime.now().millisecondsSinceEpoch.toDouble()*1000;
+        }
+        else{
+            double pauseDuration = DateTime.now().millisecondsSinceEpoch.toDouble()*1000-startTimeOfPause;
+            // Stop horizontal super skill cooldown when puase
+            if (cooldown_time_hor != 0){
+                cooldown_time_hor += pauseDuration;
+            }
+            // Stop vertical super skill cooldown when puase
+            if (cooldown_time_vert != 0){
+                cooldown_time_vert += pauseDuration;
+            }
+            // Change start time of the game which use to count the timer 'arial.ttf'
+            startTime += pauseDuration;
+    lastLoopPaused = pause;
+    if (pause){
+        drawText(canvas,'►',Colors.white,28,61,692);
+        duration = stopTimeText;
+    }
+    else{
+        drawText(canvas,'II',Colors.white,28,63,692)
+        duration = DateTime.now().millisecondsSinceEpoch.toDouble()*1000 - startTime;
+        stopTimeText = duration;
+    }
+    drawText(canvas,'TIME:'+getTimeformat(duration),Colors.black,20,275,91) //display clock
+*/
   Future<ui.Image> loadUiImage(String imageAssetPath) async {
     final ByteData data = await rootBundle.load(imageAssetPath);
     final Completer<ui.Image> completer = Completer();
