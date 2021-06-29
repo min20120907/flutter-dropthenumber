@@ -138,7 +138,8 @@ class DropTheNumber extends Game {
     TextPainter(
       text: TextSpan(
           text: text,
-          style: TextStyle(color: colo, fontSize: screenSize.height / 750)),
+          style: TextStyle(
+              color: colo, fontSize: screenSize.height * fontSize / 750)),
       textAlign: TextAlign.left,
       textDirection: TextDirection.ltr,
     )
