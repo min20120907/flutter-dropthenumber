@@ -45,7 +45,7 @@ class DropTheNumber extends Game {
     for (double i = 0; i < 5; i++)
       drawLine(Colors.white, canvas, 75 + i * 70, 165, 75 + i * 70, 665, 5);
     //draw text
-    drawText(canvas, '2048v2', 100, -250, 70);
+    drawText(canvas, '2048v2', 100, 0, 0);
   }
 
   void drawLine(Color c, Canvas canvas, double p1x, double p1y, double p2x,
@@ -68,8 +68,7 @@ class DropTheNumber extends Game {
     )
       ..layout(minWidth: screenSize.height, maxWidth: screenSize.height)
       ..paint(canvas,
-          // Offset(screenSize.width * x / 500, screenSize.height * y / 750));
-          Offset(0,0));
+          Offset(screenSize.width * x / 500, screenSize.height * y / 750));
   }
 
   Future<ui.Image> loadUiImage(String imageAssetPath) async {
