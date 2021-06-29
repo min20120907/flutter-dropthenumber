@@ -45,7 +45,8 @@ class DropTheNumber extends Game {
     for (double i = 0; i < 5; i++)
       drawLine(Colors.white, canvas, 75 + i * 70, 165, 75 + i * 70, 665, 5);
     //draw text
-    drawText(canvas, '2048v2', -250, 70);
+    drawText(canvas, '2048v2', -250, 60);
+    for (double i = 0; i < 5; i++) drawText(canvas, 'a', 98 + i * 70, 161);
   }
 
   void drawLine(Color c, Canvas canvas, double p1x, double p1y, double p2x,
