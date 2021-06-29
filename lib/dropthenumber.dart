@@ -9,6 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 class DropTheNumber extends Game {
+  double score = 0;
   Size screenSize;
   ui.Image img;
   void render(Canvas canvas) {
@@ -37,6 +38,53 @@ class DropTheNumber extends Game {
       ..strokeWidth = 5;
     canvas.drawRect(Rect2, rect2Paint);
 
+    Rect Rect3 = Rect.fromLTWH(
+        screenSize.width * 180 / 420,
+        screenSize.height * 81 / 630,
+        screenSize.width * 45 / 500,
+        screenSize.height * 37 / 750);
+
+    Paint rect3Paint = Paint()
+      ..color = Color(0xffffffff)
+      ..style = PaintingStyle.fill;
+    canvas.drawRect(Rect3, rect3Paint);
+
+    Rect Rect5 = Rect.fromLTWH(
+        screenSize.width * 50 / 530,
+        screenSize.height * 685 / 730,
+        screenSize.width * 40 / 500,
+        screenSize.height * 32 / 750);
+
+    Paint rect5Paint = Paint()
+      ..color = Color(0xffffffff)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3;
+    canvas.drawRect(Rect5, rect5Paint);
+
+    Rect Rect4 = Rect.fromLTWH(
+        screenSize.width * 350 / 490,
+        screenSize.height * 685 / 730,
+        screenSize.width * 40 / 500,
+        screenSize.height * 32 / 750);
+
+    Paint rect4Paint = Paint()
+      ..color = Color(0xffffffff)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3;
+    canvas.drawRect(Rect4, rect4Paint);
+
+    Rect Rect6 = Rect.fromLTWH(
+        screenSize.width * 405 / 490,
+        screenSize.height * 685 / 730,
+        screenSize.width * 40 / 500,
+        screenSize.height * 32 / 750);
+
+    Paint rect6Paint = Paint()
+      ..color = Color(0xffffffff)
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3;
+    canvas.drawRect(Rect6, rect6Paint);
+
     //draw three horizontal lines
     drawLine(Colors.white, canvas, 50, 90, 450, 90, 5);
     drawLine(Colors.white, canvas, 50, 140, 450, 140, 5);
@@ -44,8 +92,13 @@ class DropTheNumber extends Game {
     // draw five vertical lines
     for (double i = 0; i < 5; i++)
       drawLine(Colors.white, canvas, 75 + i * 70, 165, 75 + i * 70, 665, 5);
+
     //draw text
-    drawText(canvas, '2048v2', 100, -250, 70);
+    drawText(canvas, 'Drop', Colors.red, 30, -235, 48);
+    drawText(canvas, 'Next Block ►', Colors.pink, 18, -350, 103);
+    drawText(canvas, 'Score:' + score.toString(), Colors.white, 27, -310, 703);
+    for (double i = 0; i < 5; i++)
+      drawText(canvas, '†', Colors.red, 55, -370 + i * 70, 170);
   }
 
   void drawLine(Color c, Canvas canvas, double p1x, double p1y, double p2x,
@@ -60,20 +113,18 @@ class DropTheNumber extends Game {
     canvas.drawLine(p1, p2, paint);
   }
 
-  void drawText(
-      Canvas canvas, String text, double fontSize, double x, double y) {
+  void drawText(Canvas canvas, String text, Color colo, double fontSize,
+      double x, double y) {
     TextPainter(
       text: TextSpan(
-          text: text,
-          style: TextStyle(color: Colors.white, fontSize: fontSize)),
+          text: text, style: TextStyle(color: colo, fontSize: fontSize)),
       textAlign: TextAlign.center,
       textDirection: TextDirection.ltr,
     )
       ..layout(minWidth: screenSize.height, maxWidth: screenSize.height)
-      ..paint(
-          canvas,
-          // Offset(screenSize.width * x / 500, screenSize.height * y / 750));
-          Offset(0, 0));
+      ..paint(canvas,
+          Offset(screenSize.width * x / 500, screenSize.height * y / 750));
+    // Offset(0, 0));
   }
 
   Future<ui.Image> loadUiImage(String imageAssetPath) async {
