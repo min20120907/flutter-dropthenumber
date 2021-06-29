@@ -94,11 +94,15 @@ class DropTheNumber extends Game {
       drawLine(Colors.white, canvas, 75 + i * 70, 165, 75 + i * 70, 665, 5);
 
     //draw text
+<<<<<<< HEAD
     drawText(canvas, 'Drop', Colors.red, 30, -235, 48);
     drawText(canvas, 'Next Block ►', Colors.pink, 18, -350, 103);
     drawText(canvas, 'Score:' + score.toString(), Colors.white, 27, -310, 703);
     for (double i = 0; i < 5; i++)
       drawText(canvas, '†', Colors.red, 55, -370 + i * 70, 170);
+=======
+    drawText(canvas, '2048v2', 100, 0, 0);
+>>>>>>> 2d361976c35e8dde34e33ecee1ab82e3e25df2d6
   }
 
   void drawLine(Color c, Canvas canvas, double p1x, double p1y, double p2x,
@@ -124,7 +128,10 @@ class DropTheNumber extends Game {
       ..layout(minWidth: screenSize.height, maxWidth: screenSize.height)
       ..paint(canvas,
           Offset(screenSize.width * x / 500, screenSize.height * y / 750));
+<<<<<<< HEAD
     // Offset(0, 0));
+=======
+>>>>>>> 2d361976c35e8dde34e33ecee1ab82e3e25df2d6
   }
 
   Future<ui.Image> loadUiImage(String imageAssetPath) async {
