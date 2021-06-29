@@ -1,6 +1,7 @@
 // @dart=2.11
 
 import 'dart:async';
+import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flame/game.dart';
@@ -12,6 +13,9 @@ class DropTheNumber extends Game {
   double score = 0;
   Size screenSize;
   ui.Image img;
+  // colorlist
+  var colorList = [Colors.red];
+
   void render(Canvas canvas) {
     // draw background
     drawImage(Paint(), canvas, "/img/bg3.jpg", 0, 0, screenSize.width,
@@ -45,8 +49,9 @@ class DropTheNumber extends Game {
         screenSize.height * 37 / 750);
 
     Paint rect3Paint = Paint()
-      ..color = Color(0xffffffff)
-      ..style = PaintingStyle.fill;
+      ..color = Colors.pink[200]
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 3;
     canvas.drawRect(Rect3, rect3Paint);
 
     Rect Rect5 = Rect.fromLTWH(
