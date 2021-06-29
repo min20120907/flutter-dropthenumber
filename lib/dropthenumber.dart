@@ -94,11 +94,11 @@ class DropTheNumber extends Game {
       drawLine(Colors.white, canvas, 75 + i * 70, 165, 75 + i * 70, 665, 5);
 
     //draw text
-    drawText(canvas, 'Drop', Colors.red, 30, -235, 48);
-    drawText(canvas, 'Next Block ►', Colors.pink, 18, -350, 103);
-    drawText(canvas, 'Score:' + score.toString(), Colors.white, 27, -310, 703);
+    drawText(canvas, 'Drop', Colors.red, 30, 215, 48);
+    drawText(canvas, 'Next Block ►', Colors.pink, 18, 60, 103);
+    drawText(canvas, 'Score:' + score.toString(), Colors.white, 27, 100, 703);
     for (double i = 0; i < 5; i++)
-      drawText(canvas, '†', Colors.red, 55, -370 + i * 70, 170);
+      drawText(canvas, '†', Colors.red, 50, 90 + i * 70, 170);
   }
 
   void drawLine(Color c, Canvas canvas, double p1x, double p1y, double p2x,
@@ -118,10 +118,11 @@ class DropTheNumber extends Game {
     TextPainter(
       text: TextSpan(
           text: text, style: TextStyle(color: colo, fontSize: fontSize)),
-      textAlign: TextAlign.center,
+      textAlign: TextAlign.left,
       textDirection: TextDirection.ltr,
     )
-      ..layout(minWidth: screenSize.height, maxWidth: screenSize.height)
+      // ..layout(minWidth: screenSize.width, maxWidth: screenSize.width)
+      ..layout(minWidth:screenSize.width, maxWidth:screenSize.width)
       ..paint(canvas,
           Offset(screenSize.width * x / 500, screenSize.height * y / 750));
   }
