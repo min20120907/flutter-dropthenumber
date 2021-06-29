@@ -16,7 +16,7 @@ class DropTheNumber extends Game {
     drawImage(Paint(), canvas, "/img/bg3.jpg", 0, 0, screenSize.width,
         screenSize.height);
 
-    Rect Rect1 = Rect.fromLTWH(screenSize.width / 10, screenSize.height / 30,
+    Rect Rect1 = Rect.fromLTWH(screenSize.width / 10, screenSize.height / 20,
         screenSize.width * 4 / 5, screenSize.height * 650 / 750);
 
     Paint rect1Paint = Paint()
@@ -25,27 +25,27 @@ class DropTheNumber extends Game {
       ..strokeWidth = 10;
     canvas.drawRect(Rect1, rect1Paint);
 
-    //pygame.draw.rect(screen, white, (75,150,350,500), 5)
     Rect Rect2 = Rect.fromLTWH(
         screenSize.width * 75 / 500,
-        screenSize.height * 15 / 75,
+        screenSize.height * 45 / 202,
         screenSize.width * 35 / 50,
         screenSize.height * 50 / 75);
 
     Paint rect2Paint = Paint()
       ..color = Color(0xffffffff)
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 10;
+      ..strokeWidth = 5;
     canvas.drawRect(Rect2, rect2Paint);
+
     //draw three horizontal lines
-    drawLine(Colors.white, canvas, 50, 75, 450, 75, 5);
-    drawLine(Colors.white, canvas, 50, 125, 450, 125, 5);
-    drawLine(Colors.white, canvas, 75, 220, 425, 220, 5);
+    drawLine(Colors.white, canvas, 50, 90, 450, 90, 5);
+    drawLine(Colors.white, canvas, 50, 140, 450, 140, 5);
+    drawLine(Colors.white, canvas, 75, 235, 425, 235, 5);
     // draw five vertical lines
     for (double i = 0; i < 5; i++)
-      drawLine(Colors.white, canvas, 75 + i * 70, 150, 75 + i * 70, 650, 5);
-
-    drawText(canvas, 'Hello world!', 10, 10);
+      drawLine(Colors.white, canvas, 75 + i * 70, 165, 75 + i * 70, 665, 5);
+    //draw text
+    drawText(canvas, '2048v2', -250, 70);
   }
 
   void drawLine(Color c, Canvas canvas, double p1x, double p1y, double p2x,
