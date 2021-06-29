@@ -15,7 +15,8 @@ class DropTheNumber extends Game {
   ui.Image img;
   // colorlist
   var colorList = [Colors.red];
-
+  
+  @Override
   void render(Canvas canvas) {
     // draw background
     drawImage(Paint(), canvas, "/img/bg3.jpg", 0, 0, screenSize.width,
@@ -153,8 +154,10 @@ class DropTheNumber extends Game {
         p);
   }
 
+  @Override
   void update(double t) {}
-
+  
+  @Override
   void resize(Size size) {
     screenSize = size;
     super.resize(size);
