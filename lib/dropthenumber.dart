@@ -15,21 +15,21 @@ class DropTheNumber extends Game {
   ui.Image img;
   // colorlist
   var colorList = [
-    Color.fromRGBO(255,  0,  0,  0),
-    Color.fromRGBO(  0,255,  0,  0),
-    Color.fromRGBO(204,153,255,  0),
-    Color.fromRGBO(209,237,  0,  0),
-    Color.fromRGBO(209,237,240,  0),
-    Color.fromRGBO(209, 40,240,  0),
-    Color.fromRGBO(254,239,222,  0),
-    Color.fromRGBO(  0,239,222,  0),
-    Color.fromRGBO(255,255, 80,  0),
-    Color.fromRGBO( 51,102,255,  0),
-    Color.fromRGBO(255,204,164,  0),
-    Color.fromRGBO(153,255,153,  0),
-    Color.fromRGBO(194,194,214,  0)
+    Color.fromRGBO(255, 0, 0, 0),
+    Color.fromRGBO(0, 255, 0, 0),
+    Color.fromRGBO(204, 153, 255, 0),
+    Color.fromRGBO(209, 237, 0, 0),
+    Color.fromRGBO(209, 237, 240, 0),
+    Color.fromRGBO(209, 40, 240, 0),
+    Color.fromRGBO(254, 239, 222, 0),
+    Color.fromRGBO(0, 239, 222, 0),
+    Color.fromRGBO(255, 255, 80, 0),
+    Color.fromRGBO(51, 102, 255, 0),
+    Color.fromRGBO(255, 204, 164, 0),
+    Color.fromRGBO(153, 255, 153, 0),
+    Color.fromRGBO(194, 194, 214, 0)
   ];
-  
+
   @override
   void render(Canvas canvas) {
     // draw background
@@ -137,12 +137,13 @@ class DropTheNumber extends Game {
       double x, double y) {
     TextPainter(
       text: TextSpan(
-          text: text, style: TextStyle(color: colo, fontSize: fontSize)),
+          text: text,
+          style: TextStyle(color: colo, fontSize: screenSize.height / 750)),
       textAlign: TextAlign.left,
       textDirection: TextDirection.ltr,
     )
       // ..layout(minWidth: screenSize.width, maxWidth: screenSize.width)
-      ..layout(minWidth:screenSize.width, maxWidth:screenSize.width)
+      ..layout(minWidth: screenSize.width, maxWidth: screenSize.width)
       ..paint(canvas,
           Offset(screenSize.width * x / 500, screenSize.height * y / 750));
   }
@@ -170,7 +171,7 @@ class DropTheNumber extends Game {
 
   @override
   void update(double t) {}
-  
+
   @override
   void resize(Size size) {
     screenSize = size;
