@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 class DropTheNumber extends Game {
+  bool pause = false;
   double score = 0;
   Size screenSize;
   ui.Image img;
