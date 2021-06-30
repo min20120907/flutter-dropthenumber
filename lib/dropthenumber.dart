@@ -18,15 +18,13 @@ class DropTheNumber extends Game with TapDetector {
   bool pause = false;
   double score = 0;
   Size screenSize;
-  bool lastLoopPaused=false;
-  DateTime startTime=DateTime.now();
+  bool lastLoopPaused = false;
+  DateTime startTime = DateTime.now();
   Duration stopTimeText;
   DateTime startTimeOfPause;
   Duration duration;
-  // ignore: non_constant_identifier_names
-  DateTime cooldown_time_hor;
-  // ignore: non_constant_identifier_names
-  DateTime cooldown_time_vert;
+  DateTime cooldownTimeHor;
+  DateTime cooldownTimeVert;
   Duration pauseDuration;
   ui.Image img;
   double log2(double x) => log(x) / log(2);
@@ -171,10 +169,8 @@ class DropTheNumber extends Game with TapDetector {
 
   //Format the time from second to minute and second
   String getTimeformat(Duration totalSecond) {
-    return sprintf("%02d:%02d", [
-      (totalSecond.inSeconds / 60).toInt(),
-      (totalSecond.inSeconds % 60).toInt()
-    ]);
+    return sprintf("%02d:%02d",
+        [totalSecond.inSeconds ~/ 60, (totalSecond.inSeconds % 60).toInt()]);
   }
 
   void drawTime(Canvas canvas) {
@@ -185,12 +181,12 @@ class DropTheNumber extends Game with TapDetector {
         pauseDuration = DateTime.now().difference(startTimeOfPause);
 
         // Stop horizontal super skill cooldown when puase
-        if (cooldown_time_hor != null) {
-          cooldown_time_hor.add(pauseDuration);
+        if (cooldownTimeHor != null) {
+          cooldownTimeHor.add(pauseDuration);
         }
         // Stop vertical super skill cooldown when puase
-        if (cooldown_time_vert != null) {
-          cooldown_time_vert.add(pauseDuration);
+        if (cooldownTimeVert != null) {
+          cooldownTimeVert.add(pauseDuration);
         }
         // Change start time of the game which use to count the timer 'arial.ttf'
         startTime.add(pauseDuration);
