@@ -8,6 +8,8 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:sprintf/sprintf.dart';
+
 
 class DropTheNumber extends Game {
   double score = 0;
@@ -148,22 +150,26 @@ class DropTheNumber extends Game {
       ..paint(canvas,
           Offset(screenSize.width * x / 500, screenSize.height * y / 750));
   }
- /*   bool lastLoopPaused=false;
+  //Format the time from second to minute and second
+String getTimeformat(DateTime totalSecond){
+    return sprintf("%02d:%02d", [totalSecond.minute, totalSecond.second]);
+}
+    bool lastLoopPaused=false;
     bool pause=false;
-    double startTime;
-    double stopTimeText;
-    double startTimeOfPause;
-    double duration;
-    double cooldown_time_hor;
-    double cooldown_time_vert;
+    var startTime;
+    DateTime stopTimeText;
+    DateTime startTimeOfPause;
+    var duration;
+    var cooldown_time_hor;
+    var cooldown_time_vert;
 void drawTime(Canvas canvas){
-   
     if (lastLoopPaused != pause){
         if (pause){
-            startTimeOfPause = DateTime.now().millisecondsSinceEpoch.toDouble()*1000;
+            startTimeOfPause = DateTime.now();
         }
         else{
-            double pauseDuration = DateTime.now().millisecondsSinceEpoch.toDouble()*1000-startTimeOfPause;
+            var pauseDuration = DateTime.now().difference(startTimeOfPause);
+            
             // Stop horizontal super skill cooldown when puase
             if (cooldown_time_hor != 0){
                 cooldown_time_hor += pauseDuration;
@@ -174,6 +180,7 @@ void drawTime(Canvas canvas){
             }
             // Change start time of the game which use to count the timer 'arial.ttf'
             startTime += pauseDuration;
+          }
     lastLoopPaused = pause;
     if (pause){
         drawText(canvas,'►',Colors.white,28,61,692);
@@ -181,11 +188,11 @@ void drawTime(Canvas canvas){
     }
     else{
         drawText(canvas,'II',Colors.white,28,63,692)
-        duration = DateTime.now().millisecondsSinceEpoch.toDouble()*1000 - startTime;
+        duration = DateTime.now().difference(startTime);
         stopTimeText = duration;
     }
     drawText(canvas,'TIME:'+getTimeformat(duration),Colors.black,20,275,91) //display clock
-*/
+
   Future<ui.Image> loadUiImage(String imageAssetPath) async {
     final ByteData data = await rootBundle.load(imageAssetPath);
     final Completer<ui.Image> completer = Completer();
