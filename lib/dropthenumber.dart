@@ -14,6 +14,7 @@ class DropTheNumber extends Game {
   double score = 0;
   Size screenSize;
   ui.Image img;
+  double log2(double x) => log(x) / log(2);
   // colorlist
   var colorList = [
     Color.fromRGBO(255, 0, 0, 0),
@@ -149,7 +150,8 @@ class DropTheNumber extends Game {
       ..paint(canvas,
           Offset(screenSize.width * x / 500, screenSize.height * y / 750));
   }
- /*   bool lastLoopPaused=false;
+
+  /*   bool lastLoopPaused=false;
     bool pause=false;
     double startTime;
     double stopTimeText;
