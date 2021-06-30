@@ -231,6 +231,7 @@ class DropTheNumber extends Game with TapDetector {
   @override
   void onTapDown(TapDownDetails event) {
     print("Player tap down on ${event.globalPosition}");
+    // pause event
     if (event.globalPosition.dx >= 50 &&
         event.globalPosition.dx <= 95 &&
         event.globalPosition.dy >= 685 &&
