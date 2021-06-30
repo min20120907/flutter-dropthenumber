@@ -19,7 +19,7 @@ class DropTheNumber extends Game {
   double score = 0;
   Size screenSize;
   bool lastLoopPaused=false;
-  DateTime startTime=DateTime.now();;
+  DateTime startTime=DateTime.now();
   Duration stopTimeText;
   DateTime startTimeOfPause;
   Duration duration;
