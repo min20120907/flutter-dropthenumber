@@ -11,7 +11,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sprintf/sprintf.dart';
 
-
 Random random = new Random();
 int randomNumber = random.nextInt(13);
 
@@ -19,12 +18,14 @@ class DropTheNumber extends Game with TapDetector {
   bool pause = false;
   double score = 0;
   Size screenSize;
-  bool lastLoopPaused=false;
-  DateTime startTime=DateTime.now();;
+  bool lastLoopPaused = false;
+  DateTime startTime = DateTime.now();
   Duration stopTimeText;
   DateTime startTimeOfPause;
   Duration duration;
+  // ignore: non_constant_identifier_names
   DateTime cooldown_time_hor;
+  // ignore: non_constant_identifier_names
   DateTime cooldown_time_vert;
   Duration pauseDuration;
   ui.Image img;
@@ -126,7 +127,7 @@ class DropTheNumber extends Game with TapDetector {
     drawLine(Colors.white, canvas, 50, 90, 450, 90, 5);
     drawLine(Colors.white, canvas, 50, 140, 450, 140, 5);
     drawLine(Colors.white, canvas, 75, 235, 425, 235, 5);
-  
+
     // draw five vertical lines
     for (double i = 0; i < 5; i++)
       drawLine(Colors.white, canvas, 75 + i * 70, 165, 75 + i * 70, 665, 5);
@@ -137,9 +138,9 @@ class DropTheNumber extends Game with TapDetector {
     drawText(canvas, 'Score:' + score.toString(), Colors.white, 27, 100, 703);
     for (double i = 0; i < 5; i++)
       drawText(canvas, '†', Colors.red, 50, 90 + i * 70, 170);
-   drawTime(canvas);
+    drawTime(canvas);
   }
-     
+
   void drawLine(Color c, Canvas canvas, double p1x, double p1y, double p2x,
       double p2y, double width) {
     final p1 =
@@ -167,43 +168,48 @@ class DropTheNumber extends Game with TapDetector {
       ..paint(canvas,
           Offset(screenSize.width * x / 500, screenSize.height * y / 750));
   }
-  //Format the time from second to minute and second
-String getTimeformat(Duration totalSecond){
-    return sprintf("%02d:%02d", [totalSecond.inSeconds/60, totalSecond.inSeconds%60]);
-}
 
-void drawTime(Canvas canvas){
-    if (lastLoopPaused != pause){
-        if (pause){
-            startTimeOfPause = DateTime.now();
+  //Format the time from second to minute and second
+  String getTimeformat(Duration totalSecond) {
+    return sprintf("%02d:%02d", [
+      (totalSecond.inSeconds / 60).toInt(),
+      (totalSecond.inSeconds % 60).toInt()
+    ]);
+  }
+
+  void drawTime(Canvas canvas) {
+    if (lastLoopPaused != pause) {
+      if (pause) {
+        startTimeOfPause = DateTime.now();
+      } else {
+        pauseDuration = DateTime.now().difference(startTimeOfPause);
+
+        // Stop horizontal super skill cooldown when puase
+        if (cooldown_time_hor != null) {
+          cooldown_time_hor.add(pauseDuration);
         }
-        else{
-            pauseDuration = DateTime.now().difference(startTimeOfPause);
-            
-            // Stop horizontal super skill cooldown when puase
-            if (cooldown_time_hor != null){
-                cooldown_time_hor.add(pauseDuration);
-            }
-            // Stop vertical super skill cooldown when puase
-            if (cooldown_time_vert != null){
-                cooldown_time_vert.add(pauseDuration);
-            }
-            // Change start time of the game which use to count the timer 'arial.ttf'
-            startTime.add(pauseDuration);
-          }
-    lastLoopPaused = pause;
+        // Stop vertical super skill cooldown when puase
+        if (cooldown_time_vert != null) {
+          cooldown_time_vert.add(pauseDuration);
+        }
+        // Change start time of the game which use to count the timer 'arial.ttf'
+        startTime.add(pauseDuration);
+      }
+      lastLoopPaused = pause;
     }
-    if (pause){
-        drawText(canvas,'►',Colors.white,28,61,692);
-        duration = stopTimeText;
+    if (pause) {
+      drawText(canvas, '►', Colors.white, 28, 61, 692);
+      duration = stopTimeText;
+    } else {
+      drawText(canvas, 'II', Colors.white, 28, 63, 692);
+      this.duration = DateTime.now().difference(startTime);
+      print(duration);
+      stopTimeText = duration;
     }
-    else{
-        drawText(canvas,'II',Colors.white,28,63,692);
-        duration = DateTime.now().difference(startTime);
-        stopTimeText = duration;
-    }
-    drawText(canvas,'TIME:'+getTimeformat(duration),Colors.black,20,275,91); //display clock
-}
+    drawText(canvas, 'TIME:' + getTimeformat(duration), Colors.white, 20, 275,
+        91); //display clock
+  }
+
   Future<ui.Image> loadUiImage(String imageAssetPath) async {
     final ByteData data = await rootBundle.load(imageAssetPath);
     final Completer<ui.Image> completer = Completer();
