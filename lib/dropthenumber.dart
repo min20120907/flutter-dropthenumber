@@ -235,7 +235,7 @@ class DropTheNumber extends Game with TapDetector {
     double x = event.globalPosition.dx;
     double y = event.globalPosition.dy;
     // pause event
-    if (inRange(x, 50, 95) && inRange(y, 685, 730)) {
+    if (inRange(x, getX(50), getX(95)) && inRange(y, getY(685), getY(730))) {
       pause = !pause;
     }
   }
