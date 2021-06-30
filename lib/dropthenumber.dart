@@ -30,6 +30,7 @@ class DropTheNumber extends Game with TapDetector {
   double log2(double x) => log(x) / log(2);
   double getX(double x) => screenSize.width * x / 500;
   double getY(double y) => screenSize.height * y / 750;
+  bool inRange(double x, double a, double b) => x >= a && x <= b;
   int a = pow(2, randomNumber);
 
   // colorlist
@@ -231,11 +232,10 @@ class DropTheNumber extends Game with TapDetector {
   @override
   void onTapDown(TapDownDetails event) {
     print("Player tap down on ${event.globalPosition}");
+    double x = event.globalPosition.dx;
+    double y = event.globalPosition.dy;
     // pause event
-    if (event.globalPosition.dx >= 50 &&
-        event.globalPosition.dx <= 95 &&
-        event.globalPosition.dy >= 685 &&
-        event.globalPosition.dy <= 730) {
+    if (inRange(x, 50, 95) && inRange(y, 685, 730)) {
       pause = !pause;
     }
   }
