@@ -5,6 +5,7 @@ import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 import 'package:flame/game.dart';
+import 'package:flame/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -12,13 +13,14 @@ import 'package:flutter/widgets.dart';
 Random random = new Random();
 int randomNumber = random.nextInt(13);
 
-class DropTheNumber extends Game {
+class DropTheNumber extends Game with TapDetector {
   bool pause = false;
   double score = 0;
   Size screenSize;
   ui.Image img;
   double log2(double x) => log(x) / log(2);
   int a = pow(2, randomNumber);
+
   // colorlist
   var colorList = [
     Color.fromRGBO(255, 0, 0, 0),
@@ -211,6 +213,11 @@ void drawTime(Canvas canvas){
             img.width.toDouble(), img.height.toDouble()),
         Rect.fromLTWH(screenSize.width * x / 500, y, sx, sy),
         p);
+  }
+
+  @override
+  void onTapDown(TapDownDetails event) {
+    print("Player tap down on ${event.globalPosition}");
   }
 
   @override
