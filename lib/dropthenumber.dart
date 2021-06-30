@@ -9,12 +9,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
+Random random = new Random();
+int randomNumber = random.nextInt(13);
+
 class DropTheNumber extends Game {
   bool pause = false;
   double score = 0;
   Size screenSize;
   ui.Image img;
   double log2(double x) => log(x) / log(2);
+  int a = pow(2, randomNumber);
   // colorlist
   var colorList = [
     Color.fromRGBO(255, 0, 0, 0),
@@ -31,7 +35,6 @@ class DropTheNumber extends Game {
     Color.fromRGBO(153, 255, 153, 0),
     Color.fromRGBO(194, 194, 214, 0)
   ];
-
   @override
   void render(Canvas canvas) {
     // draw background
