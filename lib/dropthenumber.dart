@@ -60,7 +60,7 @@ class DropTheNumber extends Game {
     canvas.drawRect(Rect2, rect2Paint);
 
     Rect Rect3 = Rect.fromLTWH(
-        screenSize.width * 180 / 420,
+        screenSize.width * 180 / 450,
         screenSize.height * 81 / 630,
         screenSize.width * 45 / 500,
         screenSize.height * 37 / 750);
@@ -72,7 +72,7 @@ class DropTheNumber extends Game {
     canvas.drawRect(Rect3, rect3Paint);
 
     Rect Rect5 = Rect.fromLTWH(
-        screenSize.width * 50 / 530,
+        screenSize.width * 55 / 590,
         screenSize.height * 685 / 730,
         screenSize.width * 40 / 500,
         screenSize.height * 32 / 750);
