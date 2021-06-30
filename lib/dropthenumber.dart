@@ -203,7 +203,6 @@ class DropTheNumber extends Game with TapDetector {
     } else {
       drawText(canvas, 'II', Colors.white, 28, 63, 692);
       this.duration = DateTime.now().difference(startTime);
-      print(duration);
       stopTimeText = duration;
     }
     drawText(canvas, 'TIME:' + getTimeformat(duration), Colors.white, 20, 275,
