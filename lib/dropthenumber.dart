@@ -140,10 +140,10 @@ class DropTheNumber extends Game with TapDetector {
 
     //draw text
     drawText(canvas, 'Drop', Colors.red, 30, 215, 48);
-    drawText(canvas, 'Next Block ►', Colors.pink, 18, 60, 103);
+    drawText(canvas, 'Next Block ►', Colors.white, 18, 60, 103);
     drawText(canvas, 'Score:' + score.toString(), Colors.white, 27, 100, 703);
     for (double i = 0; i < 5; i++)
-      drawText(canvas, '†', Colors.red, 50, 90 + i * 70, 170);
+      drawText(canvas, '†', Colors.black, 50, 90 + i * 70, 170);
     drawTime(canvas);
   }
 
@@ -202,15 +202,15 @@ class DropTheNumber extends Game with TapDetector {
       lastLoopPaused = pause;
     }
     if (pause) {
-      drawText(canvas, '►', Colors.white, 28, 56, 702);
+      drawText(canvas, '►', Colors.white, 30, 54, 698);
       duration = stopTimeText;
     } else {
-      drawText(canvas, 'II', Colors.white, 28, 56, 702);
+      drawText(canvas, 'II', Colors.white, 28, 56, 703);
       this.duration = DateTime.now().difference(startTime);
       stopTimeText = duration;
     }
-    drawText(canvas, 'TIME:' + getTimeformat(duration), Colors.white, 22, 275,
-        100); //display clock
+    drawText(canvas, 'TIME:' + getTimeformat(duration), Colors.white, 19.5, 262,
+        105); //display clock
   }
 
   Future<ui.Image> loadUiImage(String imageAssetPath) async {
