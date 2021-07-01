@@ -164,6 +164,9 @@ class DropTheNumber extends Game with TapDetector {
       ..color = c
       ..strokeWidth = screenSize.height * width / 750;
     canvas.drawLine(p1, p2, paint);
+
+    // draw mute
+    if (mute) {}
   }
 
   void drawText(Canvas canvas, String text, Color colo, double fontSize,
@@ -217,8 +220,8 @@ class DropTheNumber extends Game with TapDetector {
       displayDuration = DateTime.now().difference(startTime);
       stopTimeText = displayDuration;
     }
-    drawText(canvas, 'TIME:' + getTimeformat(displayDuration), Colors.white, 22, 275,
-        100); //display clock
+    drawText(canvas, 'TIME:' + getTimeformat(displayDuration), Colors.white, 22,
+        275, 100); //display clock
   }
 
   Future<ui.Image> loadUiImage(String imageAssetPath) async {
@@ -250,11 +253,18 @@ class DropTheNumber extends Game with TapDetector {
     // pause event
     if (inRange(x, getX(50), getX(95)) && inRange(y, getY(685), getY(730))) {
       pause = !pause;
+      if (pause) {
+        Flame.bgm.pause();
+      } else {
+        Flame.bgm.resume();
+      }
     }
     if (inRange(x, getX(402), getX(437)) && inRange(y, getY(83), getY(118))) {
       mute = !mute;
       if (mute) {
-        Flame.bgm.stop();
+        Flame.bgm.pause();
+      } else {
+        Flame.bgm.resume();
       }
     }
   }
