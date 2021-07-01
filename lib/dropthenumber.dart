@@ -64,12 +64,12 @@ class DropTheNumber extends Game with TapDetector {
 // draw mute
     if (mute) {
       loadUiImage("img/mute-2.png").then((value) => img2 = value);
-      drawImage(new Paint(), canvas, img2, 402, 83, 33, 35);
+      drawImage(new Paint(), canvas, img2, 402, 93, getX(40), getY(33));
     } else {
       loadUiImage("img/mute-1.png").then((value) => img2 = value);
-      drawImage(new Paint(), canvas, img2, 402, 83, 33, 35);
+      drawImage(new Paint(), canvas, img2, 402, 93, getX(40), getY(33));
     }
-    // ignore: non_constant_identifier_names
+
     Rect Rect1 = Rect.fromLTWH(screenSize.width / 10, screenSize.height / 20,
         screenSize.width * 4 / 5, screenSize.height * 650 / 750);
 
@@ -79,7 +79,6 @@ class DropTheNumber extends Game with TapDetector {
       ..strokeWidth = 10;
     canvas.drawRect(Rect1, rect1Paint);
 
-    // ignore: non_constant_identifier_names
     Rect Rect2 = Rect.fromLTWH(
         screenSize.width * 75 / 500,
         screenSize.height * 45 / 202,
@@ -104,7 +103,6 @@ class DropTheNumber extends Game with TapDetector {
       ..strokeWidth = 3;
     canvas.drawRect(Rect3, rect3Paint);
 
-    // ignore: non_constant_identifier_names
     Rect Rect5 = Rect.fromLTWH(
         screenSize.width * 55 / 590,
         screenSize.height * 685 / 730,
@@ -117,7 +115,6 @@ class DropTheNumber extends Game with TapDetector {
       ..strokeWidth = 3;
     canvas.drawRect(Rect5, rect5Paint);
 
-    // ignore: non_constant_identifier_names
     Rect Rect4 = Rect.fromLTWH(
         screenSize.width * 350 / 490,
         screenSize.height * 685 / 730,
@@ -130,7 +127,6 @@ class DropTheNumber extends Game with TapDetector {
       ..strokeWidth = 3;
     canvas.drawRect(Rect4, rect4Paint);
 
-    // ignore: non_constant_identifier_names
     Rect Rect6 = Rect.fromLTWH(
         screenSize.width * 405 / 490,
         screenSize.height * 685 / 730,
@@ -226,7 +222,7 @@ class DropTheNumber extends Game with TapDetector {
     }
 
     drawText(canvas, 'TIME:' + getTimeformat(displayDuration), Colors.white, 22,
-        275, 100); //display clock
+        255, 100); //display clock
   }
 
   Future<ui.Image> loadUiImage(String imageAssetPath) async {
