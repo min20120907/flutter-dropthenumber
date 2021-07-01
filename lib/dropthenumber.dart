@@ -154,10 +154,10 @@ class DropTheNumber extends Game with TapDetector {
 
     //draw text
     drawText(canvas, 'Drop', Colors.red, 30, 215, 48);
-    drawText(canvas, 'Next Block ►', Colors.pink, 18, 60, 103);
+    drawText(canvas, 'Next Block ►', Colors.white, 18, 60, 103);
     drawText(canvas, 'Score:' + score.toString(), Colors.white, 27, 100, 703);
     for (double i = 0; i < 5; i++)
-      drawText(canvas, '†', Colors.red, 50, 90 + i * 70, 170);
+      drawText(canvas, '†', Colors.black, 50, 90 + i * 70, 170);
     drawTime(canvas);
   }
 
@@ -224,6 +224,7 @@ class DropTheNumber extends Game with TapDetector {
       displayDuration = DateTime.now().difference(startTime);
       stopTimeText = displayDuration;
     }
+
     drawText(canvas, 'TIME:' + getTimeformat(displayDuration), Colors.white, 22,
         275, 100); //display clock
   }
