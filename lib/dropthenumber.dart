@@ -16,8 +16,8 @@ Random random = new Random();
 int randomNumber = random.nextInt(13);
 int randomNumber2 = random.nextInt(13);
 int track = random.nextInt(5);
-int current = pow(2, randomNumber);
-int next = pow(2, randomNumber2);
+int current = pow(2, randomNumber).toInt();
+int next = pow(2, randomNumber2).toInt();
 
 class DropTheNumber extends Game with TapDetector {
   bool pause = false;
