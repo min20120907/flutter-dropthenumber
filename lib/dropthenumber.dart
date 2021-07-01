@@ -34,7 +34,7 @@ class DropTheNumber extends Game with TapDetector {
   DateTime cooldownTimeHor;
   DateTime cooldownTimeVert;
   Duration pauseDuration;
-  ui.Image img;
+  ui.Image img1, img2;
   double log2(double x) => log(x) / log(2);
   double getX(double x) => screenSize.width * x / 500;
   double getY(double y) => screenSize.height * y / 750;
@@ -58,10 +58,17 @@ class DropTheNumber extends Game with TapDetector {
 
   @override
   void render(Canvas canvas) {
+    loadUiImage("img/bg3.jpg").then((value) => img1 = value);
     // draw background
-    drawImage(Paint(), canvas, "img/bg3.jpg", 0, 0, screenSize.width,
-        screenSize.height);
-
+    drawImage(Paint(), canvas, img1, 0, 0, screenSize.width, screenSize.height);
+// draw mute
+    if (mute) {
+      loadUiImage("img/mute-2.png").then((value) => img2 = value);
+      drawImage(new Paint(), canvas, img2, 402, 83, 33, 35);
+    } else {
+      loadUiImage("img/mute-1.png").then((value) => img2 = value);
+      drawImage(new Paint(), canvas, img2, 402, 83, 33, 35);
+    }
     // ignore: non_constant_identifier_names
     Rect Rect1 = Rect.fromLTWH(screenSize.width / 10, screenSize.height / 20,
         screenSize.width * 4 / 5, screenSize.height * 650 / 750);
@@ -164,9 +171,6 @@ class DropTheNumber extends Game with TapDetector {
       ..color = c
       ..strokeWidth = screenSize.height * width / 750;
     canvas.drawLine(p1, p2, paint);
-
-    // draw mute
-    if (mute) {}
   }
 
   void drawText(Canvas canvas, String text, Color colo, double fontSize,
@@ -233,15 +237,12 @@ class DropTheNumber extends Game with TapDetector {
     return completer.future;
   }
 
-  void drawImage(Paint p, Canvas canvas, String imgPath, double x, double y,
-      double sx, double sy) {
-    loadUiImage(imgPath).then((value) => this.img = value);
-
+  void drawImage(p, Canvas canvas, ui.Image img, double x, double y, double sx,
+      double sy) {
     canvas.drawImageRect(
-        this.img,
-        Rect.fromLTWH(screenSize.width * x / 500, screenSize.height * y / 750,
-            img.width.toDouble(), img.height.toDouble()),
-        Rect.fromLTWH(screenSize.width * x / 500, y, sx, sy),
+        img,
+        Rect.fromLTWH(0, 0, img.width.toDouble(), img.height.toDouble()),
+        Rect.fromLTWH(getX(x), getY(y), sx, sy),
         p);
   }
 
