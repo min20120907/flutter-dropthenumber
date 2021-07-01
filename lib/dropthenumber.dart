@@ -11,11 +11,17 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sprintf/sprintf.dart';
 
+// Global Variables
 Random random = new Random();
 int randomNumber = random.nextInt(13);
+int randomNumber2 = random.nextInt(13);
+int track = random.nextInt(5);
+int current = pow(2, randomNumber);
+int next = pow(2, randomNumber2);
 
 class DropTheNumber extends Game with TapDetector {
   bool pause = false;
+  bool mute = false;
   double score = 0;
   Size screenSize;
   bool lastLoopPaused = false;
@@ -31,7 +37,6 @@ class DropTheNumber extends Game with TapDetector {
   double getX(double x) => screenSize.width * x / 500;
   double getY(double y) => screenSize.height * y / 750;
   bool inRange(double x, double a, double b) => x >= a && x <= b;
-  int a = pow(2, randomNumber);
 
   // colorlist
   var colorList = [
@@ -52,7 +57,7 @@ class DropTheNumber extends Game with TapDetector {
   @override
   void render(Canvas canvas) {
     // draw background
-    drawImage(Paint(), canvas, "/img/bg3.jpg", 0, 0, screenSize.width,
+    drawImage(Paint(), canvas, "img/bg3.jpg", 0, 0, screenSize.width,
         screenSize.height);
 
     Rect Rect1 = Rect.fromLTWH(screenSize.width / 10, screenSize.height / 20,
@@ -219,7 +224,7 @@ class DropTheNumber extends Game with TapDetector {
 
   void drawImage(Paint p, Canvas canvas, String imgPath, double x, double y,
       double sx, double sy) {
-    loadUiImage("img/bg3.jpg").then((value) => this.img = value);
+    loadUiImage(imgPath).then((value) => this.img = value);
 
     canvas.drawImageRect(
         this.img,
