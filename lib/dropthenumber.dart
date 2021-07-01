@@ -187,26 +187,30 @@ class DropTheNumber extends Game with TapDetector {
         startTimeOfPause = DateTime.now();
       } else {
         pauseDuration = DateTime.now().difference(startTimeOfPause);
+        print("pauseDuration: "); //////////debug
+        print(pauseDuration.inSeconds.toString()); //////////debug
 
         // Stop horizontal super skill cooldown when puase
         if (cooldownTimeHor != null) {
-          cooldownTimeHor.add(pauseDuration);
+          cooldownTimeHor = cooldownTimeHor.add(pauseDuration);
         }
         // Stop vertical super skill cooldown when puase
         if (cooldownTimeVert != null) {
-          cooldownTimeVert.add(pauseDuration);
+          cooldownTimeVert = cooldownTimeVert.add(pauseDuration);
         }
         // Change start time of the game which use to count the timer 'arial.ttf'
-        startTime.add(pauseDuration);
+        startTime = startTime.add(pauseDuration);
+        print("startTime: "); //////////debug
+        print(startTime.hour.toString() + " " + startTime.minute.toString() + " " + startTime.second.toString()); //////////debug
       }
-      lastLoopPaused = pause;
     }
+    lastLoopPaused = pause;
     if (pause) {
       drawText(canvas, '►', Colors.white, 28, 56, 702);
       duration = stopTimeText;
     } else {
       drawText(canvas, 'II', Colors.white, 28, 56, 702);
-      this.duration = DateTime.now().difference(startTime);
+      duration = DateTime.now().difference(startTime);
       stopTimeText = duration;
     }
     drawText(canvas, 'TIME:' + getTimeformat(duration), Colors.white, 22, 275,
