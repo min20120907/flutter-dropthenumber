@@ -15,7 +15,6 @@ dependencies:
   cupertino_icons: ^1.0.2
   flame: ^0.29.4
   flutter_screenutil: ^5.0.0+2
-
   sprintf: "^4.0.0"
 
 dev_dependencies:
@@ -26,3 +25,4 @@ flutter:
   uses-material-design: true
   assets:
     - img/
+    - assets/audio

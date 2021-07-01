@@ -4,6 +4,9 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'package:flame/audio_pool.dart';
+import 'package:flame/flame.dart';
+import 'package:flame/flame_audio.dart' as audio;
 import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
 import 'package:flutter/material.dart';
@@ -21,14 +24,13 @@ int next = pow(2, randomNumber2).toInt();
 
 class DropTheNumber extends Game with TapDetector {
   bool pause = false;
-  bool mute = false;
+  static bool mute = false;
   double score = 0;
   Size screenSize;
   bool lastLoopPaused = false;
   DateTime startTime = DateTime.now();
   Duration stopTimeText;
   DateTime startTimeOfPause;
-  Duration duration;
   DateTime cooldownTimeHor;
   DateTime cooldownTimeVert;
   Duration pauseDuration;
@@ -37,7 +39,6 @@ class DropTheNumber extends Game with TapDetector {
   double getX(double x) => screenSize.width * x / 500;
   double getY(double y) => screenSize.height * y / 750;
   bool inRange(double x, double a, double b) => x >= a && x <= b;
-
   // colorlist
   var colorList = [
     Color.fromRGBO(255, 0, 0, 0),
@@ -54,12 +55,14 @@ class DropTheNumber extends Game with TapDetector {
     Color.fromRGBO(153, 255, 153, 0),
     Color.fromRGBO(194, 194, 214, 0)
   ];
+
   @override
   void render(Canvas canvas) {
     // draw background
     drawImage(Paint(), canvas, "img/bg3.jpg", 0, 0, screenSize.width,
         screenSize.height);
 
+    // ignore: non_constant_identifier_names
     Rect Rect1 = Rect.fromLTWH(screenSize.width / 10, screenSize.height / 20,
         screenSize.width * 4 / 5, screenSize.height * 650 / 750);
 
@@ -69,6 +72,7 @@ class DropTheNumber extends Game with TapDetector {
       ..strokeWidth = 10;
     canvas.drawRect(Rect1, rect1Paint);
 
+    // ignore: non_constant_identifier_names
     Rect Rect2 = Rect.fromLTWH(
         screenSize.width * 75 / 500,
         screenSize.height * 45 / 202,
@@ -93,6 +97,7 @@ class DropTheNumber extends Game with TapDetector {
       ..strokeWidth = 3;
     canvas.drawRect(Rect3, rect3Paint);
 
+    // ignore: non_constant_identifier_names
     Rect Rect5 = Rect.fromLTWH(
         screenSize.width * 55 / 590,
         screenSize.height * 685 / 730,
@@ -105,6 +110,7 @@ class DropTheNumber extends Game with TapDetector {
       ..strokeWidth = 3;
     canvas.drawRect(Rect5, rect5Paint);
 
+    // ignore: non_constant_identifier_names
     Rect Rect4 = Rect.fromLTWH(
         screenSize.width * 350 / 490,
         screenSize.height * 685 / 730,
@@ -117,6 +123,7 @@ class DropTheNumber extends Game with TapDetector {
       ..strokeWidth = 3;
     canvas.drawRect(Rect4, rect4Paint);
 
+    // ignore: non_constant_identifier_names
     Rect Rect6 = Rect.fromLTWH(
         screenSize.width * 405 / 490,
         screenSize.height * 685 / 730,
@@ -190,18 +197,20 @@ class DropTheNumber extends Game with TapDetector {
 
         // Stop horizontal super skill cooldown when puase
         if (cooldownTimeHor != null) {
-          cooldownTimeHor.add(pauseDuration);
+          cooldownTimeHor = cooldownTimeHor.add(pauseDuration);
         }
         // Stop vertical super skill cooldown when puase
         if (cooldownTimeVert != null) {
-          cooldownTimeVert.add(pauseDuration);
+          cooldownTimeVert = cooldownTimeVert.add(pauseDuration);
         }
         // Change start time of the game which use to count the timer 'arial.ttf'
-        startTime.add(pauseDuration);
+        startTime = startTime.add(pauseDuration);
       }
-      lastLoopPaused = pause;
     }
+    lastLoopPaused = pause;
+    Duration displayDuration;
     if (pause) {
+<<<<<<< HEAD
       drawText(canvas, '►', Colors.white, 30, 54, 698);
       duration = stopTimeText;
     } else {
@@ -211,6 +220,17 @@ class DropTheNumber extends Game with TapDetector {
     }
     drawText(canvas, 'TIME:' + getTimeformat(duration), Colors.white, 19.5, 262,
         105); //display clock
+=======
+      drawText(canvas, '►', Colors.white, 28, 56, 702);
+      displayDuration = stopTimeText;
+    } else {
+      drawText(canvas, 'II', Colors.white, 28, 56, 702);
+      displayDuration = DateTime.now().difference(startTime);
+      stopTimeText = displayDuration;
+    }
+    drawText(canvas, 'TIME:' + getTimeformat(displayDuration), Colors.white, 22, 275,
+        100); //display clock
+>>>>>>> 5754a6262c69371d157cfb51623c581c91063ce4
   }
 
   Future<ui.Image> loadUiImage(String imageAssetPath) async {
@@ -242,6 +262,12 @@ class DropTheNumber extends Game with TapDetector {
     // pause event
     if (inRange(x, getX(50), getX(95)) && inRange(y, getY(685), getY(730))) {
       pause = !pause;
+    }
+    if (inRange(x, getX(402), getX(437)) && inRange(y, getY(83), getY(118))) {
+      mute = !mute;
+      if (mute) {
+        Flame.bgm.stop();
+      }
     }
   }
 
