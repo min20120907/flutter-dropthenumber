@@ -24,6 +24,7 @@ int next = pow(2, randomNumber2).toInt();
 class DropTheNumber extends Game with TapDetector {
   // Create Variable
   List<List<Block>> blocks = [[]];
+  int highest = 99;
   bool pause = false;
   bool mute = false;
   double score = 0;
@@ -37,8 +38,12 @@ class DropTheNumber extends Game with TapDetector {
   DateTime cooldownTimeVert;
   Duration pauseDuration;
   Duration displayDuration;
-  ui.Image img1, img2, img3, img4;
 
+  // coordinates of clicked position
+  double xAxis = 0, yAxis = 0;
+  ui.Image img1, img2, img3, img4;
+  // Videos declaration
+  List<ui.Image> vid1, vid2;
   // Lambda Function
   double log2(double x) => log(x) / log(2);
   double getX(double x) => screenSize.width * x / 500;
@@ -67,8 +72,7 @@ class DropTheNumber extends Game with TapDetector {
     if (!gameOver) {
       // draw background
       loadUiImage("img/bg3.jpg").then((value) => img1 = value);
-      drawImage(
-          Paint(), canvas, img1, 0, 0, 500, 750);
+      drawImage(Paint(), canvas, img1, 0, 0, 500, 750);
       // draw mute
       if (mute) {
         loadUiImage("img/mute-2.png").then((value) => img2 = value);
@@ -77,12 +81,7 @@ class DropTheNumber extends Game with TapDetector {
         loadUiImage("img/mute-1.png").then((value) => img2 = value);
         drawImage(new Paint(), canvas, img2, 399, 98, 40, 40);
       }
-      // draw superpower horizontal
-      loadUiImage("img/fire-4.png").then((value) => img3 = value);
-      drawImage(Paint(), canvas, img3, 403, 695, 59, 60);
-      // draw superpower vertical
-      loadUiImage("img/vertical-2.png").then((value) => img4 = value);
-      drawImage(Paint(), canvas, img4, 350, 696, 50, 50);
+
       // Draw outline
       drawRectStroke(canvas, 500 / 10, 750 / 20, 500 * 4 / 5, 750 * 650 / 750,
           Colors.white, 10);
@@ -114,26 +113,14 @@ class DropTheNumber extends Game with TapDetector {
       drawTime(canvas);
       drawBlock(canvas, Block(current, 216, 240));
       drawNextBlock(canvas, Block(next, 200, 96));
+      drawAllBlocks(canvas);
     } else {
-      int highest = 99;
-
-      // Draw Gameover Screen
-      drawRect(canvas, 0, 0, 500, 750, Colors.white);
-      drawText(canvas, "Game Over", Colors.black, 40, 145, 150);
-      drawText(canvas, "TIME:", Colors.black, 30, 165, 220);
-      drawText(
-          canvas, getTimeformat(displayDuration), Colors.black, 30, 252, 220);
-      drawText(canvas, "Highest Score:", Colors.black, 30, 100, 270);
-      drawText(canvas, highest.toString(), Colors.black, 30, 304, 271);
-      drawText(canvas, "Your Score:", Colors.black, 30, 120, 320);
-      drawText(canvas, score.toString(), Colors.black, 30, 280, 322);
-      drawRectStroke(canvas, 160, 380, 185, 40, Colors.black, 5);
-      drawText(canvas, "Restart", Colors.black, 25, 215, 384);
-      drawRectStroke(canvas, 160, 430, 185, 40, Colors.black, 5);
-      drawText(canvas, "Quit", Colors.black, 25, 225, 435);
+      drawGameover(canvas);
     }
   }
 
+  // get new random next block
+  void getNewNextBlock() {}
   // Define Function
   // Drawline
   void drawLine(Color c, Canvas canvas, double p1x, double p1y, double p2x,
@@ -146,6 +133,24 @@ class DropTheNumber extends Game with TapDetector {
       ..color = c
       ..strokeWidth = screenSize.height * width / 750;
     canvas.drawLine(p1, p2, paint);
+  }
+
+  // draw gameover screen
+  void drawGameover(Canvas canvas) {
+    // Draw Gameover Screen
+    drawRect(canvas, 0, 0, 500, 750, Colors.white);
+    drawText(canvas, "Game Over", Colors.black, 40, 145, 150);
+    drawText(canvas, "TIME:", Colors.black, 30, 165, 220);
+    drawText(
+        canvas, getTimeformat(displayDuration), Colors.black, 30, 252, 220);
+    drawText(canvas, "Highest Score:", Colors.black, 30, 100, 270);
+    drawText(canvas, highest.toString(), Colors.black, 30, 304, 271);
+    drawText(canvas, "Your Score:", Colors.black, 30, 120, 320);
+    drawText(canvas, score.toString(), Colors.black, 30, 280, 322);
+    drawRectStroke(canvas, 160, 380, 185, 40, Colors.black, 5);
+    drawText(canvas, "Restart", Colors.black, 25, 215, 384);
+    drawRectStroke(canvas, 160, 430, 185, 40, Colors.black, 5);
+    drawText(canvas, "Quit", Colors.black, 25, 225, 435);
   }
 
   // Drawtext
@@ -174,6 +179,14 @@ class DropTheNumber extends Game with TapDetector {
 
     canvas.drawRect(rect, paint);
   }
+
+  // def blockAppend():
+  // void blockAppend() {
+  //   double max_y_axis = (582 - 70 * blocks[track].length).toDouble();
+  //   if (max_y_axis > 223) {
+  //     List<Block> block = [current, x, max_y_axis];
+  //   }
+  // }
 
   // Drawstroke
   void drawRectStroke(Canvas canvas, double x, double y, double width,
@@ -235,6 +248,22 @@ class DropTheNumber extends Game with TapDetector {
     return completer.future;
   }
 
+  void drawAllBlocks(Canvas canvas) {
+    for (List<Block> linesOfBlocksY in blocks) {
+      for (Block block in linesOfBlocksY) {
+        if (!gameOver) {
+          drawBlock(canvas, block);
+        }
+      }
+    }
+    // draw superpower horizontal
+    loadUiImage("img/fire-4.png").then((value) => img3 = value);
+    drawImage(Paint(), canvas, img3, 403, 695, 59, 60);
+    // draw superpower vertical
+    loadUiImage("img/vertical-2.png").then((value) => img4 = value);
+    drawImage(Paint(), canvas, img4, 350, 696, 50, 50);
+  }
+
   // Drawimage
   void drawImage(Paint p, Canvas canvas, ui.Image img, double x, double y,
       double width, double height) {
@@ -243,6 +272,20 @@ class DropTheNumber extends Game with TapDetector {
         Rect.fromLTWH(0, 0, img.width.toDouble(), img.height.toDouble()),
         Rect.fromLTWH(getX(x), getY(y), getX(width), getY(height)),
         p);
+  }
+
+  // draw video
+  void drawVideo(Paint p, Canvas canvas, List<ui.Image> vid, double x, double y,
+      double sx, double sy) {
+    // load video
+    for (int i = 0; i < vid.length; i++) {
+      canvas.drawImageRect(
+          vid[i],
+          Rect.fromLTWH(
+              0, 0, vid[i].width.toDouble(), vid[i].height.toDouble()),
+          Rect.fromLTWH(getX(x), getY(y), sx, sy),
+          p);
+    }
   }
 
   void tryToPause() {
@@ -299,9 +342,33 @@ class DropTheNumber extends Game with TapDetector {
     return elems.indexOf(elems.reduce(max));
   }
 
+  // super power of column clearance
   void superVert(Canvas canvas) {
     int maxTrack = getMaxTrack();
-    for (int i = 0; i < 6; i++) {}
+    for (int i = 1; i < 16; i++) {
+      loadUiImage("vid/power1/power1_000" + sprintf("%02d", i) + ".png")
+          .then((value) => vid1.add(value));
+      drawVideo(Paint(), canvas, vid1, getX(blocks[maxTrack][0].x - 220),
+          getY(blocks[maxTrack][0].y - 367), getX(500), getX(500));
+    }
+    blocks.remove(blocks[maxTrack]);
+    blocks.insert(maxTrack - 1, []);
+  }
+
+  // super power of horizontal lines
+  void superHor(Canvas canvas) {
+    for (int i = 1; i < 20; i++) {
+      loadUiImage("vid/power2/power2_000" + sprintf("%02d", i) + ".png")
+          .then((value) => vid1.add(value));
+      drawVideo(
+          Paint(), canvas, vid1, getX(-350), getY(50), getX(500), getX(500));
+    }
+    for (int i = 0; i < 5; i++) {
+      blocks[i].remove(blocks[i][0]);
+      for (int j = 0; j < blocks[i].length; j++) {
+        blocks[i][j].y += getY(70);
+      }
+    }
   }
 
   void dropAboveBlocks(int x, int y) {
@@ -317,6 +384,8 @@ class DropTheNumber extends Game with TapDetector {
   @override
   void onTapDown(TapDownDetails event) {
     print("Player tap down on ${event.globalPosition}");
+    xAxis = event.globalPosition.dx;
+    yAxis = event.globalPosition.dy;
     double x = event.globalPosition.dx;
     double y = event.globalPosition.dy;
     // pause event

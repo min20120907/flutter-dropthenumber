@@ -26,3 +26,5 @@ flutter:
   assets:
     - img/
     - assets/audio/
+    - vid/power1/
+    - vid/power2/
