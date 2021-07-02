@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sprintf/sprintf.dart';
+import 'block.dart';
 
 // Global Variables
 Random random = new Random();
@@ -21,6 +22,7 @@ int current = pow(2, randomNumber).toInt();
 int next = pow(2, randomNumber2).toInt();
 
 class DropTheNumber extends Game with TapDetector {
+  List<List<Block>> blocks = [[]];
   bool pause = false;
   static bool mute = false;
   double score = 0;
@@ -57,8 +59,8 @@ class DropTheNumber extends Game with TapDetector {
 
   @override
   void render(Canvas canvas) {
-    loadUiImage("img/bg3.jpg").then((value) => img1 = value);
     // draw background
+    loadUiImage("img/bg3.jpg").then((value) => img1 = value);
     drawImage(Paint(), canvas, img1, 0, 0, screenSize.width, screenSize.height);
     // draw mute
     if (mute) {
@@ -71,9 +73,9 @@ class DropTheNumber extends Game with TapDetector {
     // draw superpower horizontal
     loadUiImage("img/fire-4.png").then((value) => img3 = value);
     drawImage(Paint(), canvas, img3, 402, 685, getX(59), getY(60));
+    // draw superpower vertical
     loadUiImage("img/vertical-2.png").then((value) => img4 = value);
     drawImage(Paint(), canvas, img4, 350, 686, getX(50), getY(50));
-    // draw superpower vertical
     Rect Rect1 = Rect.fromLTWH(screenSize.width / 10, screenSize.height / 20,
         screenSize.width * 4 / 5, screenSize.height * 650 / 750);
 
