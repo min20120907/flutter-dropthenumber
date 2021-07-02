@@ -65,14 +65,14 @@ class DropTheNumber extends Game with TapDetector {
     // draw mute
     if (mute) {
       loadUiImage("img/mute-2.png").then((value) => img2 = value);
-      drawImage(new Paint(), canvas, img2, 399, 98, getX(40), getY(33));
+      drawImage(new Paint(), canvas, img2, 400, 100, getX(40), getY(33));
     } else {
       loadUiImage("img/mute-1.png").then((value) => img2 = value);
-      drawImage(new Paint(), canvas, img2, 399, 98, getX(40), getY(33));
+      drawImage(new Paint(), canvas, img2, 400, 100, getX(40), getY(33));
     }
     // draw superpower horizontal
     loadUiImage("img/fire-4.png").then((value) => img3 = value);
-    drawImage(Paint(), canvas, img3, 402, 685, getX(59), getY(60));
+    drawImage(Paint(), canvas, img3, 402, 685, getX(54), getY(60));
     // draw superpower vertical
     loadUiImage("img/vertical-2.png").then((value) => img4 = value);
     drawImage(Paint(), canvas, img4, 350, 686, getX(50), getY(50));
