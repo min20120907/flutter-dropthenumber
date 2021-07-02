@@ -184,10 +184,10 @@ class DropTheNumber extends Game with TapDetector {
     }
     // draw superpower horizontal
     loadUiImage("img/fire-4.png").then((value) => img3 = value);
-    drawImage(Paint(), canvas, img3, 402, 685, getX(54), getY(60));
+    drawImage(Paint(), canvas, img3, 402, 685, getX(54), getX(60));
     // draw superpower vertical
     loadUiImage("img/vertical-2.png").then((value) => img4 = value);
-    drawImage(Paint(), canvas, img4, 350, 686, getX(50), getY(50));
+    drawImage(Paint(), canvas, img4, 350, 686, getX(50), getX(50));
     Rect rect1 = Rect.fromLTWH(screenSize.width / 10, screenSize.height / 20,
         screenSize.width * 4 / 5, screenSize.height * 650 / 750);
 
@@ -273,7 +273,7 @@ class DropTheNumber extends Game with TapDetector {
     for (double i = 0; i < 5; i++)
       drawText(canvas, '†', Colors.black, 50, 90 + i * 70, 170);
     drawTime(canvas);
-    drawBlock(canvas, Block(2, getX(200), getY(200)));
+    drawBlock(canvas, Block(8, getX(200), getY(200)));
   }
 
   void drawLine(Color c, Canvas canvas, double p1x, double p1y, double p2x,
@@ -306,7 +306,7 @@ class DropTheNumber extends Game with TapDetector {
 
   void drawRect(Canvas canvas, double x, double y, double width, double height,
       Color color) {
-    Rect rect = Rect.fromLTWH(getX(x), getY(y), getX(width), getY(height));
+    Rect rect = Rect.fromLTWH(getX(x), getY(y), getX(width), getX(height));
 
     Paint paint = Paint()
       ..color = color
@@ -317,7 +317,7 @@ class DropTheNumber extends Game with TapDetector {
 
   void drawRectStroke(Canvas canvas, double x, double y, double width,
       double height, Color color, double strokeWidth) {
-    Rect rect = Rect.fromLTWH(getX(x), getY(y), getX(width), getY(height));
+    Rect rect = Rect.fromLTWH(getX(x), getY(y), getX(width), getX(height));
 
     Paint paint = Paint()
       ..color = color
@@ -391,11 +391,7 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   void drawBlock(Canvas canvas, Block b) {
-    Rect rect = Rect.fromLTWH(getX(b.x), getY(b.y), getX(68), getY(68));
-    // Paint within 2048
-    Paint rectPaint1 = Paint()
-      ..color = this.colorList[log2(b.v.toDouble()).toInt()]
-      ..style = PaintingStyle.fill;
+    Rect rect = Rect.fromLTWH(getX(b.x), getY(b.y), getX(68), getX(68));
 
     // paint with over 2048
     Paint rectPaint2 = Paint()
@@ -406,20 +402,23 @@ class DropTheNumber extends Game with TapDetector {
       ..color = Colors.black
       ..style = PaintingStyle.stroke
       ..strokeWidth = 4;
-    if (log2(b.v.toDouble()) - 1 < 13) {
+    if (log2(b.v.toDouble()) - 1 < 12) {
+      // Paint within 2048
+      Paint rectPaint1 = Paint()
+        ..color = this.colorList[log2(b.v.toDouble()).toInt() - 1]
+        ..style = PaintingStyle.fill;
       canvas.drawRect(rect, rectPaint1);
-      print(colorList[log2(b.v.toDouble()).toInt()]);
+      // print(colorList[log2(b.v.toDouble()).toInt()]);
     } else {
       canvas.drawRect(rect, rectPaint2);
-      print("greater 13");
+      // print("greater 13");
     }
     canvas.drawRect(rect, borderPaint);
-    double textX = b.x + 24 - b.v * 5;
-    if (b.v <= 8192) {
+    double textX = b.x + 24 - b.v.toString().length * 5;
+    if (b.v < 8192) {
       drawText(canvas, b.v.toString(), Colors.black, getX(27), textX, b.y + 15);
     } else {
-      drawText(canvas, b.v.toString(), this.colorList[12], getX(27), textX,
-          b.y + 15);
+      drawText(canvas, b.v.toString(), Colors.black, getX(27), textX, b.y + 15);
     }
   }
 
