@@ -422,6 +422,15 @@ class DropTheNumber extends Game with TapDetector {
     }
   }
 
+  int getMaxTrack() {
+    List<int> elems = [];
+    for (int i = 0; i < 5; i++) {
+      elems.add(blocks[i].length);
+    }
+    return elems.indexOf(elems.reduce(max));
+  }
+
+  void superVert() {}
   void dropAboveBlocks(int x, int y) {
     if (blocks[x].length > 0) {
       for (int i = 0; i < blocks[x].length; i++) {
