@@ -125,11 +125,11 @@ class DropTheNumber extends Game with TapDetector {
     track = random.nextInt(4);
     current = next;
     if (score > 100000)
-      next = pow(2, randomRange(7, 12));
+      next = pow(2, randomRange(7, 12).toDouble());
     else if (score > 30000)
-      next = pow(2, randomRange(1, 9));
+      next = pow(2, randomRange(1, 9).toDouble());
     else
-      next = pow(2, randomRange(1, 5));
+      next = pow(2, randomRange(1, 5).toDouble());
     xAxis = (75 + 70 * track).toDouble();
   }
 
@@ -177,8 +177,7 @@ class DropTheNumber extends Game with TapDetector {
       textDirection: TextDirection.ltr,
     )
       ..layout(minWidth: screenSize.width, maxWidth: screenSize.width)
-      ..paint(canvas,
-          Offset(getX(x), getY(y)));
+      ..paint(canvas, Offset(getX(x), getY(y)));
   }
 
   // Drawrect
@@ -311,7 +310,8 @@ class DropTheNumber extends Game with TapDetector {
     double height = 750 * 37 / 750;
     if (log2(b.v.toDouble()) - 1 < 12) {
       // Paint within 8192
-      drawRect(canvas, b.x, b.y, width, height, colorList[log2(b.v.toDouble()).toInt() - 1]);
+      drawRect(canvas, b.x, b.y, width, height,
+          colorList[log2(b.v.toDouble()).toInt() - 1]);
     } else {
       // Paint with over 8192
       drawRect(canvas, b.x, b.y, width, height, colorList[12]);
@@ -333,7 +333,8 @@ class DropTheNumber extends Game with TapDetector {
 
     if (log2(b.v.toDouble()) - 1 < 12) {
       // Paint within 8192
-      drawRect(canvas, b.x, b.y, width, height, colorList[log2(b.v.toDouble()).toInt() - 1]);
+      drawRect(canvas, b.x, b.y, width, height,
+          colorList[log2(b.v.toDouble()).toInt() - 1]);
     } else {
       // paint with over 8192
       drawRect(canvas, b.x, b.y, width, height, colorList[12]);
