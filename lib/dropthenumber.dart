@@ -38,7 +38,8 @@ class DropTheNumber extends Game with TapDetector {
   Duration pauseDuration;
   Duration displayDuration;
   ui.Image img1, img2, img3, img4;
-
+  // Videos declaration
+  List<ui.Image> vid1, vid2;
   // Lambda Function
   double log2(double x) => log(x) / log(2);
   double getX(double x) => screenSize.width * x / 500;
@@ -296,6 +297,20 @@ class DropTheNumber extends Game with TapDetector {
         p);
   }
 
+  // draw video
+  void drawVideo(Paint p, Canvas canvas, List<ui.Image> vid, double x, double y,
+      double sx, double sy) {
+    // load video
+    for (int i = 0; i < vid.length; i++) {
+      canvas.drawImageRect(
+          vid[i],
+          Rect.fromLTWH(
+              0, 0, vid[i].width.toDouble(), vid[i].height.toDouble()),
+          Rect.fromLTWH(getX(x), getY(y), sx, sy),
+          p);
+    }
+  }
+
   void tryToPause() {
     if (!gameOver) {
       pause = !pause;
@@ -344,7 +359,14 @@ class DropTheNumber extends Game with TapDetector {
 
   void superVert(Canvas canvas) {
     int maxTrack = getMaxTrack();
-    for (int i = 0; i < 6; i++) {}
+    for (int i = 1; i < 16; i++) {
+      loadUiImage("vid/power1/power1_000" + sprintf("%02d", i) + ".png")
+          .then((value) => vid1.add(value));
+      drawVideo(Paint(), canvas, vid1, getX(blocks[maxTrack][0].x - 220),
+          getY(blocks[maxTrack][0].y - 367), getX(500), getX(500));
+    }
+    blocks.remove(blocks[maxTrack]);
+    blocks.insert(maxTrack - 1, []);
   }
 
   void dropAboveBlocks(int x, int y) {
