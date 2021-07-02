@@ -164,7 +164,8 @@ class DropTheNumber extends Game with TapDetector {
         drawText(canvas, '†', Colors.black, 50, 90 + i * 70, 170);
 
       drawTime(canvas);
-      drawBlock(canvas, Block(8192, getX(200), getY(200)));
+      drawBlock(canvas, Block(8192, getX(240), getY(240)));
+      drawNextBlock(canvas, Block(2, getX(200), getY(200)));
     } else {
       int highest = 99;
 
@@ -299,6 +300,36 @@ class DropTheNumber extends Game with TapDetector {
   void tryToPause() {
     if (!gameOver) {
       pause = !pause;
+    }
+  }
+
+  void drawNextBlock(Canvas canvas, Block b) {
+    Rect rect = Rect.fromLTWH(getX(b.x), getY(b.y), getX(55), getX(55));
+
+    // paint with over 8192
+    Paint rectPaint2 = Paint()
+      ..color = this.colorList[12]
+      ..style = PaintingStyle.fill;
+    // border paint
+    Paint borderPaint = Paint()
+      ..color = Colors.pink[200]
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1;
+    if (log2(b.v.toDouble()) - 1 < 12) {
+      // Paint within 8192
+      Paint rectPaint1 = Paint()
+        ..color = this.colorList[log2(b.v.toDouble()).toInt() - 1]
+        ..style = PaintingStyle.fill;
+      canvas.drawRect(rect, rectPaint1);
+    } else {
+      canvas.drawRect(rect, rectPaint2);
+    }
+    canvas.drawRect(rect, borderPaint);
+    double textX = b.x + 24 - b.v.toString().length * 5;
+    if (b.v < 8192) {
+      drawText(canvas, b.v.toString(), Colors.black, getX(24), textX, b.y + 15);
+    } else {
+      drawText(canvas, b.v.toString(), Colors.black, getX(24), textX, b.y + 15);
     }
   }
 
