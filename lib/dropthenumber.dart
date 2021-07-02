@@ -182,6 +182,14 @@ class DropTheNumber extends Game with TapDetector {
     canvas.drawRect(rect, paint);
   }
 
+  // def blockAppend():
+  // void blockAppend() {
+  //   double max_y_axis = (582 - 70 * blocks[track].length).toDouble();
+  //   if (max_y_axis > 223) {
+  //     List<Block> block = [current, x, max_y_axis];
+  //   }
+  // }
+
   // Drawstroke
   void drawRectStroke(Canvas canvas, double x, double y, double width,
       double height, Color color, double strokeWidth) {
