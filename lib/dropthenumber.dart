@@ -34,7 +34,7 @@ class DropTheNumber extends Game with TapDetector {
   DateTime cooldownTimeHor;
   DateTime cooldownTimeVert;
   Duration pauseDuration;
-  ui.Image img1, img2;
+  ui.Image img1, img2, img3, img4;
   double log2(double x) => log(x) / log(2);
   double getX(double x) => screenSize.width * x / 500;
   double getY(double y) => screenSize.height * y / 750;
@@ -234,6 +234,7 @@ class DropTheNumber extends Game with TapDetector {
     return completer.future;
   }
 
+  // Draw image method, relative coordinates, and absolute size width and length
   void drawImage(p, Canvas canvas, ui.Image img, double x, double y, double sx,
       double sy) {
     canvas.drawImageRect(
