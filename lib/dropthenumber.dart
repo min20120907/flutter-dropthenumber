@@ -4,9 +4,7 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-import 'package:flame/audio_pool.dart';
 import 'package:flame/flame.dart';
-import 'package:flame/flame_audio.dart' as audio;
 import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +26,7 @@ class DropTheNumber extends Game with TapDetector {
   double score = 0;
   Size screenSize;
   bool lastLoopPaused = false;
+  bool gameOver = false;
   DateTime startTime = DateTime.now();
   Duration stopTimeText;
   DateTime startTimeOfPause;
@@ -246,6 +245,12 @@ class DropTheNumber extends Game with TapDetector {
         Rect.fromLTWH(0, 0, img.width.toDouble(), img.height.toDouble()),
         Rect.fromLTWH(getX(x), getY(y), sx, sy),
         p);
+  }
+
+  void tryToPause() {
+    if (!gameOver) {
+      pause = !pause;
+    }
   }
 
   @override
