@@ -72,24 +72,30 @@ class DropTheNumber extends Game with TapDetector {
       // draw mute
       if (mute) {
         loadUiImage("img/mute-2.png").then((value) => img2 = value);
-        drawImage(new Paint(), canvas, img2, 399, 95, getX(40), getY(35));
+        drawImage(new Paint(), canvas, img2, 399, 97, getX(40), getY(35));
       } else {
         loadUiImage("img/mute-1.png").then((value) => img2 = value);
-        drawImage(new Paint(), canvas, img2, 399, 95, getX(40), getY(35));
+        drawImage(new Paint(), canvas, img2, 399, 97, getX(40), getY(35));
       }
       // draw superpower horizontal
       loadUiImage("img/fire-4.png").then((value) => img3 = value);
-      drawImage(Paint(), canvas, img3, 403, 695, getX(59), getY(60));
+      drawImage(Paint(), canvas, img3, 405, 689, getX(59), getY(60));
       // draw superpower vertical
       loadUiImage("img/vertical-2.png").then((value) => img4 = value);
-      drawImage(Paint(), canvas, img4, 350, 696, getX(50), getY(50));
+      drawImage(Paint(), canvas, img4, 352, 690, getX(50), getY(50));
       // Draw outline
-      drawRectStroke(canvas, 500/10, 750/20, 500*4/5, 750*650/750, Colors.white, 10);
-      drawRectStroke(canvas, 500*75/500, 750*45/202, 500*35/50, 750*50/75, Colors.white, 5);
-      drawRectStroke(canvas, 500*180/450, 750*81/630, 500*45/500, 750*37/750, Colors.pink[200], 3);
-      drawRectStroke(canvas, 500*350/490, 750*685/730, 500*40/500, 750*32/750, Colors.white, 3);
-      drawRectStroke(canvas, 500*55/590, 750*685/730, 500*40/500, 750*32/750, Colors.white, 3);
-      drawRectStroke(canvas, 500*405/490, 750*685/730, 500*40/500, 750*32/750, Colors.white, 3);
+      drawRectStroke(canvas, 500 / 10, 750 / 20, 500 * 4 / 5, 750 * 650 / 750,
+          Colors.white, 10);
+      drawRectStroke(canvas, 500 * 75 / 500, 750 * 45 / 202, 500 * 35 / 50,
+          750 * 50 / 75, Colors.white, 5);
+      drawRectStroke(canvas, 500 * 180 / 450, 750 * 81 / 630, 500 * 45 / 500,
+          750 * 37 / 750, Colors.pink[200], 3);
+      drawRectStroke(canvas, 500 * 350 / 490, 750 * 685 / 730, 500 * 40 / 500,
+          750 * 32 / 750, Colors.white, 3);
+      drawRectStroke(canvas, 500 * 55 / 590, 750 * 685 / 730, 500 * 40 / 500,
+          750 * 32 / 750, Colors.white, 3);
+      drawRectStroke(canvas, 500 * 405 / 490, 750 * 685 / 730, 500 * 40 / 500,
+          750 * 32 / 750, Colors.white, 3);
 
       //draw three horizontal lines
       drawLine(Colors.white, canvas, 50, 90, 450, 90, 5);
@@ -108,8 +114,8 @@ class DropTheNumber extends Game with TapDetector {
         drawText(canvas, '†', Colors.black, 50, 100 + i * 70, 170);
 
       drawTime(canvas);
-      drawBlock(canvas, Block(8192, getX(240), getY(240)));
-      drawNextBlock(canvas, Block(2, getX(200), getY(200)));
+      drawBlock(canvas, Block(current, getX(240), getY(240)));
+      drawNextBlock(canvas, Block(next, getX(273), getY(102)));
     } else {
       int highest = 99;
 
@@ -248,7 +254,7 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   void drawNextBlock(Canvas canvas, Block b) {
-    Rect rect = Rect.fromLTWH(getX(b.x), getY(b.y), getX(55), getX(55));
+    Rect rect = Rect.fromLTWH(getX(b.x), getY(b.y), getX(51), getX(51));
 
     // paint with over 8192
     Paint rectPaint2 = Paint()
@@ -269,11 +275,11 @@ class DropTheNumber extends Game with TapDetector {
       canvas.drawRect(rect, rectPaint2);
     }
     canvas.drawRect(rect, borderPaint);
-    double textX = b.x + 24 - b.v.toString().length * 5;
+    double textX = b.x + 21 - b.v.toString().length * 5;
     if (b.v < 8192) {
-      drawText(canvas, b.v.toString(), Colors.black, getX(24), textX, b.y + 15);
+      drawText(canvas, b.v.toString(), Colors.black, getX(24), textX, b.y + 12);
     } else {
-      drawText(canvas, b.v.toString(), Colors.black, getX(24), textX, b.y + 15);
+      drawText(canvas, b.v.toString(), Colors.black, getX(24), textX, b.y + 12);
     }
   }
 
