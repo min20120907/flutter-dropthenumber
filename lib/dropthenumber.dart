@@ -116,7 +116,7 @@ class DropTheNumber extends Game with TapDetector {
 
       drawTime(canvas);
       drawBlock(canvas, Block(current, getX(240), getY(240)));
-      drawNextBlock(canvas, Block(next, getX(273), getY(102)));
+      drawNextBlock(canvas, Block(next, getX(253), getY(92)));
     } else {
       int highest = 99;
 
@@ -338,6 +338,7 @@ class DropTheNumber extends Game with TapDetector {
     return elems.indexOf(elems.reduce(max));
   }
 
+  // super power of column clearance
   void superVert(Canvas canvas) {
     int maxTrack = getMaxTrack();
     for (int i = 1; i < 16; i++) {
@@ -350,9 +351,20 @@ class DropTheNumber extends Game with TapDetector {
     blocks.insert(maxTrack - 1, []);
   }
 
+  // super power of horizontal lines
   void superHor(Canvas canvas) {
-    int maxTrack = getMaxTrack();
-    for(int i=1)
+    for (int i = 1; i < 20; i++) {
+      loadUiImage("vid/power2/power2_000" + sprintf("%02d", i) + ".png")
+          .then((value) => vid1.add(value));
+      drawVideo(
+          Paint(), canvas, vid1, getX(-350), getY(50), getX(500), getX(500));
+    }
+    for (int i = 0; i < 5; i++) {
+      blocks[i].remove(blocks[i][0]);
+      for (int j = 0; j < blocks[i].length; j++) {
+        blocks[i][j].y += getY(70);
+      }
+    }
   }
 
   void dropAboveBlocks(int x, int y) {
