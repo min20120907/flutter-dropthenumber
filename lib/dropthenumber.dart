@@ -24,6 +24,7 @@ int next = pow(2, randomNumber2).toInt();
 class DropTheNumber extends Game with TapDetector {
   // Create Variable
   List<List<Block>> blocks = [[]];
+  int highest = 99;
   bool pause = false;
   bool mute = false;
   double score = 0;
@@ -68,8 +69,7 @@ class DropTheNumber extends Game with TapDetector {
     if (!gameOver) {
       // draw background
       loadUiImage("img/bg3.jpg").then((value) => img1 = value);
-      drawImage(
-          Paint(), canvas, img1, 0, 0, 500, 750);
+      drawImage(Paint(), canvas, img1, 0, 0, 500, 750);
       // draw mute
       if (mute) {
         loadUiImage("img/mute-2.png").then((value) => img2 = value);
@@ -78,12 +78,7 @@ class DropTheNumber extends Game with TapDetector {
         loadUiImage("img/mute-1.png").then((value) => img2 = value);
         drawImage(new Paint(), canvas, img2, 399, 98, 40, 40);
       }
-      // draw superpower horizontal
-      loadUiImage("img/fire-4.png").then((value) => img3 = value);
-      drawImage(Paint(), canvas, img3, 403, 695, 59, 60);
-      // draw superpower vertical
-      loadUiImage("img/vertical-2.png").then((value) => img4 = value);
-      drawImage(Paint(), canvas, img4, 350, 696, 50, 50);
+
       // Draw outline
       drawRectStroke(canvas, 500 / 10, 750 / 20, 500 * 4 / 5, 750 * 650 / 750,
           Colors.white, 10);
@@ -117,23 +112,9 @@ class DropTheNumber extends Game with TapDetector {
       drawTime(canvas);
       drawBlock(canvas, Block(current, getX(240), getY(240)));
       drawNextBlock(canvas, Block(next, getX(253), getY(92)));
+      drawAllBlocks(canvas);
     } else {
-      int highest = 99;
-
-      // Draw Gameover Screen
-      drawRect(canvas, 0, 0, 500, 750, Colors.white);
-      drawText(canvas, "Game Over", Colors.black, 40, 145, 150);
-      drawText(canvas, "TIME:", Colors.black, 30, 165, 220);
-      drawText(
-          canvas, getTimeformat(displayDuration), Colors.black, 30, 252, 220);
-      drawText(canvas, "Highest Score:", Colors.black, 30, 100, 270);
-      drawText(canvas, highest.toString(), Colors.black, 30, 304, 271);
-      drawText(canvas, "Your Score:", Colors.black, 30, 120, 320);
-      drawText(canvas, score.toString(), Colors.black, 30, 280, 322);
-      drawRectStroke(canvas, 160, 380, 185, 40, Colors.black, 5);
-      drawText(canvas, "Restart", Colors.black, 25, 215, 384);
-      drawRectStroke(canvas, 160, 430, 185, 40, Colors.black, 5);
-      drawText(canvas, "Quit", Colors.black, 25, 225, 435);
+      drawGameover(canvas);
     }
   }
 
@@ -149,6 +130,24 @@ class DropTheNumber extends Game with TapDetector {
       ..color = c
       ..strokeWidth = screenSize.height * width / 750;
     canvas.drawLine(p1, p2, paint);
+  }
+
+  // draw gameover screen
+  void drawGameover(Canvas canvas) {
+    // Draw Gameover Screen
+    drawRect(canvas, 0, 0, 500, 750, Colors.white);
+    drawText(canvas, "Game Over", Colors.black, 40, 145, 150);
+    drawText(canvas, "TIME:", Colors.black, 30, 165, 220);
+    drawText(
+        canvas, getTimeformat(displayDuration), Colors.black, 30, 252, 220);
+    drawText(canvas, "Highest Score:", Colors.black, 30, 100, 270);
+    drawText(canvas, highest.toString(), Colors.black, 30, 304, 271);
+    drawText(canvas, "Your Score:", Colors.black, 30, 120, 320);
+    drawText(canvas, score.toString(), Colors.black, 30, 280, 322);
+    drawRectStroke(canvas, 160, 380, 185, 40, Colors.black, 5);
+    drawText(canvas, "Restart", Colors.black, 25, 215, 384);
+    drawRectStroke(canvas, 160, 430, 185, 40, Colors.black, 5);
+    drawText(canvas, "Quit", Colors.black, 25, 225, 435);
   }
 
   // Drawtext
@@ -236,6 +235,22 @@ class DropTheNumber extends Game with TapDetector {
       return completer.complete(img);
     });
     return completer.future;
+  }
+
+  void drawAllBlocks(Canvas canvas) {
+    for (List<Block> linesOfBlocksY in blocks) {
+      for (Block block in linesOfBlocksY) {
+        if (!gameOver) {
+          drawBlock(canvas, block);
+        }
+      }
+    }
+    // draw superpower horizontal
+    loadUiImage("img/fire-4.png").then((value) => img3 = value);
+    drawImage(Paint(), canvas, img3, 403, 695, 59, 60);
+    // draw superpower vertical
+    loadUiImage("img/vertical-2.png").then((value) => img4 = value);
+    drawImage(Paint(), canvas, img4, 350, 696, 50, 50);
   }
 
   // Drawimage
