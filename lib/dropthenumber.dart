@@ -109,7 +109,7 @@ class DropTheNumber extends Game with TapDetector {
       ..strokeWidth = 3;
     canvas.drawRect(rect3, rect3Paint);
 
-    Rect Rect5 = Rect.fromLTWH(
+    Rect rect5 = Rect.fromLTWH(
         screenSize.width * 55 / 590,
         screenSize.height * 685 / 730,
         screenSize.width * 40 / 500,
@@ -119,7 +119,7 @@ class DropTheNumber extends Game with TapDetector {
       ..color = Color(0xffffffff)
       ..style = PaintingStyle.stroke
       ..strokeWidth = 3;
-    canvas.drawRect(Rect5, rect5Paint);
+    canvas.drawRect(rect5, rect5Paint);
 
     Rect rect4 = Rect.fromLTWH(
         screenSize.width * 350 / 490,
