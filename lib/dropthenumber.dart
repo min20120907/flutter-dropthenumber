@@ -68,21 +68,21 @@ class DropTheNumber extends Game with TapDetector {
       // draw background
       loadUiImage("img/bg3.jpg").then((value) => img1 = value);
       drawImage(
-          Paint(), canvas, img1, 0, 0, screenSize.width, screenSize.height);
+          Paint(), canvas, img1, 0, 0, 500, 750);
       // draw mute
       if (mute) {
         loadUiImage("img/mute-2.png").then((value) => img2 = value);
-        drawImage(new Paint(), canvas, img2, 399, 95, getX(40), getY(35));
+        drawImage(new Paint(), canvas, img2, 399, 98, 40, 40);
       } else {
         loadUiImage("img/mute-1.png").then((value) => img2 = value);
-        drawImage(new Paint(), canvas, img2, 399, 95, getX(40), getY(35));
+        drawImage(new Paint(), canvas, img2, 399, 98, 40, 40);
       }
       // draw superpower horizontal
       loadUiImage("img/fire-4.png").then((value) => img3 = value);
-      drawImage(Paint(), canvas, img3, 403, 695, getX(59), getY(60));
+      drawImage(Paint(), canvas, img3, 403, 695, 59, 60);
       // draw superpower vertical
       loadUiImage("img/vertical-2.png").then((value) => img4 = value);
-      drawImage(Paint(), canvas, img4, 350, 696, getX(50), getY(50));
+      drawImage(Paint(), canvas, img4, 350, 696, 50, 50);
       // Draw outline
       drawRectStroke(canvas, 500/10, 750/20, 500*4/5, 750*650/750, Colors.white, 10);
       drawRectStroke(canvas, 500*75/500, 750*45/202, 500*35/50, 750*50/75, Colors.white, 5);
@@ -232,11 +232,11 @@ class DropTheNumber extends Game with TapDetector {
 
   // Drawimage
   void drawImage(Paint p, Canvas canvas, ui.Image img, double x, double y,
-      double sx, double sy) {
+      double width, double height) {
     canvas.drawImageRect(
         img,
         Rect.fromLTWH(0, 0, img.width.toDouble(), img.height.toDouble()),
-        Rect.fromLTWH(getX(x), getY(y), sx, sy),
+        Rect.fromLTWH(getX(x), getY(y), getX(width), getY(height)),
         p);
   }
 
