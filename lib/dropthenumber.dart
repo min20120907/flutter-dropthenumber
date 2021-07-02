@@ -430,7 +430,11 @@ class DropTheNumber extends Game with TapDetector {
     return elems.indexOf(elems.reduce(max));
   }
 
-  void superVert() {}
+  void superVert(Canvas canvas) {
+    int maxTrack = getMaxTrack();
+    for (int i = 0; i < 6; i++) {}
+  }
+
   void dropAboveBlocks(int x, int y) {
     if (blocks[x].length > 0) {
       for (int i = 0; i < blocks[x].length; i++) {
