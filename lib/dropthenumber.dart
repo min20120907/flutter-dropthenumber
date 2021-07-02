@@ -273,7 +273,7 @@ class DropTheNumber extends Game with TapDetector {
     for (double i = 0; i < 5; i++)
       drawText(canvas, '†', Colors.black, 50, 90 + i * 70, 170);
     drawTime(canvas);
-    drawBlock(canvas, Block(8, getX(200), getY(200)));
+    drawBlock(canvas, Block(8192, getX(200), getY(200)));
   }
 
   void drawLine(Color c, Canvas canvas, double p1x, double p1y, double p2x,
@@ -419,6 +419,25 @@ class DropTheNumber extends Game with TapDetector {
       drawText(canvas, b.v.toString(), Colors.black, getX(27), textX, b.y + 15);
     } else {
       drawText(canvas, b.v.toString(), Colors.black, getX(27), textX, b.y + 15);
+    }
+  }
+
+  int getMaxTrack() {
+    List<int> elems = [];
+    for (int i = 0; i < 5; i++) {
+      elems.add(blocks[i].length);
+    }
+    return elems.indexOf(elems.reduce(max));
+  }
+
+  void superVert() {}
+  void dropAboveBlocks(int x, int y) {
+    if (blocks[x].length > 0) {
+      for (int i = 0; i < blocks[x].length; i++) {
+        blocks[x][i].v = blocks[x][i + 1].v;
+      }
+      blocks[x]
+          .removeWhere((element) => element == blocks[x][blocks[x].length - 1]);
     }
   }
 
