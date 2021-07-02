@@ -79,10 +79,10 @@ class DropTheNumber extends Game with TapDetector {
       }
       // draw superpower horizontal
       loadUiImage("img/fire-4.png").then((value) => img3 = value);
-      drawImage(Paint(), canvas, img3, 402, 685, getX(59), getX(60));
+      drawImage(Paint(), canvas, img3, 403, 695, getX(59), getX(60));
       // draw superpower vertical
       loadUiImage("img/vertical-2.png").then((value) => img4 = value);
-      drawImage(Paint(), canvas, img4, 350, 686, getX(50), getX(50));
+      drawImage(Paint(), canvas, img4, 350, 696, getX(50), getX(50));
       // Draw Outline
       Rect rect1 = Rect.fromLTWH(screenSize.width / 10, screenSize.height / 20,
           screenSize.width * 4 / 5, screenSize.height * 650 / 750);
@@ -183,13 +183,6 @@ class DropTheNumber extends Game with TapDetector {
       drawRectStroke(canvas, 160, 430, 185, 40, Colors.black, 5);
       drawText(canvas, "Quit", Colors.black, 25, 225, 435);
     }
-
-    // draw superpower horizontal
-    loadUiImage("img/fire-4.png").then((value) => img3 = value);
-    drawImage(Paint(), canvas, img3, 402, 685, getX(54), getX(60));
-    // draw superpower vertical
-    loadUiImage("img/vertical-2.png").then((value) => img4 = value);
-    drawImage(Paint(), canvas, img4, 350, 686, getX(50), getX(50));
   }
 
   // Define Function
