@@ -64,10 +64,10 @@ class DropTheNumber extends Game with TapDetector {
 // draw mute
     if (mute) {
       loadUiImage("img/mute-2.png").then((value) => img2 = value);
-      drawImage(new Paint(), canvas, img2, 402, 93, getX(40), getY(33));
+      drawImage(new Paint(), canvas, img2, 399, 98, getX(40), getY(33));
     } else {
       loadUiImage("img/mute-1.png").then((value) => img2 = value);
-      drawImage(new Paint(), canvas, img2, 402, 93, getX(40), getY(33));
+      drawImage(new Paint(), canvas, img2, 399, 98, getX(40), getY(33));
     }
 
     Rect Rect1 = Rect.fromLTWH(screenSize.width / 10, screenSize.height / 20,
@@ -213,16 +213,16 @@ class DropTheNumber extends Game with TapDetector {
     lastLoopPaused = pause;
     Duration displayDuration;
     if (pause) {
-      drawText(canvas, '►', Colors.white, 28, 56, 702);
+      drawText(canvas, '►', Colors.white, 28, 54, 699);
       displayDuration = stopTimeText;
     } else {
-      drawText(canvas, 'II', Colors.white, 28, 56, 702);
+      drawText(canvas, 'II', Colors.white, 28, 56, 704);
       displayDuration = DateTime.now().difference(startTime);
       stopTimeText = displayDuration;
     }
 
-    drawText(canvas, 'TIME:' + getTimeformat(displayDuration), Colors.white, 22,
-        255, 100); //display clock
+    drawText(canvas, 'TIME:' + getTimeformat(displayDuration), Colors.white, 21,
+        255, 103); //display clock
   }
 
   Future<ui.Image> loadUiImage(String imageAssetPath) async {
@@ -234,9 +234,8 @@ class DropTheNumber extends Game with TapDetector {
     return completer.future;
   }
 
-  // Draw image method, relative coordinates, and absolute size width and length
-  void drawImage(p, Canvas canvas, ui.Image img, double x, double y, double sx,
-      double sy) {
+  void drawImage(Paint p, Canvas canvas, ui.Image img, double x, double y,
+      double sx, double sy) {
     canvas.drawImageRect(
         img,
         Rect.fromLTWH(0, 0, img.width.toDouble(), img.height.toDouble()),
