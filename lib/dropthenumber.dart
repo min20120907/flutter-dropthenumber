@@ -180,8 +180,6 @@ class DropTheNumber extends Game with TapDetector {
 
         drawText(canvas, "Quit", Colors.black, 25, 225, 435);
     }
-<<<<<<< HEAD
-=======
     // draw superpower horizontal
     loadUiImage("img/fire-4.png").then((value) => img3 = value);
     drawImage(Paint(), canvas, img3, 402, 685, getX(59), getY(60));
@@ -273,7 +271,6 @@ class DropTheNumber extends Game with TapDetector {
     for (double i = 0; i < 5; i++)
       drawText(canvas, '†', Colors.black, 50, 90 + i * 70, 170);
     drawTime(canvas);
->>>>>>> 6b0086a09084206d5e0d9d9bf7fbefce601b7626
   }
 
   void drawLine(Color c, Canvas canvas, double p1x, double p1y, double p2x,
