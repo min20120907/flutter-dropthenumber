@@ -84,12 +84,18 @@ class DropTheNumber extends Game with TapDetector {
       loadUiImage("img/vertical-2.png").then((value) => img4 = value);
       drawImage(Paint(), canvas, img4, 350, 696, 50, 50);
       // Draw outline
-      drawRectStroke(canvas, 500/10, 750/20, 500*4/5, 750*650/750, Colors.white, 10);
-      drawRectStroke(canvas, 500*75/500, 750*45/202, 500*35/50, 750*50/75, Colors.white, 5);
-      drawRectStroke(canvas, 500*180/450, 750*81/630, 500*45/500, 750*37/750, Colors.pink[200], 3);
-      drawRectStroke(canvas, 500*350/490, 750*685/730, 500*40/500, 750*32/750, Colors.white, 3);
-      drawRectStroke(canvas, 500*55/590, 750*685/730, 500*40/500, 750*32/750, Colors.white, 3);
-      drawRectStroke(canvas, 500*405/490, 750*685/730, 500*40/500, 750*32/750, Colors.white, 3);
+      drawRectStroke(canvas, 500 / 10, 750 / 20, 500 * 4 / 5, 750 * 650 / 750,
+          Colors.white, 10);
+      drawRectStroke(canvas, 500 * 75 / 500, 750 * 45 / 202, 500 * 35 / 50,
+          750 * 50 / 75, Colors.white, 5);
+      drawRectStroke(canvas, 500 * 180 / 450, 750 * 81 / 630, 500 * 45 / 500,
+          750 * 37 / 750, Colors.pink[200], 3);
+      drawRectStroke(canvas, 500 * 350 / 490, 750 * 685 / 730, 500 * 40 / 500,
+          750 * 32 / 750, Colors.white, 3);
+      drawRectStroke(canvas, 500 * 55 / 590, 750 * 685 / 730, 500 * 40 / 500,
+          750 * 32 / 750, Colors.white, 3);
+      drawRectStroke(canvas, 500 * 405 / 490, 750 * 685 / 730, 500 * 40 / 500,
+          750 * 32 / 750, Colors.white, 3);
 
       //draw three horizontal lines
       drawLine(Colors.white, canvas, 50, 90, 450, 90, 5);
@@ -108,7 +114,8 @@ class DropTheNumber extends Game with TapDetector {
         drawText(canvas, '†', Colors.black, 50, 100 + i * 70, 170);
 
       drawTime(canvas);
-      drawBlock(canvas, Block(8192, getX(200), getY(200)));
+      drawBlock(canvas, Block(current, getX(240), getY(240)));
+      drawNextBlock(canvas, Block(next, getX(273), getY(102)));
     } else {
       int highest = 99;
 
@@ -243,6 +250,36 @@ class DropTheNumber extends Game with TapDetector {
   void tryToPause() {
     if (!gameOver) {
       pause = !pause;
+    }
+  }
+
+  void drawNextBlock(Canvas canvas, Block b) {
+    Rect rect = Rect.fromLTWH(getX(b.x), getY(b.y), getX(51), getX(51));
+
+    // paint with over 8192
+    Paint rectPaint2 = Paint()
+      ..color = this.colorList[12]
+      ..style = PaintingStyle.fill;
+    // border paint
+    Paint borderPaint = Paint()
+      ..color = Colors.pink[200]
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1;
+    if (log2(b.v.toDouble()) - 1 < 12) {
+      // Paint within 8192
+      Paint rectPaint1 = Paint()
+        ..color = this.colorList[log2(b.v.toDouble()).toInt() - 1]
+        ..style = PaintingStyle.fill;
+      canvas.drawRect(rect, rectPaint1);
+    } else {
+      canvas.drawRect(rect, rectPaint2);
+    }
+    canvas.drawRect(rect, borderPaint);
+    double textX = b.x + 21 - b.v.toString().length * 5;
+    if (b.v < 8192) {
+      drawText(canvas, b.v.toString(), Colors.black, getX(24), textX, b.y + 12);
+    } else {
+      drawText(canvas, b.v.toString(), Colors.black, getX(24), textX, b.y + 12);
     }
   }
 
