@@ -80,6 +80,7 @@ class DropTheNumber extends Game with TapDetector {
       loadUiImage("img/vertical-2.png").then((value) => img4 = value);
       drawImage(Paint(), canvas, img4, 350, 686, getX(50), getX(50));
 
+      // draw border
       drawRectStroke(canvas, 50, 37.5, 400, 650, Colors.white, 10);
       drawRectStroke(canvas, 75, 750/202*45, 350, 500, Colors.white, 5); // 750/202*45=167
       drawRectStroke(canvas, 200, 750/630*81, 45, 37, Colors.pink[200], 3); // 750/630*81=96.4
