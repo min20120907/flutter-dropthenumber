@@ -35,6 +35,7 @@ class DropTheNumber extends Game with TapDetector {
   DateTime cooldownTimeHor;
   DateTime cooldownTimeVert;
   Duration pauseDuration;
+  Duration displayDuration;
   ui.Image img1, img2, img3, img4;
   double log2(double x) => log(x) / log(2);
   double getX(double x) => screenSize.width * x / 500;
@@ -59,16 +60,127 @@ class DropTheNumber extends Game with TapDetector {
 
   @override
   void render(Canvas canvas) {
-    // draw background
-    loadUiImage("img/bg3.jpg").then((value) => img1 = value);
-    drawImage(Paint(), canvas, img1, 0, 0, screenSize.width, screenSize.height);
-    // draw mute
-    if (mute) {
-      loadUiImage("img/mute-2.png").then((value) => img2 = value);
-      drawImage(new Paint(), canvas, img2, 400, 100, getX(40), getY(33));
+    if (!gameOver) {
+      // draw background
+      loadUiImage("img/bg3.jpg").then((value) => img1 = value);
+      drawImage(
+          Paint(), canvas, img1, 0, 0, screenSize.width, screenSize.height);
+      // draw mute
+      if (mute) {
+        loadUiImage("img/mute-2.png").then((value) => img2 = value);
+        drawImage(new Paint(), canvas, img2, 399, 98, getX(40), getY(33));
+      } else {
+        loadUiImage("img/mute-1.png").then((value) => img2 = value);
+        drawImage(new Paint(), canvas, img2, 399, 98, getX(40), getY(33));
+      }
+      // draw superpower horizontal
+      loadUiImage("img/fire-4.png").then((value) => img3 = value);
+      drawImage(Paint(), canvas, img3, 402, 685, getX(59), getY(60));
+      // draw superpower vertical
+      loadUiImage("img/vertical-2.png").then((value) => img4 = value);
+      drawImage(Paint(), canvas, img4, 350, 686, getX(50), getY(50));
+      Rect Rect1 = Rect.fromLTWH(screenSize.width / 10, screenSize.height / 20,
+          screenSize.width * 4 / 5, screenSize.height * 650 / 750);
+
+      Paint rect1Paint = Paint()
+        ..color = Color(0xffffffff)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 10;
+      canvas.drawRect(Rect1, rect1Paint);
+
+      Rect Rect2 = Rect.fromLTWH(
+          screenSize.width * 75 / 500,
+          screenSize.height * 45 / 202,
+          screenSize.width * 35 / 50,
+          screenSize.height * 50 / 75);
+
+      Paint rect2Paint = Paint()
+        ..color = Color(0xffffffff)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 5;
+      canvas.drawRect(Rect2, rect2Paint);
+
+      Rect Rect3 = Rect.fromLTWH(
+          screenSize.width * 180 / 450,
+          screenSize.height * 81 / 630,
+          screenSize.width * 45 / 500,
+          screenSize.height * 37 / 750);
+
+      Paint rect3Paint = Paint()
+        ..color = Colors.pink[200]
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 3;
+      canvas.drawRect(Rect3, rect3Paint);
+
+      Rect Rect5 = Rect.fromLTWH(
+          screenSize.width * 55 / 590,
+          screenSize.height * 685 / 730,
+          screenSize.width * 40 / 500,
+          screenSize.height * 32 / 750);
+
+      Paint rect5Paint = Paint()
+        ..color = Color(0xffffffff)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 3;
+      canvas.drawRect(Rect5, rect5Paint);
+
+      Rect Rect4 = Rect.fromLTWH(
+          screenSize.width * 350 / 490,
+          screenSize.height * 685 / 730,
+          screenSize.width * 40 / 500,
+          screenSize.height * 32 / 750);
+
+      Paint rect4Paint = Paint()
+        ..color = Color(0xffffffff)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 3;
+      canvas.drawRect(Rect4, rect4Paint);
+
+      Rect Rect6 = Rect.fromLTWH(
+          screenSize.width * 405 / 490,
+          screenSize.height * 685 / 730,
+          screenSize.width * 40 / 500,
+          screenSize.height * 32 / 750);
+
+      Paint rect6Paint = Paint()
+        ..color = Color(0xffffffff)
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 3;
+      canvas.drawRect(Rect6, rect6Paint);
+
+      //draw three horizontal lines
+      drawLine(Colors.white, canvas, 50, 90, 450, 90, 5);
+      drawLine(Colors.white, canvas, 50, 140, 450, 140, 5);
+      drawLine(Colors.white, canvas, 75, 235, 425, 235, 5);
+
+      // draw five vertical lines
+      for (double i = 0; i < 5; i++)
+        drawLine(Colors.white, canvas, 75 + i * 70, 165, 75 + i * 70, 665, 5);
+
+      //draw text
+      drawText(canvas, 'Drop', Colors.red, 30, 215, 48);
+      drawText(canvas, 'Next Block ►', Colors.white, 18, 60, 103);
+      drawText(canvas, 'Score:' + score.toString(), Colors.white, 27, 100, 703);
+      for (double i = 0; i < 5; i++)
+        drawText(canvas, '†', Colors.black, 50, 90 + i * 70, 170);
+      drawTime(canvas);
     } else {
-      loadUiImage("img/mute-1.png").then((value) => img2 = value);
-      drawImage(new Paint(), canvas, img2, 400, 100, getX(40), getY(33));
+      int highest =
+          99; //////////////////////////////////////////////////////////////////debug
+      drawRect(canvas, 0, 0, 500, 750, Colors.white);
+      drawText(canvas, "Game Over", Colors.black, 40, 145, 150);
+      drawText(canvas, "TIME:", Colors.black, 30, 165, 220);
+      drawText(
+          canvas, getTimeformat(displayDuration), Colors.black, 30, 252, 220);
+      drawText(canvas, "Highest Score:", Colors.black, 30, 100, 270);
+      drawText(canvas, highest.toString(), Colors.black, 30, 304, 271);
+      drawText(canvas, "Your Score:", Colors.black, 30, 120, 320);
+      drawText(canvas, score.toString(), Colors.black, 30, 280, 322);
+      drawRectStroke(canvas, 160, 380, 185, 40, Colors.black, 5);
+      drawText(canvas, "Restart", Colors.black, 25, 215, 384);
+      drawRectStroke(canvas, 160, 430, 185, 40, Colors.black, 5);
+
+      drawText(canvas, "Quit", Colors.black, 25, 225, 435);
     }
     // draw superpower horizontal
     loadUiImage("img/fire-4.png").then((value) => img3 = value);
@@ -191,6 +303,29 @@ class DropTheNumber extends Game with TapDetector {
           Offset(screenSize.width * x / 500, screenSize.height * y / 750));
   }
 
+  void drawRect(Canvas canvas, double x, double y, double width, double height,
+      Color color) {
+    Rect rect = Rect.fromLTWH(getX(x), getY(y), getX(width), getY(height));
+
+    Paint paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.fill;
+
+    canvas.drawRect(rect, paint);
+  }
+
+  void drawRectStroke(Canvas canvas, double x, double y, double width,
+      double height, Color color, double strokeWidth) {
+    Rect rect = Rect.fromLTWH(getX(x), getY(y), getX(width), getY(height));
+
+    Paint paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = strokeWidth;
+
+    canvas.drawRect(rect, paint);
+  }
+
   //Format the time from second to minute and second
   String getTimeformat(Duration totalSecond) {
     return sprintf("%02d:%02d",
@@ -217,7 +352,6 @@ class DropTheNumber extends Game with TapDetector {
       }
     }
     lastLoopPaused = pause;
-    Duration displayDuration;
     if (pause) {
       drawText(canvas, '►', Colors.white, 28, 54, 699);
       displayDuration = stopTimeText;
