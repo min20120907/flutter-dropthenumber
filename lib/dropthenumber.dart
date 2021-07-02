@@ -162,7 +162,9 @@ class DropTheNumber extends Game with TapDetector {
       drawText(canvas, 'Score:' + score.toString(), Colors.white, 27, 100, 703);
       for (double i = 0; i < 5; i++)
         drawText(canvas, '†', Colors.black, 50, 90 + i * 70, 170);
+
       drawTime(canvas);
+      drawBlock(canvas, Block(8192, getX(200), getY(200)));
     } else {
       int highest = 99;
 
@@ -188,88 +190,6 @@ class DropTheNumber extends Game with TapDetector {
     // draw superpower vertical
     loadUiImage("img/vertical-2.png").then((value) => img4 = value);
     drawImage(Paint(), canvas, img4, 350, 686, getX(50), getX(50));
-
-    // Draw Outline
-    Rect rect1 = Rect.fromLTWH(screenSize.width / 10, screenSize.height / 20,
-        screenSize.width * 4 / 5, screenSize.height * 650 / 750);
-    Paint rect1Paint = Paint()
-      ..color = Color(0xffffffff)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 10;
-    canvas.drawRect(rect1, rect1Paint);
-
-    Rect rect2 = Rect.fromLTWH(
-        screenSize.width * 75 / 500,
-        screenSize.height * 45 / 202,
-        screenSize.width * 35 / 50,
-        screenSize.height * 50 / 75);
-    Paint rect2Paint = Paint()
-      ..color = Color(0xffffffff)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 5;
-    canvas.drawRect(rect2, rect2Paint);
-
-    Rect rect3 = Rect.fromLTWH(
-        screenSize.width * 180 / 450,
-        screenSize.height * 81 / 630,
-        screenSize.width * 45 / 500,
-        screenSize.height * 37 / 750);
-    Paint rect3Paint = Paint()
-      ..color = Colors.pink[200]
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 3;
-    canvas.drawRect(rect3, rect3Paint);
-
-    Rect rect5 = Rect.fromLTWH(
-        screenSize.width * 55 / 590,
-        screenSize.height * 685 / 730,
-        screenSize.width * 40 / 500,
-        screenSize.height * 32 / 750);
-    Paint rect5Paint = Paint()
-      ..color = Color(0xffffffff)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 3;
-    canvas.drawRect(rect5, rect5Paint);
-
-    Rect rect4 = Rect.fromLTWH(
-        screenSize.width * 350 / 490,
-        screenSize.height * 685 / 730,
-        screenSize.width * 40 / 500,
-        screenSize.height * 32 / 750);
-    Paint rect4Paint = Paint()
-      ..color = Color(0xffffffff)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 3;
-    canvas.drawRect(rect4, rect4Paint);
-
-    Rect rect6 = Rect.fromLTWH(
-        screenSize.width * 405 / 490,
-        screenSize.height * 685 / 730,
-        screenSize.width * 40 / 500,
-        screenSize.height * 32 / 750);
-    Paint rect6Paint = Paint()
-      ..color = Color(0xffffffff)
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 3;
-    canvas.drawRect(rect6, rect6Paint);
-
-    //draw three horizontal lines
-    drawLine(Colors.white, canvas, 50, 90, 450, 90, 5);
-    drawLine(Colors.white, canvas, 50, 140, 450, 140, 5);
-    drawLine(Colors.white, canvas, 75, 235, 425, 235, 5);
-
-    // draw five vertical lines
-    for (double i = 0; i < 5; i++)
-      drawLine(Colors.white, canvas, 75 + i * 70, 165, 75 + i * 70, 665, 5);
-
-    //draw text
-    drawText(canvas, 'Drop', Colors.red, 30, 215, 48);
-    drawText(canvas, 'Next Block ►', Colors.white, 18, 60, 103);
-    drawText(canvas, 'Score:' + score.toString(), Colors.white, 27, 100, 703);
-    for (double i = 0; i < 5; i++)
-      drawText(canvas, '†', Colors.black, 50, 90 + i * 70, 170);
-    drawTime(canvas);
-    drawBlock(canvas, Block(8192, getX(200), getY(200)));
   }
 
   // Define Function
