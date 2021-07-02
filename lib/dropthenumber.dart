@@ -255,6 +255,28 @@ class DropTheNumber extends Game with TapDetector {
     }
   }
 
+  void drawBlock(Canvas canvas, Block b) {
+    // Paint within 2048
+    Paint rectPaint1 = Paint()
+      ..color = this.colorList[log2(b.v.toDouble()).toInt()]
+      ..style = PaintingStyle.fill;
+    Rect rect = Rect.fromLTWH(getX(b.x), getY(b.y), getX(68), getY(68));
+    // paint with over 2048
+    Paint rectPaint2 = Paint()
+      ..color = this.colorList[12]
+      ..style = PaintingStyle.fill;
+    // border paint
+    Paint borderPaint = Paint()
+      ..color = Colors.black
+      ..style = PaintingStyle.fill;
+    if (log2(b.v.toDouble()) - 1 < 13) {
+      canvas.drawRect(rect, rectPaint1);
+    } else {
+      canvas.drawRect(rect, rectPaint2);
+    }
+    canvas.drawRect(rect, borderPaint);
+  }
+
   @override
   void onTapDown(TapDownDetails event) {
     print("Player tap down on ${event.globalPosition}");
