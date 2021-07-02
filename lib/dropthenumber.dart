@@ -83,7 +83,6 @@ class DropTheNumber extends Game with TapDetector {
       // draw superpower vertical
       loadUiImage("img/vertical-2.png").then((value) => img4 = value);
       drawImage(Paint(), canvas, img4, 350, 686, getX(50), getX(50));
-<<<<<<< HEAD
       // Draw Outline
       Rect rect1 = Rect.fromLTWH(screenSize.width / 10, screenSize.height / 20,
           screenSize.width * 4 / 5, screenSize.height * 650 / 750);
@@ -147,16 +146,6 @@ class DropTheNumber extends Game with TapDetector {
         ..style = PaintingStyle.stroke
         ..strokeWidth = 3;
       canvas.drawRect(rect6, rect6Paint);
-=======
-
-      // draw border
-      drawRectStroke(canvas, 50, 37.5, 400, 650, Colors.white, 10);
-      drawRectStroke(canvas, 75, 750/202*45, 350, 500, Colors.white, 5); // 750/202*45=167
-      drawRectStroke(canvas, 200, 750/630*81, 45, 37, Colors.pink[200], 3); // 750/630*81=96.4
-      drawRectStroke(canvas, 500/490*350, 750/730*685, 40, 32, Colors.white, 3); // 500/490*350=357, 750/730*685=703.7
-      drawRectStroke(canvas, 500/590*55, 750/730*685, 40, 32, Colors.white, 3); // 500/590*55=46.6, 750/730*685=703.7
-      drawRectStroke(canvas, 500/490*405, 750/730*685, 40, 32, Colors.white, 3); // 500/490*405=413, 750/730*685=703.7
->>>>>>> a2cebf74b26dd21f9c36e15ff4fd79737643dc85
 
       //draw three horizontal lines
       drawLine(Colors.white, canvas, 50, 90, 450, 90, 5);
@@ -174,17 +163,10 @@ class DropTheNumber extends Game with TapDetector {
       for (double i = 0; i < 5; i++)
         drawText(canvas, '†', Colors.black, 50, 90 + i * 70, 170);
       drawTime(canvas);
-      drawBlock(canvas, Block(8192, getX(200), getY(200)));
     } else {
-<<<<<<< HEAD
       int highest = 99;
 
       // Draw Gameover Screen
-=======
-      // Draw game over screen
-      int highest =
-          99; //////////////////////////////////////////////////////////////////debug
->>>>>>> a2cebf74b26dd21f9c36e15ff4fd79737643dc85
       drawRect(canvas, 0, 0, 500, 750, Colors.white);
       drawText(canvas, "Game Over", Colors.black, 40, 145, 150);
       drawText(canvas, "TIME:", Colors.black, 30, 165, 220);
@@ -199,7 +181,6 @@ class DropTheNumber extends Game with TapDetector {
       drawRectStroke(canvas, 160, 430, 185, 40, Colors.black, 5);
       drawText(canvas, "Quit", Colors.black, 25, 225, 435);
     }
-<<<<<<< HEAD
 
     // draw superpower horizontal
     loadUiImage("img/fire-4.png").then((value) => img3 = value);
@@ -289,8 +270,6 @@ class DropTheNumber extends Game with TapDetector {
       drawText(canvas, '†', Colors.black, 50, 90 + i * 70, 170);
     drawTime(canvas);
     drawBlock(canvas, Block(8192, getX(200), getY(200)));
-=======
->>>>>>> a2cebf74b26dd21f9c36e15ff4fd79737643dc85
   }
 
   // Define Function
@@ -326,12 +305,7 @@ class DropTheNumber extends Game with TapDetector {
   // Drawrect
   void drawRect(Canvas canvas, double x, double y, double width, double height,
       Color color) {
-<<<<<<< HEAD
     Rect rect = Rect.fromLTWH(getX(x), getY(y), getX(width), getX(height));
-=======
-    Rect rect = Rect.fromLTWH(getX(x), getY(y), getX(width), getY(height));
-
->>>>>>> a2cebf74b26dd21f9c36e15ff4fd79737643dc85
     Paint paint = Paint()
       ..color = color
       ..style = PaintingStyle.fill;
@@ -342,12 +316,7 @@ class DropTheNumber extends Game with TapDetector {
   // Drawstroke
   void drawRectStroke(Canvas canvas, double x, double y, double width,
       double height, Color color, double strokeWidth) {
-<<<<<<< HEAD
     Rect rect = Rect.fromLTWH(getX(x), getY(y), getX(width), getX(height));
-=======
-    Rect rect = Rect.fromLTWH(getX(x), getY(y), getX(width), getY(height));
-
->>>>>>> a2cebf74b26dd21f9c36e15ff4fd79737643dc85
     Paint paint = Paint()
       ..color = color
       ..style = PaintingStyle.stroke
