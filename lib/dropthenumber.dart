@@ -88,8 +88,6 @@ class DropTheNumber extends Game with TapDetector {
           Colors.white, 10);
       drawRectStroke(canvas, 500 * 75 / 500, 750 * 45 / 202, 500 * 35 / 50,
           750 * 50 / 75, Colors.white, 5);
-      drawRectStroke(canvas, 500 * 180 / 450, 750 * 81 / 630, 500 * 45 / 500,
-          750 * 37 / 750, Colors.pink[200], 3);
       drawRectStroke(canvas, 500 * 350 / 490, 750 * 685 / 730, 500 * 40 / 500,
           750 * 32 / 750, Colors.white, 3);
       drawRectStroke(canvas, 500 * 55 / 590, 750 * 685 / 730, 500 * 40 / 500,
@@ -114,8 +112,8 @@ class DropTheNumber extends Game with TapDetector {
         drawText(canvas, '†', Colors.black, 50, 100 + i * 70, 170);
 
       drawTime(canvas);
-      drawBlock(canvas, Block(current, getX(240), getY(240)));
-      drawNextBlock(canvas, Block(next, getX(253), getY(92)));
+      drawBlock(canvas, Block(current, 216, 240));
+      drawNextBlock(canvas, Block(next, 200, 96));
       drawAllBlocks(canvas);
     } else {
       drawGameover(canvas);
@@ -180,7 +178,7 @@ class DropTheNumber extends Game with TapDetector {
     )
       ..layout(minWidth: screenSize.width, maxWidth: screenSize.width)
       ..paint(canvas,
-          Offset(screenSize.width * x / 500, screenSize.height * y / 750));
+          Offset(getX(x), getY(y)));
   }
 
   // Drawrect
@@ -309,27 +307,18 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   void drawNextBlock(Canvas canvas, Block b) {
-    Rect rect = Rect.fromLTWH(getX(b.x), getY(b.y), getX(51), getX(51));
-
-    // paint with over 8192
-    Paint rectPaint2 = Paint()
-      ..color = this.colorList[12]
-      ..style = PaintingStyle.fill;
-    // border paint
-    Paint borderPaint = Paint()
-      ..color = Colors.pink[200]
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1;
+    double width = 500 * 45 / 500;
+    double height = 750 * 37 / 750;
     if (log2(b.v.toDouble()) - 1 < 12) {
       // Paint within 8192
-      Paint rectPaint1 = Paint()
-        ..color = this.colorList[log2(b.v.toDouble()).toInt() - 1]
-        ..style = PaintingStyle.fill;
-      canvas.drawRect(rect, rectPaint1);
+      drawRect(canvas, b.x, b.y, width, height, colorList[log2(b.v.toDouble()).toInt() - 1]);
     } else {
-      canvas.drawRect(rect, rectPaint2);
+      // Paint with over 8192
+      drawRect(canvas, b.x, b.y, width, height, colorList[12]);
     }
-    canvas.drawRect(rect, borderPaint);
+    // Paint nextBlock border
+    drawRectStroke(canvas, b.x, b.y, width, height, Colors.pink[200], 3);
+    // Paint nextBlock text
     double textX = b.x + 21 - b.v.toString().length * 5;
     if (b.v < 8192) {
       drawText(canvas, b.v.toString(), Colors.black, getX(24), textX, b.y + 12);
@@ -339,35 +328,22 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   void drawBlock(Canvas canvas, Block b) {
-    Rect rect = Rect.fromLTWH(getX(b.x), getY(b.y), getX(68), getX(68));
+    double width = 68;
+    double height = 68;
 
-    // paint with over 8192
-    Paint rectPaint2 = Paint()
-      ..color = this.colorList[12]
-      ..style = PaintingStyle.fill;
-    // border paint
-    Paint borderPaint = Paint()
-      ..color = Colors.black
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 4;
     if (log2(b.v.toDouble()) - 1 < 12) {
       // Paint within 8192
-      Paint rectPaint1 = Paint()
-        ..color = this.colorList[log2(b.v.toDouble()).toInt() - 1]
-        ..style = PaintingStyle.fill;
-      canvas.drawRect(rect, rectPaint1);
-      // print(colorList[log2(b.v.toDouble()).toInt()]);
+      drawRect(canvas, b.x, b.y, width, height, colorList[log2(b.v.toDouble()).toInt() - 1]);
     } else {
-      canvas.drawRect(rect, rectPaint2);
-      // print("greater 13");
+      // paint with over 8192
+      drawRect(canvas, b.x, b.y, width, height, colorList[12]);
     }
-    canvas.drawRect(rect, borderPaint);
+    // Paint border
+    drawRectStroke(canvas, b.x, b.y, width, height, Colors.black, 4);
+
+    // Paint block text
     double textX = b.x + 24 - b.v.toString().length * 5;
-    if (b.v < 8192) {
-      drawText(canvas, b.v.toString(), Colors.black, getX(27), textX, b.y + 15);
-    } else {
-      drawText(canvas, b.v.toString(), Colors.black, getX(27), textX, b.y + 15);
-    }
+    drawText(canvas, b.v.toString(), Colors.black, getX(27), textX, b.y + 15);
   }
 
   int getMaxTrack() {
