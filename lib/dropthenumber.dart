@@ -24,7 +24,7 @@ int next = pow(2, randomNumber2).toInt();
 class DropTheNumber extends Game with TapDetector {
   List<List<Block>> blocks = [[]];
   bool pause = false;
-  static bool mute = false;
+  bool mute = false;
   double score = 0;
   Size screenSize;
   bool lastLoopPaused = false;
@@ -68,27 +68,27 @@ class DropTheNumber extends Game with TapDetector {
       // draw mute
       if (mute) {
         loadUiImage("img/mute-2.png").then((value) => img2 = value);
-        drawImage(new Paint(), canvas, img2, 399, 98, getX(40), getY(33));
+        drawImage(new Paint(), canvas, img2, 399, 98, getX(40), getX(40));
       } else {
         loadUiImage("img/mute-1.png").then((value) => img2 = value);
-        drawImage(new Paint(), canvas, img2, 399, 98, getX(40), getY(33));
+        drawImage(new Paint(), canvas, img2, 399, 98, getX(40), getX(40));
       }
       // draw superpower horizontal
       loadUiImage("img/fire-4.png").then((value) => img3 = value);
-      drawImage(Paint(), canvas, img3, 402, 685, getX(59), getY(60));
+      drawImage(Paint(), canvas, img3, 402, 685, getX(59), getX(60));
       // draw superpower vertical
       loadUiImage("img/vertical-2.png").then((value) => img4 = value);
-      drawImage(Paint(), canvas, img4, 350, 686, getX(50), getY(50));
-      Rect Rect1 = Rect.fromLTWH(screenSize.width / 10, screenSize.height / 20,
+      drawImage(Paint(), canvas, img4, 350, 686, getX(50), getX(50));
+      Rect rect1 = Rect.fromLTWH(screenSize.width / 10, screenSize.height / 20,
           screenSize.width * 4 / 5, screenSize.height * 650 / 750);
 
       Paint rect1Paint = Paint()
         ..color = Color(0xffffffff)
         ..style = PaintingStyle.stroke
         ..strokeWidth = 10;
-      canvas.drawRect(Rect1, rect1Paint);
+      canvas.drawRect(rect1, rect1Paint);
 
-      Rect Rect2 = Rect.fromLTWH(
+      Rect rect2 = Rect.fromLTWH(
           screenSize.width * 75 / 500,
           screenSize.height * 45 / 202,
           screenSize.width * 35 / 50,
@@ -98,9 +98,9 @@ class DropTheNumber extends Game with TapDetector {
         ..color = Color(0xffffffff)
         ..style = PaintingStyle.stroke
         ..strokeWidth = 5;
-      canvas.drawRect(Rect2, rect2Paint);
+      canvas.drawRect(rect2, rect2Paint);
 
-      Rect Rect3 = Rect.fromLTWH(
+      Rect rect3 = Rect.fromLTWH(
           screenSize.width * 180 / 450,
           screenSize.height * 81 / 630,
           screenSize.width * 45 / 500,
@@ -110,9 +110,9 @@ class DropTheNumber extends Game with TapDetector {
         ..color = Colors.pink[200]
         ..style = PaintingStyle.stroke
         ..strokeWidth = 3;
-      canvas.drawRect(Rect3, rect3Paint);
+      canvas.drawRect(rect3, rect3Paint);
 
-      Rect Rect5 = Rect.fromLTWH(
+      Rect rect5 = Rect.fromLTWH(
           screenSize.width * 55 / 590,
           screenSize.height * 685 / 730,
           screenSize.width * 40 / 500,
@@ -122,9 +122,9 @@ class DropTheNumber extends Game with TapDetector {
         ..color = Color(0xffffffff)
         ..style = PaintingStyle.stroke
         ..strokeWidth = 3;
-      canvas.drawRect(Rect5, rect5Paint);
+      canvas.drawRect(rect5, rect5Paint);
 
-      Rect Rect4 = Rect.fromLTWH(
+      Rect rect4 = Rect.fromLTWH(
           screenSize.width * 350 / 490,
           screenSize.height * 685 / 730,
           screenSize.width * 40 / 500,
@@ -134,9 +134,9 @@ class DropTheNumber extends Game with TapDetector {
         ..color = Color(0xffffffff)
         ..style = PaintingStyle.stroke
         ..strokeWidth = 3;
-      canvas.drawRect(Rect4, rect4Paint);
+      canvas.drawRect(rect4, rect4Paint);
 
-      Rect Rect6 = Rect.fromLTWH(
+      Rect rect6 = Rect.fromLTWH(
           screenSize.width * 405 / 490,
           screenSize.height * 685 / 730,
           screenSize.width * 40 / 500,
@@ -146,7 +146,7 @@ class DropTheNumber extends Game with TapDetector {
         ..color = Color(0xffffffff)
         ..style = PaintingStyle.stroke
         ..strokeWidth = 3;
-      canvas.drawRect(Rect6, rect6Paint);
+      canvas.drawRect(rect6, rect6Paint);
 
       //draw three horizontal lines
       drawLine(Colors.white, canvas, 50, 90, 450, 90, 5);
