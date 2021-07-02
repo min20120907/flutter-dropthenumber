@@ -19,6 +19,7 @@ int randomNumber2 = random.nextInt(13);
 int track = random.nextInt(5);
 int current = pow(2, randomNumber).toInt();
 int next = pow(2, randomNumber2).toInt();
+int randomRange(int min, int max) => min + random.nextInt(max - min);
 
 // Game Main Loop
 class DropTheNumber extends Game with TapDetector {
@@ -120,7 +121,18 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   // get new random next block
-  void getNewNextBlock() {}
+  void getNewNextBlock() {
+    track = random.nextInt(4);
+    current = next;
+    if (score > 100000)
+      next = pow(2, randomRange(7, 12));
+    else if (score > 30000)
+      next = pow(2, randomRange(1, 9));
+    else
+      next = pow(2, randomRange(1, 5));
+    xAxis = (75 + 70 * track).toDouble();
+  }
+
   // Define Function
   // Drawline
   void drawLine(Color c, Canvas canvas, double p1x, double p1y, double p2x,
