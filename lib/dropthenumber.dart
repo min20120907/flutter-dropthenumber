@@ -34,7 +34,7 @@ class DropTheNumber extends Game with TapDetector {
   DateTime cooldownTimeHor;
   DateTime cooldownTimeVert;
   Duration pauseDuration;
-  ui.Image img1, img2;
+  ui.Image img1, img2, img3, img4;
   double log2(double x) => log(x) / log(2);
   double getX(double x) => screenSize.width * x / 500;
   double getY(double y) => screenSize.height * y / 750;
