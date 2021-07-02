@@ -38,6 +38,9 @@ class DropTheNumber extends Game with TapDetector {
   DateTime cooldownTimeVert;
   Duration pauseDuration;
   Duration displayDuration;
+
+  // coordinates of clicked position
+  double xAxis = 0, yAxis = 0;
   ui.Image img1, img2, img3, img4;
   // Videos declaration
   List<ui.Image> vid1, vid2;
@@ -118,6 +121,8 @@ class DropTheNumber extends Game with TapDetector {
     }
   }
 
+  // get new random next block
+  void getNewNextBlock() {}
   // Define Function
   // Drawline
   void drawLine(Color c, Canvas canvas, double p1x, double p1y, double p2x,
@@ -395,6 +400,8 @@ class DropTheNumber extends Game with TapDetector {
   @override
   void onTapDown(TapDownDetails event) {
     print("Player tap down on ${event.globalPosition}");
+    xAxis = event.globalPosition.dx;
+    yAxis = event.globalPosition.dy;
     double x = event.globalPosition.dx;
     double y = event.globalPosition.dy;
     // pause event
