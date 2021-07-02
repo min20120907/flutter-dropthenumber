@@ -75,7 +75,7 @@ class DropTheNumber extends Game with TapDetector {
       }
       // draw superpower horizontal
       loadUiImage("img/fire-4.png").then((value) => img3 = value);
-      drawImage(Paint(), canvas, img3, 402, 685, getX(59), getY(60));
+      drawImage(Paint(), canvas, img3, 403, 685, getX(59), getY(60));
       // draw superpower vertical
       loadUiImage("img/vertical-2.png").then((value) => img4 = value);
       drawImage(Paint(), canvas, img4, 350, 686, getX(50), getY(50));
