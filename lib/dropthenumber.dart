@@ -305,7 +305,7 @@ class DropTheNumber extends Game with TapDetector {
   void drawBlock(Canvas canvas, Block b) {
     Rect rect = Rect.fromLTWH(getX(b.x), getY(b.y), getX(68), getX(68));
 
-    // paint with over 2048
+    // paint with over 8192
     Paint rectPaint2 = Paint()
       ..color = this.colorList[12]
       ..style = PaintingStyle.fill;
@@ -315,7 +315,7 @@ class DropTheNumber extends Game with TapDetector {
       ..style = PaintingStyle.stroke
       ..strokeWidth = 4;
     if (log2(b.v.toDouble()) - 1 < 12) {
-      // Paint within 2048
+      // Paint within 8192
       Paint rectPaint1 = Paint()
         ..color = this.colorList[log2(b.v.toDouble()).toInt() - 1]
         ..style = PaintingStyle.fill;
