@@ -41,20 +41,20 @@ class DropTheNumber extends Game with TapDetector {
   double getY(double y) => screenSize.height * y / 750;
   bool inRange(double x, double a, double b) => x >= a && x <= b;
   // colorlist
-  var colorList = [
-    Color.fromRGBO(255, 0, 0, 0),
-    Color.fromRGBO(0, 255, 0, 0),
-    Color.fromRGBO(204, 153, 255, 0),
-    Color.fromRGBO(209, 237, 0, 0),
-    Color.fromRGBO(209, 237, 240, 0),
-    Color.fromRGBO(209, 40, 240, 0),
-    Color.fromRGBO(254, 239, 222, 0),
-    Color.fromRGBO(0, 239, 222, 0),
-    Color.fromRGBO(255, 255, 80, 0),
-    Color.fromRGBO(51, 102, 255, 0),
-    Color.fromRGBO(255, 204, 164, 0),
-    Color.fromRGBO(153, 255, 153, 0),
-    Color.fromRGBO(194, 194, 214, 0)
+  List<Color> colorList = [
+    Color.fromRGBO(255, 0, 0, 1.0),
+    Color.fromRGBO(0, 255, 0, 1.0),
+    Color.fromRGBO(204, 153, 255, 1.0),
+    Color.fromRGBO(209, 237, 0, 1.0),
+    Color.fromRGBO(209, 237, 240, 1.0),
+    Color.fromRGBO(209, 40, 240, 1.0),
+    Color.fromRGBO(254, 239, 222, 1.0),
+    Color.fromRGBO(0, 239, 222, 1.0),
+    Color.fromRGBO(255, 255, 80, 1.0),
+    Color.fromRGBO(51, 102, 255, 1.0),
+    Color.fromRGBO(255, 204, 164, 1.0),
+    Color.fromRGBO(153, 255, 153, 1.0),
+    Color.fromRGBO(194, 194, 214, 1.0)
   ];
 
   @override
@@ -161,6 +161,7 @@ class DropTheNumber extends Game with TapDetector {
     for (double i = 0; i < 5; i++)
       drawText(canvas, '†', Colors.black, 50, 90 + i * 70, 170);
     drawTime(canvas);
+    drawBlock(canvas, Block(2, getX(200), getY(200)));
   }
 
   void drawLine(Color c, Canvas canvas, double p1x, double p1y, double p2x,
@@ -256,11 +257,12 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   void drawBlock(Canvas canvas, Block b) {
+    Rect rect = Rect.fromLTWH(getX(b.x), getY(b.y), getX(68), getY(68));
     // Paint within 2048
     Paint rectPaint1 = Paint()
       ..color = this.colorList[log2(b.v.toDouble()).toInt()]
       ..style = PaintingStyle.fill;
-    Rect rect = Rect.fromLTWH(getX(b.x), getY(b.y), getX(68), getY(68));
+
     // paint with over 2048
     Paint rectPaint2 = Paint()
       ..color = this.colorList[12]
@@ -268,13 +270,23 @@ class DropTheNumber extends Game with TapDetector {
     // border paint
     Paint borderPaint = Paint()
       ..color = Colors.black
-      ..style = PaintingStyle.fill;
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 4;
     if (log2(b.v.toDouble()) - 1 < 13) {
       canvas.drawRect(rect, rectPaint1);
+      print(colorList[log2(b.v.toDouble()).toInt()]);
     } else {
       canvas.drawRect(rect, rectPaint2);
+      print("greater 13");
     }
     canvas.drawRect(rect, borderPaint);
+    double textX = b.x + 24 - b.v * 5;
+    if (b.v <= 8192) {
+      drawText(canvas, b.v.toString(), Colors.black, getX(27), textX, b.y + 15);
+    } else {
+      drawText(canvas, b.v.toString(), this.colorList[12], getX(27), textX,
+          b.y + 15);
+    }
   }
 
   @override
