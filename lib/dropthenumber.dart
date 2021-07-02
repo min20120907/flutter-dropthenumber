@@ -68,8 +68,7 @@ class DropTheNumber extends Game with TapDetector {
     if (!gameOver) {
       // draw background
       loadUiImage("img/bg3.jpg").then((value) => img1 = value);
-      drawImage(
-          Paint(), canvas, img1, 0, 0, 500, 750);
+      drawImage(Paint(), canvas, img1, 0, 0, 500, 750);
       // draw mute
       if (mute) {
         loadUiImage("img/mute-2.png").then((value) => img2 = value);
@@ -177,6 +176,14 @@ class DropTheNumber extends Game with TapDetector {
 
     canvas.drawRect(rect, paint);
   }
+
+  // def blockAppend():
+  // void blockAppend() {
+  //   double max_y_axis = (582 - 70 * blocks[track].length).toDouble();
+  //   if (max_y_axis > 223) {
+  //     List<Block> block = [current, x, max_y_axis];
+  //   }
+  // }
 
   // Drawstroke
   void drawRectStroke(Canvas canvas, double x, double y, double width,
