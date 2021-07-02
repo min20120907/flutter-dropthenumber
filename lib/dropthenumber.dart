@@ -85,12 +85,18 @@ class DropTheNumber extends Game with TapDetector {
       loadUiImage("img/vertical-2.png").then((value) => img4 = value);
       drawImage(Paint(), canvas, img4, 350, 696, getX(50), getY(50));
       // Draw outline
-      drawRectStroke(canvas, 500/10, 750/20, 500*4/5, 750*650/750, Colors.white, 10);
-      drawRectStroke(canvas, 500*75/500, 750*45/202, 500*35/50, 750*50/75, Colors.white, 5);
-      drawRectStroke(canvas, 500*180/450, 750*81/630, 500*45/500, 750*37/750, Colors.pink[200], 3);
-      drawRectStroke(canvas, 500*350/490, 750*685/730, 500*40/500, 750*32/750, Colors.white, 3);
-      drawRectStroke(canvas, 500*55/590, 750*685/730, 500*40/500, 750*32/750, Colors.white, 3);
-      drawRectStroke(canvas, 500*405/490, 750*685/730, 500*40/500, 750*32/750, Colors.white, 3);
+      drawRectStroke(canvas, 500 / 10, 750 / 20, 500 * 4 / 5, 750 * 650 / 750,
+          Colors.white, 10);
+      drawRectStroke(canvas, 500 * 75 / 500, 750 * 45 / 202, 500 * 35 / 50,
+          750 * 50 / 75, Colors.white, 5);
+      drawRectStroke(canvas, 500 * 180 / 450, 750 * 81 / 630, 500 * 45 / 500,
+          750 * 37 / 750, Colors.pink[200], 3);
+      drawRectStroke(canvas, 500 * 350 / 490, 750 * 685 / 730, 500 * 40 / 500,
+          750 * 32 / 750, Colors.white, 3);
+      drawRectStroke(canvas, 500 * 55 / 590, 750 * 685 / 730, 500 * 40 / 500,
+          750 * 32 / 750, Colors.white, 3);
+      drawRectStroke(canvas, 500 * 405 / 490, 750 * 685 / 730, 500 * 40 / 500,
+          750 * 32 / 750, Colors.white, 3);
 
       //draw three horizontal lines
       drawLine(Colors.white, canvas, 50, 90, 450, 90, 5);
@@ -311,6 +317,11 @@ class DropTheNumber extends Game with TapDetector {
     }
     blocks.remove(blocks[maxTrack]);
     blocks.insert(maxTrack - 1, []);
+  }
+
+  void superHor(Canvas canvas) {
+    int maxTrack = getMaxTrack();
+    for(int i=1)
   }
 
   void dropAboveBlocks(int x, int y) {
