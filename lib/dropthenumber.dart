@@ -321,9 +321,9 @@ class DropTheNumber extends Game with TapDetector {
     // Paint nextBlock text
     double textX = b.x + 21 - b.v.toString().length * 5;
     if (b.v < 8192) {
-      drawText(canvas, b.v.toString(), Colors.black, getX(24), textX, b.y + 12);
+      drawText(canvas, b.v.toString(), Colors.black, getX(22), textX, b.y + 12);
     } else {
-      drawText(canvas, b.v.toString(), Colors.black, getX(24), textX, b.y + 12);
+      drawText(canvas, b.v.toString(), Colors.black, getX(22), textX, b.y + 12);
     }
   }
 
