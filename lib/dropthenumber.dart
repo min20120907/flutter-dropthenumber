@@ -125,11 +125,11 @@ class DropTheNumber extends Game with TapDetector {
     track = random.nextInt(4);
     current = next;
     if (score > 100000)
-      next = pow(2, randomRange(7, 12).toDouble()).toInt();
+      next = pow(2, randomRange(7, 12)).toInt();
     else if (score > 30000)
-      next = pow(2, randomRange(1, 9).toDouble()).toInt();
+      next = pow(2, randomRange(1, 9)).toInt();
     else
-      next = pow(2, randomRange(1, 5).toDouble()).toInt();
+      next = pow(2, randomRange(1, 5)).toInt();
     xAxis = (75 + 70 * track).toDouble();
   }
 
