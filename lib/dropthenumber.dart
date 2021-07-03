@@ -40,8 +40,6 @@ class DropTheNumber extends Game with TapDetector {
   Duration pauseDuration;
   Duration displayDuration;
 
-  // coordinates of clicked position
-  double xAxis = 0, yAxis = 0;
   ui.Image img1, img2, img3, img4;
   // Videos declaration
   List<ui.Image> vid1, vid2;
@@ -50,6 +48,9 @@ class DropTheNumber extends Game with TapDetector {
   double getX(double x) => screenSize.width * x / 500;
   double getY(double y) => screenSize.height * y / 750;
   bool inRange(double x, double a, double b) => x >= a && x <= b;
+// coordinates of clicked position
+  double xAxis = (75 + 70 * track).toDouble(), yAxis = 226;
+  double maxYAxis = 582;
 
   // colorlist
   List<Color> colorList = [
