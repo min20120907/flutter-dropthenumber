@@ -48,7 +48,7 @@ class DropTheNumber extends Game with TapDetector {
   double getY(double y) => screenSize.height * y / 750;
   bool inRange(double x, double a, double b) => x >= a && x <= b;
   // coordinates of clicked position
-  double xAxis = (75 + 70 * track).toDouble(), yAxis = 228;
+  double xAxis = (75 + 70 * track).toDouble(), yAxis = 237;
   double maxYAxis = 590;
   Canvas ccc;
   // merging speed
@@ -85,10 +85,14 @@ class DropTheNumber extends Game with TapDetector {
       drawMute(canvas);
 
       // draw two testing blocks
-      drawBlock(canvas, Block(current, 216, 232));
+
       drawNextBlock(canvas);
 
-      drawAllBlocks(canvas);
+      if (!pause) {
+        yAxis += 1;
+        maxYAxis = (590 - 70 * blocks[track].length).toDouble();
+        drawBlock(canvas, Block(current, xAxis, yAxis));
+      }
     } else {
       drawGameover(canvas);
     }
@@ -213,8 +217,8 @@ class DropTheNumber extends Game with TapDetector {
 
   // def blockAppend():
   void blockAppend(Canvas canvas) {
-    double max_y_axis = 582 - 70 * blocks[track].length.toDouble();
-    if (max_y_axis > 223) {
+    double max_y_axis = (590 - 70 * blocks[track].length).toDouble();
+    if (max_y_axis > 237) {
       Block block1 = Block(current, getX(xAxis), max_y_axis);
       blocks[track].add(block1);
       // merge(canvas, x, y);
