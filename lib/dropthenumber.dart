@@ -87,7 +87,7 @@ class DropTheNumber extends Game with TapDetector {
       // draw two testing blocks
 
       drawNextBlock(canvas);
-
+      drawAllBlocks(canvas);
       if (!pause) {
         yAxis += 1;
         maxYAxis = (590 - 70 * blocks[track].length).toDouble();
