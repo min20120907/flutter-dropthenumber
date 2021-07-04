@@ -48,9 +48,11 @@ class DropTheNumber extends Game with TapDetector {
   double getX(double x) => screenSize.width * x / 500;
   double getY(double y) => screenSize.height * y / 750;
   bool inRange(double x, double a, double b) => x >= a && x <= b;
-// coordinates of clicked position
+  // coordinates of clicked position
   double xAxis = (75 + 70 * track).toDouble(), yAxis = 226;
   double maxYAxis = 582;
+  // merging speed
+  double mergingSpeed = 5;
 
   // colorlist
   List<Color> colorList = [
@@ -256,7 +258,24 @@ class DropTheNumber extends Game with TapDetector {
 
           while (jj < blocks[x][y - 1].x && kk > blocks[x][y - 1].x) {
             drawBackground(canvas);
+            drawBorders(canvas);
+            drawAllTexts(canvas);
+            drawTime(canvas);
+            drawAllBlocks(canvas);
+
+            //Draw next block hint
+            drawNextBlock(canvas, Block(next, 0, 0));
+            ii += mergingSpeed;
+            jj += mergingSpeed;
           }
+          merge(canvas, x, y);
+          merge(canvas, x - 1, y);
+          merge(canvas, x + 1, y);
+          // something about to check above
+          merge(canvas, x, blocks[x].length - 1);
+          merge(canvas, x - 1, blocks[x - 1].length - 1);
+          merge(canvas, x + 1, blocks[x + 1].length - 1);
+          return;
         }
       }
     }
@@ -368,6 +387,8 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   void drawNextBlock(Canvas canvas, Block b) {
+    b.x = 200;
+    b.y = 96;
     double width = 500 * 45 / 500;
     double height = 750 * 37 / 750;
     if (log2(b.v.toDouble()) - 1 < 12) {
