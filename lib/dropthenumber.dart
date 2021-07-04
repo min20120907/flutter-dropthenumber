@@ -52,7 +52,6 @@ class DropTheNumber extends Game with TapDetector {
   double maxYAxis = 582;
   // merging speed
   double mergingSpeed = 5;
-
   // colorlist
   List<Color> colorList = [
     Color.fromRGBO(255, 0, 0, 1.0),
@@ -533,6 +532,7 @@ class DropTheNumber extends Game with TapDetector {
         track = ((getX(x) - 76) ~/ 70).toInt();
         xAxis = (76 + 70 * track).toDouble();
         maxYAxis = (582 - 70 * blocks[track].length).toDouble();
+        blockAppend(canvas);
       }
     }
   }
