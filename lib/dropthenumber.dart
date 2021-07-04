@@ -413,8 +413,6 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   void drawNextBlock(Canvas canvas, Block b) {
-    b.x = getX(200);
-    b.y = getY(96);
     double width = 500 * 45 / 500;
     double height = 750 * 37 / 750;
     if (log2(b.v.toDouble()) < 12) {
