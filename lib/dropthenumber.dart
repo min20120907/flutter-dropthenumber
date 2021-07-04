@@ -642,6 +642,7 @@ class DropTheNumber extends Game with TapDetector {
         blocks[x][i].v = blocks[x][i + 1].v;
       }
       blocks[x].removeAt(blocks[x].length - 1);
+      print("dropped");
     }
   }
 
