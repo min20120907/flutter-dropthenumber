@@ -74,32 +74,32 @@ class DropTheNumber extends Game with TapDetector {
     if (!gameOver) {
       // draw background
       drawBackground(canvas);
-      // draw mute
-      if (mute) {
-        loadUiImage("img/mute-2.png").then((value) => img2 = value);
-        drawImage(new Paint(), canvas, img2, 399, 98, 40, 40);
-      } else {
-        loadUiImage("img/mute-1.png").then((value) => img2 = value);
-        drawImage(new Paint(), canvas, img2, 399, 98, 40, 40);
-      }
 
       drawBorders(canvas);
-      //draw three horizontal lines
-      drawLine(Colors.white, canvas, 50, 90, 450, 90, 5);
-      drawLine(Colors.white, canvas, 50, 140, 450, 140, 5);
-      drawLine(Colors.white, canvas, 75, 235, 425, 235, 5);
 
       drawAllTexts(canvas);
-      // draw five vertical lines
-      for (double i = 0; i < 5; i++)
-        drawLine(Colors.white, canvas, 75 + i * 70, 165, 75 + i * 70, 665, 5);
 
       drawTime(canvas);
+      drawMute(canvas);
+
+      // draw two testing blocks
       drawBlock(canvas, Block(current, 216, 240));
       drawNextBlock(canvas, Block(next, 200, 96));
+
       drawAllBlocks(canvas);
     } else {
       drawGameover(canvas);
+    }
+  }
+
+  void drawMute(Canvas canvas) {
+    // draw mute
+    if (mute) {
+      loadUiImage("img/mute-2.png").then((value) => img2 = value);
+      drawImage(new Paint(), canvas, img2, 399, 98, 40, 40);
+    } else {
+      loadUiImage("img/mute-1.png").then((value) => img2 = value);
+      drawImage(new Paint(), canvas, img2, 399, 98, 40, 40);
     }
   }
 
@@ -116,6 +116,13 @@ class DropTheNumber extends Game with TapDetector {
         750 * 32 / 750, Colors.white, 3);
     drawRectStroke(canvas, 500 * 405 / 490, 750 * 685 / 730, 500 * 40 / 500,
         750 * 32 / 750, Colors.white, 3);
+    //draw three horizontal lines
+    drawLine(Colors.white, canvas, 50, 90, 450, 90, 5);
+    drawLine(Colors.white, canvas, 50, 140, 450, 140, 5);
+    drawLine(Colors.white, canvas, 75, 235, 425, 235, 5);
+    // draw five vertical lines
+    for (double i = 0; i < 5; i++)
+      drawLine(Colors.white, canvas, 75 + i * 70, 165, 75 + i * 70, 665, 5);
   }
 
   //draw all text function
