@@ -190,13 +190,13 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   // Drawtext
-  void drawText(Canvas canvas, String text, Color colo, double fontSize,
+  void drawText(Canvas canvas, String text, Color color, double fontSize,
       double x, double y) {
     TextPainter(
       text: TextSpan(
           text: text,
           style: TextStyle(
-              color: colo, fontSize: screenSize.height * fontSize / 750)),
+              color: color, fontSize: getY(fontSize))),
       textAlign: TextAlign.left,
       textDirection: TextDirection.ltr,
     )
@@ -392,11 +392,6 @@ class DropTheNumber extends Game with TapDetector {
         startTimeOfPause = DateTime.now();
       } else {
         pauseDuration = DateTime.now().difference(startTimeOfPause);
-
-        // Stop horizontal super skill cooldown when puase
-        if (cooldownTimeHor != null) {
-          cooldownTimeHor = cooldownTimeHor.add(pauseDuration);
-        }
         // Stop vertical super skill cooldown when puase
         if (cooldownTimeVert != null) {
           cooldownTimeVert = cooldownTimeVert.add(pauseDuration);
@@ -491,11 +486,11 @@ class DropTheNumber extends Game with TapDetector {
     // Paint nextBlock text
     double textX = 200.0 + 22 - next.toString().length * 5;
     if (next < 8192) {
-      drawText(canvas, next.toString(), Colors.black, getX(20), textX,
-          getY(96) + 10);
+      drawText(canvas, next.toString(), Colors.black, 20.0, textX,
+          96.0 + 10);
     } else {
-      drawText(canvas, next.toString(), Colors.black, getX(20), textX,
-          getY(96) + 10);
+      drawText(canvas, next.toString(), Colors.black, 20.0, textX,
+          96.0 + 10);
     }
   }
 
@@ -516,7 +511,7 @@ class DropTheNumber extends Game with TapDetector {
 
     // Paint block text
     double textX = b.x + 24 - b.v.toString().length * 5;
-    drawText(canvas, b.v.toString(), Colors.black, getX(27), textX, b.y + 15);
+    drawText(canvas, b.v.toString(), Colors.black, 27, textX, b.y + 15);
   }
 
   int getMaxTrack() {
