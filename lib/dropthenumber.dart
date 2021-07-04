@@ -49,7 +49,7 @@ class DropTheNumber extends Game with TapDetector {
   bool inRange(double x, double a, double b) => x >= a && x <= b;
   // coordinates of clicked position
   double xAxis = (75 + 70 * track).toDouble(), yAxis = 237;
-  double maxYAxis = 595;
+  double maxYAxis = 597;
   Canvas ccc;
   // merging speed
   double mergingSpeed = 5;
@@ -90,7 +90,7 @@ class DropTheNumber extends Game with TapDetector {
       drawAllBlocks(canvas);
       if (!pause) {
         yAxis += 1;
-        maxYAxis = (590 - 70 * blocks[track].length).toDouble();
+        maxYAxis = (597 - 70 * blocks[track].length).toDouble();
         drawBlock(canvas, Block(current, xAxis, yAxis));
       }
     } else {
@@ -190,13 +190,11 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   // Drawtext
-  void drawText(Canvas canvas, String text, Color colo, double fontSize,
+  void drawText(Canvas canvas, String text, Color color, double fontSize,
       double x, double y) {
     TextPainter(
       text: TextSpan(
-          text: text,
-          style: TextStyle(
-              color: colo, fontSize: screenSize.height * fontSize / 750)),
+          text: text, style: TextStyle(color: color, fontSize: getY(fontSize))),
       textAlign: TextAlign.left,
       textDirection: TextDirection.ltr,
     )
@@ -217,7 +215,7 @@ class DropTheNumber extends Game with TapDetector {
 
   // def blockAppend():
   void blockAppend(Canvas canvas) {
-    double max_y_axis = (595 - 70 * blocks[track].length).toDouble();
+    double max_y_axis = (597 - 70 * blocks[track].length).toDouble();
     if (max_y_axis > 237) {
       Block block1 = Block(current, getX(xAxis), max_y_axis);
       blocks[track].add(block1);
@@ -458,11 +456,6 @@ class DropTheNumber extends Game with TapDetector {
         startTimeOfPause = DateTime.now();
       } else {
         pauseDuration = DateTime.now().difference(startTimeOfPause);
-
-        // Stop horizontal super skill cooldown when puase
-        if (cooldownTimeHor != null) {
-          cooldownTimeHor = cooldownTimeHor.add(pauseDuration);
-        }
         // Stop vertical super skill cooldown when puase
         if (cooldownTimeVert != null) {
           cooldownTimeVert = cooldownTimeVert.add(pauseDuration);
@@ -541,27 +534,24 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   void drawNextBlock(Canvas canvas) {
-    double width = 500 * 44 / 500;
-    double height = 750 * 37 / 750;
+    double width = 44;
+    double height = 37;
     if (log2(next.toDouble()) < 12) {
       // Paint within 8192
-      drawRect(canvas, getX(200), getY(96), width, height,
+      drawRect(canvas, 200, 96, width, height,
           colorList[log2(next.toDouble()).toInt()]);
     } else {
       // Paint with over 8192
-      drawRect(canvas, getX(200), getY(96), width, height, colorList[12]);
+      drawRect(canvas, 200, 96, width, height, colorList[12]);
     }
     // Paint nextBlock border
-    drawRectStroke(
-        canvas, getX(200), getY(96), width, height, Colors.pink[200], 3);
+    drawRectStroke(canvas, 200, 96, width, height, Colors.pink[200], 3);
     // Paint nextBlock text
-    double textX = getX(200) + 22 - next.toString().length * 5;
+    double textX = 200.0 + 20 - next.toString().length * 5;
     if (next < 8192) {
-      drawText(canvas, next.toString(), Colors.black, getX(20), textX,
-          getY(96) + 10);
+      drawText(canvas, next.toString(), Colors.black, 16.0, textX, 96.0 + 10);
     } else {
-      drawText(canvas, next.toString(), Colors.black, getX(20), textX,
-          getY(96) + 10);
+      drawText(canvas, next.toString(), Colors.black, 16.0, textX, 96.0 + 10);
     }
   }
 
@@ -581,8 +571,8 @@ class DropTheNumber extends Game with TapDetector {
     drawRectStroke(canvas, b.x, b.y, width, height, Colors.black, 4);
 
     // Paint block text
-    double textX = b.x + 24 - b.v.toString().length * 5;
-    drawText(canvas, b.v.toString(), Colors.black, getX(27), textX, b.y + 15);
+    double textX = b.x + 25 - b.v.toString().length * 5;
+    drawText(canvas, b.v.toString(), Colors.black, 22, textX, b.y + 15);
   }
 
   int getMaxTrack() {
@@ -634,11 +624,13 @@ class DropTheNumber extends Game with TapDetector {
 
   @override
   void onTapDown(TapDownDetails event) {
-    print("Player tap down on ${event.globalPosition}");
-    xAxis = event.globalPosition.dx;
-    yAxis = event.globalPosition.dy;
     double x = event.globalPosition.dx;
     double y = event.globalPosition.dy;
+    double oldX = x / getX(1);
+    double oldY = y / getY(1);
+    print("Player tap down on (${oldX}, ${oldY})");
+    xAxis = event.globalPosition.dx;
+    yAxis = event.globalPosition.dy;
     // pause event
     if (inRange(x, getX(50), getX(95)) && inRange(y, getY(685), getY(730))) {
       pause = !pause;
@@ -660,7 +652,7 @@ class DropTheNumber extends Game with TapDetector {
       track = ((getX(x) - 76) ~/ 70).toInt();
       print(track);
       xAxis = (76 + 70 * track).toDouble();
-      maxYAxis = (595 - 70 * blocks[track].length).toDouble();
+      maxYAxis = (582 - 70 * blocks[track].length).toDouble();
       blockAppend(ccc);
     }
   }
