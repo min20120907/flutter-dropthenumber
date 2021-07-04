@@ -222,7 +222,7 @@ class DropTheNumber extends Game with TapDetector {
       // merge(canvas, x, y);
       getNewNextBlock();
       return;
-    } else if (current == blocks[track][-1].v) {
+    } else if (current == blocks[track][blocks[track].length - 1].v) {
       Block block1 = Block(current, xAxis, max_y_axis);
       // merge(track, blocks[track].length) - 1);
       getNewNextBlock();
@@ -351,6 +351,7 @@ class DropTheNumber extends Game with TapDetector {
           double ii = blocks[x][y].y;
           double jj = blocks[x - 1][y].x;
           score += blocks[x][y - 1].v;
+          blocks[x][y - 1].v *= 4;
           dropAboveBlocks(x - 1, y);
           while (jj < blocks[x][y].x) {
             drawBackground(canvas);
@@ -440,7 +441,25 @@ class DropTheNumber extends Game with TapDetector {
       }
     }
     // Check down
-    if (y > 0) {}
+    if (y > 0) {
+      if (blocks[x][y].v == blocks[x][y - 1].v) {
+        double jj = blocks[x][y].y;
+        int old = blocks[x][y].v;
+        blocks[x][y].v *= 2;
+        score += blocks[x][y - 1].v;
+        dropAboveBlocks(x, y);
+        while (jj < blocks[x][y - 1].y) {
+          drawBackground(canvas);
+          drawBorders(canvas);
+          drawAllTexts(canvas);
+          drawTime(canvas);
+          drawAllBlocks(canvas);
+          drawNextBlock(canvas);
+          drawBlock(canvas, Block(old, blocks[x][y - 1].x, jj));
+          jj += mergingSpeed;
+        }
+      }
+    }
   }
 
   //Format the time from second to minute and second
