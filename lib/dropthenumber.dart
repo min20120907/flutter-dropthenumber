@@ -219,12 +219,13 @@ class DropTheNumber extends Game with TapDetector {
     if (max_y_axis > 237) {
       Block block1 = Block(current, getX(xAxis), max_y_axis);
       blocks[track].add(block1);
-      // merge(canvas, x, y);
+      merge(canvas, track, blocks[track].length - 1);
       getNewNextBlock();
       return;
     } else if (current == blocks[track][blocks[track].length - 1].v) {
       Block block1 = Block(current, xAxis, max_y_axis);
-      // merge(track, blocks[track].length) - 1);
+      blocks[track].add(block1);
+      merge(canvas, track, blocks[track].length - 1);
       getNewNextBlock();
       return;
     }
@@ -458,6 +459,10 @@ class DropTheNumber extends Game with TapDetector {
           drawBlock(canvas, Block(old, blocks[x][y - 1].x, jj));
           jj += mergingSpeed;
         }
+        merge(canvas, x, y);
+        merge(canvas, x, y - 1);
+        merge(canvas, x, blocks[x].length - 1);
+        return;
       }
     }
   }
