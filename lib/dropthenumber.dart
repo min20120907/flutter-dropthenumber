@@ -213,7 +213,7 @@ class DropTheNumber extends Game with TapDetector {
 
   // def blockAppend():
   void blockAppend(Canvas canvas) {
-    double max_y_axis = getY(582 - 70 * blocks[track].length).toDouble();
+    double max_y_axis = 582 - 70 * blocks[track].length.toDouble();
     if (max_y_axis > 223) {
       Block block1 = Block(current, getX(xAxis), max_y_axis);
       blocks[track].add(block1);
@@ -309,9 +309,52 @@ class DropTheNumber extends Game with TapDetector {
       }
     }
     // Check left and down(7 Shape)
-    if (x > 0 && y > 0) {}
+    if (x > 0 && y > 0) {
+      int leftLineY = blocks[x - 1].length - 1;
+      if (leftLineY > 0) {
+        if (blocks[x][y].v == blocks[x - 1][y].v &&
+            blocks[x][y].v == blocks[x][y - 1].v) {
+          int old = blocks[x][y].v;
+          double ii = blocks[x][y].y;
+          double jj = blocks[x - 1][y].x;
+          score += blocks[x][y - 1].v;
+          dropAboveBlocks(x - 1, y);
+          while (jj < blocks[x][y].x) {
+            drawBackground(canvas);
+            drawBorders(canvas);
+            drawAllTexts(canvas);
+            drawAllBlocks(canvas);
+            drawNextBlock(canvas, Block(next, 0, 0));
+            drawBlock(canvas, Block(old, jj, blocks[x][y].y));
+            jj += mergingSpeed;
+          }
+          while (ii < blocks[x][y - 1].y) {
+            drawBackground(canvas);
+            drawBorders(canvas);
+            drawAllTexts(canvas);
+            drawAllBlocks(canvas);
+            drawNextBlock(canvas, Block(next, 0, 0));
+            drawBlock(canvas, Block(old, jj, blocks[x][y].y));
+            ii += mergingSpeed;
+          }
+          merge(canvas, x, y);
+          merge(canvas, x, y - 1);
+          merge(canvas, x - 1, y);
+          merge(canvas, x, blocks[x].length - 1);
+          merge(canvas, x - 1, blocks[x - 1].length - 1);
+          return;
+        }
+      }
+    }
     // Check left and right(horizontal shape)
-    if (x > 0) {}
+    if (x > 0 && x < 4) {
+      int leftLineY = blocks[x - 1].length - 1;
+      int rightLineY = blocks[x + 1].length - 1;
+      if (leftLineY >= y && rightLineY >= y) {
+        if (blocks[x][y].v == blocks[x - 1][y].v &&
+            blocks[x][y].v == blocks[x + 1][y].v) {}
+      }
+    }
     // Check right
     if (x < 4) {}
     // Check down
@@ -528,6 +571,7 @@ class DropTheNumber extends Game with TapDetector {
     }
     if (inRange(x, getX(76), getX(426)) && inRange(y, getY(221), getY(653))) {
       track = ((getX(x) - 76) ~/ 70).toInt();
+      print(track);
       xAxis = (76 + 70 * track).toDouble();
       maxYAxis = (582 - 70 * blocks[track].length).toDouble();
       blockAppend(ccc);
