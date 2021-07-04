@@ -14,8 +14,8 @@ import 'block.dart';
 
 // Global Variables
 Random random = new Random();
-int randomNumber = random.nextInt(13);
-int randomNumber2 = random.nextInt(13);
+int randomNumber = random.nextInt(12);
+int randomNumber2 = random.nextInt(12);
 int track = random.nextInt(5);
 int current = pow(2, randomNumber).toInt();
 int next = pow(2, randomNumber2).toInt();
@@ -39,7 +39,6 @@ class DropTheNumber extends Game with TapDetector {
   DateTime cooldownTimeVert;
   Duration pauseDuration;
   Duration displayDuration;
-
   ui.Image img1, img2, img3, img4;
   // Videos declaration
   List<ui.Image> vid1, vid2;
@@ -87,8 +86,6 @@ class DropTheNumber extends Game with TapDetector {
       // draw two testing blocks
       drawBlock(canvas, Block(current, 216, 240));
       drawNextBlock(canvas, Block(next, 200, 96));
-      track = 2;
-      blockAppend(canvas);
 
       drawAllBlocks(canvas);
     } else {
@@ -419,14 +416,14 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   void drawNextBlock(Canvas canvas, Block b) {
-    b.x = 200;
-    b.y = 96;
+    b.x = getX(200);
+    b.y = getY(92);
     double width = 500 * 45 / 500;
     double height = 750 * 37 / 750;
-    if (log2(b.v.toDouble()) - 1 < 12) {
+    if (log2(b.v.toDouble()) < 12) {
       // Paint within 8192
       drawRect(canvas, b.x, b.y, width, height,
-          colorList[log2(b.v.toDouble()).toInt() - 1]);
+          colorList[log2(b.v.toDouble()).toInt()]);
     } else {
       // Paint with over 8192
       drawRect(canvas, b.x, b.y, width, height, colorList[12]);
@@ -446,10 +443,10 @@ class DropTheNumber extends Game with TapDetector {
     double width = 68;
     double height = 68;
 
-    if (log2(b.v.toDouble()) - 1 < 12) {
+    if (log2(b.v.toDouble()) < 12) {
       // Paint within 8192
       drawRect(canvas, b.x, b.y, width, height,
-          colorList[log2(b.v.toDouble()).toInt() - 1]);
+          colorList[log2(b.v.toDouble()).toInt()]);
     } else {
       // paint with over 8192
       drawRect(canvas, b.x, b.y, width, height, colorList[12]);
@@ -533,10 +530,9 @@ class DropTheNumber extends Game with TapDetector {
         Flame.bgm.resume();
       }
       if (inRange(x, getX(76), getX(426)) && inRange(y, getY(221), getY(653))) {
-        track = ((getX(x) - 76) / 70).toInt();
+        track = ((getX(x) - 76) ~/ 70).toInt();
         xAxis = (76 + 70 * track).toDouble();
         maxYAxis = (582 - 70 * blocks[track].length).toDouble();
-        // blockAppend(canvas);
       }
     }
   }
