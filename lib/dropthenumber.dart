@@ -14,8 +14,8 @@ import 'block.dart';
 
 // Global Variables
 Random random = new Random();
-int randomNumber = random.nextInt(13);
-int randomNumber2 = random.nextInt(13);
+int randomNumber = random.nextInt(12);
+int randomNumber2 = random.nextInt(12);
 int track = random.nextInt(5);
 int current = pow(2, randomNumber).toInt();
 int next = pow(2, randomNumber2).toInt();
@@ -39,7 +39,6 @@ class DropTheNumber extends Game with TapDetector {
   DateTime cooldownTimeVert;
   Duration pauseDuration;
   Duration displayDuration;
-
   ui.Image img1, img2, img3, img4;
   // Videos declaration
   List<ui.Image> vid1, vid2;
@@ -48,9 +47,11 @@ class DropTheNumber extends Game with TapDetector {
   double getX(double x) => screenSize.width * x / 500;
   double getY(double y) => screenSize.height * y / 750;
   bool inRange(double x, double a, double b) => x >= a && x <= b;
-// coordinates of clicked position
+  // coordinates of clicked position
   double xAxis = (75 + 70 * track).toDouble(), yAxis = 226;
   double maxYAxis = 582;
+  // merging speed
+  double mergingSpeed = 5;
 
   // colorlist
   List<Color> colorList = [
@@ -85,8 +86,6 @@ class DropTheNumber extends Game with TapDetector {
       // draw two testing blocks
       drawBlock(canvas, Block(current, 216, 240));
       drawNextBlock(canvas, Block(next, 200, 96));
-      track = 2;
-      blockAppend(canvas);
 
       drawAllBlocks(canvas);
     } else {
@@ -264,12 +263,50 @@ class DropTheNumber extends Game with TapDetector {
 
           while (jj < blocks[x][y - 1].x && kk > blocks[x][y - 1].x) {
             drawBackground(canvas);
+            drawBorders(canvas);
+            drawAllTexts(canvas);
+            drawTime(canvas);
+            drawAllBlocks(canvas);
+
+            //Draw next block hint
+            drawNextBlock(canvas, Block(next, 0, 0));
+            ii += mergingSpeed;
+            jj += mergingSpeed;
           }
+          while (ii < blocks[x][y - 1].y) {
+            drawBackground(canvas);
+            drawBorders(canvas);
+            drawTime(canvas);
+            drawAllBlocks(canvas);
+
+            drawNextBlock(canvas, Block(next, 0, 0));
+            drawBlock(canvas, Block(old, blocks[x][y - 1].x, ii));
+            ii += mergingSpeed;
+          }
+          merge(canvas, x, y);
+          merge(canvas, x, y - 1);
+          merge(canvas, x - 1, y);
+          merge(canvas, x + 1, y);
+          // something about to check above
+          merge(canvas, x, blocks[x].length - 1);
+          merge(canvas, x - 1, blocks[x - 1].length - 1);
+          merge(canvas, x + 1, blocks[x + 1].length - 1);
+          return;
         }
       }
     }
     // Check right and down(Gamma shape)
-    if (x < 4 && y > 0) {}
+    if (x < 4 && y > 0) {
+      int rightLineY = blocks[x + 1].length - 1;
+      if (rightLineY >= y) {
+        if (blocks[x][y].v == blocks[x + 1][y].v &&
+            blocks[x][y].v == blocks[x][y - 1].v) {
+          int old = blocks[x][y].v;
+          double ii = blocks[x][y].y;
+          double jj = blocks[x + 1][y].x;
+        }
+      }
+    }
     // Check left and down(7 Shape)
     if (x > 0 && y > 0) {}
     // Check left and right(horizontal shape)
@@ -376,12 +413,14 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   void drawNextBlock(Canvas canvas, Block b) {
+    b.x = getX(200);
+    b.y = getY(92);
     double width = 500 * 45 / 500;
     double height = 750 * 37 / 750;
-    if (log2(b.v.toDouble()) - 1 < 12) {
+    if (log2(b.v.toDouble()) < 12) {
       // Paint within 8192
       drawRect(canvas, b.x, b.y, width, height,
-          colorList[log2(b.v.toDouble()).toInt() - 1]);
+          colorList[log2(b.v.toDouble()).toInt()]);
     } else {
       // Paint with over 8192
       drawRect(canvas, b.x, b.y, width, height, colorList[12]);
@@ -401,10 +440,10 @@ class DropTheNumber extends Game with TapDetector {
     double width = 68;
     double height = 68;
 
-    if (log2(b.v.toDouble()) - 1 < 12) {
+    if (log2(b.v.toDouble()) < 12) {
       // Paint within 8192
       drawRect(canvas, b.x, b.y, width, height,
-          colorList[log2(b.v.toDouble()).toInt() - 1]);
+          colorList[log2(b.v.toDouble()).toInt()]);
     } else {
       // paint with over 8192
       drawRect(canvas, b.x, b.y, width, height, colorList[12]);
@@ -488,10 +527,9 @@ class DropTheNumber extends Game with TapDetector {
         Flame.bgm.resume();
       }
       if (inRange(x, getX(76), getX(426)) && inRange(y, getY(221), getY(653))) {
-        track = ((getX(x) - 76) / 70).toInt();
+        track = ((getX(x) - 76) ~/ 70).toInt();
         xAxis = (76 + 70 * track).toDouble();
         maxYAxis = (582 - 70 * blocks[track].length).toDouble();
-        // blockAppend(canvas);
       }
     }
   }
