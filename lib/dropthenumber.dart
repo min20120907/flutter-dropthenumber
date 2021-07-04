@@ -268,7 +268,18 @@ class DropTheNumber extends Game with TapDetector {
             ii += mergingSpeed;
             jj += mergingSpeed;
           }
+          while (ii < blocks[x][y - 1].y) {
+            drawBackground(canvas);
+            drawBorders(canvas);
+            drawTime(canvas);
+            drawAllBlocks(canvas);
+
+            drawNextBlock(canvas, Block(next, 0, 0));
+            drawBlock(canvas, Block(old, blocks[x][y - 1].x, ii));
+            ii += mergingSpeed;
+          }
           merge(canvas, x, y);
+          merge(canvas, x, y - 1);
           merge(canvas, x - 1, y);
           merge(canvas, x + 1, y);
           // something about to check above
@@ -280,7 +291,17 @@ class DropTheNumber extends Game with TapDetector {
       }
     }
     // Check right and down(Gamma shape)
-    if (x < 4 && y > 0) {}
+    if (x < 4 && y > 0) {
+      int rightLineY = blocks[x + 1].length - 1;
+      if (rightLineY >= y) {
+        if (blocks[x][y].v == blocks[x + 1][y].v &&
+            blocks[x][y].v == blocks[x][y - 1].v) {
+          int old = blocks[x][y].v;
+          double ii = blocks[x][y].y;
+          double jj = blocks[x + 1][y].x;
+        }
+      }
+    }
     // Check left and down(7 Shape)
     if (x > 0 && y > 0) {}
     // Check left and right(horizontal shape)
