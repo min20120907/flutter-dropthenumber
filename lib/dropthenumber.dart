@@ -211,6 +211,25 @@ class DropTheNumber extends Game with TapDetector {
     canvas.drawRect(rect, paint);
   }
 
+  // Merge method
+  void merge(Canvas canvas, int x, int y) {
+    if (x < 0 && x > 5) return;
+    if (y < 0 && blocks[x].length - 1 < y) return;
+
+    // Check left and right and down(T shape)
+    if (x > 0 && x < 4 && y > 0) {}
+    // Check right and down(Gamma shape)
+    if (x < 4 && y > 0) {}
+    // Check left and down(7 Shape)
+    if (x > 0 && y > 0) {}
+    // Check left and right(horizontal shape)
+    if (x > 0) {}
+    // Check right
+    if (x < 4) {}
+    // Check down
+    if (y > 0) {}
+  }
+
   //Format the time from second to minute and second
   String getTimeformat(Duration totalSecond) {
     return sprintf("%02d:%02d",
