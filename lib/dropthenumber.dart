@@ -194,9 +194,7 @@ class DropTheNumber extends Game with TapDetector {
       double x, double y) {
     TextPainter(
       text: TextSpan(
-          text: text,
-          style: TextStyle(
-              color: color, fontSize: getY(fontSize))),
+          text: text, style: TextStyle(color: color, fontSize: getY(fontSize))),
       textAlign: TextAlign.left,
       textDirection: TextDirection.ltr,
     )
@@ -483,13 +481,11 @@ class DropTheNumber extends Game with TapDetector {
     // Paint nextBlock border
     drawRectStroke(canvas, 200, 96, width, height, Colors.pink[200], 3);
     // Paint nextBlock text
-    double textX = 200.0 + 22 - next.toString().length * 5;
+    double textX = 200.0 + 20 - next.toString().length * 5;
     if (next < 8192) {
-      drawText(canvas, next.toString(), Colors.black, 20.0, textX,
-          96.0 + 10);
+      drawText(canvas, next.toString(), Colors.black, 16.0, textX, 96.0 + 10);
     } else {
-      drawText(canvas, next.toString(), Colors.black, 20.0, textX,
-          96.0 + 10);
+      drawText(canvas, next.toString(), Colors.black, 16.0, textX, 96.0 + 10);
     }
   }
 
@@ -509,8 +505,8 @@ class DropTheNumber extends Game with TapDetector {
     drawRectStroke(canvas, b.x, b.y, width, height, Colors.black, 4);
 
     // Paint block text
-    double textX = b.x + 24 - b.v.toString().length * 5;
-    drawText(canvas, b.v.toString(), Colors.black, 27, textX, b.y + 15);
+    double textX = b.x + 25 - b.v.toString().length * 5;
+    drawText(canvas, b.v.toString(), Colors.black, 22, textX, b.y + 15);
   }
 
   int getMaxTrack() {
