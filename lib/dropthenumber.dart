@@ -24,7 +24,7 @@ int randomRange(int min, int max) => min + random.nextInt(max - min);
 // Game Main Loop
 class DropTheNumber extends Game with TapDetector {
   // Create Variable
-  List<List<Block>> blocks = [[]];
+  List<List<Block>> blocks = [[], [], [], [], []];
   int highest = 99;
   bool pause = false;
   bool mute = false;
@@ -50,6 +50,7 @@ class DropTheNumber extends Game with TapDetector {
   // coordinates of clicked position
   double xAxis = (75 + 70 * track).toDouble(), yAxis = 226;
   double maxYAxis = 582;
+  Canvas ccc;
   // merging speed
   double mergingSpeed = 5;
   // colorlist
@@ -71,6 +72,7 @@ class DropTheNumber extends Game with TapDetector {
 
   @override
   void render(Canvas canvas) {
+    ccc = canvas;
     if (!gameOver) {
       // draw background
       drawBackground(canvas);
@@ -523,12 +525,12 @@ class DropTheNumber extends Game with TapDetector {
       } else {
         Flame.bgm.resume();
       }
-      if (inRange(x, getX(76), getX(426)) && inRange(y, getY(221), getY(653))) {
-        track = ((getX(x) - 76) ~/ 70).toInt();
-        xAxis = (76 + 70 * track).toDouble();
-        maxYAxis = (582 - 70 * blocks[track].length).toDouble();
-        blockAppend(canvas);
-      }
+    }
+    if (inRange(x, getX(76), getX(426)) && inRange(y, getY(221), getY(653))) {
+      track = ((getX(x) - 76) ~/ 70).toInt();
+      xAxis = (76 + 70 * track).toDouble();
+      maxYAxis = (582 - 70 * blocks[track].length).toDouble();
+      blockAppend(ccc);
     }
   }
 
