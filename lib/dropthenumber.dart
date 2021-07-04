@@ -83,33 +83,16 @@ class DropTheNumber extends Game with TapDetector {
         drawImage(new Paint(), canvas, img2, 399, 98, 40, 40);
       }
 
-      // Draw outline
-      drawRectStroke(canvas, 500 / 10, 750 / 20, 500 * 4 / 5, 750 * 650 / 750,
-          Colors.white, 10);
-      drawRectStroke(canvas, 500 * 75 / 500, 750 * 45 / 202, 500 * 35 / 50,
-          750 * 50 / 75, Colors.white, 5);
-      drawRectStroke(canvas, 500 * 350 / 490, 750 * 685 / 730, 500 * 40 / 500,
-          750 * 32 / 750, Colors.white, 3);
-      drawRectStroke(canvas, 500 * 55 / 590, 750 * 685 / 730, 500 * 40 / 500,
-          750 * 32 / 750, Colors.white, 3);
-      drawRectStroke(canvas, 500 * 405 / 490, 750 * 685 / 730, 500 * 40 / 500,
-          750 * 32 / 750, Colors.white, 3);
-
+      drawBorders(canvas);
       //draw three horizontal lines
       drawLine(Colors.white, canvas, 50, 90, 450, 90, 5);
       drawLine(Colors.white, canvas, 50, 140, 450, 140, 5);
       drawLine(Colors.white, canvas, 75, 235, 425, 235, 5);
 
+      drawAllTexts(canvas);
       // draw five vertical lines
       for (double i = 0; i < 5; i++)
         drawLine(Colors.white, canvas, 75 + i * 70, 165, 75 + i * 70, 665, 5);
-
-      //draw text
-      drawText(canvas, 'Drop', Colors.red, 30, 215, 48);
-      drawText(canvas, 'Next Block ►', Colors.white, 18, 60, 103);
-      drawText(canvas, 'Score:' + score.toString(), Colors.white, 27, 100, 703);
-      for (double i = 0; i < 5; i++)
-        drawText(canvas, '†', Colors.black, 50, 100 + i * 70, 170);
 
       drawTime(canvas);
       drawBlock(canvas, Block(current, 216, 240));
@@ -118,6 +101,31 @@ class DropTheNumber extends Game with TapDetector {
     } else {
       drawGameover(canvas);
     }
+  }
+
+  // draw borders function
+  void drawBorders(Canvas canvas) {
+    // Draw outline
+    drawRectStroke(canvas, 500 / 10, 750 / 20, 500 * 4 / 5, 750 * 650 / 750,
+        Colors.white, 10);
+    drawRectStroke(canvas, 500 * 75 / 500, 750 * 45 / 202, 500 * 35 / 50,
+        750 * 50 / 75, Colors.white, 5);
+    drawRectStroke(canvas, 500 * 350 / 490, 750 * 685 / 730, 500 * 40 / 500,
+        750 * 32 / 750, Colors.white, 3);
+    drawRectStroke(canvas, 500 * 55 / 590, 750 * 685 / 730, 500 * 40 / 500,
+        750 * 32 / 750, Colors.white, 3);
+    drawRectStroke(canvas, 500 * 405 / 490, 750 * 685 / 730, 500 * 40 / 500,
+        750 * 32 / 750, Colors.white, 3);
+  }
+
+  //draw all text function
+  void drawAllTexts(Canvas canvas) {
+    //draw text
+    drawText(canvas, 'Drop', Colors.red, 30, 215, 48);
+    drawText(canvas, 'Next Block ►', Colors.white, 18, 60, 103);
+    drawText(canvas, 'Score:' + score.toString(), Colors.white, 27, 100, 703);
+    for (double i = 0; i < 5; i++)
+      drawText(canvas, '†', Colors.black, 50, 100 + i * 70, 170);
   }
 
   void drawBackground(Canvas canvas) {
@@ -239,7 +247,9 @@ class DropTheNumber extends Game with TapDetector {
           dropAboveBlocks(x - 1, y);
           dropAboveBlocks(x + 1, y);
 
-          while (jj < blocks[x][y - 1].x && kk > blocks[x][y - 1].x) {}
+          while (jj < blocks[x][y - 1].x && kk > blocks[x][y - 1].x) {
+            drawBackground(canvas);
+          }
         }
       }
     }
