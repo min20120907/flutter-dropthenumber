@@ -85,6 +85,8 @@ class DropTheNumber extends Game with TapDetector {
       // draw two testing blocks
       drawBlock(canvas, Block(current, 216, 240));
       drawNextBlock(canvas, Block(next, 200, 96));
+      track = 2;
+      blockAppend(canvas);
 
       drawAllBlocks(canvas);
     } else {
@@ -213,12 +215,21 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   // def blockAppend():
-  // void blockAppend() {
-  //   double max_y_axis = (582 - 70 * blocks[track].length).toDouble();
-  //   if (max_y_axis > 223) {
-  //     List<Block> block = [current, x, max_y_axis];
-  //   }
-  // }
+  void blockAppend(Canvas canvas) {
+    double max_y_axis = (582 - 70 * blocks[track].length).toDouble();
+    if (max_y_axis > 223) {
+      Block block1 = Block(current, xAxis, max_y_axis);
+      blocks[track].add(block1);
+      // merge(canvas, x, y);
+      getNewNextBlock();
+      return;
+    } else if (current == blocks[track][-1].v) {
+      Block block1 = Block(current, xAxis, max_y_axis);
+      // merge(track, blocks[track].length) - 1);
+      getNewNextBlock();
+      return;
+    }
+  }
 
   // Drawstroke
   void drawRectStroke(Canvas canvas, double x, double y, double width,
@@ -478,6 +489,12 @@ class DropTheNumber extends Game with TapDetector {
         Flame.bgm.pause();
       } else {
         Flame.bgm.resume();
+      }
+      if (inRange(x, getX(76), getX(426)) && inRange(y, getY(221), getY(653))) {
+        track = ((getX(x) - 76) / 70).toInt();
+        xAxis = (76 + 70 * track).toDouble();
+        maxYAxis = (582 - 70 * blocks[track].length).toDouble();
+        // blockAppend(canvas);
       }
     }
   }
