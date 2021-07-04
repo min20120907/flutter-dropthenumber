@@ -568,11 +568,13 @@ class DropTheNumber extends Game with TapDetector {
 
   @override
   void onTapDown(TapDownDetails event) {
-    print("Player tap down on ${event.globalPosition}");
-    xAxis = event.globalPosition.dx;
-    yAxis = event.globalPosition.dy;
     double x = event.globalPosition.dx;
     double y = event.globalPosition.dy;
+    double oldX = 1/getX(x);
+    double oldY = 1/getY(y);
+    print("Player tap down on (${oldX}, ${oldY})");
+    xAxis = event.globalPosition.dx;
+    yAxis = event.globalPosition.dy;
     // pause event
     if (inRange(x, getX(50), getX(95)) && inRange(y, getY(685), getY(730))) {
       pause = !pause;
