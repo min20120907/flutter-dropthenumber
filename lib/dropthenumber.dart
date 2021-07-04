@@ -73,8 +73,7 @@ class DropTheNumber extends Game with TapDetector {
   void render(Canvas canvas) {
     if (!gameOver) {
       // draw background
-      loadUiImage("img/bg3.jpg").then((value) => img1 = value);
-      drawImage(Paint(), canvas, img1, 0, 0, 500, 750);
+      drawBackground(canvas);
       // draw mute
       if (mute) {
         loadUiImage("img/mute-2.png").then((value) => img2 = value);
@@ -119,6 +118,12 @@ class DropTheNumber extends Game with TapDetector {
     } else {
       drawGameover(canvas);
     }
+  }
+
+  void drawBackground(Canvas canvas) {
+    // draw background
+    loadUiImage("img/bg3.jpg").then((value) => img1 = value);
+    drawImage(Paint(), canvas, img1, 0, 0, 500, 750);
   }
 
   // get new random next block
@@ -217,7 +222,27 @@ class DropTheNumber extends Game with TapDetector {
     if (y < 0 && blocks[x].length - 1 < y) return;
 
     // Check left and right and down(T shape)
-    if (x > 0 && x < 4 && y > 0) {}
+    if (x > 0 && x < 4 && y > 0) {
+      int leftLineY = blocks[x - 1].length - 1;
+      int rightLineY = blocks[x + 1].length - 1;
+      if (leftLineY >= y && rightLineY >= y) {
+        if (blocks[x][y].v == blocks[x - 1][y].v &&
+            blocks[x][y].v == blocks[x + 1][y].v &&
+            blocks[x][y].v == blocks[x][y - 1].v) {
+          int old = blocks[x][y].v;
+          double ii = blocks[x][y].y;
+          double jj = blocks[x - 1][y].x;
+          double kk = blocks[x + 1][y].x;
+
+          blocks[x][y - 1].v *= 8;
+          score += blocks[x][y - 1].v;
+          dropAboveBlocks(x - 1, y);
+          dropAboveBlocks(x + 1, y);
+
+          while (jj < blocks[x][y - 1].x && kk > blocks[x][y - 1].x) {}
+        }
+      }
+    }
     // Check right and down(Gamma shape)
     if (x < 4 && y > 0) {}
     // Check left and down(7 Shape)
