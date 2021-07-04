@@ -332,6 +332,14 @@ class DropTheNumber extends Game with TapDetector {
             drawBlock(canvas, Block(old, blocks[x][y - 1].x, ii));
             ii += mergingSpeed;
           }
+          merge(canvas, x, y);
+          merge(canvas, x, y - 1);
+          merge(canvas, x - 1, y);
+
+          // check above
+          merge(canvas, x, blocks[x].length - 1);
+          merge(canvas, x - 1, blocks[x].length - 1);
+          return;
         }
       }
     }
@@ -409,7 +417,30 @@ class DropTheNumber extends Game with TapDetector {
       }
     }
     // Check right
-    if (x < 4) {}
+    if (x < 4) {
+      int rightLineY = blocks[x + 1].length - 1;
+      if (rightLineY >= y) {
+        if (blocks[x][y].v == blocks[x + 1][y].v) {
+          int old = blocks[x][y].v;
+          double jj = blocks[x + 1][y].x;
+          blocks[x][y].v *= 2;
+          score += blocks[x][y].v;
+          while (jj > blocks[x][y].x) {
+            drawBackground(canvas);
+            drawBorders(canvas);
+            drawAllTexts(canvas);
+            drawTime(canvas);
+            drawNextBlock(canvas);
+            drawBlock(canvas, Block(old, jj, blocks[x][y].y));
+            jj -= mergingSpeed;
+          }
+          merge(canvas, x, y);
+          merge(canvas, x + 1, y - 1);
+          merge(canvas, x + 1, blocks[x + 1].length - 1);
+          return;
+        }
+      }
+    }
     // Check down
     if (y > 0) {}
   }
