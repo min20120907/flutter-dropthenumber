@@ -309,6 +309,29 @@ class DropTheNumber extends Game with TapDetector {
           int old = blocks[x][y].v;
           double ii = blocks[x][y].y;
           double jj = blocks[x + 1][y].x;
+          blocks[x][y - 1].v *= 4;
+          score += blocks[x][y - 1].v;
+          dropAboveBlocks(x + 1, y);
+          while (jj > blocks[x][y].x) {
+            drawBackground(canvas);
+            drawBorders(canvas);
+            drawAllTexts(canvas);
+            drawTime(canvas);
+            drawAllBlocks(canvas);
+            drawBlock(canvas, Block(old, jj, blocks[x][y].y));
+            jj -= mergingSpeed;
+          }
+          dropAboveBlocks(x, y);
+          while (ii < blocks[x][y - 1].y) {
+            drawBackground(canvas);
+            drawBorders(canvas);
+            drawAllTexts(canvas);
+            drawTime(canvas);
+            drawAllBlocks(canvas);
+            drawNextBlock(canvas);
+            drawBlock(canvas, Block(old, blocks[x][y - 1].x, ii));
+            ii += mergingSpeed;
+          }
         }
       }
     }
@@ -369,7 +392,19 @@ class DropTheNumber extends Game with TapDetector {
             drawAllBlocks(canvas);
 
             drawNextBlock(canvas);
+            drawBlock(canvas, Block(old, ii, blocks[x][y].y));
+            drawBlock(canvas, Block(old, jj, blocks[x][y].y));
+            ii += mergingSpeed;
+            jj += mergingSpeed;
           }
+          merge(canvas, x, y);
+          merge(canvas, x - 1, y);
+          merge(canvas, x + 1, y);
+          // check above
+          merge(canvas, x, blocks[x].length - 1);
+          merge(canvas, x - 1, blocks[x - 1].length - 1);
+          merge(canvas, x + 1, blocks[x + 1].length - 1);
+          return;
         }
       }
     }
