@@ -106,23 +106,20 @@ class DropTheNumber extends Game with TapDetector {
   // draw borders function
   void drawBorders(Canvas canvas) {
     // Draw outline
-    drawRectStroke(canvas, 500 / 10, 750 / 20, 500 * 4 / 5, 750 * 650 / 750,
-        Colors.white, 10);
-    drawRectStroke(canvas, 500 * 75 / 500, 750 * 45 / 202, 500 * 35 / 50,
-        750 * 50 / 75, Colors.white, 5);
-    drawRectStroke(canvas, 500 * 350 / 490, 750 * 685 / 730, 500 * 40 / 500,
-        750 * 32 / 750, Colors.white, 3);
-    drawRectStroke(canvas, 500 * 55 / 590, 750 * 685 / 730, 500 * 40 / 500,
-        750 * 32 / 750, Colors.white, 3);
-    drawRectStroke(canvas, 500 * 405 / 490, 750 * 685 / 730, 500 * 40 / 500,
-        750 * 32 / 750, Colors.white, 3);
+    drawRectStroke(canvas, 50, 35, 400, 650, Colors.white, 10);
+    drawRectStroke(canvas, 75, 167, 350, 500, Colors.white, 5);
+    drawRectStroke(canvas, 46.6, 703.7, 40, 32, Colors.white, 3);
+    drawRectStroke(canvas, 357, 704, 40, 32, Colors.white, 3);
+    drawRectStroke(canvas, 413, 703.7, 40, 32, Colors.white, 3);
+
     //draw three horizontal lines
     drawLine(Colors.white, canvas, 50, 90, 450, 90, 5);
     drawLine(Colors.white, canvas, 50, 140, 450, 140, 5);
     drawLine(Colors.white, canvas, 75, 235, 425, 235, 5);
-    // draw five vertical lines
-    for (double i = 0; i < 5; i++)
-      drawLine(Colors.white, canvas, 75 + i * 70, 165, 75 + i * 70, 665, 5);
+
+    // draw four vertical lines
+    for (double i = 1; i < 5; i++)
+      drawLine(Colors.white, canvas, 75 + (i * 70), 165, 75 + (i * 70), 665, 5);
   }
 
   //draw all text function
