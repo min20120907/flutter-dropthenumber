@@ -109,10 +109,10 @@ class DropTheNumber extends Game with TapDetector {
   void drawBorders(Canvas canvas) {
     // Draw outline
     drawRectStroke(canvas, 50, 35, 400, 650, Colors.white, 10);
-    drawRectStroke(canvas, 75, 167, 350, 500, Colors.white, 5);
-    drawRectStroke(canvas, 46.6, 703.7, 40, 32, Colors.white, 3);
-    drawRectStroke(canvas, 357, 704, 40, 32, Colors.white, 3);
-    drawRectStroke(canvas, 413, 703.7, 40, 32, Colors.white, 3);
+    drawRectStroke(canvas, 75, 165, 350, 500, Colors.white, 5);
+    drawRectStroke(canvas, 45, 705, 40, 32, Colors.white, 3);
+    drawRectStroke(canvas, 355, 705, 40, 32, Colors.white, 3);
+    drawRectStroke(canvas, 415, 705, 40, 32, Colors.white, 3);
 
     //draw three horizontal lines
     drawLine(Colors.white, canvas, 50, 90, 450, 90, 5);
