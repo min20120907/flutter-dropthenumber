@@ -616,7 +616,7 @@ class DropTheNumber extends Game with TapDetector {
       drawVideo(Paint(), canvas, vid1, getX(blocks[maxTrack][0].x - 220),
           getY(blocks[maxTrack][0].y - 367), getX(500), getX(500));
     }
-    blocks.remove(blocks[maxTrack]);
+    blocks.removeAt(maxTrack);
     blocks.insert(maxTrack - 1, []);
   }
 
@@ -629,7 +629,7 @@ class DropTheNumber extends Game with TapDetector {
           Paint(), canvas, vid1, getX(-350), getY(50), getX(500), getX(500));
     }
     for (int i = 0; i < 5; i++) {
-      blocks[i].remove(blocks[i][0]);
+      blocks[i].removeAt(0);
       for (int j = 0; j < blocks[i].length; j++) {
         blocks[i][j].y += getY(70);
       }
@@ -641,8 +641,7 @@ class DropTheNumber extends Game with TapDetector {
       for (int i = 0; i < blocks[x].length; i++) {
         blocks[x][i].v = blocks[x][i + 1].v;
       }
-      blocks[x]
-          .removeWhere((element) => element == blocks[x][blocks[x].length - 1]);
+      blocks[x].removeAt(blocks[x].length - 1);
     }
   }
 
