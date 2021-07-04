@@ -85,7 +85,7 @@ class DropTheNumber extends Game with TapDetector {
       drawMute(canvas);
 
       // draw two testing blocks
-      drawBlock(canvas, Block(current, 216, 240));
+      drawBlock(canvas, Block(current, 216, 232));
       drawNextBlock(canvas, Block(next, 200, 96));
 
       drawAllBlocks(canvas);
@@ -215,7 +215,7 @@ class DropTheNumber extends Game with TapDetector {
   void blockAppend(Canvas canvas) {
     double max_y_axis = getY(582 - 70 * blocks[track].length).toDouble();
     if (max_y_axis > 223) {
-      Block block1 = Block(current, xAxis, max_y_axis);
+      Block block1 = Block(current, getX(xAxis), max_y_axis);
       blocks[track].add(block1);
       // merge(canvas, x, y);
       getNewNextBlock();
