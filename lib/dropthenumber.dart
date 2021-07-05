@@ -215,15 +215,15 @@ class DropTheNumber extends Game with TapDetector {
 
   // def blockAppend():
   void blockAppend(Canvas canvas) {
-    double max_y_axis = (597 - 70 * blocks[track].length).toDouble();
-    if (max_y_axis > 237) {
-      Block block1 = Block(current, getX(xAxis), max_y_axis);
+    double maxYAxis = (597 - 70 * blocks[track].length).toDouble();
+    if (maxYAxis > 237) {
+      Block block1 = Block(current, getX(xAxis), maxYAxis);
       blocks[track].add(block1);
       merge(canvas, track, blocks[track].length - 1);
       getNewNextBlock();
       return;
     } else if (current == blocks[track][blocks[track].length - 1].v) {
-      Block block1 = Block(current, xAxis, max_y_axis);
+      Block block1 = Block(current, xAxis, maxYAxis);
       blocks[track].add(block1);
       merge(canvas, track, blocks[track].length - 1);
       getNewNextBlock();
@@ -641,7 +641,7 @@ class DropTheNumber extends Game with TapDetector {
       for (int i = 0; i < blocks[x].length; i++) {
         blocks[x][i].v = blocks[x][i + 1].v;
       }
-      blocks[x].removeAt(blocks[x].length - 1);
+      blocks[x].removeLast();
       print("dropped");
     }
   }
