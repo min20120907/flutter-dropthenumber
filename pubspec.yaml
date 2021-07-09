@@ -24,7 +24,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - img/
+    - assets/image/
     - assets/audio/
-    - vid/power1/
-    - vid/power2/
+    - assets/video/power1/
+    - assets/video/power2/
