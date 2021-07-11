@@ -26,7 +26,8 @@ class DropTheNumber extends Game with TapDetector {
   // Left offset of the canvas left.
   double canvasXOffset;
   // If the start game screen is showed, it only show once when the game start.
-  bool startGameScreenFinished = true; //////////////////////////// Temporary set the value to true for debugging
+  bool startGameScreenFinished =
+      true; //////////////////////////// Temporary set the value to true for debugging
   // If the game is game over, waiting for restart.
   bool gameOver;
   // If the game is paused.
@@ -173,34 +174,26 @@ class DropTheNumber extends Game with TapDetector {
   ******************************************************d****************/
   @override
   void update(double previousLoopTimeConsumed) {
-<<<<<<< HEAD
-    // print("update() invoked"); // debug
-    print(previousLoopTimeConsumed);
-=======
     // Print lag percentage for debugging
     // int lagPercentage = ((previousLoopTimeConsumed*60-1) * 100).toInt();
     // print("Lag: " + (lagPercentage).toString() + "%");
-    
->>>>>>> 9c91594bc3e54f8b3b8fefb49b9affd542449918
+
     if (!pause && isGameRunning()) {
       // Update time
       elapsedTime = DateTime.now().difference(startTime) - pauseElapsedTime;
-<<<<<<< HEAD
-=======
 
       // Drop block
-      if(!dropCurrentBlock()) {
+      if (!dropCurrentBlock()) {
         // Hit solid block, current block cannot be drop any more!
-        if(blocks[currentTrack].length < 6) { //HERE
+        if (blocks[currentTrack].length < 6) {
+          //HERE
           blocks[currentTrack].add(currentBlock);
           setupCurrentBlock();
-        }
-        else {
+        } else {
           // print(blocks[currentTrack].length);
           print("Game over!"); //debug
         }
       }
->>>>>>> 9c91594bc3e54f8b3b8fefb49b9affd542449918
     }
   }
 
@@ -211,12 +204,11 @@ class DropTheNumber extends Game with TapDetector {
   @override
   void resize(Size screenSize) {
     this.screenSize = screenSize;
-    if(screenSize.width > screenSize.height*2/3) {
+    if (screenSize.width > screenSize.height * 2 / 3) {
       // canvasXOffset = (screenSize.width-screenSize.height*2/3)/2;
-      canvasSize = Size(screenSize.height*2/3, screenSize.height);
-      canvasXOffset = (screenSize.width-canvasSize.width) / 2;
-    }
-    else {
+      canvasSize = Size(screenSize.height * 2 / 3, screenSize.height);
+      canvasXOffset = (screenSize.width - canvasSize.width) / 2;
+    } else {
       canvasSize = screenSize;
       canvasXOffset = 0;
     }
@@ -273,15 +265,12 @@ class DropTheNumber extends Game with TapDetector {
     else {
       if (inRange(x, 25, 45) && inRange(y, 70, 75)) {
         print("Restart button clicked!"); // debug
-      }
-      else if (inRange(x, 55, 65) && inRange(y, 70, 75)) {
+      } else if (inRange(x, 55, 65) && inRange(y, 70, 75)) {
         print("Quit button clicked!"); // debug
       }
     }
   }
 
-<<<<<<< HEAD
-=======
   /**********************************************************************
   * Try to drop the current block, return true if the drop is successed.
   * If current block is going to touch a solid block, it failed to drop and return false.
@@ -290,21 +279,20 @@ class DropTheNumber extends Game with TapDetector {
     // Height of every blocks
     double blockHeight = 9;
     // The highest y in the current track
-    double currentTrackHighestSolidY = 87-blockHeight*blocks[currentTrack].length;
+    double currentTrackHighestSolidY =
+        87 - blockHeight * blocks[currentTrack].length;
     // The bottom y of current block in the next round.
-    double currentBlockBottomY = currentBlock.y+blockHeight+dropSpeed/60;
+    double currentBlockBottomY = currentBlock.y + blockHeight + dropSpeed / 60;
 
-    if(currentBlockBottomY<currentTrackHighestSolidY) {
-      currentBlock.y += dropSpeed/60;
+    if (currentBlockBottomY < currentTrackHighestSolidY) {
+      currentBlock.y += dropSpeed / 60;
       return true;
-    }
-    else {
+    } else {
       currentBlock.y = currentTrackHighestSolidY - blockHeight;
       return false;
     }
   }
 
->>>>>>> 9c91594bc3e54f8b3b8fefb49b9affd542449918
   // void blockAppend(Canvas canvas) {
   //     double maxYAxis = (597 - 70 * blocks[currentTrack].length).toDouble();
   //     if (maxYAxis > 237) {
