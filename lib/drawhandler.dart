@@ -13,6 +13,7 @@ import 'package:sprintf/sprintf.dart';
 import 'block.dart';
 
 class DrawHandler {
+<<<<<<< HEAD
   /* Variables */
   // If draw handler is initialized. (Use by tryToInit(), after initialized image and video are loaded.)
   bool initialized = false;
@@ -55,6 +56,54 @@ class DrawHandler {
   List<ui.Image> horizontalSuperPowerVideo;
 
   /**********************************************************************
+=======
+    /* Variables */
+    // If draw handler is initialized. (Use by tryToInit(), after initialized image and video are loaded.)
+    bool initialized = false;
+    // The screen size, needed by the drawBackground().
+    Size screenSize;
+    // The draw area size. (Background image is not in this limit)
+    Size canvasSize;
+    // The left margin of canvas, prevent the screen stretch. (This is already in absolute coordinates)
+    double canvasXOffset;
+
+    /* Utils */
+    // The canvas that the draw handler want to draw on.
+    Canvas canvas;
+    // Convert the relative x to ablolute x.
+    double toAbsoluteX(double x) => x*canvasSize.width/100;
+    // Convert the relative y to ablolute y.
+    double toAbsoluteY(double y) => y*canvasSize.height/100;
+    // Every block color in different value of block.
+    List<Color> blockColors = [
+        Color.fromRGBO(255, 0, 0, 1.0),
+        Color.fromRGBO(0, 255, 0, 1.0),
+        Color.fromRGBO(204, 153, 255, 1.0),
+        Color.fromRGBO(209, 237, 0, 1.0),
+        Color.fromRGBO(209, 237, 240, 1.0),
+        Color.fromRGBO(209, 40, 240, 1.0),
+        Color.fromRGBO(254, 239, 222, 1.0),
+        Color.fromRGBO(0, 239, 222, 1.0),
+        Color.fromRGBO(255, 255, 80, 1.0),
+        Color.fromRGBO(51, 102, 255, 1.0),
+        Color.fromRGBO(255, 204, 164, 1.0),
+        Color.fromRGBO(153, 255, 153, 1.0),
+        Color.fromRGBO(194, 194, 214, 1.0)
+    ];
+    // Images which will be load later.
+    ui.Image backgroundImage;
+    ui.Image musicImage;
+    ui.Image muteImage;
+    ui.Image pauseImage;
+    ui.Image playImage;
+    ui.Image horizontalSuperPowerImage;
+    ui.Image verticalSuperPowerImage;
+    // Videos combine by lots of images which will be load later.
+    List<ui.Image> verticalSuperPowerVideo;
+    List<ui.Image> horizontalSuperPowerVideo;
+
+    /**********************************************************************
+>>>>>>> 3826dc8f6573a8b1446d25bcb4c5fed6f98bef5c
     * Constructor
     **********************************************************************/
   DrawHandler() {}
@@ -66,6 +115,7 @@ class DrawHandler {
     this.canvas = canvas;
   }
 
+<<<<<<< HEAD
   /**********************************************************************
     * Set the canvas to draw, that everything will draw in correct relative size.
     * Should called to get the current screen size before every draw method invoke.
@@ -73,6 +123,16 @@ class DrawHandler {
   void setScreenSize(Size screenSize) {
     if (screenSize.width / screenSize.height > 2 / 3) {
       screenSize = Size(screenSize.width, screenSize.width * 2 / 3);
+=======
+    /**********************************************************************
+    * Set the size to draw, that everything will draw in correct relative size.
+    * Should called to get the current screen size before every draw method invoke.
+    **********************************************************************/
+    void setSize(Size screenSize, Size canvasSize, double canvasXOffset) {
+        this.screenSize = screenSize;
+        this.canvasSize = canvasSize;
+        this.canvasXOffset = canvasXOffset;
+>>>>>>> 3826dc8f6573a8b1446d25bcb4c5fed6f98bef5c
     }
     this.screenSize = screenSize;
   }
@@ -92,6 +152,7 @@ class DrawHandler {
   /**********************************************************************
     * Initial images like music image, backgroundImage, etc.
     **********************************************************************/
+<<<<<<< HEAD
   void initImages() {
     loadUiImage("assets/image/background2.png")
         .then((value) => backgroundImage = value);
@@ -107,6 +168,19 @@ class DrawHandler {
   }
 
   /**********************************************************************
+=======
+    void initImages() {
+        loadUiImage("assets/image/background.jpg").then((value) => backgroundImage = value);
+        loadUiImage("assets/image/music.png").then((value) => musicImage = value);
+        loadUiImage("assets/image/mute.png").then((value) => muteImage = value);
+        loadUiImage("assets/image/pause.png").then((value) => pauseImage = value);
+        loadUiImage("assets/image/play.png").then((value) => playImage = value);
+        loadUiImage("assets/image/horizontalSuperPower.png").then((value) => horizontalSuperPowerImage = value);
+        loadUiImage("assets/image/verticalSuperPower.png").then((value) => verticalSuperPowerImage = value);
+    }
+
+    /**********************************************************************
+>>>>>>> 3826dc8f6573a8b1446d25bcb4c5fed6f98bef5c
     * Initial super power animation video.
     * The video is combine by lots of (.png) files.
     **********************************************************************/
@@ -132,9 +206,16 @@ class DrawHandler {
   /**********************************************************************
     * Draw the game background.
     **********************************************************************/
+<<<<<<< HEAD
   void drawBackground() {
     drawImage(backgroundImage, 0, 0, 100, 100);
   }
+=======
+    void drawBackground() {
+        drawFullScreenImage(backgroundImage);
+    }
+
+>>>>>>> 3826dc8f6573a8b1446d25bcb4c5fed6f98bef5c
 
   /**********************************************************************
     * Draw all the borders.
@@ -169,9 +250,15 @@ class DrawHandler {
   /**********************************************************************
     * Draw next block hint on the canvas.
     **********************************************************************/
+<<<<<<< HEAD
   void drawNextBlockHintText() {
     drawText('Next Block ►', 24, 15.5, Colors.white, 20);
   }
+=======
+    void drawNextBlockHintText() {
+        drawText('Next Block >', 24.5, 15.5, Colors.white, 23);
+    }
+>>>>>>> 3826dc8f6573a8b1446d25bcb4c5fed6f98bef5c
 
   /**********************************************************************
     * Draw "nextBlock" on the canvas.
@@ -188,10 +275,18 @@ class DrawHandler {
   /**********************************************************************
     * Draw the game elapsed time on the canvas.
     **********************************************************************/
+<<<<<<< HEAD
   void drawTime(Duration elapsedTime) {
     if (elapsedTime == null) {
       // here
       return;
+=======
+    void drawTime(Duration elapsedTime) {
+        if(elapsedTime==null) { // here
+            return;
+        }
+        drawText('TIME:' + getTimeformat(elapsedTime), 62.5, 15.5, Colors.white, 25);
+>>>>>>> 3826dc8f6573a8b1446d25bcb4c5fed6f98bef5c
     }
     drawText(
         'TIME:' + getTimeformat(elapsedTime), 62.5, 15.5, Colors.white, 20);
@@ -200,16 +295,28 @@ class DrawHandler {
   /**********************************************************************
     * Draw mute button.
     **********************************************************************/
+<<<<<<< HEAD
   void drawMuteButton() {
     drawImage(muteImage, 80, 14.5, 8, 5);
   }
+=======
+    void drawMuteButton() {
+        drawImage(muteImage, 80, 15, 7, 4.5);
+    }
+>>>>>>> 3826dc8f6573a8b1446d25bcb4c5fed6f98bef5c
 
   /**********************************************************************
     * Draw music button.
     **********************************************************************/
+<<<<<<< HEAD
   void drawMusicButton() {
     drawImage(musicImage, 80, 14.5, 8, 5);
   }
+=======
+    void drawMusicButton() {
+        drawImage(musicImage, 80, 15, 7, 4.5);
+    }
+>>>>>>> 3826dc8f6573a8b1446d25bcb4c5fed6f98bef5c
 
   /**********************************************************************
     * Draw five cross on the canvas. (On the five track)
@@ -357,6 +464,7 @@ class DrawHandler {
   /**********************************************************************
     * Draw an animation video on the canvas.
     **********************************************************************/
+<<<<<<< HEAD
   void drawVideo(
       List<ui.Image> video, double x, double y, double width, double height) {
     // load video
@@ -367,6 +475,18 @@ class DrawHandler {
               0, 0, video[i].width.toDouble(), video[i].height.toDouble()),
           Rect.fromLTWH(x, y, width, height),
           Paint());
+=======
+    void drawVideo(List<ui.Image> video, double x, double y, double width, double height) {
+        // load video
+        for (int i = 0; i < video.length; i++) {
+            canvas.drawImageRect(
+                video[i],
+                Rect.fromLTWH(0, 0, video[i].width.toDouble(), video[i].height.toDouble()),
+                Rect.fromLTWH(toAbsoluteX(x), toAbsoluteY(y), width, height),
+                Paint()
+            );
+        }
+>>>>>>> 3826dc8f6573a8b1446d25bcb4c5fed6f98bef5c
     }
   }
 
@@ -401,12 +521,20 @@ class DrawHandler {
   /**********************************************************************
     * Draw a rectangle on the canvas.
     **********************************************************************/
+<<<<<<< HEAD
   void drawRect(double x, double y, double width, double height, Color color) {
     Rect rect = Rect.fromLTWH(toAbsoluteX(x), toAbsoluteY(y),
         toAbsoluteX(width), toAbsoluteY(height));
     Paint paint = Paint()
       ..color = color
       ..style = PaintingStyle.fill;
+=======
+    void drawRect(double x, double y, double width, double height, Color color) {
+        Rect rect = Rect.fromLTWH(toAbsoluteX(x)+canvasXOffset, toAbsoluteY(y), toAbsoluteX(width), toAbsoluteY(height));
+        Paint paint = Paint()
+            ..color = color
+            ..style = PaintingStyle.fill;
+>>>>>>> 3826dc8f6573a8b1446d25bcb4c5fed6f98bef5c
 
     canvas.drawRect(rect, paint);
   }
@@ -414,6 +542,7 @@ class DrawHandler {
   /**********************************************************************
     * Draw a rectangle but only stroke on the canvas.
     **********************************************************************/
+<<<<<<< HEAD
   void drawRectStroke(double x, double y, double width, double height,
       Color color, double strokeWidth) {
     Rect rect = Rect.fromLTWH(toAbsoluteX(x), toAbsoluteY(y),
@@ -422,6 +551,17 @@ class DrawHandler {
       ..color = color
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth;
+=======
+    void drawRectStroke(double x, double y, double width, double height, Color color, double strokeWidth) {
+        Rect rect = Rect.fromLTWH(toAbsoluteX(x)+canvasXOffset, toAbsoluteY(y), toAbsoluteX(width), toAbsoluteY(height));
+        Paint paint = Paint()
+            ..color = color
+            ..style = PaintingStyle.stroke
+            ..strokeWidth = strokeWidth;
+    
+        canvas.drawRect(rect, paint);
+    }
+>>>>>>> 3826dc8f6573a8b1446d25bcb4c5fed6f98bef5c
 
     canvas.drawRect(rect, paint);
   }
@@ -429,6 +569,7 @@ class DrawHandler {
   /**********************************************************************
     * Draw a line on the canvas by the given start point (x1, y1) and end point (x2, y2).
     **********************************************************************/
+<<<<<<< HEAD
   void drawLine(double x1, double y1, double x2, double y2, Color color,
       double strokeWidth) {
     Offset p1 = Offset(toAbsoluteX(x1), toAbsoluteY(y1));
@@ -471,3 +612,58 @@ class DrawHandler {
         Paint());
   }
 }
+=======
+    void drawLine(double x1, double y1, double x2, double y2, Color color, double strokeWidth) {
+        Offset p1 = Offset(toAbsoluteX(x1)+canvasXOffset, toAbsoluteY(y1));
+        Offset p2 = Offset(toAbsoluteX(x2)+canvasXOffset, toAbsoluteY(y2));
+        Paint paint = Paint()
+            ..color = color
+            ..strokeWidth = strokeWidth;
+        canvas.drawLine(p1, p2, paint);
+    }
+
+    /**********************************************************************
+    * Draw a text on the canvas.
+    * The x and y are coordinate the text center.
+    **********************************************************************/
+    void drawText(String text, double x, double y, Color color, double fontSize) {
+        TextPainter(
+            text: TextSpan(text: text, style: TextStyle(color: color, fontSize: fontSize)),
+            textDirection: TextDirection.ltr,
+            textAlign: TextAlign.center,
+        )
+        ..layout(minWidth: canvasSize.width, maxWidth: canvasSize.width)
+        ..paint(canvas, Offset(toAbsoluteX(x)-(canvasSize.width/2)+canvasXOffset, toAbsoluteY(y)));
+    }
+    
+    /**********************************************************************
+    * Draw an image on the canvas.
+    **********************************************************************/
+    void drawImage(ui.Image image, double x, double y, double width, double height) {
+        if(image==null) {
+            return;
+        }
+        canvas.drawImageRect(
+            image,
+            Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble()),
+            Rect.fromLTWH(toAbsoluteX(x)+canvasXOffset, toAbsoluteY(y), toAbsoluteX(width), toAbsoluteY(height)),
+            Paint()
+        );
+    }
+
+    /**********************************************************************
+    * Draw an full screen image on the canvas.
+    **********************************************************************/
+    void drawFullScreenImage(ui.Image image) {
+        if(image==null) {
+            return;
+        }
+        canvas.drawImageRect(
+            image,
+            Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble()),
+            Rect.fromLTWH(0, 0, screenSize.width, screenSize.height),
+            Paint()
+        );
+    }
+}
+>>>>>>> 3826dc8f6573a8b1446d25bcb4c5fed6f98bef5c

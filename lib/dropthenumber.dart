@@ -17,9 +17,12 @@ class DropTheNumber extends Game with TapDetector {
   /* Variables */
   // Store the screen size, the value will be set in resize() function.
   Size screenSize;
+  // Calculated canvas size in the middle of screen.
+  Size canvasSize;
+  // Left offset of the canvas left.
+  double canvasXOffset;
   // If the start game screen is showed, it only show once when the game start.
-  bool startGameScreenFinished =
-      true; //////////////////////////// Temporary set the value to true for debugging
+  bool startGameScreenFinished = true; //////////////////////////// Temporary set the value to true for debugging
   // If the game is game over, waiting for restart.
   bool gameOver;
   // If the game is paused.
@@ -54,9 +57,9 @@ class DropTheNumber extends Game with TapDetector {
   // Draw handler for helping to draw everything on screen.
   DrawHandler drawHandler = DrawHandler();
   // Convert the absolute x to relative x.
-  double toRelativeX(double x) => x * 100 / screenSize.width;
+  double toRelativeX(double x) => x * 100 / canvasSize.width;
   // Convert the absolute y to relative y.
-  double toRelativeY(double y) => y * 100 / screenSize.height;
+  double toRelativeY(double y) => y * 100 / canvasSize.height;
   // Check if the number is within given lower boundary and upper boundary.
   bool inRange(double number, double lowerBoundary, double upperBoundary) =>
       number >= lowerBoundary && number <= upperBoundary;
@@ -76,8 +79,8 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   /**********************************************************************
-    * Reset the game to initial state.
-    **********************************************************************/
+  * Reset the game to initial state.
+  **********************************************************************/
   void resetGame() {
     gameOver = false; // debug
     pause = false;
@@ -91,8 +94,8 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   /**********************************************************************
-    * Random the currentTrack, currentBlock and nextBlock.
-    **********************************************************************/
+  * Random the currentTrack, currentBlock and nextBlock.
+  **********************************************************************/
   void setupCurrentBlock() {
     // The max power quantity of 2.
     int MAX_POWER = 12;
@@ -116,7 +119,7 @@ class DropTheNumber extends Game with TapDetector {
     // print("render() invoked!"); // debug
     drawHandler.tryToInit();
     drawHandler.setCanvas(canvas);
-    drawHandler.setScreenSize(screenSize);
+    drawHandler.setSize(screenSize, canvasSize, canvasXOffset);
 
     // Draw start game screen. (It only show once when the game start)
     if (!startGameScreenFinished) {
@@ -168,31 +171,41 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   /**********************************************************************
-    * Game main loop.
-    * Override from Game, which is from 'package:flame/game.dart'.
-    ******************************************************d****************/
+  * Game main loop.
+  * Override from Game, which is from 'package:flame/game.dart'.
+  ******************************************************d****************/
   @override
   void update(double previousLoopTimeConsumed) {
     // print("update() invoked"); // debug
+    print(previousLoopTimeConsumed);
     if (!pause && isGameRunning()) {
       elapsedTime = DateTime.now().difference(startTime) - pauseElapsedTime;
     }
   }
 
   /**********************************************************************
-    * Reserve current screen size.
-    * Override from Game, which is from 'package:flame/game.dart'.
-    **********************************************************************/
+  * Reserve current screen size.
+  * Override from Game, which is from 'package:flame/game.dart'.
+  **********************************************************************/
   @override
-  void resize(Size size) {
-    screenSize = size;
+  void resize(Size screenSize) {
+    this.screenSize = screenSize;
+    if(screenSize.width > screenSize.height*2/3) {
+      // canvasXOffset = (screenSize.width-screenSize.height*2/3)/2;
+      canvasSize = Size(screenSize.height*2/3, screenSize.height);
+      canvasXOffset = (screenSize.width-canvasSize.width) / 2;
+    }
+    else {
+      canvasSize = screenSize;
+      canvasXOffset = 0;
+    }
   }
 
   /**********************************************************************
-    * Print tap position (x,y) in screen ratio.
-    * Range is (0.0, 0.0) to (100.0, 100.0).
-    * Override from Game, which is from 'package:flame/game.dart'.
-    **********************************************************************/
+  * Print tap position (x,y) in screen ratio.
+  * Range is (0.0, 0.0) to (100.0, 100.0).
+  * Override from Game, which is from 'package:flame/game.dart'.
+  **********************************************************************/
   @override
   void onTapDown(TapDownDetails event) {
     double x = toRelativeX(event.globalPosition.dx);
@@ -207,7 +220,7 @@ class DropTheNumber extends Game with TapDetector {
     // Game running
     else if (!gameOver) {
       // Mute button clicked.
-      if (inRange(x, 80, 88) && inRange(y, 14.5, 19.5)) {
+      if (inRange(x, 81, 90) && inRange(y, 15, 19.5)) {
         toggleMute();
       }
       // Pause button clicked.
@@ -239,7 +252,8 @@ class DropTheNumber extends Game with TapDetector {
     else {
       if (inRange(x, 25, 45) && inRange(y, 70, 75)) {
         print("Restart button clicked!"); // debug
-      } else if (inRange(x, 55, 65) && inRange(y, 70, 75)) {
+      }
+      else if (inRange(x, 55, 65) && inRange(y, 70, 75)) {
         print("Quit button clicked!"); // debug
       }
     }
@@ -449,8 +463,8 @@ class DropTheNumber extends Game with TapDetector {
   // }
 
   /**********************************************************************
-    * Try to toggle pause of the game is running.
-    **********************************************************************/
+  * Try to toggle pause of the game is running.
+  **********************************************************************/
   void togglePause() {
     if (isGameRunning()) {
       pause = !pause;
@@ -462,8 +476,8 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   /**********************************************************************
-    * Try to toggle the mute the the game is running music.
-    **********************************************************************/
+  * Try to toggle the mute the the game is running music.
+  **********************************************************************/
   void toggleMute() {
     mute = !mute;
 
@@ -475,8 +489,8 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   /**********************************************************************
-    * If the game is started and not game over.
-    **********************************************************************/
+  * If the game is started and not game over.
+  **********************************************************************/
   bool isGameRunning() {
     if (startGameScreenFinished && !gameOver) {
       return true;
@@ -486,9 +500,9 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   /**********************************************************************
-    * Get the track has the most blocks.
-    * If there are more than one track have the most block, get a random of them.
-    **********************************************************************/
+  * Get the track has the most blocks.
+  * If there are more than one track have the most block, get a random of them.
+  **********************************************************************/
   int getHighestTrack() {
     // The blocks quantity of the most block track
     int mostBlockQuantity = 0;
@@ -514,8 +528,8 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   /**********************************************************************
-    * Drop the blocks above of the specfic block.
-    **********************************************************************/
+  * Drop the blocks above of the specfic block.
+  **********************************************************************/
   void dropAboveBlocks(int x, int y) {
     if (x < 0 && x >= blocks.length) {
       print("Error: Try to call dropAboveBlocks() with out of bound x index!");
