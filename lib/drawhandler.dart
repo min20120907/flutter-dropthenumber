@@ -162,14 +162,14 @@ class DrawHandler {
     * The title color are the same as the color of next block rectangle.
     **********************************************************************/
     void drawTitle(int nextBlockValue) {
-        drawText('Drop The Number', 50, 6.5, getBlockColorByValue(nextBlockValue), 40);
+        drawText('Drop The Number', 50, 6.5, getBlockColorByValue(nextBlockValue), 34);
     }
 
     /**********************************************************************
     * Draw next block hint on the canvas.
     **********************************************************************/
     void drawNextBlockHintText() {
-        drawText('Next Block >', 24.5, 15.5, Colors.white, 23);
+        drawText('Next Block >', 25, 15.5, Colors.white, 17);
     }
 
     /**********************************************************************
@@ -191,7 +191,7 @@ class DrawHandler {
         if(elapsedTime==null) { // here
             return;
         }
-        drawText('TIME:' + getTimeformat(elapsedTime), 62.5, 15.5, Colors.white, 25);
+        drawText('TIME:' + getTimeformat(elapsedTime), 64, 15.5, Colors.white, 21);
     }
 
 
@@ -260,7 +260,7 @@ class DrawHandler {
     * Draw the current score.
     **********************************************************************/
     void drawScore(int score) {
-        drawText('Score: ' + score.toString(), 31, 92.5, Colors.white, 27);
+        drawText('Score: ' + score.toString(), 33, 92.5, Colors.white, 25);
     }
 
     /**********************************************************************

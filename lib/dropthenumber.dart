@@ -72,8 +72,8 @@ class DropTheNumber extends Game with TapDetector {
   // double mergingSpeed = 5;
 
   /**********************************************************************
-    * Constructor
-    **********************************************************************/
+  * Constructor
+  **********************************************************************/
   DropTheNumber() {
     resetGame();
   }
@@ -105,15 +105,14 @@ class DropTheNumber extends Game with TapDetector {
       nextBlockValue = pow(2, random.nextInt(MAX_POWER) + POWER_OFFSET).toInt();
     }
     currentTrack = random.nextInt(5);
-    currentBlock = Block(nextBlockValue, 15,
-        30); /////////////////////////////////////temporary set x and y for debug!
+    currentBlock = Block(nextBlockValue, (15+14*currentTrack).toDouble(), 30);
     nextBlockValue = pow(2, random.nextInt(MAX_POWER) + POWER_OFFSET).toInt();
   }
 
   /**********************************************************************
-    * Draw the screen on every render call.
-    * Override from Game, which is from 'package:flame/game.dart'.
-    **********************************************************************/
+  * Draw the screen on every render call.
+  * Override from Game, which is from 'package:flame/game.dart'.
+  **********************************************************************/
   @override
   void render(Canvas canvas) {
     // print("render() invoked!"); // debug
@@ -176,11 +175,17 @@ class DropTheNumber extends Game with TapDetector {
   ******************************************************d****************/
   @override
   void update(double previousLoopTimeConsumed) {
-    // print("update() invoked"); // debug
-    print(previousLoopTimeConsumed);
+    // Print lag percentage for debugging
+    int lagPercentage = ((previousLoopTimeConsumed*60-1) * 100).toInt();
+    print("Lag: " + (lagPercentage).toString() + "%");
+    
     if (!pause && isGameRunning()) {
       elapsedTime = DateTime.now().difference(startTime) - pauseElapsedTime;
+      if(!dropCurrentBlock()) {
+        // Merge current block to current track
+      }
     }
+    
   }
 
   /**********************************************************************
@@ -256,6 +261,22 @@ class DropTheNumber extends Game with TapDetector {
       else if (inRange(x, 55, 65) && inRange(y, 70, 75)) {
         print("Quit button clicked!"); // debug
       }
+    }
+  }
+
+  /**********************************************************************
+  * Try to drop the current block, return true if the drop is successed.
+  * If current block is going to touch a solid block, it failed to drop and return false.
+  **********************************************************************/
+  bool dropCurrentBlock() {
+    double dropSpeed = 10; // debug
+
+    if(true) { // debug
+      currentBlock.y += dropSpeed/60;
+      return true;
+    }
+    else {
+      return false;
     }
   }
 
