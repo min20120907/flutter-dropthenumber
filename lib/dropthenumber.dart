@@ -91,6 +91,13 @@ class DropTheNumber extends Game with TapDetector {
     // Called twice to be sure didn't used the next block value of last round.
     setupCurrentBlock();
     setupCurrentBlock();
+
+    ////////////////////////////////////////////////////////////////////////////// debug!!!
+    blocks[0].add(Block(32, 15, 42));
+    blocks[0].add(Block(16, 15, 51));
+    blocks[0].add(Block(8, 15, 60));
+    blocks[0].add(Block(4, 15, 69));
+    blocks[0].add(Block(2, 15, 78));
   }
 
   /**********************************************************************
@@ -141,13 +148,6 @@ class DropTheNumber extends Game with TapDetector {
       drawHandler.drawAllBlocks(blocks);
       drawHandler.drawCurrentBlock(currentBlock);
 
-      // debug
-      drawHandler.drawBlock(Block(32, 15, 42));
-      drawHandler.drawBlock(Block(16, 15, 51));
-      drawHandler.drawBlock(Block(8, 15, 60));
-      drawHandler.drawBlock(Block(4, 15, 69));
-      drawHandler.drawBlock(Block(2, 15, 78));
-
       drawHandler.drawScore(score);
       drawHandler.drawVerticalSuperPowerButton();
       drawHandler.drawHorizontalSuperPowerButton();
@@ -182,6 +182,7 @@ class DropTheNumber extends Game with TapDetector {
     if (!pause && isGameRunning()) {
       elapsedTime = DateTime.now().difference(startTime) - pauseElapsedTime;
       if(!dropCurrentBlock()) {
+        // print("Hit solid block, current block cannot be drop any more!"); // debug
         // Merge current block to current track
       }
     }
@@ -269,9 +270,17 @@ class DropTheNumber extends Game with TapDetector {
   * If current block is going to touch a solid block, it failed to drop and return false.
   **********************************************************************/
   bool dropCurrentBlock() {
+    // Y dropped for every second. (In percentage)
     double dropSpeed = 10; // debug
 
-    if(true) { // debug
+    // Height of every blocks
+    double blockHeight = 9;
+    // The highest y in the current track
+    double currentTrackHighestSolidY = 87-blockHeight*blocks[currentTrack].length;
+    // Predict the bottom y of current block in the next round.
+    double currentBlockNextRoundBottomY = currentBlock.y+blockHeight+dropSpeed/60;
+
+    if(currentBlockNextRoundBottomY<currentTrackHighestSolidY) {
       currentBlock.y += dropSpeed/60;
       return true;
     }
