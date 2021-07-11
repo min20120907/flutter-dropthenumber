@@ -72,8 +72,8 @@ class DropTheNumber extends Game with TapDetector {
   // double mergingSpeed = 5;
 
   /**********************************************************************
-    * Constructor
-    **********************************************************************/
+  * Constructor
+  **********************************************************************/
   DropTheNumber() {
     resetGame();
   }
@@ -111,9 +111,9 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   /**********************************************************************
-    * Draw the screen on every render call.
-    * Override from Game, which is from 'package:flame/game.dart'.
-    **********************************************************************/
+  * Draw the screen on every render call.
+  * Override from Game, which is from 'package:flame/game.dart'.
+  **********************************************************************/
   @override
   void render(Canvas canvas) {
     // print("render() invoked!"); // debug
@@ -176,8 +176,10 @@ class DropTheNumber extends Game with TapDetector {
   ******************************************************d****************/
   @override
   void update(double previousLoopTimeConsumed) {
-    // print("update() invoked"); // debug
-    print(previousLoopTimeConsumed);
+    // Print lag percentage for debugging
+    int lagPercentage = ((previousLoopTimeConsumed*60-1) * 100).toInt();
+    print("Lag: " + (lagPercentage).toString() + "%");
+    
     if (!pause && isGameRunning()) {
       elapsedTime = DateTime.now().difference(startTime) - pauseElapsedTime;
     }
