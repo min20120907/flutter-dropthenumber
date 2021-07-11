@@ -16,16 +16,20 @@ class DrawHandler {
     /* Variables */
     // If draw handler is initialized. (Use by tryToInit(), after initialized image and video are loaded.)
     bool initialized = false;
+    // The screen size, needed by the drawBackground().
+    Size screenSize;
+    // The draw area size. (Background image is not in this limit)
+    Size canvasSize;
+    // The left margin of canvas, prevent the screen stretch. (This is already in absolute coordinates)
+    double canvasXOffset;
 
     /* Utils */
     // The canvas that the draw handler want to draw on.
     Canvas canvas;
-    // The screen size for relative and absolute coordinates convertion.
-    Size screenSize;
     // Convert the relative x to ablolute x.
-    double toAbsoluteX(double x) => x*screenSize.width/100;
+    double toAbsoluteX(double x) => x*canvasSize.width/100;
     // Convert the relative y to ablolute y.
-    double toAbsoluteY(double y) => y*screenSize.height/100;
+    double toAbsoluteY(double y) => y*canvasSize.height/100;
     // Every block color in different value of block.
     List<Color> blockColors = [
         Color.fromRGBO(255, 0, 0, 1.0),
@@ -69,11 +73,13 @@ class DrawHandler {
     }
 
     /**********************************************************************
-    * Set the canvas to draw, that everything will draw in correct relative size.
+    * Set the size to draw, that everything will draw in correct relative size.
     * Should called to get the current screen size before every draw method invoke.
     **********************************************************************/
-    void setScreenSize(Size screenSize) {
+    void setSize(Size screenSize, Size canvasSize, double canvasXOffset) {
         this.screenSize = screenSize;
+        this.canvasSize = canvasSize;
+        this.canvasXOffset = canvasXOffset;
     }
 
     /**********************************************************************
@@ -92,8 +98,8 @@ class DrawHandler {
     * Initial images like music image, backgroundImage, etc.
     **********************************************************************/
     void initImages() {
-        loadUiImage("assets/image/background2.png").then((value) => backgroundImage = value);
-        loadUiImage("assets/image/music.png").then((value) => this.musicImage = value);
+        loadUiImage("assets/image/background.jpg").then((value) => backgroundImage = value);
+        loadUiImage("assets/image/music.png").then((value) => musicImage = value);
         loadUiImage("assets/image/mute.png").then((value) => muteImage = value);
         loadUiImage("assets/image/pause.png").then((value) => pauseImage = value);
         loadUiImage("assets/image/play.png").then((value) => playImage = value);
@@ -126,7 +132,7 @@ class DrawHandler {
     * Draw the game background.
     **********************************************************************/
     void drawBackground() {
-        drawImage(backgroundImage, 0, 0, 100, 100);
+        drawFullScreenImage(backgroundImage);
     }
 
 
@@ -163,7 +169,7 @@ class DrawHandler {
     * Draw next block hint on the canvas.
     **********************************************************************/
     void drawNextBlockHintText() {
-        drawText('Next Block ►', 24, 15.5, Colors.white, 20);
+        drawText('Next Block >', 24.5, 15.5, Colors.white, 23);
     }
 
     /**********************************************************************
@@ -185,7 +191,7 @@ class DrawHandler {
         if(elapsedTime==null) { // here
             return;
         }
-        drawText('TIME:' + getTimeformat(elapsedTime), 62.5, 15.5, Colors.white, 20);
+        drawText('TIME:' + getTimeformat(elapsedTime), 62.5, 15.5, Colors.white, 25);
     }
 
 
@@ -193,14 +199,14 @@ class DrawHandler {
     * Draw mute button.
     **********************************************************************/
     void drawMuteButton() {
-        drawImage(muteImage, 80, 14.5, 8, 5);
+        drawImage(muteImage, 80, 15, 7, 4.5);
     }
 
     /**********************************************************************
     * Draw music button.
     **********************************************************************/
     void drawMusicButton() {
-        drawImage(musicImage, 80, 14.5, 8, 5);
+        drawImage(musicImage, 80, 15, 7, 4.5);
     }
 
     /**********************************************************************
@@ -352,7 +358,7 @@ class DrawHandler {
             canvas.drawImageRect(
                 video[i],
                 Rect.fromLTWH(0, 0, video[i].width.toDouble(), video[i].height.toDouble()),
-                Rect.fromLTWH(x, y, width, height),
+                Rect.fromLTWH(toAbsoluteX(x), toAbsoluteY(y), width, height),
                 Paint()
             );
         }
@@ -390,7 +396,7 @@ class DrawHandler {
     * Draw a rectangle on the canvas.
     **********************************************************************/
     void drawRect(double x, double y, double width, double height, Color color) {
-        Rect rect = Rect.fromLTWH(toAbsoluteX(x), toAbsoluteY(y), toAbsoluteX(width), toAbsoluteY(height));
+        Rect rect = Rect.fromLTWH(toAbsoluteX(x)+canvasXOffset, toAbsoluteY(y), toAbsoluteX(width), toAbsoluteY(height));
         Paint paint = Paint()
             ..color = color
             ..style = PaintingStyle.fill;
@@ -402,7 +408,7 @@ class DrawHandler {
     * Draw a rectangle but only stroke on the canvas.
     **********************************************************************/
     void drawRectStroke(double x, double y, double width, double height, Color color, double strokeWidth) {
-        Rect rect = Rect.fromLTWH(toAbsoluteX(x), toAbsoluteY(y), toAbsoluteX(width), toAbsoluteY(height));
+        Rect rect = Rect.fromLTWH(toAbsoluteX(x)+canvasXOffset, toAbsoluteY(y), toAbsoluteX(width), toAbsoluteY(height));
         Paint paint = Paint()
             ..color = color
             ..style = PaintingStyle.stroke
@@ -415,8 +421,8 @@ class DrawHandler {
     * Draw a line on the canvas by the given start point (x1, y1) and end point (x2, y2).
     **********************************************************************/
     void drawLine(double x1, double y1, double x2, double y2, Color color, double strokeWidth) {
-        Offset p1 = Offset(toAbsoluteX(x1), toAbsoluteY(y1));
-        Offset p2 = Offset(toAbsoluteX(x2), toAbsoluteY(y2));
+        Offset p1 = Offset(toAbsoluteX(x1)+canvasXOffset, toAbsoluteY(y1));
+        Offset p2 = Offset(toAbsoluteX(x2)+canvasXOffset, toAbsoluteY(y2));
         Paint paint = Paint()
             ..color = color
             ..strokeWidth = strokeWidth;
@@ -433,8 +439,8 @@ class DrawHandler {
             textDirection: TextDirection.ltr,
             textAlign: TextAlign.center,
         )
-        ..layout(minWidth: screenSize.width, maxWidth: screenSize.width)
-        ..paint(canvas, Offset(toAbsoluteX(x)-(screenSize.width/2), toAbsoluteY(y)));
+        ..layout(minWidth: canvasSize.width, maxWidth: canvasSize.width)
+        ..paint(canvas, Offset(toAbsoluteX(x)-(canvasSize.width/2)+canvasXOffset, toAbsoluteY(y)));
     }
     
     /**********************************************************************
@@ -447,7 +453,22 @@ class DrawHandler {
         canvas.drawImageRect(
             image,
             Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble()),
-            Rect.fromLTWH(toAbsoluteX(x), toAbsoluteY(y), toAbsoluteX(width), toAbsoluteY(height)),
+            Rect.fromLTWH(toAbsoluteX(x)+canvasXOffset, toAbsoluteY(y), toAbsoluteX(width), toAbsoluteY(height)),
+            Paint()
+        );
+    }
+
+    /**********************************************************************
+    * Draw an full screen image on the canvas.
+    **********************************************************************/
+    void drawFullScreenImage(ui.Image image) {
+        if(image==null) {
+            return;
+        }
+        canvas.drawImageRect(
+            image,
+            Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble()),
+            Rect.fromLTWH(0, 0, screenSize.width, screenSize.height),
             Paint()
         );
     }
