@@ -14,6 +14,10 @@ import 'block.dart';
 import 'package:dropthenumber/drawhandler.dart';
 
 class DropTheNumber extends Game with TapDetector {
+  /* Setting */
+  // Y dropped for every second. (In percentage)
+  double dropSpeed = 10; // debug
+
   /* Variables */
   // Store the screen size, the value will be set in resize() function.
   Size screenSize;
@@ -91,13 +95,6 @@ class DropTheNumber extends Game with TapDetector {
     // Called twice to be sure didn't used the next block value of last round.
     setupCurrentBlock();
     setupCurrentBlock();
-
-    ////////////////////////////////////////////////////////////////////////////// debug!!!
-    blocks[0].add(Block(32, 15, 42));
-    blocks[0].add(Block(16, 15, 51));
-    blocks[0].add(Block(8, 15, 60));
-    blocks[0].add(Block(4, 15, 69));
-    blocks[0].add(Block(2, 15, 78));
   }
 
   /**********************************************************************
@@ -176,14 +173,24 @@ class DropTheNumber extends Game with TapDetector {
   @override
   void update(double previousLoopTimeConsumed) {
     // Print lag percentage for debugging
-    int lagPercentage = ((previousLoopTimeConsumed*60-1) * 100).toInt();
-    print("Lag: " + (lagPercentage).toString() + "%");
+    // int lagPercentage = ((previousLoopTimeConsumed*60-1) * 100).toInt();
+    // print("Lag: " + (lagPercentage).toString() + "%");
     
     if (!pause && isGameRunning()) {
+      // Update time
       elapsedTime = DateTime.now().difference(startTime) - pauseElapsedTime;
+
+      // Drop block
       if(!dropCurrentBlock()) {
-        // print("Hit solid block, current block cannot be drop any more!"); // debug
-        // Merge current block to current track
+        // Hit solid block, current block cannot be drop any more!
+        if(blocks[currentTrack].length < 6) { //HERE
+          blocks[currentTrack].add(currentBlock);
+          setupCurrentBlock();
+        }
+        else {
+          // print(blocks[currentTrack].length);
+          print("Game over!"); //debug
+        }
       }
     }
     
@@ -270,21 +277,19 @@ class DropTheNumber extends Game with TapDetector {
   * If current block is going to touch a solid block, it failed to drop and return false.
   **********************************************************************/
   bool dropCurrentBlock() {
-    // Y dropped for every second. (In percentage)
-    double dropSpeed = 10; // debug
-
     // Height of every blocks
     double blockHeight = 9;
     // The highest y in the current track
     double currentTrackHighestSolidY = 87-blockHeight*blocks[currentTrack].length;
-    // Predict the bottom y of current block in the next round.
-    double currentBlockNextRoundBottomY = currentBlock.y+blockHeight+dropSpeed/60;
+    // The bottom y of current block in the next round.
+    double currentBlockBottomY = currentBlock.y+blockHeight+dropSpeed/60;
 
-    if(currentBlockNextRoundBottomY<currentTrackHighestSolidY) {
+    if(currentBlockBottomY<currentTrackHighestSolidY) {
       currentBlock.y += dropSpeed/60;
       return true;
     }
     else {
+      currentBlock.y = currentTrackHighestSolidY - blockHeight;
       return false;
     }
   }
