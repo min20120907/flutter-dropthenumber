@@ -244,6 +244,7 @@ class DropTheNumber extends Game with TapDetector {
       else if (inRange(x, 15, 85) && inRange(y, 30, 87)) {
         currentTrack = (x - 15) ~/ 14;
         print("Track " + currentTrack.toString() + " clicked!"); // debug
+        setupCurrentBlock();
       }
       // Horizontal super power clicked.
       else if (inRange(x, 65, 75) && inRange(y, 92.5, 97.5)) {
@@ -293,23 +294,23 @@ class DropTheNumber extends Game with TapDetector {
     }
   }
 
-  // void blockAppend(Canvas canvas) {
-  //     double maxYAxis = (597 - 70 * blocks[currentTrack].length).toDouble();
-  //     if (maxYAxis > 237) {
-  //         Block block1 = Block(current, xAxis, maxYAxis);
-  //         blocks[currentTrack].add(block1);
-  //         merge(canvas, currentTrack, blocks[currentTrack].length - 1);
-  //         getNewNextBlock();
-  //         return;
-  //     }
-  //     else if (current == blocks[currentTrack][blocks[currentTrack].length - 1].v) {
-  //         Block block1 = Block(current, xAxis, maxYAxis);
-  //         blocks[currentTrack].add(block1);
-  //         merge(canvas, currentTrack, blocks[currentTrack].length - 1);
-  //         getNewNextBlock();
-  //         return;
-  //     }
-  // }
+  //void blockAppend(Canvas canvas) {
+  //  double maxYAxis = (597 - 70 * blocks[currentTrack].length).toDouble();
+  //  if (maxYAxis > 237) {
+  //    Block block1 = Block(current, xAxis, maxYAxis);
+  //    blocks[currentTrack].add(block1);
+  //    merge(canvas, currentTrack, blocks[currentTrack].length - 1);
+  //    getNewNextBlock();
+  //    return;
+  //  } else if (current ==
+  //      blocks[currentTrack][blocks[currentTrack].length - 1].v) {
+  //    Block block1 = Block(current, xAxis, maxYAxis);
+  //    blocks[currentTrack].add(block1);
+  //    merge(canvas, currentTrack, blocks[currentTrack].length - 1);
+  //    getNewNextBlock();
+  //    return;
+  //  }
+  //}
 
   // Merge method
   // void merge(Canvas canvas, int x, int y) {
