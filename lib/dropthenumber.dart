@@ -14,6 +14,10 @@ import 'block.dart';
 import 'package:dropthenumber/drawhandler.dart';
 
 class DropTheNumber extends Game with TapDetector {
+  /* Setting */
+  // Y dropped for every second. (In percentage)
+  double dropSpeed = 10; // debug
+
   /* Variables */
   // Store the screen size, the value will be set in resize() function.
   Size screenSize;
@@ -22,7 +26,8 @@ class DropTheNumber extends Game with TapDetector {
   // Left offset of the canvas left.
   double canvasXOffset;
   // If the start game screen is showed, it only show once when the game start.
-  bool startGameScreenFinished = true; //////////////////////////// Temporary set the value to true for debugging
+  bool startGameScreenFinished =
+      true; //////////////////////////// Temporary set the value to true for debugging
   // If the game is game over, waiting for restart.
   bool gameOver;
   // If the game is paused.
@@ -142,13 +147,6 @@ class DropTheNumber extends Game with TapDetector {
       drawHandler.drawAllBlocks(blocks);
       drawHandler.drawCurrentBlock(currentBlock);
 
-      // debug
-      drawHandler.drawBlock(Block(32, 15, 42));
-      drawHandler.drawBlock(Block(16, 15, 51));
-      drawHandler.drawBlock(Block(8, 15, 60));
-      drawHandler.drawBlock(Block(4, 15, 69));
-      drawHandler.drawBlock(Block(2, 15, 78));
-
       drawHandler.drawScore(score);
       drawHandler.drawVerticalSuperPowerButton();
       drawHandler.drawHorizontalSuperPowerButton();
@@ -176,10 +174,26 @@ class DropTheNumber extends Game with TapDetector {
   ******************************************************d****************/
   @override
   void update(double previousLoopTimeConsumed) {
-    // print("update() invoked"); // debug
-    print(previousLoopTimeConsumed);
+    // Print lag percentage for debugging
+    // int lagPercentage = ((previousLoopTimeConsumed*60-1) * 100).toInt();
+    // print("Lag: " + (lagPercentage).toString() + "%");
+
     if (!pause && isGameRunning()) {
+      // Update time
       elapsedTime = DateTime.now().difference(startTime) - pauseElapsedTime;
+
+      // Drop block
+      if (!dropCurrentBlock()) {
+        // Hit solid block, current block cannot be drop any more!
+        if (blocks[currentTrack].length < 6) {
+          //HERE
+          blocks[currentTrack].add(currentBlock);
+          setupCurrentBlock();
+        } else {
+          // print(blocks[currentTrack].length);
+          print("Game over!"); //debug
+        }
+      }
     }
   }
 
@@ -190,12 +204,11 @@ class DropTheNumber extends Game with TapDetector {
   @override
   void resize(Size screenSize) {
     this.screenSize = screenSize;
-    if(screenSize.width > screenSize.height*2/3) {
+    if (screenSize.width > screenSize.height * 2 / 3) {
       // canvasXOffset = (screenSize.width-screenSize.height*2/3)/2;
-      canvasSize = Size(screenSize.height*2/3, screenSize.height);
-      canvasXOffset = (screenSize.width-canvasSize.width) / 2;
-    }
-    else {
+      canvasSize = Size(screenSize.height * 2 / 3, screenSize.height);
+      canvasXOffset = (screenSize.width - canvasSize.width) / 2;
+    } else {
       canvasSize = screenSize;
       canvasXOffset = 0;
     }
@@ -231,6 +244,7 @@ class DropTheNumber extends Game with TapDetector {
       else if (inRange(x, 15, 85) && inRange(y, 30, 87)) {
         currentTrack = (x - 15) ~/ 14;
         print("Track " + currentTrack.toString() + " clicked!"); // debug
+        setupCurrentBlock();
       }
       // Horizontal super power clicked.
       else if (inRange(x, 65, 75) && inRange(y, 92.5, 97.5)) {
@@ -252,30 +266,51 @@ class DropTheNumber extends Game with TapDetector {
     else {
       if (inRange(x, 25, 45) && inRange(y, 70, 75)) {
         print("Restart button clicked!"); // debug
-      }
-      else if (inRange(x, 55, 65) && inRange(y, 70, 75)) {
+      } else if (inRange(x, 55, 65) && inRange(y, 70, 75)) {
         print("Quit button clicked!"); // debug
       }
     }
   }
 
-  // void blockAppend(Canvas canvas) {
-  //     double maxYAxis = (597 - 70 * blocks[currentTrack].length).toDouble();
-  //     if (maxYAxis > 237) {
-  //         Block block1 = Block(current, xAxis, maxYAxis);
-  //         blocks[currentTrack].add(block1);
-  //         merge(canvas, currentTrack, blocks[currentTrack].length - 1);
-  //         getNewNextBlock();
-  //         return;
-  //     }
-  //     else if (current == blocks[currentTrack][blocks[currentTrack].length - 1].v) {
-  //         Block block1 = Block(current, xAxis, maxYAxis);
-  //         blocks[currentTrack].add(block1);
-  //         merge(canvas, currentTrack, blocks[currentTrack].length - 1);
-  //         getNewNextBlock();
-  //         return;
-  //     }
-  // }
+  /**********************************************************************
+  * Try to drop the current block, return true if the drop is successed.
+  * If current block is going to touch a solid block, it failed to drop and return false.
+  **********************************************************************/
+  bool dropCurrentBlock() {
+    // Height of every blocks
+    double blockHeight = 9;
+    // The highest y in the current track
+    double currentTrackHighestSolidY =
+        87 - blockHeight * blocks[currentTrack].length;
+    // The bottom y of current block in the next round.
+    double currentBlockBottomY = currentBlock.y + blockHeight + dropSpeed / 60;
+
+    if (currentBlockBottomY < currentTrackHighestSolidY) {
+      currentBlock.y += dropSpeed / 60;
+      return true;
+    } else {
+      currentBlock.y = currentTrackHighestSolidY - blockHeight;
+      return false;
+    }
+  }
+
+  //void blockAppend(Canvas canvas) {
+  //  double maxYAxis = (597 - 70 * blocks[currentTrack].length).toDouble();
+  //  if (maxYAxis > 237) {
+  //    Block block1 = Block(current, xAxis, maxYAxis);
+  //    blocks[currentTrack].add(block1);
+  //    merge(canvas, currentTrack, blocks[currentTrack].length - 1);
+  //    getNewNextBlock();
+  //    return;
+  //  } else if (current ==
+  //      blocks[currentTrack][blocks[currentTrack].length - 1].v) {
+  //    Block block1 = Block(current, xAxis, maxYAxis);
+  //    blocks[currentTrack].add(block1);
+  //    merge(canvas, currentTrack, blocks[currentTrack].length - 1);
+  //    getNewNextBlock();
+  //    return;
+  //  }
+  //}
 
   // Merge method
   // void merge(Canvas canvas, int x, int y) {
