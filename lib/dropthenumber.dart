@@ -87,10 +87,10 @@ class DropTheNumber extends Game with TapDetector {
   * Reset the game to initial state.
   **********************************************************************/
   void resetGame() {
+    score = 0;
     gameOver = false; // debug
     pause = false;
     pauseElapsedTime = Duration();
-    score = 0;
     startTime = DateTime.now();
 
     // Called twice to be sure didn't used the next block value of last round.
@@ -110,8 +110,7 @@ class DropTheNumber extends Game with TapDetector {
       nextBlockValue = pow(2, random.nextInt(MAX_POWER) + POWER_OFFSET).toInt();
     }
     currentTrack = random.nextInt(5);
-    currentBlock = Block(nextBlockValue, 15,
-        30); /////////////////////////////////////temporary set x and y for debug!
+    currentBlock = Block(nextBlockValue, (15+14*currentTrack).toDouble(), 30);
     nextBlockValue = pow(2, random.nextInt(MAX_POWER) + POWER_OFFSET).toInt();
   }
 
@@ -187,7 +186,7 @@ class DropTheNumber extends Game with TapDetector {
         // Hit solid block, current block cannot be drop any more!
         if (blocks[currentTrack].length < 6) {
           //HERE
-          blocks[currentTrack].add(currentBlock);
+          appendCurrentBlockToTrack();
           setupCurrentBlock();
         } else {
           // print(blocks[currentTrack].length);
@@ -244,6 +243,7 @@ class DropTheNumber extends Game with TapDetector {
       else if (inRange(x, 15, 85) && inRange(y, 30, 87)) {
         currentTrack = (x - 15) ~/ 14;
         print("Track " + currentTrack.toString() + " clicked!"); // debug
+        appendCurrentBlockToTrack();
         setupCurrentBlock();
       }
       // Horizontal super power clicked.
@@ -292,6 +292,20 @@ class DropTheNumber extends Game with TapDetector {
       currentBlock.y = currentTrackHighestSolidY - blockHeight;
       return false;
     }
+  }
+
+  /**********************************************************************
+  * Add current block to solid blocks of current track.
+  **********************************************************************/
+  void appendCurrentBlockToTrack() {
+    // Height of every blocks
+    double blockHeight = 9;
+    // Make sure the x axis of current block is in the right position.
+    currentBlock.x = 15.0+14*currentTrack;
+    // Move the block to the highest position of current track.
+    currentBlock.y = 87 - blockHeight * (blocks[currentTrack].length+1);
+    // Add current block to blocks array.
+    blocks[currentTrack].add(currentBlock);
   }
 
   //void blockAppend(Canvas canvas) {
