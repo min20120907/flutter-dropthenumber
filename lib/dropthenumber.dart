@@ -155,7 +155,6 @@ class DropTheNumber extends Game with TapDetector {
       } else {
         drawHandler.drawPlayButton();
       }
-
       // if (!pause) {
       //     yAxis += 1;
       //     maxYAxis = (597 - 70 * blocks[currentTrack].length).toDouble();
@@ -192,6 +191,7 @@ class DropTheNumber extends Game with TapDetector {
         } else {
           // print(blocks[currentTrack].length);
           print("Game over!"); //debug
+          this.gameOver = true;
         }
       }
     }
@@ -246,6 +246,8 @@ class DropTheNumber extends Game with TapDetector {
         print("Track " + currentTrack.toString() + " clicked!"); // debug
         appendCurrentBlockToTrack();
         setupCurrentBlock();
+        // do the merge process
+        merge(currentTrack, blocks[currentTrack].length);
       }
       // Horizontal super power clicked.
       else if (inRange(x, 65, 75) && inRange(y, 92.5, 97.5)) {
@@ -307,8 +309,6 @@ class DropTheNumber extends Game with TapDetector {
     currentBlock.y = 87 - blockHeight * (blocks[currentTrack].length + 1);
     // Add current block to blocks array.
     blocks[currentTrack].add(currentBlock);
-    // do the merge process
-    merge(currentTrack, blocks[currentTrack].length - 1);
   }
 
   // Merge method
