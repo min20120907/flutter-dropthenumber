@@ -17,7 +17,6 @@ class DropTheNumber extends Game with TapDetector {
   /* Setting */
   // Y dropped for every second. (In percentage)
   double dropSpeed = 10; // debug
-
   /* Variables */
   // Store the screen size, the value will be set in resize() function.
   Size screenSize;
@@ -53,6 +52,7 @@ class DropTheNumber extends Game with TapDetector {
   // The time elapsed of the game pause.
   Duration pauseElapsedTime;
 
+  double mergingSpeed = 5;
   DateTime cooldownTimeHor; // wip
   DateTime cooldownTimeVert; // wip
 
@@ -110,7 +110,8 @@ class DropTheNumber extends Game with TapDetector {
       nextBlockValue = pow(2, random.nextInt(MAX_POWER) + POWER_OFFSET).toInt();
     }
     currentTrack = random.nextInt(5);
-    currentBlock = Block(nextBlockValue, (15+14*currentTrack).toDouble(), 30);
+    currentBlock =
+        Block(nextBlockValue, (15 + 14 * currentTrack).toDouble(), 30);
     nextBlockValue = pow(2, random.nextInt(MAX_POWER) + POWER_OFFSET).toInt();
   }
 
@@ -301,13 +302,386 @@ class DropTheNumber extends Game with TapDetector {
     // Height of every blocks
     double blockHeight = 9;
     // Make sure the x axis of current block is in the right position.
-    currentBlock.x = 15.0+14*currentTrack;
+    currentBlock.x = 15.0 + 14 * currentTrack;
     // Move the block to the highest position of current track.
-    currentBlock.y = 87 - blockHeight * (blocks[currentTrack].length+1);
+    currentBlock.y = 87 - blockHeight * (blocks[currentTrack].length + 1);
     // Add current block to blocks array.
     blocks[currentTrack].add(currentBlock);
+    // do the merge process
+    merge(currentTrack, blocks[currentTrack].length - 1);
   }
 
+  // Merge method
+  void merge(int x, int y) {
+    if (x < 0 && x > 5) return;
+    if (y < 0 && blocks[x].length - 1 < y) return;
+
+    // Check left and right and down(T shape)
+    if (x > 0 && x < 4 && y > 0) {
+      int leftLineY = blocks[x - 1].length - 1;
+      int rightLineY = blocks[x + 1].length - 1;
+      if (leftLineY >= y && rightLineY >= y) {
+        if (blocks[x][y].v == blocks[x - 1][y].v &&
+            blocks[x][y].v == blocks[x + 1][y].v &&
+            blocks[x][y].v == blocks[x][y - 1].v) {
+          int old = blocks[x][y].v;
+          double ii = blocks[x][y].y;
+          double jj = blocks[x - 1][y].x;
+          double kk = blocks[x + 1][y].x;
+
+          blocks[x][y - 1].v *= 8;
+          score += blocks[x][y - 1].v;
+          dropAboveBlocks(x - 1, y);
+          dropAboveBlocks(x + 1, y);
+
+          while (jj < blocks[x][y - 1].x && kk > blocks[x][y - 1].x) {
+            drawHandler.drawBackground();
+            drawHandler.drawBorders();
+            drawHandler.drawTitle(nextBlockValue);
+            drawHandler.drawNextBlockHintText();
+            drawHandler.drawNextBlock(nextBlockValue);
+            drawHandler.drawTime(elapsedTime);
+            if (!mute) {
+              drawHandler.drawMusicButton();
+            } else {
+              drawHandler.drawMuteButton();
+            }
+            drawHandler.drawFiveCross();
+            drawHandler.drawAllBlocks(blocks);
+
+            drawHandler.drawScore(score);
+            drawHandler.drawVerticalSuperPowerButton();
+            drawHandler.drawHorizontalSuperPowerButton();
+            if (!pause) {
+              drawHandler.drawPauseButton();
+            } else {
+              drawHandler.drawPlayButton();
+            }
+
+            ii += mergingSpeed;
+            jj += mergingSpeed;
+          }
+          while (ii < blocks[x][y - 1].y) {
+            drawHandler.drawBackground();
+            drawHandler.drawBorders();
+            drawHandler.drawTitle(nextBlockValue);
+            drawHandler.drawNextBlockHintText();
+            drawHandler.drawNextBlock(nextBlockValue);
+            drawHandler.drawTime(elapsedTime);
+            if (!mute) {
+              drawHandler.drawMusicButton();
+            } else {
+              drawHandler.drawMuteButton();
+            }
+            drawHandler.drawFiveCross();
+            drawHandler.drawAllBlocks(blocks);
+
+            drawHandler.drawScore(score);
+            drawHandler.drawVerticalSuperPowerButton();
+            drawHandler.drawHorizontalSuperPowerButton();
+            if (!pause) {
+              drawHandler.drawPauseButton();
+            } else {
+              drawHandler.drawPlayButton();
+            }
+
+            drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, ii));
+            ii += mergingSpeed;
+          }
+          merge(x, y);
+          merge(x, y - 1);
+          merge(x - 1, y);
+          merge(x + 1, y);
+          // something about to check above
+          merge(x, blocks[x].length - 1);
+          merge(x - 1, blocks[x - 1].length - 1);
+          merge(x + 1, blocks[x + 1].length - 1);
+          return;
+        }
+      }
+    }
+    // Check right and down(Gamma shape)
+    if (x < 4 && y > 0) {
+      int rightLineY = blocks[x + 1].length - 1;
+      if (rightLineY >= y) {
+        if (blocks[x][y].v == blocks[x + 1][y].v &&
+            blocks[x][y].v == blocks[x][y - 1].v) {
+          int old = blocks[x][y].v;
+          double ii = blocks[x][y].y;
+          double jj = blocks[x + 1][y].x;
+          blocks[x][y - 1].v *= 4;
+          score += blocks[x][y - 1].v;
+          dropAboveBlocks(x + 1, y);
+          while (jj > blocks[x][y].x) {
+            drawHandler.drawBackground();
+            drawHandler.drawBorders();
+            drawHandler.drawTitle(nextBlockValue);
+            drawHandler.drawNextBlockHintText();
+            drawHandler.drawNextBlock(nextBlockValue);
+            drawHandler.drawTime(elapsedTime);
+            if (!mute) {
+              drawHandler.drawMusicButton();
+            } else {
+              drawHandler.drawMuteButton();
+            }
+            drawHandler.drawFiveCross();
+            drawHandler.drawAllBlocks(blocks);
+
+            drawHandler.drawScore(score);
+            drawHandler.drawVerticalSuperPowerButton();
+            drawHandler.drawHorizontalSuperPowerButton();
+            if (!pause) {
+              drawHandler.drawPauseButton();
+            } else {
+              drawHandler.drawPlayButton();
+            }
+            drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+            jj -= mergingSpeed;
+          }
+          dropAboveBlocks(x, y);
+          while (ii < blocks[x][y - 1].y) {
+            drawHandler.drawBackground();
+            drawHandler.drawBorders();
+            drawHandler.drawTitle(nextBlockValue);
+            drawHandler.drawNextBlockHintText();
+            drawHandler.drawNextBlock(nextBlockValue);
+            drawHandler.drawTime(elapsedTime);
+            if (!mute) {
+              drawHandler.drawMusicButton();
+            } else {
+              drawHandler.drawMuteButton();
+            }
+            drawHandler.drawFiveCross();
+            drawHandler.drawAllBlocks(blocks);
+
+            drawHandler.drawScore(score);
+            drawHandler.drawVerticalSuperPowerButton();
+            drawHandler.drawHorizontalSuperPowerButton();
+            if (!pause) {
+              drawHandler.drawPauseButton();
+            } else {
+              drawHandler.drawPlayButton();
+            }
+            drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, ii));
+            ii += mergingSpeed;
+          }
+          merge(x, y);
+          merge(x, y - 1);
+          merge(x - 1, y);
+
+          // check above
+          merge(x, blocks[x].length - 1);
+          merge(x - 1, blocks[x].length - 1);
+          return;
+        }
+      }
+    }
+    // Check left and down(7 Shape)
+    if (x > 0 && y > 0) {
+      int leftLineY = blocks[x - 1].length - 1;
+      if (leftLineY > 0) {
+        if (blocks[x][y].v == blocks[x - 1][y].v &&
+            blocks[x][y].v == blocks[x][y - 1].v) {
+          int old = blocks[x][y].v;
+          double ii = blocks[x][y].y;
+          double jj = blocks[x - 1][y].x;
+          score += blocks[x][y - 1].v;
+          blocks[x][y - 1].v *= 4;
+          dropAboveBlocks(x - 1, y);
+          while (jj < blocks[x][y].x) {
+            drawHandler.drawBackground();
+            drawHandler.drawBorders();
+            drawHandler.drawTitle(nextBlockValue);
+            drawHandler.drawNextBlockHintText();
+            drawHandler.drawNextBlock(nextBlockValue);
+            drawHandler.drawTime(elapsedTime);
+            if (!mute) {
+              drawHandler.drawMusicButton();
+            } else {
+              drawHandler.drawMuteButton();
+            }
+            drawHandler.drawFiveCross();
+            drawHandler.drawAllBlocks(blocks);
+
+            drawHandler.drawScore(score);
+            drawHandler.drawVerticalSuperPowerButton();
+            drawHandler.drawHorizontalSuperPowerButton();
+            if (!pause) {
+              drawHandler.drawPauseButton();
+            } else {
+              drawHandler.drawPlayButton();
+            }
+            drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+            jj += mergingSpeed;
+          }
+          while (ii < blocks[x][y - 1].y) {
+            drawHandler.drawBackground();
+            drawHandler.drawBorders();
+            drawHandler.drawTitle(nextBlockValue);
+            drawHandler.drawNextBlockHintText();
+            drawHandler.drawNextBlock(nextBlockValue);
+            drawHandler.drawTime(elapsedTime);
+            if (!mute) {
+              drawHandler.drawMusicButton();
+            } else {
+              drawHandler.drawMuteButton();
+            }
+            drawHandler.drawFiveCross();
+            drawHandler.drawAllBlocks(blocks);
+
+            drawHandler.drawScore(score);
+            drawHandler.drawVerticalSuperPowerButton();
+            drawHandler.drawHorizontalSuperPowerButton();
+            if (!pause) {
+              drawHandler.drawPauseButton();
+            } else {
+              drawHandler.drawPlayButton();
+            }
+            drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+            ii += mergingSpeed;
+          }
+          merge(x, y);
+          merge(x, y - 1);
+          merge(x - 1, y);
+          merge(x, blocks[x].length - 1);
+          merge(x - 1, blocks[x - 1].length - 1);
+          return;
+        }
+      }
+    }
+    // Check left and right(horizontal shape)
+    if (x > 0 && x < 4) {
+      int leftLineY = blocks[x - 1].length - 1;
+      int rightLineY = blocks[x + 1].length - 1;
+      if (leftLineY >= y && rightLineY >= y) {
+        if (blocks[x][y].v == blocks[x - 1][y].v &&
+            blocks[x][y].v == blocks[x + 1][y].v) {
+          int old = blocks[x][y].v;
+          double ii = blocks[x + 1][y].x;
+          double jj = blocks[x - 1][y].x;
+          blocks[x][y].v *= 4;
+          while (ii > blocks[x][y].x && jj < blocks[x][y].x) {
+            drawHandler.drawBackground();
+            drawHandler.drawBorders();
+            drawHandler.drawTitle(nextBlockValue);
+            drawHandler.drawNextBlockHintText();
+            drawHandler.drawNextBlock(nextBlockValue);
+            drawHandler.drawTime(elapsedTime);
+            if (!mute) {
+              drawHandler.drawMusicButton();
+            } else {
+              drawHandler.drawMuteButton();
+            }
+            drawHandler.drawFiveCross();
+            drawHandler.drawAllBlocks(blocks);
+
+            drawHandler.drawScore(score);
+            drawHandler.drawVerticalSuperPowerButton();
+            drawHandler.drawHorizontalSuperPowerButton();
+            if (!pause) {
+              drawHandler.drawPauseButton();
+            } else {
+              drawHandler.drawPlayButton();
+            }
+            drawHandler.drawBlock(Block(old, ii, blocks[x][y].y));
+            drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+            ii += mergingSpeed;
+            jj += mergingSpeed;
+          }
+          merge(x, y);
+          merge(x - 1, y);
+          merge(x + 1, y);
+          // check above
+          merge(x, blocks[x].length - 1);
+          merge(x - 1, blocks[x - 1].length - 1);
+          merge(x + 1, blocks[x + 1].length - 1);
+          return;
+        }
+      }
+    }
+    // Check right
+    if (x < 4) {
+      int rightLineY = blocks[x + 1].length - 1;
+      if (rightLineY >= y) {
+        if (blocks[x][y].v == blocks[x + 1][y].v) {
+          int old = blocks[x][y].v;
+          double jj = blocks[x + 1][y].x;
+          blocks[x][y].v *= 2;
+          score += blocks[x][y].v;
+          while (jj > blocks[x][y].x) {
+            drawHandler.drawBackground();
+            drawHandler.drawBorders();
+            drawHandler.drawTitle(nextBlockValue);
+            drawHandler.drawNextBlockHintText();
+            drawHandler.drawNextBlock(nextBlockValue);
+            drawHandler.drawTime(elapsedTime);
+            if (!mute) {
+              drawHandler.drawMusicButton();
+            } else {
+              drawHandler.drawMuteButton();
+            }
+            drawHandler.drawFiveCross();
+            drawHandler.drawAllBlocks(blocks);
+
+            drawHandler.drawScore(score);
+            drawHandler.drawVerticalSuperPowerButton();
+            drawHandler.drawHorizontalSuperPowerButton();
+            if (!pause) {
+              drawHandler.drawPauseButton();
+            } else {
+              drawHandler.drawPlayButton();
+            }
+            drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+            jj -= mergingSpeed;
+          }
+          merge(x, y);
+          merge(x + 1, y - 1);
+          merge(x + 1, blocks[x + 1].length - 1);
+          return;
+        }
+      }
+    }
+    // Check down
+    if (y > 0) {
+      if (blocks[x][y].v == blocks[x][y - 1].v) {
+        double jj = blocks[x][y].y;
+        int old = blocks[x][y].v;
+        blocks[x][y].v *= 2;
+        score += blocks[x][y - 1].v;
+        dropAboveBlocks(x, y);
+        while (jj < blocks[x][y - 1].y) {
+          drawHandler.drawBackground();
+          drawHandler.drawBorders();
+          drawHandler.drawTitle(nextBlockValue);
+          drawHandler.drawNextBlockHintText();
+          drawHandler.drawNextBlock(nextBlockValue);
+          drawHandler.drawTime(elapsedTime);
+          if (!mute) {
+            drawHandler.drawMusicButton();
+          } else {
+            drawHandler.drawMuteButton();
+          }
+          drawHandler.drawFiveCross();
+          drawHandler.drawAllBlocks(blocks);
+
+          drawHandler.drawScore(score);
+          drawHandler.drawVerticalSuperPowerButton();
+          drawHandler.drawHorizontalSuperPowerButton();
+          if (!pause) {
+            drawHandler.drawPauseButton();
+          } else {
+            drawHandler.drawPlayButton();
+          }
+          drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, jj));
+          jj += mergingSpeed;
+        }
+        merge(x, y);
+        merge(x, y - 1);
+        merge(x, blocks[x].length - 1);
+        return;
+      }
+    }
+  }
   //void blockAppend(Canvas canvas) {
   //  double maxYAxis = (597 - 70 * blocks[currentTrack].length).toDouble();
   //  if (maxYAxis > 237) {
@@ -325,191 +699,6 @@ class DropTheNumber extends Game with TapDetector {
   //    return;
   //  }
   //}
-
-  // Merge method
-  // void merge(Canvas canvas, int x, int y) {
-  //     if (x < 0 && x > 5) return;
-  //     if (y < 0 && blocks[x].length - 1 < y) return;
-
-  //     // Check left and right and down(T shape)
-  //     if (x > 0 && x < 4 && y > 0) {
-  //         int leftLineY = blocks[x - 1].length - 1;
-  //         int rightLineY = blocks[x + 1].length - 1;
-  //         if (leftLineY >= y && rightLineY >= y) {
-  //             if (blocks[x][y].v == blocks[x - 1][y].v && blocks[x][y].v == blocks[x + 1][y].v && blocks[x][y].v == blocks[x][y - 1].v) {
-  //                 int old = blocks[x][y].v;
-  //                 double ii = blocks[x][y].y;
-  //                 double jj = blocks[x - 1][y].x;
-  //                 double kk = blocks[x + 1][y].x;
-
-  //                 blocks[x][y - 1].v *= 8;
-  //                 score += blocks[x][y - 1].v;
-  //                 dropAboveBlocks(x - 1, y);
-  //                 dropAboveBlocks(x + 1, y);
-
-  //                 while (jj < blocks[x][y - 1].x && kk > blocks[x][y - 1].x) {
-  //                     drawBackground(canvas);
-  //                     drawBorders(canvas);
-  //                     drawAllTexts(canvas);
-  //                     drawTime(canvas);
-  //                     drawAllBlocks(canvas);
-
-  //                     //Draw next block hint
-  //                     drawNextBlock(canvas);
-  //                     ii += mergingSpeed;
-  //                     jj += mergingSpeed;
-  //                 }
-  //                 while (ii < blocks[x][y - 1].y) {
-  //                     drawBackground(canvas);
-  //                     drawBorders(canvas);
-  //                     drawTime(canvas);
-  //                     drawAllBlocks(canvas);
-
-  //                     drawNextBlock(canvas);
-  //                     drawBlock(canvas, Block(old, blocks[x][y - 1].x, ii));
-  //                     ii += mergingSpeed;
-  //                 }
-  //                 merge(canvas, x, y);
-  //                 merge(canvas, x, y - 1);
-  //                 merge(canvas, x - 1, y);
-  //                 merge(canvas, x + 1, y);
-  //                 // something about to check above
-  //                 merge(canvas, x, blocks[x].length - 1);
-  //                 merge(canvas, x - 1, blocks[x - 1].length - 1);
-  //                 merge(canvas, x + 1, blocks[x + 1].length - 1);
-  //                 return;
-  //             }
-  //         }
-  //     }
-  //     // Check right and down(Gamma shape)
-  //     if (x < 4 && y > 0) {
-  //         int rightLineY = blocks[x + 1].length - 1;
-  //         if (rightLineY >= y) {
-  //             if (blocks[x][y].v == blocks[x + 1][y].v && blocks[x][y].v == blocks[x][y - 1].v) {
-  //                 int old = blocks[x][y].v;
-  //                 double ii = blocks[x][y].y;
-  //                 double jj = blocks[x + 1][y].x;
-  //                 blocks[x][y - 1].v *= 4;
-  //                 score += blocks[x][y - 1].v;
-  //                 dropAboveBlocks(x + 1, y);
-  //                 while (jj > blocks[x][y].x) {
-  //                     drawBackground(canvas);
-  //                     drawBorders(canvas);
-  //                     drawAllTexts(canvas);
-  //                     drawTime(canvas);
-  //                     drawAllBlocks(canvas);
-  //                     drawBlock(canvas, Block(old, jj, blocks[x][y].y));
-  //                     jj -= mergingSpeed;
-  //                 }
-  //                 dropAboveBlocks(x, y);
-  //                 while (ii < blocks[x][y - 1].y) {
-  //                     drawBackground(canvas);
-  //                     drawBorders(canvas);
-  //                     drawAllTexts(canvas);
-  //                     drawTime(canvas);
-  //                     drawAllBlocks(canvas);
-  //                     drawNextBlock(canvas);
-  //                     drawBlock(canvas, Block(old, blocks[x][y - 1].x, ii));
-  //                     ii += mergingSpeed;
-  //                 }
-  //                 merge(canvas, x, y);
-  //                 merge(canvas, x, y - 1);
-  //                 merge(canvas, x - 1, y);
-
-  //                 // check above
-  //                 merge(canvas, x, blocks[x].length - 1);
-  //                 merge(canvas, x - 1, blocks[x].length - 1);
-  //                 return;
-  //             }
-  //         }
-  //     }
-  //     // Check left and down(7 Shape)
-  //     if (x > 0 && y > 0) {
-  //         int leftLineY = blocks[x - 1].length - 1;
-  //         if (leftLineY > 0) {
-  //             if (blocks[x][y].v == blocks[x - 1][y].v && blocks[x][y].v == blocks[x][y - 1].v) {
-  //                 int old = blocks[x][y].v;
-  //                 double ii = blocks[x][y].y;
-  //                 double jj = blocks[x - 1][y].x;
-  //                 score += blocks[x][y - 1].v;
-  //                 blocks[x][y - 1].v *= 4;
-  //                 dropAboveBlocks(x - 1, y);
-  //                 while (jj < blocks[x][y].x) {
-  //                     drawBackground(canvas);
-  //                     drawBorders(canvas);
-  //                     drawAllTexts(canvas);
-  //                     drawAllBlocks(canvas);
-  //                     drawNext    , x, y - 1);
-  //                 merge(canvas, x - 1, y);
-  //                 merge(canvas, x, blocks[x].length - 1);
-  //                 merge(canvas, x - 1, blocks[x - 1].length - 1);
-  //                 return;
-  //             }
-  //         }
-  //     }
-  //     // Check left and right(horizontal shape)
-  //     if (x > 0 && x < 4) {
-  //         int leftLineY = blocks[x - 1].length - 1;
-  //         int rightLineY = blocks[x + 1].length - 1;
-  //         if (leftLineY >= y && rightLineY >= y) {
-  //             if (blocks[x][y].v == blocks[x - 1][y].v && blocks[x][y].v == blocks[x + 1][y].v) {
-  //                 int old = blocks[x][y].v;
-  //                 double ii = blocks[x + 1][y].x;
-  //                 double jj = blocks[x - 1][y].x;
-  //                 blocks[x][y].v *= 4;
-  //                 while (ii >    , x, y);
-  //                 merge(canvas, x - 1, y);
-  //                 merge(canvas, x + 1, y);
-  //                 // check above
-  //                 merge(canvas, x, blocks[x].length - 1);
-  //                 merge(canvas, x - 1, blocks[x - 1].length - 1);
-  //                 merge(canvas, x + 1, blocks[x + 1].length - 1);
-  //                 return;
-  //             }
-  //         }
-  //     }
-  //     // Check right
-  //     if (x < 4) {
-  //         int rightLineY = blocks[x + 1].length - 1;
-  //         if (rightLineY >= y) {
-  //             if (blocks[x][y].v == blocks[x + 1][y].v) {
-  //                 int old = blocks[x][y].v;
-  //                 double jj = blocks[x + 1][y].x;
-  //                 blocks[x][y].v *= 2;
-  //                 score += blocks[x][y].v;
-  //                 while (jj > blocks[x][y].x) {
-  //                     drawBackground(canvas);
-  //                     drawBorders(canvas)maxy
-  //                 merge(canvas, x + 1, blocks[x + 1].length - 1);
-  //                 return;
-  //             }
-  //         }
-  //     }
-  //     // Check down
-  //     if (y > 0) {
-  //         if (blocks[x][y].v == blocks[x][y - 1].v) {
-  //             double jj = blocks[x][y].y;
-  //             int old = blocks[x][y].v;
-  //             blocks[x][y].v *= 2;
-  //             score += blocks[x][y - 1].v;
-  //             dropAboveBlocks(x, y);
-  //             while (jj < blocks[x][y - 1].y) {
-  //                 drawBackground(canvas);
-  //                 drawBorders(canvas);
-  //                 drawAllTexts(canvas);
-  //                 drawTime(canvas);
-  //                 drawAllBlocks(canvas);
-  //                 drawNextBlock(canvas);
-  //                 drawBlock(canvas, Block(old, blocks[x][y - 1].x, jj));
-  //                 jj += mergingSpeed;
-  //             }
-  //             merge(canvas, x, y);
-  //             merge(canvas, x, y - 1);
-  //             merge(canvas, x, blocks[x].length - 1);
-  //             return;
-  //         }
-  //     }
-  // }
 
   /**********************************************************************
   * Try to toggle pause of the game is running.
