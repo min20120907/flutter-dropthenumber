@@ -187,6 +187,7 @@ class DropTheNumber extends Game with TapDetector {
         if (blocks[currentTrack].length < 6) {
           //HERE
           appendCurrentBlockToTrack();
+          merge(currentTrack, blocks[currentTrack].length - 1);
           setupCurrentBlock();
         } else {
           // print(blocks[currentTrack].length);
@@ -246,8 +247,6 @@ class DropTheNumber extends Game with TapDetector {
         print("Track " + currentTrack.toString() + " clicked!"); // debug
         appendCurrentBlockToTrack();
         setupCurrentBlock();
-        // do the merge process
-        merge(currentTrack, blocks[currentTrack].length);
       }
       // Horizontal super power clicked.
       else if (inRange(x, 65, 75) && inRange(y, 92.5, 97.5)) {
@@ -309,10 +308,14 @@ class DropTheNumber extends Game with TapDetector {
     currentBlock.y = 87 - blockHeight * (blocks[currentTrack].length + 1);
     // Add current block to blocks array.
     blocks[currentTrack].add(currentBlock);
+    // do the merge process
+    merge(currentTrack, blocks[currentTrack].length - 1);
   }
 
   // Merge method
   void merge(int x, int y) {
+    print("X: " + x.toString() + "Y: " + y.toString());
+    print(blocks);
     if (x < 0 && x > 5) return;
     if (y < 0 && blocks[x].length - 1 < y) return;
 
@@ -776,10 +779,10 @@ class DropTheNumber extends Game with TapDetector {
       print("Error: Try to call dropAboveBlocks() with out of bound y index!");
       return;
     }
-
-    for (int i = y; i + 1 < blocks[x].length; i++) {
+    print("Removal has been triggered");
+    for (int i = y; i < blocks[x].length - 1; i++) {
       blocks[x][i].v = blocks[x][i + 1].v;
     }
-    blocks[x].removeLast();
+    blocks[x].remove(blocks[x][y]);
   }
 }
