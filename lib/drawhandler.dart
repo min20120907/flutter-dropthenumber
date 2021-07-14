@@ -263,7 +263,7 @@ class DrawHandler {
     * Draw the current score.
     **********************************************************************/
   void drawScore(int score) {
-    drawText('Score: ' + score.toString(), 35, 92.5, Colors.white, 27);
+    drawText('Score: ' + score.toString(), 36, 92.5, Colors.white, 27);
   }
 
   /**********************************************************************
