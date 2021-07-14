@@ -242,7 +242,7 @@ class DropTheNumber extends Game with TapDetector {
         togglePause();
       }
       // Track clicked.
-      else if (inRange(x, 15, 85) && inRange(y, 30, 87)) {
+      else if (!pause && inRange(x, 15, 85) && inRange(y, 30, 87)) {
         currentTrack = (x - 15) ~/ 14;
         print("Track " + currentTrack.toString() + " clicked!"); // debug
         appendCurrentBlockToTrack();
@@ -320,7 +320,7 @@ class DropTheNumber extends Game with TapDetector {
 
   // Merge method
   void merge(int x, int y) {
-    print("X: " + x.toString() + "Y: " + y.toString());
+    print("merge (" + x.toString() + "," + y.toString() + ")"); // debug
     if (x < 0 && x > 5) return;
     if (y < 0 && blocks[x].length - 1 < y) return;
 
@@ -332,6 +332,7 @@ class DropTheNumber extends Game with TapDetector {
         if (blocks[x][y].v == blocks[x - 1][y].v &&
             blocks[x][y].v == blocks[x + 1][y].v &&
             blocks[x][y].v == blocks[x][y - 1].v) {
+          print("T shape"); // debug
           int old = blocks[x][y].v;
           double ii = blocks[x][y].y;
           double jj = blocks[x - 1][y].x;
@@ -396,14 +397,14 @@ class DropTheNumber extends Game with TapDetector {
           //   drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, ii));
           //   ii += mergingSpeed;
           // }
-          merge(x, y);
-          merge(x, y - 1);
-          merge(x - 1, y);
-          merge(x + 1, y);
+//           merge(x, y);
+//           merge(x, y - 1);
+//           merge(x - 1, y);
+//           merge(x + 1, y);
           // something about to check above
-          merge(x, blocks[x].length - 1);
-          merge(x - 1, blocks[x - 1].length - 1);
-          merge(x + 1, blocks[x + 1].length - 1);
+//           merge(x, blocks[x].length - 1);
+//           merge(x - 1, blocks[x - 1].length - 1);
+//           merge(x + 1, blocks[x + 1].length - 1);
           return;
         }
       }
@@ -414,6 +415,7 @@ class DropTheNumber extends Game with TapDetector {
       if (rightLineY >= y) {
         if (blocks[x][y].v == blocks[x + 1][y].v &&
             blocks[x][y].v == blocks[x][y - 1].v) {
+          print("gamma shape"); // debug
           int old = blocks[x][y].v;
           double ii = blocks[x][y].y;
           double jj = blocks[x + 1][y].x;
@@ -473,13 +475,13 @@ class DropTheNumber extends Game with TapDetector {
           //   drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, ii));
           //   ii += mergingSpeed;
           // }
-          merge(x, y);
-          merge(x, y - 1);
-          merge(x - 1, y);
+//           merge(x, y);
+//           merge(x, y - 1);
+//           merge(x - 1, y);
 
           // check above
-          merge(x, blocks[x].length - 1);
-          merge(x - 1, blocks[x].length - 1);
+//           merge(x, blocks[x].length - 1);
+//           merge(x - 1, blocks[x].length - 1);
           return;
         }
       }
@@ -490,6 +492,7 @@ class DropTheNumber extends Game with TapDetector {
       if (leftLineY > 0) {
         if (blocks[x][y].v == blocks[x - 1][y].v &&
             blocks[x][y].v == blocks[x][y - 1].v) {
+          print("7 shape"); // debug
           int old = blocks[x][y].v;
           double ii = blocks[x][y].y;
           double jj = blocks[x - 1][y].x;
@@ -548,11 +551,11 @@ class DropTheNumber extends Game with TapDetector {
           //   drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
           //   ii += mergingSpeed;
           // }
-          merge(x, y);
-          merge(x, y - 1);
-          merge(x - 1, y);
-          merge(x, blocks[x].length - 1);
-          merge(x - 1, blocks[x - 1].length - 1);
+//           merge(x, y);
+//           merge(x, y - 1);
+//           merge(x - 1, y);
+//           merge(x, blocks[x].length - 1);
+//           merge(x - 1, blocks[x - 1].length - 1);
           return;
         }
       }
@@ -564,6 +567,7 @@ class DropTheNumber extends Game with TapDetector {
       if (leftLineY >= y && rightLineY >= y) {
         if (blocks[x][y].v == blocks[x - 1][y].v &&
             blocks[x][y].v == blocks[x + 1][y].v) {
+          print("horizontal shape"); // debug
           int old = blocks[x][y].v;
           double ii = blocks[x + 1][y].x;
           double jj = blocks[x - 1][y].x;
@@ -598,13 +602,13 @@ class DropTheNumber extends Game with TapDetector {
           //   ii += mergingSpeed;
           //   jj += mergingSpeed;
           // }
-          merge(x, y);
-          merge(x - 1, y);
-          merge(x + 1, y);
+//           merge(x, y);
+//           merge(x - 1, y);
+//           merge(x + 1, y);
           // check above
-          merge(x, blocks[x].length - 1);
-          merge(x - 1, blocks[x - 1].length - 1);
-          merge(x + 1, blocks[x + 1].length - 1);
+//           merge(x, blocks[x].length - 1);
+//           merge(x - 1, blocks[x - 1].length - 1);
+//           merge(x + 1, blocks[x + 1].length - 1);
           return;
         }
       }
@@ -614,6 +618,7 @@ class DropTheNumber extends Game with TapDetector {
       int rightLineY = blocks[x + 1].length - 1;
       if (rightLineY >= y) {
         if (blocks[x][y].v == blocks[x + 1][y].v) {
+          print("check right"); // debug
           int old = blocks[x][y].v;
           double jj = blocks[x + 1][y].x;
           blocks[x][y].v *= 2;
@@ -645,9 +650,9 @@ class DropTheNumber extends Game with TapDetector {
           //   drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
           //   jj -= mergingSpeed;
           // }
-          merge(x, y);
-          merge(x + 1, y - 1);
-          merge(x + 1, blocks[x + 1].length - 1);
+//           merge(x, y);
+//           merge(x + 1, y - 1);
+//           merge(x + 1, blocks[x + 1].length - 1);
           return;
         }
       }
@@ -655,6 +660,7 @@ class DropTheNumber extends Game with TapDetector {
     // Check down
     if (y > 0) {
       if (blocks[x][y].v == blocks[x][y - 1].v) {
+        print("Check down");
         double jj = blocks[x][y].y;
         int old = blocks[x][y].v;
         blocks[x][y - 1].v *= 2;
@@ -686,9 +692,13 @@ class DropTheNumber extends Game with TapDetector {
         //   drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, jj));
         //   jj += mergingSpeed;
         // }
-        merge(x, y);
-        merge(x, y - 1);
-        merge(x, blocks[x].length - 1);
+//         print("ONE"); // debug
+//         merge(x, y);
+//         print("TWE"); // debug
+//         merge(x, y - 1);
+//         print("THREE"); // debug
+//         merge(x, blocks[x].length - 1);
+//         print("END"); // debug
         return;
       }
     }
