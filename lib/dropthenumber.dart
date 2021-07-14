@@ -616,6 +616,7 @@ class DropTheNumber extends Game with TapDetector {
           double jj = blocks[x + 1][y].x;
           blocks[x][y].v *= 2;
           score += blocks[x][y].v;
+          dropAboveBlocks(x + 1, y);
           // while (jj > blocks[x][y].x) {
           //   drawHandler.drawBackground();
           //   drawHandler.drawBorders();
@@ -654,7 +655,7 @@ class DropTheNumber extends Game with TapDetector {
       if (blocks[x][y].v == blocks[x][y - 1].v) {
         double jj = blocks[x][y].y;
         int old = blocks[x][y].v;
-        blocks[x][y].v *= 2;
+        blocks[x][y - 1].v *= 2;
         score += blocks[x][y - 1].v;
         dropAboveBlocks(x, y);
         // while (jj < blocks[x][y - 1].y) {
@@ -789,7 +790,7 @@ class DropTheNumber extends Game with TapDetector {
       for (int i = y; i < blocks[x].length - 1; i++) {
         blocks[x][i].v = blocks[x][i + 1].v;
       }
-      blocks[x].remove(blocks[x][y]);
+      blocks[x].removeLast();
     }
   }
 }
