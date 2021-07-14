@@ -62,7 +62,7 @@ class DropTheNumber extends Game with TapDetector {
   // Draw handler for helping to draw everything on screen.
   DrawHandler drawHandler = DrawHandler();
   // Convert the absolute x to relative x.
-  double toRelativeX(double x) => x * 100 / canvasSize.width;
+  double toRelativeX(double x) => (x-canvasXOffset) * 100 / canvasSize.width;
   // Convert the absolute y to relative y.
   double toRelativeY(double y) => y * 100 / canvasSize.height;
   // Check if the number is within given lower boundary and upper boundary.
@@ -234,7 +234,7 @@ class DropTheNumber extends Game with TapDetector {
     // Game running
     else if (!gameOver) {
       // Mute button clicked.
-      if (inRange(x, 81, 90) && inRange(y, 15, 19.5)) {
+      if (inRange(x, 80, 87) && inRange(y, 15, 19.5)) {
         toggleMute();
       }
       // Pause button clicked.
