@@ -568,6 +568,8 @@ class DropTheNumber extends Game with TapDetector {
           double ii = blocks[x + 1][y].x;
           double jj = blocks[x - 1][y].x;
           blocks[x][y].v *= 4;
+          dropAboveBlocks(x - 1, y);
+          dropAboveBlocks(x + 1, y);
           // while (ii > blocks[x][y].x && jj < blocks[x][y].x) {
           //   drawHandler.drawBackground();
           //   drawHandler.drawBorders();
