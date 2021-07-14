@@ -268,6 +268,7 @@ class DropTheNumber extends Game with TapDetector {
     else {
       if (inRange(x, 25, 45) && inRange(y, 70, 75)) {
         print("Restart button clicked!"); // debug
+        blocks = [[], [], [], [], []];
         resetGame();
       } else if (inRange(x, 55, 65) && inRange(y, 70, 75)) {
         print("Quit button clicked!"); // debug
