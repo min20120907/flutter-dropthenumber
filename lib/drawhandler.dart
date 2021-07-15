@@ -215,9 +215,10 @@ class DrawHandler {
   /**********************************************************************
     * Draw five cross on the canvas. (On the five track)
     **********************************************************************/
-  void drawFiveCross() {
+  void drawFiveCross(int nextBlockValue) {
     for (double i = 0; i < 5; i++) {
-      drawText('†', 22 + i * 14, 23, Colors.red, 50);
+      drawText(
+          '†', 22 + i * 14, 22.5, getBlockColorByValue(nextBlockValue), 49);
     }
   }
 
@@ -244,7 +245,7 @@ class DrawHandler {
     **********************************************************************/
   void drawPauseButton() {
     // Pause button image
-    drawImage(pauseImage, 11.5, 93.25, 5, 3.5);
+    drawImage(pauseImage, 12, 93.5, 4, 3);
     // Pause button border
     drawRectStroke(9, 92.5, 10, 5, Colors.white, 3);
   }
@@ -295,14 +296,14 @@ class DrawHandler {
     if (elapsedTime == null) {
       elapsedTime = Duration();
     }
-    drawText("TIME: " + getTimeformat(elapsedTime), 50, 35, Colors.black, 30);
+    drawText("TIME: " + getTimeformat(elapsedTime), 49, 35, Colors.black, 30);
     drawText(
         "Highest Score: " + highestScore.toString(), 50, 45, Colors.black, 30);
-    drawText("Your Score: " + score.toString(), 50, 55, Colors.black, 30);
-    drawRectStroke(25, 70, 20, 5, Colors.black, 5);
-    drawText("Restart", 35, 70.5, Colors.black, 25);
-    drawRectStroke(55, 70, 20, 5, Colors.black, 5);
-    drawText("Quit", 65, 70.5, Colors.black, 25);
+    drawText("Your Score: " + score.toString(), 45, 55, Colors.black, 30);
+    drawRectStroke(20, 68, 27, 5, Colors.black, 5);
+    drawText("Restart", 33.5, 68.5, Colors.black, 25);
+    drawRectStroke(53, 68, 27, 5, Colors.black, 5);
+    drawText("Quit", 66, 68.5, Colors.black, 25);
   }
 
   /**********************************************************************

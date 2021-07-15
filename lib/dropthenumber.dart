@@ -44,7 +44,7 @@ class DropTheNumber extends Game with TapDetector {
   // The current score of the game.
   int score;
   // The highest score on the local game.
-  int highestScore = 99; // Temporary set the value for debug
+  int highestScore = 98237; // Temporary set the value for debug
   // The start time point of the game.
   DateTime startTime;
   // The time elapsed of the game running from the start time.
@@ -62,7 +62,7 @@ class DropTheNumber extends Game with TapDetector {
   // Draw handler for helping to draw everything on screen.
   DrawHandler drawHandler = DrawHandler();
   // Convert the absolute x to relative x.
-  double toRelativeX(double x) => (x-canvasXOffset) * 100 / canvasSize.width;
+  double toRelativeX(double x) => (x - canvasXOffset) * 100 / canvasSize.width;
   // Convert the absolute y to relative y.
   double toRelativeY(double y) => y * 100 / canvasSize.height;
   // Check if the number is within given lower boundary and upper boundary.
@@ -143,7 +143,7 @@ class DropTheNumber extends Game with TapDetector {
       } else {
         drawHandler.drawMuteButton();
       }
-      drawHandler.drawFiveCross();
+      drawHandler.drawFiveCross(nextBlockValue);
       drawHandler.drawAllBlocks(blocks);
       drawHandler.drawCurrentBlock(currentBlock);
 
@@ -312,7 +312,7 @@ class DropTheNumber extends Game with TapDetector {
     blocks[currentTrack].add(currentBlock);
     // do the merge process
 //     try {
-      merge(currentTrack, blocks[currentTrack].length - 1);
+    merge(currentTrack, blocks[currentTrack].length - 1);
 //     } catch (RangeError) {
 //       print("Range Error occurs!!!!!");
 //     }
@@ -343,7 +343,7 @@ class DropTheNumber extends Game with TapDetector {
           score += blocks[x][y - 1].v;
           dropAboveBlocks(x - 1, y);
           dropAboveBlocks(x + 1, y);
-          dropAboveBlocks(x,y);
+          dropAboveBlocks(x, y);
 
           // while (jj < blocks[x][y - 1].x && kk > blocks[x][y - 1].x) {
           //   drawHandler.drawBackground();
@@ -494,7 +494,7 @@ class DropTheNumber extends Game with TapDetector {
     if (x > 0 && y > 0) {
       int leftLineY = blocks[x - 1].length - 1;
 //       if (leftLineY > 0) { // Error occurs here!!!!!
-        if (leftLineY >= y) {
+      if (leftLineY >= y) {
         if (blocks[x][y].v == blocks[x - 1][y].v &&
             blocks[x][y].v == blocks[x][y - 1].v) {
           print("7 shape"); // debug
