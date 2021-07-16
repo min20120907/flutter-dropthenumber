@@ -192,7 +192,6 @@ class DropTheNumber extends Game with TapDetector {
         } else {
           // print(blocks[currentTrack].length);
           print("Game over!"); //debug
-          this.gameOver = true;
         }
       }
     }
@@ -310,12 +309,9 @@ class DropTheNumber extends Game with TapDetector {
     currentBlock.y = 87 - blockHeight * (blocks[currentTrack].length + 1);
     // Add current block to blocks array.
     blocks[currentTrack].add(currentBlock);
+    if (blocks[currentTrack].length > 6) this.gameOver = true;
     // do the merge process
-//     try {
     merge(currentTrack, blocks[currentTrack].length - 1);
-//     } catch (RangeError) {
-//       print("Range Error occurs!!!!!");
-//     }
   }
 
   // Merge method
