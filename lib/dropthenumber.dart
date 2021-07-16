@@ -16,7 +16,7 @@ import 'package:dropthenumber/drawhandler.dart';
 class DropTheNumber extends Game with TapDetector {
   /* Setting */
   // Y dropped for every second. (In percentage)
-  double dropSpeed = 10; // debug
+  double dropSpeed = 7; // debug
   /* Variables */
   // Store the screen size, the value will be set in resize() function.
   Size screenSize;
@@ -103,7 +103,7 @@ class DropTheNumber extends Game with TapDetector {
   **********************************************************************/
   void setupCurrentBlock() {
     // The max power quantity of 2.
-    int MAX_POWER = 3; // Temporary set to small number for debug
+    int MAX_POWER = 12; // Temporary set to small number for debug
     // The offset of power quantity of 2.
     int POWER_OFFSET = 1;
     if (nextBlockValue == null) {
@@ -266,11 +266,11 @@ class DropTheNumber extends Game with TapDetector {
     }
     // Game over
     else {
-      if (inRange(x, 25, 45) && inRange(y, 70, 75)) {
+      if (inRange(x, 20, 47) && inRange(y, 68, 73)) {
         print("Restart button clicked!"); // debug
         blocks = [[], [], [], [], []];
         resetGame();
-      } else if (inRange(x, 55, 65) && inRange(y, 70, 75)) {
+      } else if (inRange(x, 53, 79) && inRange(y, 68, 73)) {
         print("Quit button clicked!"); // debug
       }
     }

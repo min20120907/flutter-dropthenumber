@@ -184,7 +184,7 @@ class DrawHandler {
     // Draw nextBlock border
     drawRectStroke(40, 14.5, 8, 5, Colors.pink[200], 3);
     // Paint nextBlock text
-    drawText(nextBlockValue.toString(), 44, 16, Colors.black, 16.0);
+    drawText(nextBlockValue.toString(), 44, 16, Colors.black, 14);
   }
 
   /**********************************************************************
@@ -329,7 +329,7 @@ class DrawHandler {
 
     // Draw block text
     drawText(block.v.toString(), block.x + width / 2, block.y + height / 2 - 2,
-        Colors.black, 22);
+        Colors.black, 20);
   }
 
   /**********************************************************************
