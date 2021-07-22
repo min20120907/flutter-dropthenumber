@@ -116,15 +116,15 @@ class DrawHandler {
     **********************************************************************/
   void initVideos() {
     loadUiImage("assets/video/power1/1.png").then((value) => superHor1 = value);
-    for (int i = 1; i < 15; i++) {
-      loadUiImage("assets/video/power1/" + i.toString() + ".png")
-          .then((value) => verticalSuperPowerVideo.add(value));
-    }
-    for (int i = 0; i < 19; i++) {
-      loadUiImage("assets/video/power2/" + i.toString() + ".png")
-          .then((value) => horizontalSuperPowerVideo.add(value));
-    }
-    print(horizontalSuperPowerVideo);
+    // for (int i = 1; i < 15; i++) {
+    //   loadUiImage("assets/video/power1/" + i.toString() + ".png")
+    //       .then((value) => verticalSuperPowerVideo.add(value));
+    // }
+    // for (int i = 0; i < 19; i++) {
+    //   loadUiImage("assets/video/power2/" + i.toString() + ".png")
+    //       .then((value) => horizontalSuperPowerVideo.add(value));
+    // }
+    // print(horizontalSuperPowerVideo);
   }
 
   /**********************************************************************
@@ -276,7 +276,6 @@ class DrawHandler {
     * Draw horizontal super power button.
     **********************************************************************/
   void drawHorizontalSuperPowerButton() {
-    drawImage(superHor1, 65, 91, 10, 7);
     // Horizontal super power image
     drawImage(horizontalSuperPowerImage, 65, 91, 10, 7);
     // Horizontal super power border
@@ -353,7 +352,7 @@ class DrawHandler {
     **********************************************************************/
   void playHorizontalSuperPowerAnimation() {
     initVideos();
-    drawVideo(horizontalSuperPowerVideo, 50, 10, 100, 100);
+    // drawVideo(horizontalSuperPowerVideo, 50, 50, 100, 100);
     print('vidoe');
   }
 
