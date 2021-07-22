@@ -115,11 +115,11 @@ class DrawHandler {
   void initVideos() {
     for (int i = 0; i < 15; i++) {
       loadUiImage("assets/video/power1/" + i.toString() + ".png")
-          .then((value) => verticalSuperPowerVideo.add(value));
+          .then((value) => verticalSuperPowerVideo[i] = value);
     }
     for (int i = 0; i < 19; i++) {
       loadUiImage("assets/video/power2/" + i.toString() + ".png")
-          .then((value) => horizontalSuperPowerVideo.add(value));
+          .then((value) => horizontalSuperPowerVideo[i] = value);
     }
   }
 
