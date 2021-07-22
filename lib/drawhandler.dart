@@ -57,8 +57,8 @@ class DrawHandler {
   ui.Image verticalSuperPowerImage;
   ui.Image superHor1;
   // Videos combine by lots of images which will be load later.
-  List<ui.Image> verticalSuperPowerVideo;
-  List<ui.Image> horizontalSuperPowerVideo;
+  List<ui.Image> verticalSuperPowerVideo = [];
+  List<ui.Image> horizontalSuperPowerVideo = [];
 
   /**********************************************************************
     * Constructor
@@ -115,16 +115,17 @@ class DrawHandler {
     * The video is combine by lots of (.png) files.
     **********************************************************************/
   void initVideos() {
-    loadUiImage("assets/video/power1/1.png").then((value) => superHor1 = value);
-    // for (int i = 1; i < 15; i++) {
-    //   loadUiImage("assets/video/power1/" + i.toString() + ".png")
-    //       .then((value) => verticalSuperPowerVideo.add(value));
-    // }
-    // for (int i = 0; i < 19; i++) {
-    //   loadUiImage("assets/video/power2/" + i.toString() + ".png")
-    //       .then((value) => horizontalSuperPowerVideo.add(value));
-    // }
-    // print(horizontalSuperPowerVideo);
+    loadUiImage("assets/video/power1/1.png")
+        .then((value) => horizontalSuperPowerVideo.add(value));
+    for (int i = 1; i < 15; i++) {
+      loadUiImage("assets/video/power1/" + i.toString() + ".png")
+          .then((value) => verticalSuperPowerVideo.add(value));
+    }
+    for (int i = 0; i < 19; i++) {
+      loadUiImage("assets/video/power2/" + i.toString() + ".png")
+          .then((value) => horizontalSuperPowerVideo.add(value));
+    }
+    print(horizontalSuperPowerVideo);
   }
 
   /**********************************************************************
@@ -282,11 +283,6 @@ class DrawHandler {
     drawRectStroke(70, 92.5, 9, 5, Colors.white, 3);
   }
 
-  void drawTestvideo() {
-    initVideos();
-    drawImage(superHor1, 65, 91, 10, 7);
-  }
-
   /**********************************************************************
     * Draw vertical super power button.
     **********************************************************************/
@@ -356,8 +352,7 @@ class DrawHandler {
     * Play horizontal super power animation. (puple magic animation)
     **********************************************************************/
   void playHorizontalSuperPowerAnimation() {
-    initVideos();
-    // drawVideo(horizontalSuperPowerVideo, 50, 50, 100, 100);
+    drawVideo(horizontalSuperPowerVideo, 50, 50, 100, 100);
     print('vidoe');
   }
 
@@ -367,6 +362,7 @@ class DrawHandler {
   void drawVideo(
       List<ui.Image> video, double x, double y, double width, double height) {
     // load video
+    sleep(Duration(milliseconds: 100));
     for (int i = 0; i < video.length; i++) {
       canvas.drawImageRect(
           video[i],
@@ -374,7 +370,6 @@ class DrawHandler {
               0, 0, video[i].width.toDouble(), video[i].height.toDouble()),
           Rect.fromLTWH(toAbsoluteX(x), toAbsoluteY(y), width, height),
           Paint());
-      sleep(Duration(milliseconds: 600));
     }
   }
 

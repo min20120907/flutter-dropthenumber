@@ -29,6 +29,10 @@ class DropTheNumber extends Game with TapDetector {
       true; //////////////////////////// Temporary set the value to true for debugging
   // If the game is game over, waiting for restart.
   bool gameOver;
+  // If the horizontal superpower is clicked
+  bool superHorBool = false;
+  // If the vertical superpower is triggered
+  bool superVertBool = false;
   // If the game is paused.
   bool pause;
   // If the game is muted.
@@ -163,7 +167,6 @@ class DropTheNumber extends Game with TapDetector {
     }
     // Draw game running screen.
     else if (!gameOver) {
-      drawHandler.drawTestvideo();
       drawHandler.drawBackground();
       drawHandler.drawBorders();
       drawHandler.drawTitle(nextBlockValue);
@@ -186,6 +189,14 @@ class DropTheNumber extends Game with TapDetector {
         drawHandler.drawPauseButton();
       } else {
         drawHandler.drawPlayButton();
+      }
+      if (superHorBool) {
+        drawHandler.playHorizontalSuperPowerAnimation();
+        superHorBool = false;
+      }
+      if (superVertBool) {
+        drawHandler.playVerticalSuperPowerAnimation(currentTrack);
+        superVertBool = false;
       }
       // if (!pause) {
       //     yAxis += 1;
@@ -293,11 +304,13 @@ class DropTheNumber extends Game with TapDetector {
       // Horizontal super power clicked.
       else if (inRange(x, 65, 75) && inRange(y, 92.5, 97.5)) {
         print("Horizontal super power clicked!"); // debug
+        superHorBool = true;
         superHor();
       }
       // Vertical super power clicked.
       else if (inRange(x, 80, 90) && inRange(y, 92.5, 97.5)) {
         print("Vertical super power clicked!"); // debug
+        superVertBool = true;
         superVert();
       }
       //
