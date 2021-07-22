@@ -53,9 +53,16 @@ class DropTheNumber extends Game with TapDetector {
   Duration pauseElapsedTime;
   // Get the maximum track among the blocks
   int getMaxTrack() {
-    int maximum = blocks[0].length;
+    int maximum = blocks[0].length, index = 0;
     for (int i = 1; i < 5; i++) maximum = max(blocks[i].length, maximum);
-    return blocks.where((element) => element.length == maximum).length;
+    print(maximum.toString());
+    for (int j = 0; j < 5; j++) {
+      if (blocks[j].length == maximum) {
+        index = j;
+        break;
+      }
+    }
+    return index;
   }
 
   double mergingSpeed = 5;
@@ -225,7 +232,10 @@ class DropTheNumber extends Game with TapDetector {
   // Super horizontal power
   void superVert() {
     int maxTrack = getMaxTrack();
-    blocks.removeAt(maxTrack);
+    print("max track is " + maxTrack.toString());
+    try {
+      blocks.removeAt(maxTrack);
+    } catch (Exception) {}
     blocks.insert(maxTrack - 1, []);
   }
 
