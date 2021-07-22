@@ -195,7 +195,7 @@ class DropTheNumber extends Game with TapDetector {
         superHorBool = false;
       }
       if (superVertBool) {
-        drawHandler.playVerticalSuperPowerAnimation(currentTrack);
+        drawHandler.playVerticalSuperPowerAnimation(getMaxTrack(), blocks);
         superVertBool = false;
       }
       // if (!pause) {

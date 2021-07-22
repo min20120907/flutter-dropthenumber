@@ -115,8 +115,8 @@ class DrawHandler {
     * The video is combine by lots of (.png) files.
     **********************************************************************/
   void initVideos() {
-    loadUiImage("assets/video/power1/1.png")
-        .then((value) => horizontalSuperPowerVideo.add(value));
+    // loadUiImage("assets/video/power1/1.png")
+    //     .then((value) => horizontalSuperPowerVideo.add(value));
     for (int i = 1; i < 15; i++) {
       loadUiImage("assets/video/power1/" + i.toString() + ".png")
           .then((value) => verticalSuperPowerVideo.add(value));
@@ -125,7 +125,7 @@ class DrawHandler {
       loadUiImage("assets/video/power2/" + i.toString() + ".png")
           .then((value) => horizontalSuperPowerVideo.add(value));
     }
-    print(horizontalSuperPowerVideo);
+    // print(horizontalSuperPowerVideo);
   }
 
   /**********************************************************************
@@ -341,19 +341,16 @@ class DrawHandler {
   /**********************************************************************
     * Play vertical super power animation. (flame animation)
     **********************************************************************/
-  void playVerticalSuperPowerAnimation(int track) {
-    // int maxTrack = getMaxTrack();
-    drawVideo(verticalSuperPowerVideo, 220, 367, 500, 500);
-    // blocks.removeAt(maxTrack);
-    // blocks.insert(maxTrack - 1, []);
+  void playVerticalSuperPowerAnimation(int track, List<List<Block>> blocks) {
+    drawVideo(verticalSuperPowerVideo, blocks[track][0].x - 5,
+        blocks[track][0].y - 50, 300, 600);
   }
 
   /**********************************************************************
     * Play horizontal super power animation. (puple magic animation)
     **********************************************************************/
   void playHorizontalSuperPowerAnimation() {
-    drawVideo(horizontalSuperPowerVideo, 50, 50, 100, 100);
-    print('vidoe');
+    drawVideo(horizontalSuperPowerVideo, -110, -20, 1300, 900);
   }
 
   /**********************************************************************
@@ -362,14 +359,15 @@ class DrawHandler {
   void drawVideo(
       List<ui.Image> video, double x, double y, double width, double height) {
     // load video
-    sleep(Duration(milliseconds: 100));
     for (int i = 0; i < video.length; i++) {
-      canvas.drawImageRect(
-          video[i],
-          Rect.fromLTWH(
-              0, 0, video[i].width.toDouble(), video[i].height.toDouble()),
-          Rect.fromLTWH(toAbsoluteX(x), toAbsoluteY(y), width, height),
-          Paint());
+      for (int j = 0; j < 300; j++) {
+        canvas.drawImageRect(
+            video[i],
+            Rect.fromLTWH(
+                0, 0, video[i].width.toDouble(), video[i].height.toDouble()),
+            Rect.fromLTWH(toAbsoluteX(x), toAbsoluteY(y), width, height),
+            Paint());
+      }
     }
   }
 
