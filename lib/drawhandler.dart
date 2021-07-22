@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sprintf/sprintf.dart';
 import 'block.dart';
+import 'dart:io';
 
 class DrawHandler {
   /* Variables */
@@ -121,6 +122,7 @@ class DrawHandler {
       loadUiImage("assets/video/power2/" + i.toString() + ".png")
           .then((value) => horizontalSuperPowerVideo[i] = value);
     }
+    print(horizontalSuperPowerVideo);
   }
 
   /**********************************************************************
@@ -264,7 +266,8 @@ class DrawHandler {
     * Draw the current score.
     **********************************************************************/
   void drawScore(int score) {
-    drawText('Score: ' + score.toString(), 35, 92.5, Colors.white, 27);
+    drawText('Score: ', 30, 92.5, Colors.white, 27);
+    drawText(score.toString(), 60, 93, Colors.white, 26);
   }
 
   /**********************************************************************
@@ -346,7 +349,9 @@ class DrawHandler {
     * Play horizontal super power animation. (puple magic animation)
     **********************************************************************/
   void playHorizontalSuperPowerAnimation() {
-    drawVideo(horizontalSuperPowerVideo, -350, 50, 500, 500);
+    initVideos();
+    drawVideo(horizontalSuperPowerVideo, 50, 10, 100, 100);
+    print('vidoe');
   }
 
   /**********************************************************************
@@ -362,6 +367,7 @@ class DrawHandler {
               0, 0, video[i].width.toDouble(), video[i].height.toDouble()),
           Rect.fromLTWH(toAbsoluteX(x), toAbsoluteY(y), width, height),
           Paint());
+      sleep(Duration(milliseconds: 600));
     }
   }
 

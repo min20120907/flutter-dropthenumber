@@ -134,7 +134,7 @@ class DropTheNumber extends Game with TapDetector {
   **********************************************************************/
   void setupCurrentBlock() {
     // The max power quantity of 2.
-    int MAXPOWER = 12; // Temporary set to small number for debug
+    int MAXPOWER = 5; // Temporary set to small number for debug
     // The offset of power quantity of 2.
     int POWEROFFSET = 1;
     if (nextBlockValue == null) {
@@ -293,6 +293,7 @@ class DropTheNumber extends Game with TapDetector {
       else if (inRange(x, 65, 75) && inRange(y, 92.5, 97.5)) {
         print("Horizontal super power clicked!"); // debug
         superHor();
+        drawHandler.playHorizontalSuperPowerAnimation();
       }
       // Vertical super power clicked.
       else if (inRange(x, 80, 90) && inRange(y, 92.5, 97.5)) {
