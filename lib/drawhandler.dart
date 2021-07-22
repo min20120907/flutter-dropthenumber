@@ -55,6 +55,7 @@ class DrawHandler {
   ui.Image playImage;
   ui.Image horizontalSuperPowerImage;
   ui.Image verticalSuperPowerImage;
+  ui.Image superHor1;
   // Videos combine by lots of images which will be load later.
   List<ui.Image> verticalSuperPowerVideo;
   List<ui.Image> horizontalSuperPowerVideo;
@@ -114,13 +115,14 @@ class DrawHandler {
     * The video is combine by lots of (.png) files.
     **********************************************************************/
   void initVideos() {
-    for (int i = 0; i < 15; i++) {
+    loadUiImage("assets/video/power1/1.png").then((value) => superHor1 = value);
+    for (int i = 1; i < 15; i++) {
       loadUiImage("assets/video/power1/" + i.toString() + ".png")
-          .then((value) => verticalSuperPowerVideo[i] = value);
+          .then((value) => verticalSuperPowerVideo.add(value));
     }
     for (int i = 0; i < 19; i++) {
       loadUiImage("assets/video/power2/" + i.toString() + ".png")
-          .then((value) => horizontalSuperPowerVideo[i] = value);
+          .then((value) => horizontalSuperPowerVideo.add(value));
     }
     print(horizontalSuperPowerVideo);
   }
@@ -274,6 +276,7 @@ class DrawHandler {
     * Draw horizontal super power button.
     **********************************************************************/
   void drawHorizontalSuperPowerButton() {
+    drawImage(superHor1, 65, 91, 10, 7);
     // Horizontal super power image
     drawImage(horizontalSuperPowerImage, 65, 91, 10, 7);
     // Horizontal super power border
