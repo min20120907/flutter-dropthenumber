@@ -103,7 +103,7 @@ class DropTheNumber extends Game with TapDetector {
   **********************************************************************/
   void setupCurrentBlock() {
     // The max power quantity of 2.
-    int MAX_POWER = 12; // Temporary set to small number for debug
+    int MAX_POWER = 5; // Temporary set to small number for debug
     // The offset of power quantity of 2.
     int POWER_OFFSET = 1;
     if (nextBlockValue == null) {
