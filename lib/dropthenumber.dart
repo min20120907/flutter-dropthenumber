@@ -51,6 +51,12 @@ class DropTheNumber extends Game with TapDetector {
   Duration elapsedTime;
   // The time elapsed of the game pause.
   Duration pauseElapsedTime;
+  // Get the maximum track among the blocks
+  int getMaxTrack() {
+    int maximum = blocks[0].length;
+    for (int i = 1; i < 5; i++) maximum = max(blocks[i].length, maximum);
+    return blocks.where((element) => element.length == maximum).length;
+  }
 
   double mergingSpeed = 5;
   DateTime cooldownTimeHor; // wip
@@ -98,21 +104,31 @@ class DropTheNumber extends Game with TapDetector {
     setupCurrentBlock();
   }
 
+  // Super Horizontal power
+  void superHor() {
+    for (int i = 0; i < 5; i++) {
+      blocks[i].removeAt(0);
+      for (int j = 0; j < blocks[i].length; j++) {
+        blocks[i][j].y += 70;
+      }
+    }
+  }
+
   /**********************************************************************
   * Random the currentTrack, currentBlock and nextBlock.
   **********************************************************************/
   void setupCurrentBlock() {
     // The max power quantity of 2.
-    int MAX_POWER = 5; // Temporary set to small number for debug
+    int MAXPOWER = 5; // Temporary set to small number for debug
     // The offset of power quantity of 2.
-    int POWER_OFFSET = 1;
+    int POWEROFFSET = 1;
     if (nextBlockValue == null) {
-      nextBlockValue = pow(2, random.nextInt(MAX_POWER) + POWER_OFFSET).toInt();
+      nextBlockValue = pow(2, random.nextInt(MAXPOWER) + POWEROFFSET).toInt();
     }
     currentTrack = random.nextInt(5);
     currentBlock =
         Block(nextBlockValue, (15 + 14 * currentTrack).toDouble(), 30);
-    nextBlockValue = pow(2, random.nextInt(MAX_POWER) + POWER_OFFSET).toInt();
+    nextBlockValue = pow(2, random.nextInt(MAXPOWER) + POWEROFFSET).toInt();
   }
 
   /**********************************************************************
@@ -192,9 +208,17 @@ class DropTheNumber extends Game with TapDetector {
         } else {
           // print(blocks[currentTrack].length);
           print("Game over!"); //debug
+          this.gameOver = true;
         }
       }
     }
+  }
+
+  // Super horizontal power
+  void superVert() {
+    int maxTrack = getMaxTrack();
+    blocks.removeAt(maxTrack);
+    blocks.insert(maxTrack - 1, []);
   }
 
   /**********************************************************************
@@ -250,10 +274,20 @@ class DropTheNumber extends Game with TapDetector {
       // Horizontal super power clicked.
       else if (inRange(x, 65, 75) && inRange(y, 92.5, 97.5)) {
         print("Horizontal super power clicked!"); // debug
+        try {
+          superHor();
+        } catch (RangeError) {
+          print("Invalid operation");
+        }
       }
       // Vertical super power clicked.
       else if (inRange(x, 80, 90) && inRange(y, 92.5, 97.5)) {
         print("Vertical super power clicked!"); // debug
+        try {
+          superVert();
+        } catch (RangeError) {
+          print("Invalid operation.");
+        }
       }
       //
       // if (inRange(x, 15, 29) && inRange(y, 221, 653)) {
