@@ -282,6 +282,11 @@ class DrawHandler {
     drawRectStroke(65, 92.5, 10, 5, Colors.white, 3);
   }
 
+  void drawTestvideo() {
+    initVideos();
+    drawImage(superHor1, 65, 91, 10, 7);
+  }
+
   /**********************************************************************
     * Draw vertical super power button.
     **********************************************************************/

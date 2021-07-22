@@ -163,6 +163,7 @@ class DropTheNumber extends Game with TapDetector {
     }
     // Draw game running screen.
     else if (!gameOver) {
+      drawHandler.drawTestvideo();
       drawHandler.drawBackground();
       drawHandler.drawBorders();
       drawHandler.drawTitle(nextBlockValue);
@@ -293,8 +294,6 @@ class DropTheNumber extends Game with TapDetector {
       else if (inRange(x, 65, 75) && inRange(y, 92.5, 97.5)) {
         print("Horizontal super power clicked!"); // debug
         superHor();
-        drawHandler.drawImage(drawHandler.superHor1, 30, 30, 50, 20);
-        drawHandler.playHorizontalSuperPowerAnimation();
       }
       // Vertical super power clicked.
       else if (inRange(x, 80, 90) && inRange(y, 92.5, 97.5)) {
