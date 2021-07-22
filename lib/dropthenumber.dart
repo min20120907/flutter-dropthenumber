@@ -107,9 +107,17 @@ class DropTheNumber extends Game with TapDetector {
   // Super Horizontal power
   void superHor() {
     for (int i = 0; i < 5; i++) {
-      blocks[i].removeAt(0);
+      try {
+        blocks[i].removeAt(0);
+      } catch (Exception) {
+        print("except hor1");
+      }
       for (int j = 0; j < blocks[i].length; j++) {
-        blocks[i][j].y += 70;
+        try {
+          blocks[i][j].y += 70;
+        } catch (Exception) {
+          print("except hor2");
+        }
       }
     }
   }
@@ -274,20 +282,12 @@ class DropTheNumber extends Game with TapDetector {
       // Horizontal super power clicked.
       else if (inRange(x, 65, 75) && inRange(y, 92.5, 97.5)) {
         print("Horizontal super power clicked!"); // debug
-        try {
-          superHor();
-        } catch (RangeError) {
-          print("Invalid operation");
-        }
+        superHor();
       }
       // Vertical super power clicked.
       else if (inRange(x, 80, 90) && inRange(y, 92.5, 97.5)) {
         print("Vertical super power clicked!"); // debug
-        try {
-          superVert();
-        } catch (RangeError) {
-          print("Invalid operation.");
-        }
+        superVert();
       }
       //
       // if (inRange(x, 15, 29) && inRange(y, 221, 653)) {
