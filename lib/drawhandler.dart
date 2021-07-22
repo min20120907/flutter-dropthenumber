@@ -277,9 +277,9 @@ class DrawHandler {
     **********************************************************************/
   void drawHorizontalSuperPowerButton() {
     // Horizontal super power image
-    drawImage(horizontalSuperPowerImage, 65, 91, 10, 7);
+    drawImage(horizontalSuperPowerImage, 69.5, 91, 10, 7);
     // Horizontal super power border
-    drawRectStroke(65, 92.5, 10, 5, Colors.white, 3);
+    drawRectStroke(70, 92.5, 9, 5, Colors.white, 3);
   }
 
   void drawTestvideo() {
@@ -292,9 +292,9 @@ class DrawHandler {
     **********************************************************************/
   void drawVerticalSuperPowerButton() {
     // Vertical super power image
-    drawImage(verticalSuperPowerImage, 80, 91.25, 10, 7);
+    drawImage(verticalSuperPowerImage, 81.5, 91.25, 10, 7);
     // Vertical super power border
-    drawRectStroke(80, 92.5, 10, 5, Colors.white, 3);
+    drawRectStroke(82, 92.5, 9, 5, Colors.white, 3);
   }
 
   /**********************************************************************

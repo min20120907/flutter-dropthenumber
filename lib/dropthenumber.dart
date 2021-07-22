@@ -121,7 +121,7 @@ class DropTheNumber extends Game with TapDetector {
       }
       for (int j = 0; j < blocks[i].length; j++) {
         try {
-          blocks[i][j].y += 70;
+          blocks[i][j].y += 9;
         } catch (Exception) {
           print("except hor2");
         }
