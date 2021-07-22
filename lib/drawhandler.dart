@@ -347,13 +347,6 @@ class DrawHandler {
     **********************************************************************/
   void playHorizontalSuperPowerAnimation() {
     drawVideo(horizontalSuperPowerVideo, -350, 50, 500, 500);
-
-    // for (int i = 0; i < 5; i++) {
-    //     blocks[i].removeAt(0);
-    //     for (int j = 0; j < blocks[i].length; j++) {
-    //     blocks[i][j].y += 70;
-    //     }
-    // }
   }
 
   /**********************************************************************
