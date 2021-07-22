@@ -236,7 +236,7 @@ class DropTheNumber extends Game with TapDetector {
     try {
       blocks.removeAt(maxTrack);
     } catch (Exception) {}
-    blocks.insert(maxTrack - 1, []);
+    blocks.insert(maxTrack, []);
   }
 
   /**********************************************************************
