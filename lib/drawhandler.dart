@@ -123,14 +123,14 @@ class DrawHandler {
     // loadUiImage("assets/video/power1/1.png")
     //     .then((value) => horizontalSuperPowerVideo.add(value));
 
-    // load power1 video
+    // load fire video
     for (int i = 1; i < 68; i++) {
       loadUiImage("assets/video/fire/" + i.toString() + ".png")
           .then((value) => verticalSuperPowerVideo.add(value));
     }
-    //load power2 video
-    for (int i = 0; i < 19; i++) {
-      loadUiImage("assets/video/power2/" + i.toString() + ".png")
+    //load glow video
+    for (int i = 1; i < 215; i++) {
+      loadUiImage("assets/video/glow/" + i.toString() + ".png")
           .then((value) => horizontalSuperPowerVideo.add(value));
     }
     // print(horizontalSuperPowerVideo);
@@ -353,14 +353,14 @@ class DrawHandler {
     **********************************************************************/
   void playVerticalSuperPowerAnimation(int track, List<List<Block>> blocks) {
     drawVideo(verticalSuperPowerVideo, blocks[track][0].x - 5,
-        blocks[track][0].y - 50, 300, 600);
+        blocks[track][0].y - 50, 300, 300);
   }
 
   /**********************************************************************
     * Play horizontal super power animation. (puple magic animation)
     **********************************************************************/
   void playHorizontalSuperPowerAnimation() {
-    drawVideo(horizontalSuperPowerVideo, -110, -20, 1300, 900);
+    drawVideo(horizontalSuperPowerVideo, 20, 20, 50, 50);
   }
 
   /**********************************************************************
