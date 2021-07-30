@@ -56,6 +56,21 @@ class DropTheNumber extends Game with TapDetector {
   // The time elapsed of the game pause.
   Duration pauseElapsedTime;
   // Get the maximum track among the blocks
+
+  // Merge animation
+  // T Shape occurance check boolean variable
+  bool tShapeOccurance = false;
+  // Left and right occurance check boolean variable
+  bool leftOccurance = false;
+  bool rightOccurance = false;
+  // Down occurance check boolean variable
+  bool downOccurance = false;
+  // horizontal shape occurance check boolean variable
+  bool horizontalOccurance = false;
+  // Gamma shape occurance check boolean variable
+  bool gammaOccurance = false;
+  // 7 Shape occurance check boolean variable
+  bool sevenOccurance = false;
   int getMaxTrack() {
     int maximum = blocks[0].length, index = 0;
     for (int i = 1; i < 5; i++) maximum = max(blocks[i].length, maximum);
