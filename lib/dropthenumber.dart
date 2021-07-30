@@ -441,237 +441,245 @@ class DropTheNumber extends Game with TapDetector {
 
   // Gamma shape animation phase 1
   void gammaShapeAnimation1() {
-    // while (jj > blocks[x][y].x) {
-    //   drawHandler.drawBackground();
-    //   drawHandler.drawBorders();
-    //   drawHandler.drawTitle(nextBlockValue);
-    //   drawHandler.drawNextBlockHintText();
-    //   drawHandler.drawNextBlock(nextBlockValue);
-    //   drawHandler.drawTime(elapsedTime);
-    //   if (!mute) {
-    //     drawHandler.drawMusicButton();
-    //   } else {
-    //     drawHandler.drawMuteButton();
-    //   }
-    //   drawHandler.drawFiveCross();
-    //   drawHandler.drawAllBlocks(blocks);
+    while (jj > blocks[x][y].x) {
+      drawHandler.drawBackground();
+      drawHandler.drawBorders();
+      drawHandler.drawTitle(nextBlockValue);
+      drawHandler.drawNextBlockHintText();
+      drawHandler.drawNextBlock(nextBlockValue);
+      drawHandler.drawTime(elapsedTime);
+      if (!mute) {
+        drawHandler.drawMusicButton();
+      } else {
+        drawHandler.drawMuteButton();
+      }
+      drawHandler.drawFiveCross(nextBlockValue);
+      drawHandler.drawAllBlocks(blocks);
 
-    //   drawHandler.drawScore(score);
-    //   drawHandler.drawVerticalSuperPowerButton();
-    //   drawHandler.drawHorizontalSuperPowerButton();
-    //   if (!pause) {
-    //     drawHandler.drawPauseButton();
-    //   } else {
-    //     drawHandler.drawPlayButton();
-    //   }
-    //   drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
-    //   jj -= mergingSpeed;
-    // }
+      drawHandler.drawScore(score);
+      drawHandler.drawVerticalSuperPowerButton();
+      drawHandler.drawHorizontalSuperPowerButton();
+      if (!pause) {
+        drawHandler.drawPauseButton();
+      } else {
+        drawHandler.drawPlayButton();
+      }
+      drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+      jj -= mergingSpeed;
+    }
   }
+
   // Gamma shape animation phase 2
   void gammaShapeAnimation2() {
-    // while (ii < blocks[x][y - 1].y) {
-    //   drawHandler.drawBackground();
-    //   drawHandler.drawBorders();
-    //   drawHandler.drawTitle(nextBlockValue);
-    //   drawHandler.drawNextBlockHintText();
-    //   drawHandler.drawNextBlock(nextBlockValue);
-    //   drawHandler.drawTime(elapsedTime);
-    //   if (!mute) {
-    //     drawHandler.drawMusicButton();
-    //   } else {
-    //     drawHandler.drawMuteButton();
-    //   }
-    //   drawHandler.drawFiveCross();
-    //   drawHandler.drawAllBlocks(blocks);
+    while (ii < blocks[x][y - 1].y) {
+      drawHandler.drawBackground();
+      drawHandler.drawBorders();
+      drawHandler.drawTitle(nextBlockValue);
+      drawHandler.drawNextBlockHintText();
+      drawHandler.drawNextBlock(nextBlockValue);
+      drawHandler.drawTime(elapsedTime);
+      if (!mute) {
+        drawHandler.drawMusicButton();
+      } else {
+        drawHandler.drawMuteButton();
+      }
+      drawHandler.drawFiveCross(nextBlockValue);
+      drawHandler.drawAllBlocks(blocks);
 
-    //   drawHandler.drawScore(score);
-    //   drawHandler.drawVerticalSuperPowerButton();
-    //   drawHandler.drawHorizontalSuperPowerButton();
-    //   if (!pause) {
-    //     drawHandler.drawPauseButton();
-    //   } else {
-    //     drawHandler.drawPlayButton();
-    //   }
-    //   drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, ii));
-    //   ii += mergingSpeed;
-    // }
+      drawHandler.drawScore(score);
+      drawHandler.drawVerticalSuperPowerButton();
+      drawHandler.drawHorizontalSuperPowerButton();
+      if (!pause) {
+        drawHandler.drawPauseButton();
+      } else {
+        drawHandler.drawPlayButton();
+      }
+      drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, ii));
+      ii += mergingSpeed;
+    }
   }
+
   // 7 Shape animation phase 1
   void sevenShapeAnimation1() {
-    // while (jj < blocks[x][y].x) {
-    //   drawHandler.drawBackground();
-    //   drawHandler.drawBorders();
-    //   drawHandler.drawTitle(nextBlockValue);
-    //   drawHandler.drawNextBlockHintText();
-    //   drawHandler.drawNextBlock(nextBlockValue);
-    //   drawHandler.drawTime(elapsedTime);
-    //   if (!mute) {
-    //     drawHandler.drawMusicButton();
-    //   } else {
-    //     drawHandler.drawMuteButton();
-    //   }
-    //   drawHandler.drawFiveCross();
-    //   drawHandler.drawAllBlocks(blocks);
-  }
-  // 7 Shape animation phase 2
-  void sevenShapeAnimation2() {
-    //   drawHandler.drawScore(score);
-    //   drawHandler.drawVerticalSuperPowerButton();
-    //   drawHandler.drawHorizontalSuperPowerButton();
-    //   if (!pause) {
-    //     drawHandler.drawPauseButton();
-    //   } else {
-    //     drawHandler.drawPlayButton();
-    //   }
-    //   drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
-    //   jj += mergingSpeed;
-    // }
-    // while (ii < blocks[x][y - 1].y) {
-    //   drawHandler.drawBackground();
-    //   drawHandler.drawBorders();
-    //   drawHandler.drawTitle(nextBlockValue);
-    //   drawHandler.drawNextBlockHintText();
-    //   drawHandler.drawNextBlock(nextBlockValue);
-    //   drawHandler.drawTime(elapsedTime);
-    //   if (!mute) {
-    //     drawHandler.drawMusicButton();
-    //   } else {
-    //     drawHandler.drawMuteButton();
-    //   }
-    //   drawHandler.drawFiveCross();
-    //   drawHandler.drawAllBlocks(blocks);
+    while (jj < blocks[x][y].x) {
+      drawHandler.drawBackground();
+      drawHandler.drawBorders();
+      drawHandler.drawTitle(nextBlockValue);
+      drawHandler.drawNextBlockHintText();
+      drawHandler.drawNextBlock(nextBlockValue);
+      drawHandler.drawTime(elapsedTime);
+      if (!mute) {
+        drawHandler.drawMusicButton();
+      } else {
+        drawHandler.drawMuteButton();
+      }
+      drawHandler.drawFiveCross(nextBlockValue);
+      drawHandler.drawAllBlocks(blocks);
+    }
+    // 7 Shape animation phase 2
+    void sevenShapeAnimation2() {
+      drawHandler.drawScore(score);
+      drawHandler.drawVerticalSuperPowerButton();
+      drawHandler.drawHorizontalSuperPowerButton();
+      if (!pause) {
+        drawHandler.drawPauseButton();
+      } else {
+        drawHandler.drawPlayButton();
+      }
+      drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+      jj += mergingSpeed;
+    }
 
-    //   drawHandler.drawScore(score);
-    //   drawHandler.drawVerticalSuperPowerButton();
-    //   drawHandler.drawHorizontalSuperPowerButton();
-    //   if (!pause) {
-    //     drawHandler.drawPauseButton();
-    //   } else {
-    //     drawHandler.drawPlayButton();
-    //   }
-    //   drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
-    //   ii += mergingSpeed;
-    // }
+    while (ii < blocks[x][y - 1].y) {
+      drawHandler.drawBackground();
+      drawHandler.drawBorders();
+      drawHandler.drawTitle(nextBlockValue);
+      drawHandler.drawNextBlockHintText();
+      drawHandler.drawNextBlock(nextBlockValue);
+      drawHandler.drawTime(elapsedTime);
+      if (!mute) {
+        drawHandler.drawMusicButton();
+      } else {
+        drawHandler.drawMuteButton();
+      }
+      drawHandler.drawFiveCross(nextBlockValue);
+      drawHandler.drawAllBlocks(blocks);
+
+      drawHandler.drawScore(score);
+      drawHandler.drawVerticalSuperPowerButton();
+      drawHandler.drawHorizontalSuperPowerButton();
+      if (!pause) {
+        drawHandler.drawPauseButton();
+      } else {
+        drawHandler.drawPlayButton();
+      }
+      drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+      ii += mergingSpeed;
+    }
   }
+
   // Horizontal shape animation
   void horizontalShapeAnimation() {
-    // while (ii > blocks[x][y].x && jj < blocks[x][y].x) {
-    //   drawHandler.drawBackground();
-    //   drawHandler.drawBorders();
-    //   drawHandler.drawTitle(nextBlockValue);
-    //   drawHandler.drawNextBlockHintText();
-    //   drawHandler.drawNextBlock(nextBlockValue);
-    //   drawHandler.drawTime(elapsedTime);
-    //   if (!mute) {
-    //     drawHandler.drawMusicButton();
-    //   } else {
-    //     drawHandler.drawMuteButton();
-    //   }
-    //   drawHandler.drawFiveCross();
-    //   drawHandler.drawAllBlocks(blocks);
+    while (ii > blocks[x][y].x && jj < blocks[x][y].x) {
+      drawHandler.drawBackground();
+      drawHandler.drawBorders();
+      drawHandler.drawTitle(nextBlockValue);
+      drawHandler.drawNextBlockHintText();
+      drawHandler.drawNextBlock(nextBlockValue);
+      drawHandler.drawTime(elapsedTime);
+      if (!mute) {
+        drawHandler.drawMusicButton();
+      } else {
+        drawHandler.drawMuteButton();
+      }
+      drawHandler.drawFiveCross(nextBlockValue);
+      drawHandler.drawAllBlocks(blocks);
 
-    //   drawHandler.drawScore(score);
-    //   drawHandler.drawVerticalSuperPowerButton();
-    //   drawHandler.drawHorizontalSuperPowerButton();
-    //   if (!pause) {
-    //     drawHandler.drawPauseButton();
-    //   } else {
-    //     drawHandler.drawPlayButton();
-    //   }
-    //   drawHandler.drawBlock(Block(old, ii, blocks[x][y].y));
-    //   drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
-    //   ii += mergingSpeed;
-    //   jj += mergingSpeed;
-    // }
+      drawHandler.drawScore(score);
+      drawHandler.drawVerticalSuperPowerButton();
+      drawHandler.drawHorizontalSuperPowerButton();
+      if (!pause) {
+        drawHandler.drawPauseButton();
+      } else {
+        drawHandler.drawPlayButton();
+      }
+      drawHandler.drawBlock(Block(old, ii, blocks[x][y].y));
+      drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+      ii += mergingSpeed;
+      jj += mergingSpeed;
+    }
   }
+
   // Right merge animation
   void rightShapeAnimation() {
-    // while (jj > blocks[x][y].x) {
-    //   drawHandler.drawBackground();
-    //   drawHandler.drawBorders();
-    //   drawHandler.drawTitle(nextBlockValue);
-    //   drawHandler.drawNextBlockHintText();
-    //   drawHandler.drawNextBlock(nextBlockValue);
-    //   drawHandler.drawTime(elapsedTime);
-    //   if (!mute) {
-    //     drawHandler.drawMusicButton();
-    //   } else {
-    //     drawHandler.drawMuteButton();
-    //   }
-    //   drawHandler.drawFiveCross();
-    //   drawHandler.drawAllBlocks(blocks);
+    while (jj > blocks[x][y].x) {
+      drawHandler.drawBackground();
+      drawHandler.drawBorders();
+      drawHandler.drawTitle(nextBlockValue);
+      drawHandler.drawNextBlockHintText();
+      drawHandler.drawNextBlock(nextBlockValue);
+      drawHandler.drawTime(elapsedTime);
+      if (!mute) {
+        drawHandler.drawMusicButton();
+      } else {
+        drawHandler.drawMuteButton();
+      }
+      drawHandler.drawFiveCross(nextBlockValue);
+      drawHandler.drawAllBlocks(blocks);
 
-    //   drawHandler.drawScore(score);
-    //   drawHandler.drawVerticalSuperPowerButton();
-    //   drawHandler.drawHorizontalSuperPowerButton();
-    //   if (!pause) {
-    //     drawHandler.drawPauseButton();
-    //   } else {
-    //     drawHandler.drawPlayButton();
-    //   }
-    //   drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
-    //   jj -= mergingSpeed;
-    // }
+      drawHandler.drawScore(score);
+      drawHandler.drawVerticalSuperPowerButton();
+      drawHandler.drawHorizontalSuperPowerButton();
+      if (!pause) {
+        drawHandler.drawPauseButton();
+      } else {
+        drawHandler.drawPlayButton();
+      }
+      drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+      jj -= mergingSpeed;
+    }
   }
+
   // Left merge shape animation
   void leftShapeAnimation() {
-    // while (jj > blocks[x][y].x) {
-    //   drawHandler.drawBackground();
-    //   drawHandler.drawBorders();
-    //   drawHandler.drawTitle(nextBlockValue);
-    //   drawHandler.drawNextBlockHintText();
-    //   drawHandler.drawNextBlock(nextBlockValue);
-    //   drawHandler.drawTime(elapsedTime);
-    //   if (!mute) {
-    //     drawHandler.drawMusicButton();
-    //   } else {
-    //     drawHandler.drawMuteButton();
-    //   }
-    //   drawHandler.drawFiveCross();
-    //   drawHandler.drawAllBlocks(blocks);
+    while (jj > blocks[x][y].x) {
+      drawHandler.drawBackground();
+      drawHandler.drawBorders();
+      drawHandler.drawTitle(nextBlockValue);
+      drawHandler.drawNextBlockHintText();
+      drawHandler.drawNextBlock(nextBlockValue);
+      drawHandler.drawTime(elapsedTime);
+      if (!mute) {
+        drawHandler.drawMusicButton();
+      } else {
+        drawHandler.drawMuteButton();
+      }
+      drawHandler.drawFiveCross(nextBlockValue);
+      drawHandler.drawAllBlocks(blocks);
 
-    //   drawHandler.drawScore(score);
-    //   drawHandler.drawVerticalSuperPowerButton();
-    //   drawHandler.drawHorizontalSuperPowerButton();
-    //   if (!pause) {
-    //     drawHandler.drawPauseButton();
-    //   } else {
-    //     drawHandler.drawPlayButton();
-    //   }
-    //   drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
-    //   jj += mergingSpeed;
-    // }
+      drawHandler.drawScore(score);
+      drawHandler.drawVerticalSuperPowerButton();
+      drawHandler.drawHorizontalSuperPowerButton();
+      if (!pause) {
+        drawHandler.drawPauseButton();
+      } else {
+        drawHandler.drawPlayButton();
+      }
+      drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+      jj += mergingSpeed;
+    }
   }
+
   // up and down merge shape animation
   void downShapeAnimation() {
-    // while (jj < blocks[x][y - 1].y) {
-    //   drawHandler.drawBackground();
-    //   drawHandler.drawBorders();
-    //   drawHandler.drawTitle(nextBlockValue);
-    //   drawHandler.drawNextBlockHintText();
-    //   drawHandler.drawNextBlock(nextBlockValue);
-    //   drawHandler.drawTime(elapsedTime);
-    //   if (!mute) {
-    //     drawHandler.drawMusicButton();
-    //   } else {
-    //     drawHandler.drawMuteButton();
-    //   }
-    //   drawHandler.drawFiveCross();
-    //   drawHandler.drawAllBlocks(blocks);
+    while (jj < blocks[x][y - 1].y) {
+      drawHandler.drawBackground();
+      drawHandler.drawBorders();
+      drawHandler.drawTitle(nextBlockValue);
+      drawHandler.drawNextBlockHintText();
+      drawHandler.drawNextBlock(nextBlockValue);
+      drawHandler.drawTime(elapsedTime);
+      if (!mute) {
+        drawHandler.drawMusicButton();
+      } else {
+        drawHandler.drawMuteButton();
+      }
+      drawHandler.drawFiveCross(nextBlockValue);
+      drawHandler.drawAllBlocks(blocks);
 
-    //   drawHandler.drawScore(score);
-    //   drawHandler.drawVerticalSuperPowerButton();
-    //   drawHandler.drawHorizontalSuperPowerButton();
-    //   if (!pause) {
-    //     drawHandler.drawPauseButton();
-    //   } else {
-    //     drawHandler.drawPlayButton();
-    //   }
-    //   drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, jj));
-    //   jj += mergingSpeed;
-    // }
+      drawHandler.drawScore(score);
+      drawHandler.drawVerticalSuperPowerButton();
+      drawHandler.drawHorizontalSuperPowerButton();
+      if (!pause) {
+        drawHandler.drawPauseButton();
+      } else {
+        drawHandler.drawPlayButton();
+      }
+      drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, jj));
+      jj += mergingSpeed;
+    }
   }
+
   /**********************************************************************
   * Add current block to solid blocks of current track.
   **********************************************************************/
