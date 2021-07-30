@@ -124,8 +124,8 @@ class DrawHandler {
     //     .then((value) => horizontalSuperPowerVideo.add(value));
 
     // load power1 video
-    for (int i = 1; i < 15; i++) {
-      loadUiImage("assets/video/power1/" + i.toString() + ".png")
+    for (int i = 1; i < 68; i++) {
+      loadUiImage("assets/video/fire/" + i.toString() + ".png")
           .then((value) => verticalSuperPowerVideo.add(value));
     }
     //load power2 video
