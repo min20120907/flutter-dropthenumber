@@ -269,8 +269,8 @@ class DrawHandler {
   void drawPlayButton() {
     // Play button image
     drawImage(playImage, 11.5, 93.25, 5, 3.5);
-    drawImage(startImage, 30.5, 37.25, 40, 27.5);
-    drawImage(startborderImage, 30.5, 37.25, 40, 27.5);
+    drawImage(startImage, 30.5, 37.25, 40, 26);
+    drawImage(startborderImage, 30.5, 37.25, 40, 26);
     // Play button border
     drawRectStroke(9, 92.5, 10, 5, Colors.white, 3);
   }
