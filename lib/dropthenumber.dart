@@ -75,9 +75,11 @@ class DropTheNumber extends Game with TapDetector {
   // horizontal shape occurance check boolean variable
   bool horizontalOccurance = false;
   // Gamma shape occurance check boolean variable
-  bool gammaOccurance = false;
+  bool gammaOccurance1 = false;
+  bool gammaOccurance2 = false;
   // 7 Shape occurance check boolean variable
-  bool sevenOccurance = false;
+  bool sevenOccurance1 = false;
+  bool sevenOccurance2 = false;
   int getMaxTrack() {
     int maximum = blocks[0].length, index = 0;
     for (int i = 1; i < 5; i++) maximum = max(blocks[i].length, maximum);
