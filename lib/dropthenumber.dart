@@ -222,7 +222,43 @@ class DropTheNumber extends Game with TapDetector {
         drawHandler.playVerticalSuperPowerAnimation(getMaxTrack(), blocks);
         superVertBool = false;
       }
-
+      // if the t shape occurance is triggered
+      if (tShapeOccurance) {
+        tShapeAnimation();
+        tShapeOccurance = false;
+      }
+      // if the first phase of seven shape occurance is triggered
+      if (sevenOccurance1) {
+        sevenShapeAnimation1();
+        sevenShapeAnimation2();
+        sevenOccurance1 = false;
+      }
+      // if the first phase of gamma shape occurance is triggered
+      if (gammaOccurance1) {
+        gammaShapeAnimation1();
+        gammaShapeAnimation2();
+        gammaOccurance1 = false;
+      }
+      // if down occurance is triggered
+      if (downOccurance) {
+        downShapeAnimation();
+        downOccurance = false;
+      }
+      // if horizontal shape is triggered
+      if (horizontalOccurance) {
+        horizontalShapeAnimation();
+        horizontalOccurance = false;
+      }
+      // if the left occurance is triggered
+      if (leftOccurance) {
+        leftShapeAnimation();
+        leftOccurance = false;
+      }
+      // if the right occurance is triggered
+      if (rightOccurance) {
+        rightShapeAnimation();
+        rightOccurance = false;
+      }
       // if (!pause) {
       //     yAxis += 1;
       //     maxYAxis = (597 - 70 * blocks[currentTrack].length).toDouble();
@@ -348,6 +384,15 @@ class DropTheNumber extends Game with TapDetector {
       drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, ii));
       ii += mergingSpeed;
     }
+    merge(x, y);
+    merge(x, y - 1);
+    merge(x - 1, y);
+    merge(x + 1, y);
+    //something about to check above
+    merge(x, blocks[x].length - 1);
+    merge(x - 1, blocks[x - 1].length - 1);
+    merge(x + 1, blocks[x + 1].length - 1);
+    return;
   }
 
   /**********************************************************************
@@ -471,6 +516,7 @@ class DropTheNumber extends Game with TapDetector {
 
   // Gamma shape animation phase 2
   void gammaShapeAnimation2() {
+    dropAboveBlocks(x, y);
     while (ii < blocks[x][y - 1].y) {
       drawHandler.drawBackground();
       drawHandler.drawBorders();
@@ -497,6 +543,15 @@ class DropTheNumber extends Game with TapDetector {
       drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, ii));
       ii += mergingSpeed;
     }
+
+    merge(x, y);
+    merge(x, y - 1);
+    merge(x - 1, y);
+
+    // check above
+    merge(x, blocks[x].length - 1);
+    merge(x - 1, blocks[x].length - 1);
+    return;
   }
 
   // 7 Shape animation phase 1
@@ -515,19 +570,6 @@ class DropTheNumber extends Game with TapDetector {
       }
       drawHandler.drawFiveCross(nextBlockValue);
       drawHandler.drawAllBlocks(blocks);
-    }
-    // 7 Shape animation phase 2
-    void sevenShapeAnimation2() {
-      drawHandler.drawScore(score);
-      drawHandler.drawVerticalSuperPowerButton();
-      drawHandler.drawHorizontalSuperPowerButton();
-      if (!pause) {
-        drawHandler.drawPauseButton();
-      } else {
-        drawHandler.drawPlayButton();
-      }
-      drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
-      jj += mergingSpeed;
     }
 
     while (ii < blocks[x][y - 1].y) {
@@ -556,6 +598,27 @@ class DropTheNumber extends Game with TapDetector {
       drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
       ii += mergingSpeed;
     }
+  }
+
+// 7 Shape animation phase 2
+  void sevenShapeAnimation2() {
+    drawHandler.drawScore(score);
+    drawHandler.drawVerticalSuperPowerButton();
+    drawHandler.drawHorizontalSuperPowerButton();
+    if (!pause) {
+      drawHandler.drawPauseButton();
+    } else {
+      drawHandler.drawPlayButton();
+    }
+    drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+    jj += mergingSpeed;
+    dropAboveBlocks(x, y);
+    merge(x, y);
+    merge(x, y - 1);
+    merge(x - 1, y);
+    merge(x, blocks[x].length - 1);
+    merge(x - 1, blocks[x - 1].length - 1);
+    return;
   }
 
   // Horizontal shape animation
@@ -588,6 +651,14 @@ class DropTheNumber extends Game with TapDetector {
       ii += mergingSpeed;
       jj += mergingSpeed;
     }
+    merge(x, y);
+    merge(x - 1, y);
+    merge(x + 1, y);
+    // check above
+    merge(x, blocks[x].length - 1);
+    merge(x - 1, blocks[x - 1].length - 1);
+    merge(x + 1, blocks[x + 1].length - 1);
+    return;
   }
 
   // Right merge animation
@@ -618,6 +689,10 @@ class DropTheNumber extends Game with TapDetector {
       drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
       jj -= mergingSpeed;
     }
+    merge(x, y);
+    merge(x + 1, y - 1);
+    merge(x + 1, blocks[x + 1].length - 1);
+    return;
   }
 
   // Left merge shape animation
@@ -648,6 +723,10 @@ class DropTheNumber extends Game with TapDetector {
       drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
       jj += mergingSpeed;
     }
+    merge(x, y);
+    merge(x - 1, y - 1);
+    merge(x - 1, blocks[x + 1].length - 1);
+    return;
   }
 
   // up and down merge shape animation
@@ -678,6 +757,14 @@ class DropTheNumber extends Game with TapDetector {
       drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, jj));
       jj += mergingSpeed;
     }
+    //         print("ONE"); // debug
+    merge(x, y);
+//         print("TWE"); // debug
+    merge(x, y - 1);
+//         print("THREE"); // debug
+    merge(x, blocks[x].length - 1);
+//         print("END"); // debug
+    return;
   }
 
   /**********************************************************************
@@ -699,6 +786,8 @@ class DropTheNumber extends Game with TapDetector {
 
   // Merge method
   void merge(int x, int y) {
+    this.x = x;
+    this.y = y;
     print("merge (" + x.toString() + "," + y.toString() + ")"); // debug
     if (x < 0 || x > 5) return;
     if (y < 0 || blocks[x].length - 1 < y) return;
@@ -723,16 +812,10 @@ class DropTheNumber extends Game with TapDetector {
           dropAboveBlocks(x - 1, y);
           dropAboveBlocks(x + 1, y);
           dropAboveBlocks(x, y);
-
-          merge(x, y);
-          merge(x, y - 1);
-          merge(x - 1, y);
-          merge(x + 1, y);
-          //something about to check above
-          merge(x, blocks[x].length - 1);
-          merge(x - 1, blocks[x - 1].length - 1);
-          merge(x + 1, blocks[x + 1].length - 1);
-          return;
+          if (!tShapeOccurance) {
+            tShapeOccurance = true;
+            return;
+          }
         }
       }
     }
@@ -744,23 +827,16 @@ class DropTheNumber extends Game with TapDetector {
         if (blocks[x][y].v == blocks[x + 1][y].v &&
             blocks[x][y].v == blocks[x][y - 1].v) {
           print("gamma shape"); // debug
-          int old = blocks[x][y].v;
-          double ii = blocks[x][y].y;
-          double jj = blocks[x + 1][y].x;
+          old = blocks[x][y].v;
+          ii = blocks[x][y].y;
+          jj = blocks[x + 1][y].x;
           blocks[x][y - 1].v *= 4;
           score += blocks[x][y - 1].v;
           dropAboveBlocks(x + 1, y);
-
-          dropAboveBlocks(x, y);
-
-          merge(x, y);
-          merge(x, y - 1);
-          merge(x - 1, y);
-
-          // check above
-          merge(x, blocks[x].length - 1);
-          merge(x - 1, blocks[x].length - 1);
-          return;
+          if (!gammaOccurance1) {
+            gammaOccurance1 = true;
+            return;
+          }
         }
       }
     }
@@ -779,15 +855,10 @@ class DropTheNumber extends Game with TapDetector {
           score += blocks[x][y - 1].v;
           blocks[x][y - 1].v *= 4;
           dropAboveBlocks(x - 1, y);
-
-          dropAboveBlocks(x, y);
-
-          merge(x, y);
-          merge(x, y - 1);
-          merge(x - 1, y);
-          merge(x, blocks[x].length - 1);
-          merge(x - 1, blocks[x - 1].length - 1);
-          return;
+          if (!sevenOccurance1) {
+            sevenOccurance1 = true;
+            return;
+          }
         }
       }
     }
@@ -806,15 +877,10 @@ class DropTheNumber extends Game with TapDetector {
           blocks[x][y].v *= 4;
           dropAboveBlocks(x - 1, y);
           dropAboveBlocks(x + 1, y);
-
-          merge(x, y);
-          merge(x - 1, y);
-          merge(x + 1, y);
-          // check above
-          merge(x, blocks[x].length - 1);
-          merge(x - 1, blocks[x - 1].length - 1);
-          merge(x + 1, blocks[x + 1].length - 1);
-          return;
+          if (!horizontalOccurance) {
+            horizontalOccurance = true;
+            return;
+          }
         }
       }
     }
@@ -830,11 +896,10 @@ class DropTheNumber extends Game with TapDetector {
           blocks[x][y].v *= 2;
           score += blocks[x][y].v;
           dropAboveBlocks(x + 1, y);
-
-          merge(x, y);
-          merge(x + 1, y - 1);
-          merge(x + 1, blocks[x + 1].length - 1);
-          return;
+          if (!rightOccurance) {
+            rightOccurance = true;
+            return;
+          }
         }
       }
     }
@@ -846,16 +911,15 @@ class DropTheNumber extends Game with TapDetector {
       if (leftLineY >= y) {
         if (blocks[x][y].v == blocks[x - 1][y].v) {
           print("check left"); // debug
-          int old = blocks[x][y].v;
+          old = blocks[x][y].v;
           double jj = blocks[x - 1][y].x;
           blocks[x][y].v *= 2;
           score += blocks[x][y].v;
           dropAboveBlocks(x - 1, y);
-
-          merge(x, y);
-          merge(x - 1, y - 1);
-          merge(x - 1, blocks[x + 1].length - 1);
-          return;
+          if (!leftOccurance) {
+            leftOccurance = true;
+            return;
+          }
         }
       }
     }
@@ -865,20 +929,15 @@ class DropTheNumber extends Game with TapDetector {
     if (y > 0) {
       if (blocks[x][y].v == blocks[x][y - 1].v) {
         print("Check down"); // debug
-        double jj = blocks[x][y].y;
-        int old = blocks[x][y].v;
+        jj = blocks[x][y].y;
+        old = blocks[x][y].v;
         blocks[x][y - 1].v *= 2;
         score += blocks[x][y - 1].v;
         dropAboveBlocks(x, y);
-
-//         print("ONE"); // debug
-        merge(x, y);
-//         print("TWE"); // debug
-        merge(x, y - 1);
-//         print("THREE"); // debug
-        merge(x, blocks[x].length - 1);
-//         print("END"); // debug
-        return;
+        if (!downOccurance) {
+          downOccurance = true;
+          return;
+        }
       }
     }
   }
