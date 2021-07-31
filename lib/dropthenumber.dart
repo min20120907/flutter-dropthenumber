@@ -75,11 +75,10 @@ class DropTheNumber extends Game with TapDetector {
   // horizontal shape occurance check boolean variable
   bool horizontalOccurance = false;
   // Gamma shape occurance check boolean variable
-  bool gammaOccurance1 = false;
-  bool gammaOccurance2 = false;
+  bool gammaOccurance = false;
   // 7 Shape occurance check boolean variable
-  bool sevenOccurance1 = false;
-  bool sevenOccurance2 = false;
+  bool sevenOccurance = false;
+
   int getMaxTrack() {
     int maximum = blocks[0].length, index = 0;
     for (int i = 1; i < 5; i++) maximum = max(blocks[i].length, maximum);
@@ -228,16 +227,16 @@ class DropTheNumber extends Game with TapDetector {
         tShapeOccurance = false;
       }
       // if the first phase of seven shape occurance is triggered
-      if (sevenOccurance1) {
+      if (sevenOccurance) {
         sevenShapeAnimation1();
         sevenShapeAnimation2();
-        sevenOccurance1 = false;
+        sevenOccurance = false;
       }
       // if the first phase of gamma shape occurance is triggered
-      if (gammaOccurance1) {
+      if (gammaOccurance) {
         gammaShapeAnimation1();
         gammaShapeAnimation2();
-        gammaOccurance1 = false;
+        gammaOccurance = false;
       }
       // if down occurance is triggered
       if (downOccurance) {
@@ -833,8 +832,8 @@ class DropTheNumber extends Game with TapDetector {
           blocks[x][y - 1].v *= 4;
           score += blocks[x][y - 1].v;
           dropAboveBlocks(x + 1, y);
-          if (!gammaOccurance1) {
-            gammaOccurance1 = true;
+          if (!gammaOccurance) {
+            gammaOccurance = true;
             return;
           }
         }
@@ -855,8 +854,8 @@ class DropTheNumber extends Game with TapDetector {
           score += blocks[x][y - 1].v;
           blocks[x][y - 1].v *= 4;
           dropAboveBlocks(x - 1, y);
-          if (!sevenOccurance1) {
-            sevenOccurance1 = true;
+          if (!sevenOccurance) {
+            sevenOccurance = true;
             return;
           }
         }
