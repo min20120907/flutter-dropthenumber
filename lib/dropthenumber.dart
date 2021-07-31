@@ -419,7 +419,7 @@ class DropTheNumber extends Game with TapDetector {
       // Pause button clicked.
       else if (inRange(x, 9, 19) && inRange(y, 92.5, 97.5)) {
         togglePause();
-      } else if (inRange(x, 37, 63) && inRange(y, 42, 58)) {
+      } else if (pause && inRange(x, 37, 63) && inRange(y, 42, 58)) {
         togglePause();
       }
       // Track clicked.
