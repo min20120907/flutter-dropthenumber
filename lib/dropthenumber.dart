@@ -216,47 +216,56 @@ class DropTheNumber extends Game with TapDetector {
       if (superHorBool) {
         drawHandler.playHorizontalSuperPowerAnimation();
         superHorBool = false;
+        return;
       }
       if (superVertBool) {
         drawHandler.playVerticalSuperPowerAnimation(getMaxTrack(), blocks);
         superVertBool = false;
+        return;
       }
       // if the t shape occurance is triggered
       if (tShapeOccurance) {
         tShapeAnimation();
         tShapeOccurance = false;
+        return;
       }
       // if the first phase of seven shape occurance is triggered
       if (sevenOccurance) {
         sevenShapeAnimation1();
         sevenShapeAnimation2();
         sevenOccurance = false;
+        return;
       }
       // if the first phase of gamma shape occurance is triggered
       if (gammaOccurance) {
         gammaShapeAnimation1();
         gammaShapeAnimation2();
         gammaOccurance = false;
+        return;
       }
       // if down occurance is triggered
       if (downOccurance) {
         downShapeAnimation();
         downOccurance = false;
+        return;
       }
       // if horizontal shape is triggered
       if (horizontalOccurance) {
         horizontalShapeAnimation();
         horizontalOccurance = false;
+        return;
       }
       // if the left occurance is triggered
       if (leftOccurance) {
         leftShapeAnimation();
         leftOccurance = false;
+        return;
       }
       // if the right occurance is triggered
       if (rightOccurance) {
         rightShapeAnimation();
         rightOccurance = false;
+        return;
       }
       // if (!pause) {
       //     yAxis += 1;
