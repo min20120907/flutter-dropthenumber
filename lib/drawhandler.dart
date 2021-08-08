@@ -106,7 +106,7 @@ class DrawHandler {
     loadUiImage("assets/image/mute.png").then((value) => muteImage = value);
     loadUiImage("assets/image/pause.png").then((value) => pauseImage = value);
     loadUiImage("assets/image/play.png").then((value) => playImage = value);
-    loadUiImage("assets/image/horizontalSuperPower.png")
+    loadUiImage("assets/image/glow.png")
         .then((value) => horizontalSuperPowerImage = value);
     loadUiImage("assets/image/verticalSuperPower.png")
         .then((value) => verticalSuperPowerImage = value);
@@ -288,7 +288,7 @@ class DrawHandler {
     **********************************************************************/
   void drawHorizontalSuperPowerButton() {
     // Horizontal super power image
-    drawImage(horizontalSuperPowerImage, 69.5, 91, 10, 7);
+    drawImage(horizontalSuperPowerImage, 70, 92, 9, 6);
     // Horizontal super power border
     drawRectStroke(70, 92.5, 9, 5, Colors.white, 3);
   }
@@ -352,15 +352,16 @@ class DrawHandler {
     * Play vertical super power animation. (flame animation)
     **********************************************************************/
   void playVerticalSuperPowerAnimation(int track, List<List<Block>> blocks) {
-    drawVideo(verticalSuperPowerVideo, blocks[track][0].x - 5,
-        blocks[track][0].y - 50, 300, 300);
+    drawVideo(verticalSuperPowerVideo, 10, 10, 100, 100);
+    // drawVideo(verticalSuperPowerVideo, blocks[track][0].x - 5,
+    //     blocks[track][0].y - 50, 300, 300);
   }
 
   /**********************************************************************
     * Play horizontal super power animation. (puple magic animation)
     **********************************************************************/
   void playHorizontalSuperPowerAnimation() {
-    drawVideo(horizontalSuperPowerVideo, 20, 20, 50, 50);
+    drawVideo(horizontalSuperPowerVideo, 50, 50, 250, 250);
   }
 
   /**********************************************************************

@@ -28,3 +28,6 @@ flutter:
     - assets/audio/
     - assets/video/power1/
     - assets/video/power2/
+    - assets/video/glow/
+    - assets/video/fire/
+
