@@ -1,6 +1,5 @@
 // @dart=2.11
 import 'dart:async';
-import 'dart:ffi';
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
