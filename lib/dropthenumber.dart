@@ -490,7 +490,7 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   // Gamma shape animation phase 1
-  void gammaShapeAnimation1() {
+  void gammaShapeAnimation1() async {
     while (jj > blocks[x][y].x) {
       drawHandler.drawBackground();
       drawHandler.drawBorders();
@@ -520,7 +520,7 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   // Gamma shape animation phase 2
-  void gammaShapeAnimation2() {
+  void gammaShapeAnimation2() async {
     dropAboveBlocks(x, y);
     while (ii < blocks[x][y - 1].y) {
       drawHandler.drawBackground();
@@ -560,7 +560,7 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   // 7 Shape animation phase 1
-  void sevenShapeAnimation1() {
+  void sevenShapeAnimation1() async {
     while (jj < blocks[x][y].x) {
       drawHandler.drawBackground();
       drawHandler.drawBorders();
@@ -606,7 +606,7 @@ class DropTheNumber extends Game with TapDetector {
   }
 
 // 7 Shape animation phase 2
-  void sevenShapeAnimation2() {
+  void sevenShapeAnimation2() async {
     drawHandler.drawScore(score);
     drawHandler.drawVerticalSuperPowerButton();
     drawHandler.drawHorizontalSuperPowerButton();
@@ -627,7 +627,7 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   // Horizontal shape animation
-  void horizontalShapeAnimation() {
+  void horizontalShapeAnimation() async {
     while (ii > blocks[x][y].x && jj < blocks[x][y].x) {
       drawHandler.drawBackground();
       drawHandler.drawBorders();
@@ -667,7 +667,7 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   // Right merge animation
-  void rightShapeAnimation() {
+  void rightShapeAnimation() async {
     while (jj > blocks[x][y].x) {
       drawHandler.drawBackground();
       drawHandler.drawBorders();
@@ -701,7 +701,7 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   // Left merge shape animation
-  void leftShapeAnimation() {
+  void leftShapeAnimation() async {
     while (jj > blocks[x][y].x) {
       drawHandler.drawBackground();
       drawHandler.drawBorders();
@@ -735,7 +735,7 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   // up and down merge shape animation
-  void downShapeAnimation() {
+  void downShapeAnimation() async {
     while (jj < blocks[x][y - 1].y) {
       drawHandler.drawBackground();
       drawHandler.drawBorders();
@@ -790,7 +790,7 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   // Merge method
-  void merge(int x, int y) {
+  void merge(int x, int y) async {
     this.x = x;
     this.y = y;
     print("merge (" + x.toString() + "," + y.toString() + ")"); // debug
