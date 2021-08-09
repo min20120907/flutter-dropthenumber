@@ -356,7 +356,8 @@ class DrawHandler {
   /**********************************************************************
     * Play vertical super power animation. (flame animation)
     **********************************************************************/
-  void playVerticalSuperPowerAnimation(int track, List<List<Block>> blocks) {
+  void playVerticalSuperPowerAnimation(
+      int track, List<List<Block>> blocks) async {
     double x = 10, y = 20, width = 350, height = 350;
     for (int i = 1; i < 68; i++) {
       loadUiImage("assets/video/fire/" + i.toString() + ".png")
@@ -375,11 +376,12 @@ class DrawHandler {
   /**********************************************************************
     * Play horizontal super power animation. (puple magic animation)
     **********************************************************************/
-  void playHorizontalSuperPowerAnimation() {
+  void playHorizontalSuperPowerAnimation() async {
     double x = 50, y = 50, width = 250, height = 250;
     for (int i = 1; i < 100; i++) {
       loadUiImage("assets/video/glow/" + i.toString() + ".png")
           .then((value) => tmpHorImage = value);
+
       canvas.drawImageRect(
           tmpHorImage,
           Rect.fromLTWH(0, 0, tmpHorImage.width.toDouble(),
