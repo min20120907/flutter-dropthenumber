@@ -24,6 +24,19 @@ class DrawHandler {
   // The left margin of canvas, prevent the screen stretch. (This is already in absolute coordinates)
   double canvasXOffset;
 
+  //cooldown
+  Duration cooldown_period = Duration(seconds: 180);
+  // The last time which horizontal superpower clicked
+  Duration cooldown_time_hor;
+  // Horizontal superpower cooldown duration
+  Duration cool_down_hor = Duration.zero;
+  // The last time which vertical superpower clicked
+  Duration cooldown_time_vert;
+  // Vertical superpower cooldown duration
+  Duration cool_down_vert = Duration.zero;
+  // LastLoopPaused
+  bool LastLoopPaused = false;
+
   /* Utils */
   // The canvas that the draw handler want to draw on.
   Canvas canvas;
@@ -204,6 +217,7 @@ class DrawHandler {
     * Draw the game elapsed time on the canvas.
     **********************************************************************/
   void drawTime(Duration elapsedTime) {
+    if (!LastLoopPaused) {}
     if (elapsedTime == null) {
       // here
       return;

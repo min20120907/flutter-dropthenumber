@@ -58,17 +58,6 @@ class DropTheNumber extends Game with TapDetector {
   Duration pauseElapsedTime;
   // Get the maximum track among the blocks
 
-  //cooldown
-  int cooldown_period = 180;
-  // The last time which horizontal superpower clicked
-  int cooldown_time_hor;
-  // Horizontal superpower cooldown duration
-  int cool_down_hor = 0;
-  // The last time which vertical superpower clicked
-  int cooldown_time_vert;
-  // Vertical superpower cooldown duration
-  int cool_down_vert = 0;
-
   // Merge animation
 
   int old;
@@ -137,8 +126,8 @@ class DropTheNumber extends Game with TapDetector {
     pause = false;
     pauseElapsedTime = Duration();
     startTime = DateTime.now();
-    cooldown_time_hor = 0;
-    cooldown_time_vert = 0;
+    drawHandler.cooldown_time_hor = Duration.zero;
+    drawHandler.cooldown_time_vert = Duration.zero;
 
     // Called twice to be sure didn't used the next block value of last round.
     setupCurrentBlock();
@@ -245,8 +234,10 @@ class DropTheNumber extends Game with TapDetector {
       }
       // if the first phase of gamma shape occurance is triggered
       if (gammaOccurance) {
-        gammaShapeAnimation1();
-        gammaShapeAnimation2();
+        try {
+          gammaShapeAnimation1();
+          gammaShapeAnimation2();
+        } catch (Exception) {}
         gammaOccurance = false;
         return;
       }
