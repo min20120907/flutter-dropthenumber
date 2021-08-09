@@ -71,9 +71,8 @@ class DrawHandler {
   ui.Image superHor1;
   ui.Image startImage;
   ui.Image startborderImage;
-  // Videos combine by lots of images which will be load later.
-  List<ui.Image> verticalSuperPowerVideo = [];
-  List<ui.Image> horizontalSuperPowerVideo = [];
+  ui.Image tmpVertImage;
+  ui.Image tmpHorImage;
 
   /**********************************************************************
     * Constructor
@@ -136,16 +135,8 @@ class DrawHandler {
     // loadUiImage("assets/video/power1/1.png")
     //     .then((value) => horizontalSuperPowerVideo.add(value));
 
-    // load fire video
-    for (int i = 1; i < 68; i++) {
-      loadUiImage("assets/video/fire/" + i.toString() + ".png")
-          .then((value) => verticalSuperPowerVideo.add(value));
-    }
     //load glow video
-    for (int i = 1; i < 100; i++) {
-      loadUiImage("assets/video/glow/" + i.toString() + ".png")
-          .then((value) => horizontalSuperPowerVideo.add(value));
-    }
+
     // print(horizontalSuperPowerVideo);
   }
 
@@ -366,7 +357,17 @@ class DrawHandler {
     * Play vertical super power animation. (flame animation)
     **********************************************************************/
   void playVerticalSuperPowerAnimation(int track, List<List<Block>> blocks) {
-    drawVideo(verticalSuperPowerVideo, 10, 20, 350, 350);
+    double x = 10, y = 20, width = 350, height = 350;
+    for (int i = 1; i < 68; i++) {
+      loadUiImage("assets/video/fire/" + i.toString() + ".png")
+          .then((value) => tmpVertImage = value);
+      canvas.drawImageRect(
+          tmpVertImage,
+          Rect.fromLTWH(0, 0, tmpVertImage.width.toDouble(),
+              tmpVertImage.height.toDouble()),
+          Rect.fromLTWH(toAbsoluteX(x), toAbsoluteY(y), width, height),
+          Paint());
+    }
     // drawVideo(verticalSuperPowerVideo, blocks[track][0].x - 5,
     //     blocks[track][0].y - 50, 300, 300);
   }
@@ -375,24 +376,16 @@ class DrawHandler {
     * Play horizontal super power animation. (puple magic animation)
     **********************************************************************/
   void playHorizontalSuperPowerAnimation() {
-    drawVideo(horizontalSuperPowerVideo, 50, 50, 250, 250);
-  }
-
-  /**********************************************************************
-    * Draw an animation video on the canvas.
-    **********************************************************************/
-  void drawVideo(
-      List<ui.Image> video, double x, double y, double width, double height) {
-    // load video
-    for (int i = 0; i < video.length; i++) {
-      for (int j = 0; j < 300; j++) {
-        canvas.drawImageRect(
-            video[i],
-            Rect.fromLTWH(
-                0, 0, video[i].width.toDouble(), video[i].height.toDouble()),
-            Rect.fromLTWH(toAbsoluteX(x), toAbsoluteY(y), width, height),
-            Paint());
-      }
+    double x = 50, y = 50, width = 250, height = 250;
+    for (int i = 1; i < 100; i++) {
+      loadUiImage("assets/video/glow/" + i.toString() + ".png")
+          .then((value) => tmpHorImage = value);
+      canvas.drawImageRect(
+          tmpHorImage,
+          Rect.fromLTWH(0, 0, tmpHorImage.width.toDouble(),
+              tmpHorImage.height.toDouble()),
+          Rect.fromLTWH(toAbsoluteX(x), toAbsoluteY(y), width, height),
+          Paint());
     }
   }
 
