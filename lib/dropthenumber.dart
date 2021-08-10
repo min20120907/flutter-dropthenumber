@@ -25,8 +25,11 @@ class DropTheNumber extends Game with TapDetector {
   // Left offset of the canvas left.
   double canvasXOffset;
   // If the start game screen is showed, it only show once when the game start.
-  bool startGameScreenFinished =
-      false; //////////////////////////// Temporary set the value to true for debugging
+  bool startGameScreenFinished = false;
+  // Check whether the icon is clicked
+  bool volumeOn;
+  // Check whether the icon is clicked
+  bool volumeDown;
   // If the game is game over, waiting for restart.
   bool gameOver;
   // If the horizontal superpower is clicked
@@ -200,6 +203,8 @@ class DropTheNumber extends Game with TapDetector {
     // Draw start game screen. (It only show once when the game start)
     if (!startGameScreenFinished) {
       drawHandler.drawStartGameScreen();
+      drawHandler.volumepic1();
+      drawHandler.volumepic2();
     }
     // Draw game running screen.
     else if (!gameOver) {
@@ -450,6 +455,13 @@ class DropTheNumber extends Game with TapDetector {
     if (!startGameScreenFinished) {
       if (inRange(x, 60, 98) && inRange(y, 20, 26)) {
         startGameScreenFinished = true;
+      }
+      if (inRange(x, 20, 30) && inRange(y, 30, 40)) {
+        drawHandler.drawVolumeOn();
+        Flame.bgm.audioPlayer.setVolume(0.6);
+      }
+      if (inRange(x, 20, 30) && inRange(y, 30, 40)) {
+        drawHandler.drawVolumeDown();
       }
     }
     // Game running
