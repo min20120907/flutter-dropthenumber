@@ -60,11 +60,11 @@ class DropTheNumber extends Game with TapDetector {
   //cooldown
   Duration cooldown_period = Duration(seconds: 180);
   // The last time which horizontal superpower clicked
-  Duration cooldown_time_hor;
+  DateTime cooldown_time_hor;
   // Horizontal superpower cooldown duration
   Duration cool_down_hor = Duration.zero;
   // The last time which vertical superpower clicked
-  Duration cooldown_time_vert;
+  DateTime cooldown_time_vert;
   // Vertical superpower cooldown duration
   Duration cool_down_vert = Duration.zero;
   // LastLoopPaused
@@ -73,6 +73,8 @@ class DropTheNumber extends Game with TapDetector {
   DateTime startTimeOfPause;
   // Record the duration of pause phase
   Duration pauseDuration;
+  DateTime cdh, cdv;
+  bool blockedHor, blockedVert;
 
   // Merge animation
 
@@ -141,8 +143,8 @@ class DropTheNumber extends Game with TapDetector {
     pause = false;
     pauseElapsedTime = Duration();
     startTime = DateTime.now();
-    cooldown_time_hor = Duration.zero;
-    cooldown_time_vert = Duration.zero;
+    cooldown_time_hor = null;
+    cooldown_time_vert = null;
 
     // Called twice to be sure didn't used the next block value of last round.
     setupCurrentBlock();
@@ -234,6 +236,7 @@ class DropTheNumber extends Game with TapDetector {
         superVertBool = false;
         return;
       }
+
       // if the t shape occurance is triggered
       if (tShapeOccurance) {
         tShapeAnimation();
@@ -285,11 +288,11 @@ class DropTheNumber extends Game with TapDetector {
           startTimeOfPause = DateTime.now();
         } else {
           pauseDuration = DateTime.now().difference(startTimeOfPause);
-          if (cooldown_time_hor != Duration.zero) {
-            cooldown_time_hor += pauseDuration;
+          if (cooldown_time_hor != null) {
+            cooldown_time_hor.add(pauseDuration);
           }
-          if (cooldown_time_vert != Duration.zero) {
-            cooldown_time_vert += pauseDuration;
+          if (cooldown_time_vert != null) {
+            cooldown_time_vert.add(pauseDuration);
           }
         }
       }
@@ -470,15 +473,37 @@ class DropTheNumber extends Game with TapDetector {
       }
       // Horizontal super power clicked.
       else if (!pause && inRange(x, 65, 75) && inRange(y, 92.5, 97.5)) {
-        print("Horizontal super power clicked!"); // debug
-        superHorBool = true;
-        superHor();
+        if (cooldown_time_hor == null) {
+          cooldown_time_hor = DateTime.now();
+          superHor();
+          print("Horizontal super power clicked!"); // debug
+          superHorBool = true;
+        }
+        cool_down_hor = DateTime.now().difference(cooldown_time_hor);
+        if (cool_down_hor > cooldown_period) {
+          cool_down_hor = Duration.zero;
+          cooldown_time_hor = DateTime.now();
+          superHor();
+          print("Horizontal super power clicked!"); // debug
+          superHorBool = true;
+        }
       }
       // Vertical super power clicked.
       else if (!pause && inRange(x, 80, 90) && inRange(y, 92.5, 97.5)) {
-        print("Vertical super power clicked!"); // debug
-        superVertBool = true;
-        superVert();
+        if (cooldown_time_vert == null) {
+          cooldown_time_vert = DateTime.now();
+          print("Vertical super power clicked!"); // debug
+          superVertBool = true;
+          superVert();
+        }
+        cool_down_vert = DateTime.now().difference(cooldown_time_vert);
+        if (cool_down_vert > cooldown_period) {
+          cool_down_vert = Duration.zero;
+          cooldown_time_vert = DateTime.now();
+          print("Vertical super power clicked!"); // debug
+          superVertBool = true;
+          superVert();
+        }
       }
       //
       // if (inRange(x, 15, 29) && inRange(y, 221, 653)) {
