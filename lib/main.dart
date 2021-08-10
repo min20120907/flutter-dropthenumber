@@ -6,11 +6,11 @@ import 'package:flutter/services.dart';
 import 'package:dropthenumber/dropthenumber.dart';
 
 void main() {
-    Util flameUtil = Util();
-    flameUtil.fullScreen();
-    flameUtil.setOrientation(DeviceOrientation.portraitUp);
-    DropTheNumber game = DropTheNumber();
+  Util flameUtil = Util();
+  flameUtil.fullScreen();
+  flameUtil.setOrientation(DeviceOrientation.portraitUp);
+  DropTheNumber game = DropTheNumber();
 
-    runApp(game.widget);
-    Flame.bgm.play("edm.mp3", volume: 0.5);
+  runApp(game.widget);
+  Flame.bgm.play("edm.mp3", volume: 0.5);
 }
