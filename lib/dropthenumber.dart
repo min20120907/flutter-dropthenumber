@@ -436,13 +436,13 @@ class DropTheNumber extends Game with TapDetector {
         setupCurrentBlock();
       }
       // Horizontal super power clicked.
-      else if (inRange(x, 65, 75) && inRange(y, 92.5, 97.5)) {
+      else if (!pause && inRange(x, 65, 75) && inRange(y, 92.5, 97.5)) {
         print("Horizontal super power clicked!"); // debug
         superHorBool = true;
         superHor();
       }
       // Vertical super power clicked.
-      else if (inRange(x, 80, 90) && inRange(y, 92.5, 97.5)) {
+      else if (!pause && inRange(x, 80, 90) && inRange(y, 92.5, 97.5)) {
         print("Vertical super power clicked!"); // debug
         superVertBool = true;
         superVert();
