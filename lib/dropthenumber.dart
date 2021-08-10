@@ -61,7 +61,7 @@ class DropTheNumber extends Game with TapDetector {
   // Get the maximum track among the blocks
 
   //cooldown
-  Duration cooldown_period = Duration(seconds: 180);
+  Duration cooldown_period = Duration(seconds: 15);
   // The last time which horizontal superpower clicked
   DateTime cooldown_time_hor;
   // Horizontal superpower cooldown duration
@@ -76,7 +76,7 @@ class DropTheNumber extends Game with TapDetector {
   DateTime startTimeOfPause;
   // Record the duration of pause phase
   Duration pauseDuration;
-  DateTime cdh, cdv;
+  Duration cdh, cdv;
   bool blockedHor, blockedVert;
 
   // Merge animation
@@ -228,6 +228,24 @@ class DropTheNumber extends Game with TapDetector {
         drawHandler.drawPauseButton();
       } else {
         drawHandler.drawPlayButton();
+      }
+      cdh = DateTime.now().difference(cooldownTimeHor);
+      cdv = DateTime.now().difference(cooldown_time_vert);
+      // Horizontal cross while cooldown
+      if (cdh < cooldown_period && cdh != null) {
+        blockedHor = true;
+        // draw the cross
+        drawHandler.drawBlockedHorizontalSuperpower();
+      } else if (!pause) {
+        blockedHor = false;
+        drawHandler.drawBlockedVerticalSuperpower();
+      }
+      // Vertical cross while cooldown
+      if (cdv < cooldown_period && cdv != null) {
+        blockedVert = true;
+        // draw the cross
+      } else if (!pause) {
+        blockedVert = false;
       }
       if (superHorBool) {
         drawHandler.playHorizontalSuperPowerAnimation();
