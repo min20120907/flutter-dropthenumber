@@ -57,6 +57,23 @@ class DropTheNumber extends Game with TapDetector {
   Duration pauseElapsedTime;
   // Get the maximum track among the blocks
 
+  //cooldown
+  Duration cooldown_period = Duration(seconds: 180);
+  // The last time which horizontal superpower clicked
+  Duration cooldown_time_hor;
+  // Horizontal superpower cooldown duration
+  Duration cool_down_hor = Duration.zero;
+  // The last time which vertical superpower clicked
+  Duration cooldown_time_vert;
+  // Vertical superpower cooldown duration
+  Duration cool_down_vert = Duration.zero;
+  // LastLoopPaused
+  bool LastLoopPaused = false;
+  // Record the time stamp of pause
+  DateTime startTimeOfPause;
+  // Record the duration of pause phase
+  Duration pauseDuration;
+
   // Merge animation
 
   int old;
@@ -95,7 +112,6 @@ class DropTheNumber extends Game with TapDetector {
   double mergingSpeed = 5;
   DateTime cooldownTimeHor; // wip
   DateTime cooldownTimeVert; // wip
-
   /* Utils */
   // A generator of random values, import from 'dart:math'.
   Random random = Random();
@@ -125,8 +141,8 @@ class DropTheNumber extends Game with TapDetector {
     pause = false;
     pauseElapsedTime = Duration();
     startTime = DateTime.now();
-    drawHandler.cooldown_time_hor = Duration.zero;
-    drawHandler.cooldown_time_vert = Duration.zero;
+    cooldown_time_hor = Duration.zero;
+    cooldown_time_vert = Duration.zero;
 
     // Called twice to be sure didn't used the next block value of last round.
     setupCurrentBlock();
@@ -264,6 +280,20 @@ class DropTheNumber extends Game with TapDetector {
         rightOccurance = false;
         return;
       }
+      if (LastLoopPaused != pause) {
+        if (pause) {
+          startTimeOfPause = DateTime.now();
+        } else {
+          pauseDuration = DateTime.now().difference(startTimeOfPause);
+          if (cooldown_time_hor != Duration.zero) {
+            cooldown_time_hor += pauseDuration;
+          }
+          if (cooldown_time_vert != Duration.zero) {
+            cooldown_time_vert += pauseDuration;
+          }
+        }
+      }
+      LastLoopPaused = pause;
       // if (!pause) {
       //     yAxis += 1;
       //     maxYAxis = (597 - 70 * blocks[currentTrack].length).toDouble();
