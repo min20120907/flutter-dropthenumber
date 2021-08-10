@@ -203,8 +203,8 @@ class DropTheNumber extends Game with TapDetector {
     // Draw start game screen. (It only show once when the game start)
     if (!startGameScreenFinished) {
       drawHandler.drawStartGameScreen();
-      drawHandler.volumepic1();
-      drawHandler.volumepic2();
+      drawHandler.drawVolumeDown();
+      drawHandler.drawVolumeOn();
     }
     // Draw game running screen.
     else if (!gameOver) {
