@@ -390,7 +390,7 @@ class DropTheNumber extends Game with TapDetector {
     }
   }
 
-  void tShapeAnimation() {
+  void tShapeAnimation() async {
     while (jj < blocks[x][y - 1].x && kk > blocks[x][y - 1].x) {
       drawHandler.drawBackground();
       drawHandler.drawBorders();
@@ -445,10 +445,10 @@ class DropTheNumber extends Game with TapDetector {
       drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, ii));
       ii += mergingSpeed;
     }
-    merge(x, y);
-    merge(x, y - 1);
-    merge(x - 1, y);
-    merge(x + 1, y);
+    await merge(x, y);
+    await merge(x, y - 1);
+    await merge(x - 1, y);
+    await merge(x + 1, y);
     //something about to check above
     merge(x, blocks[x].length - 1);
     merge(x - 1, blocks[x - 1].length - 1);
@@ -863,7 +863,7 @@ class DropTheNumber extends Game with TapDetector {
   /**********************************************************************
   * Add current block to solid blocks of current track.
   **********************************************************************/
-  void appendCurrentBlockToTrack() {
+  void appendCurrentBlockToTrack() async {
     // Height of every blocks
     double blockHeight = 9;
     // Make sure the x axis of current block is in the right position.
