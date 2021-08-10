@@ -61,6 +61,7 @@ class DrawHandler {
     Color.fromRGBO(194, 194, 214, 1.0)
   ];
   // Images which will be load later.
+  ui.Image startGameImage;
   ui.Image backgroundImage;
   ui.Image musicImage;
   ui.Image muteImage;
@@ -112,6 +113,8 @@ class DrawHandler {
     * Initial images like music image, backgroundImage, etc.
     **********************************************************************/
   void initImages() {
+    loadUiImage("assets/image/startGamePage.jpg")
+        .then((value) => startGameImage = value);
     loadUiImage("assets/image/background.jpg")
         .then((value) => backgroundImage = value);
     loadUiImage("assets/image/music.png").then((value) => musicImage = value);
@@ -145,7 +148,7 @@ class DrawHandler {
     * The screen will only show once when the game start.
     **********************************************************************/
   void drawStartGameScreen() {
-    // WIP
+    drawFullScreenImage(startGameImage);
   }
 
   /**********************************************************************
