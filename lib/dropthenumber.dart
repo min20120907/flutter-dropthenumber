@@ -26,7 +26,7 @@ class DropTheNumber extends Game with TapDetector {
   double canvasXOffset;
   // If the start game screen is showed, it only show once when the game start.
   bool startGameScreenFinished =
-      true; //////////////////////////// Temporary set the value to true for debugging
+      false; //////////////////////////// Temporary set the value to true for debugging
   // If the game is game over, waiting for restart.
   bool gameOver;
   // If the horizontal superpower is clicked
@@ -445,6 +445,9 @@ class DropTheNumber extends Game with TapDetector {
 
     // Game start
     if (!startGameScreenFinished) {
+      if (inRange(x, 60, 98) && inRange(y, 20, 26)) {
+        startGameScreenFinished = true;
+      }
     }
     // Game running
     else if (!gameOver) {
