@@ -203,8 +203,6 @@ class DropTheNumber extends Game with TapDetector {
     // Draw start game screen. (It only show once when the game start)
     if (!startGameScreenFinished) {
       drawHandler.drawStartGameScreen();
-      drawHandler.drawVolumeDown();
-      drawHandler.drawVolumeOn();
     }
     // Draw game running screen.
     else if (!gameOver) {
@@ -456,13 +454,10 @@ class DropTheNumber extends Game with TapDetector {
       if (inRange(x, 60, 98) && inRange(y, 20, 26)) {
         startGameScreenFinished = true;
       }
-      if (inRange(x, 20, 30) && inRange(y, 30, 40)) {
-        drawHandler.drawVolumeOn();
-        Flame.bgm.audioPlayer.setVolume(0.6);
-      }
-      if (inRange(x, 20, 30) && inRange(y, 30, 40)) {
-        drawHandler.drawVolumeDown();
-      }
+      //   if (inRange(x, 20, 30) && inRange(y, 30, 40)) {
+      //     Flame.bgm.audioPlayer.setVolume(0.6);
+      //   }
+      //   if (inRange(x, 20, 30) && inRange(y, 30, 40)) {}
     }
     // Game running
     else if (!gameOver) {

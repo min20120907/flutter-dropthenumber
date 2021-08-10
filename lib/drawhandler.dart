@@ -51,9 +51,7 @@ class DrawHandler {
   // Images which will be load later.
   ui.Image startGameImage;
   ui.Image volumeOn1;
-  ui.Image volumeOn2;
   ui.Image volumeDown1;
-  ui.Image volumeDown2;
   ui.Image backgroundImage;
   ui.Image musicImage;
   ui.Image muteImage;
@@ -113,12 +111,8 @@ class DrawHandler {
         .then((value) => startGameImage = value);
     loadUiImage("assets/image/volumeOn1.png")
         .then((value) => volumeOn1 = value);
-    loadUiImage("assets/image/volumeOn4.png")
-        .then((value) => volumeOn2 = value);
-    loadUiImage("assets/image/volume-down1.png")
-        .then((value) => volumeDown1 = value);
     loadUiImage("assets/image/volume-down2.png")
-        .then((value) => volumeDown2 = value);
+        .then((value) => volumeDown1 = value);
     loadUiImage("assets/image/background.jpg")
         .then((value) => backgroundImage = value);
     loadUiImage("assets/image/music.png").then((value) => musicImage = value);
@@ -153,24 +147,8 @@ class DrawHandler {
     **********************************************************************/
   void drawStartGameScreen() {
     drawFullScreenImage(startGameImage);
-    drawImage(volumeDown1, 30, 30, 10, 10);
-    drawImage(volumeOn1, 20, 30, 10, 10);
-  }
-
-  void volumepic1() {
-    drawImage(volumeOn1, 20, 30, 10, 10);
-  }
-
-  void volumepic2() {
-    drawImage(volumeDown1, 30, 30, 10, 10);
-  }
-
-  void drawVolumeOn() {
-    drawImage(volumeOn2, 20, 30, 10, 10);
-  }
-
-  void drawVolumeDown() {
-    drawImage(volumeDown2, 30, 30, 10, 10);
+    drawImage(volumeDown1, 60, 34.5, 42, 11);
+    drawImage(volumeOn1, 55, 35, 15, 10);
   }
 
   /**********************************************************************
