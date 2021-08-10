@@ -399,6 +399,16 @@ class DrawHandler {
     //     blocks[track][0].y - 50, 300, 300);
   }
 
+  void drawBlockedHorizontalSuperpower() {
+    drawText("X", 70, 92.5, Colors.black, 20);
+    drawRectStroke(70, 92.5, 9, 5, Colors.black, 3);
+  }
+
+  void drawBlockedVerticalSuperpower() {
+    drawText("X", 82, 92.5, Colors.black, 20);
+    drawRectStroke(82, 92.5, 9, 5, Colors.black, 3);
+  }
+
   /**********************************************************************
     * Play horizontal super power animation. (puple magic animation)
     **********************************************************************/
