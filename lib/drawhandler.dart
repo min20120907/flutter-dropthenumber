@@ -73,12 +73,16 @@ class DrawHandler {
   ui.Image startImage;
   ui.Image startborderImage;
   ui.Image tmpVertImage;
-  ui.Image tmpHorImage;
 
   /**********************************************************************
     * Constructor
     **********************************************************************/
   DrawHandler() {}
+
+  // Frame delay gap function
+  Future<void> delayGap() {
+    return Future.delayed(Duration(milliseconds: 100));
+  }
 
   /**********************************************************************
     * Set the canvas to draw.
@@ -365,12 +369,14 @@ class DrawHandler {
     for (int i = 1; i < 68; i++) {
       loadUiImage("assets/video/fire/" + i.toString() + ".png")
           .then((value) => tmpVertImage = value);
+
       canvas.drawImageRect(
           tmpVertImage,
           Rect.fromLTWH(0, 0, tmpVertImage.width.toDouble(),
               tmpVertImage.height.toDouble()),
           Rect.fromLTWH(toAbsoluteX(a), toAbsoluteY(b), width, height),
           Paint());
+      delayGap();
     }
     // drawVideo(verticalSuperPowerVideo, blocks[track][0].x - 5,
     //     blocks[track][0].y - 50, 300, 300);
@@ -380,17 +386,22 @@ class DrawHandler {
     * Play horizontal super power animation. (puple magic animation)
     **********************************************************************/
   void playHorizontalSuperPowerAnimation() async {
-    double x = 6, y = 30, width = 550, height = 350;
-    for (int i = 1; i < 200; i++) {
-      loadUiImage("assets/video/glow/" + i.toString() + ".png")
-          .then((value) => tmpHorImage = value);
-
+    double x = 50, y = 50, width = 250, height = 250;
+    for (int i = 1; i < 100; i++) {
+      ui.Image tmpHorImg =
+          await loadUiImage("assets/video/glow/" + i.toString() + ".png");
+      canvas.save();
       canvas.drawImageRect(
-          tmpHorImage,
-          Rect.fromLTWH(0, 0, tmpHorImage.width.toDouble(),
-              tmpHorImage.height.toDouble()),
+          tmpHorImg,
+          Rect.fromLTWH(
+              0, 0, tmpHorImg.width.toDouble(), tmpHorImg.height.toDouble()),
           Rect.fromLTWH(toAbsoluteX(x), toAbsoluteY(y), width, height),
           Paint());
+
+      await delayGap();
+      print("load pic " + i.toString());
+      print(tmpHorImg.height);
+      print(tmpHorImg.width);
     }
   }
 
