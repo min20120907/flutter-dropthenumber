@@ -229,16 +229,14 @@ class DropTheNumber extends Game with TapDetector {
       } else {
         drawHandler.drawPlayButton();
       }
-      cdh = DateTime.now().difference(cooldownTimeHor);
+      cdh = DateTime.now().difference(cooldown_time_hor);
       cdv = DateTime.now().difference(cooldown_time_vert);
       // Horizontal cross while cooldown
       if (cdh < cooldown_period && cdh != null) {
         blockedHor = true;
         // draw the cross
-        drawHandler.drawBlockedHorizontalSuperpower();
       } else if (!pause) {
         blockedHor = false;
-        drawHandler.drawBlockedVerticalSuperpower();
       }
       // Vertical cross while cooldown
       if (cdv < cooldown_period && cdv != null) {
@@ -246,6 +244,12 @@ class DropTheNumber extends Game with TapDetector {
         // draw the cross
       } else if (!pause) {
         blockedVert = false;
+      }
+      if (blockedHor) {
+        drawHandler.drawBlockedHorizontalSuperpower();
+      }
+      if (blockedVert) {
+        drawHandler.drawBlockedVerticalSuperpower();
       }
       if (superHorBool) {
         drawHandler.playHorizontalSuperPowerAnimation();
@@ -443,10 +447,10 @@ class DropTheNumber extends Game with TapDetector {
       drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, ii));
       ii += mergingSpeed;
     }
-    await merge(x, y);
-    await merge(x, y - 1);
-    await merge(x - 1, y);
-    await merge(x + 1, y);
+    merge(x, y);
+    merge(x, y - 1);
+    merge(x - 1, y);
+    merge(x + 1, y);
     //something about to check above
     merge(x, blocks[x].length - 1);
     merge(x - 1, blocks[x - 1].length - 1);
