@@ -349,13 +349,82 @@ class DropTheNumber extends Game with TapDetector {
       //   return;
       // }
       // // if the first phase of gamma shape occurance is triggered
-      // if (gammaOccurance) {
-      //   gammaShapeAnimation1();
-      //   gammaShapeAnimation2();
+      if (gammaOccurance) {
+        while (jj > blocks[x][y].x) {
+          drawHandler.drawBackground();
+          drawHandler.drawBorders();
+          drawHandler.drawTitle(nextBlockValue);
+          drawHandler.drawNextBlockHintText();
+          drawHandler.drawNextBlock(nextBlockValue);
+          drawHandler.drawTime(elapsedTime);
+          if (!mute) {
+            drawHandler.drawMusicButton();
+          } else {
+            drawHandler.drawMuteButton();
+          }
+          drawHandler.drawFiveCross(nextBlockValue);
+          drawHandler.drawAllBlocks(blocks);
 
-      //   gammaOccurance = false;
-      //   return;
-      // }
+          drawHandler.drawScore(score);
+          drawHandler.drawVerticalSuperPowerButton();
+          drawHandler.drawHorizontalSuperPowerButton();
+          if (!pause) {
+            drawHandler.drawPauseButton();
+          } else {
+            drawHandler.drawPlayButton();
+          }
+          drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+          jj -= mergingSpeed;
+        }
+        dropAboveBlocks(x, y);
+        while (ii < blocks[x][y - 1].y) {
+          drawHandler.drawBackground();
+          drawHandler.drawBorders();
+          drawHandler.drawTitle(nextBlockValue);
+          drawHandler.drawNextBlockHintText();
+          drawHandler.drawNextBlock(nextBlockValue);
+          drawHandler.drawTime(elapsedTime);
+          if (!mute) {
+            drawHandler.drawMusicButton();
+          } else {
+            drawHandler.drawMuteButton();
+          }
+          drawHandler.drawFiveCross(nextBlockValue);
+          drawHandler.drawAllBlocks(blocks);
+
+          drawHandler.drawScore(score);
+          drawHandler.drawVerticalSuperPowerButton();
+          drawHandler.drawHorizontalSuperPowerButton();
+          if (!pause) {
+            drawHandler.drawPauseButton();
+          } else {
+            drawHandler.drawPlayButton();
+          }
+          drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, ii));
+          ii += mergingSpeed;
+        }
+
+        try {
+          merge(x, y);
+        } catch (Exception) {}
+        try {
+          merge(x, y - 1);
+        } catch (Exception) {}
+        try {
+          merge(x - 1, y);
+        } catch (Exception) {}
+
+        // check above
+        try {
+          merge(x, blocks[x].length - 1);
+        } catch (Exception) {}
+        try {
+          merge(x - 1, blocks[x].length - 1);
+        } catch (Exception) {}
+
+        gammaOccurance = false;
+        return;
+      }
       // // if down occurance is triggered
       if (downOccurance) {
         print("render calling succeed!");
@@ -375,12 +444,58 @@ class DropTheNumber extends Game with TapDetector {
         downOccurance = false;
         return;
       }
-      // // if horizontal shape is triggered
-      // if (horizontalOccurance) {
-      //   horizontalShapeAnimation();
-      //   horizontalOccurance = false;
-      //   return;
-      // }
+      // if horizontal shape is triggered
+      if (horizontalOccurance) {
+        while (ii > blocks[x][y].x && jj < blocks[x][y].x) {
+          drawHandler.drawBackground();
+          drawHandler.drawBorders();
+          drawHandler.drawTitle(nextBlockValue);
+          drawHandler.drawNextBlockHintText();
+          drawHandler.drawNextBlock(nextBlockValue);
+          drawHandler.drawTime(elapsedTime);
+          if (!mute) {
+            drawHandler.drawMusicButton();
+          } else {
+            drawHandler.drawMuteButton();
+          }
+          drawHandler.drawFiveCross(nextBlockValue);
+          drawHandler.drawAllBlocks(blocks);
+
+          drawHandler.drawScore(score);
+          drawHandler.drawVerticalSuperPowerButton();
+          drawHandler.drawHorizontalSuperPowerButton();
+          if (!pause) {
+            drawHandler.drawPauseButton();
+          } else {
+            drawHandler.drawPlayButton();
+          }
+          drawHandler.drawBlock(Block(old, ii, blocks[x][y].y));
+          drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+          ii += mergingSpeed;
+          jj += mergingSpeed;
+        }
+        try {
+          merge(x, y);
+        } catch (Exception) {}
+        try {
+          merge(x - 1, y);
+        } catch (Exception) {}
+        try {
+          merge(x + 1, y);
+        } catch (Exception) {}
+        try {
+          merge(x, blocks[x].length - 1);
+        } catch (Exception) {}
+        try {
+          merge(x - 1, blocks[x - 1].length - 1);
+        } catch (Exception) {}
+        // check above
+        try {
+          merge(x + 1, blocks[x + 1].length - 1);
+        } catch (Exception) {}
+        horizontalOccurance = false;
+        return;
+      }
       // // if the left occurance is triggered
       // if (leftOccurance) {
       //   leftShapeAnimation();
@@ -646,7 +761,7 @@ class DropTheNumber extends Game with TapDetector {
     }
     // Check right and down(Gamma shape)
     print("Try gamma shape"); // debug
-    if (x < 4 && y > 0) {
+    if ((x < 4 && y > 0) || gammaOccurance) {
       int rightLineY = blocks[x + 1].length - 1;
       if (rightLineY >= y) {
         if (blocks[x][y].v == blocks[x + 1][y].v &&
@@ -658,66 +773,7 @@ class DropTheNumber extends Game with TapDetector {
           blocks[x][y - 1].v *= 4;
           score += blocks[x][y - 1].v;
           dropAboveBlocks(x + 1, y);
-          // while (jj > blocks[x][y].x) {
-          //   drawHandler.drawBackground();
-          //   drawHandler.drawBorders();
-          //   drawHandler.drawTitle(nextBlockValue);
-          //   drawHandler.drawNextBlockHintText();
-          //   drawHandler.drawNextBlock(nextBlockValue);
-          //   drawHandler.drawTime(elapsedTime);
-          //   if (!mute) {
-          //     drawHandler.drawMusicButton();
-          //   } else {
-          //     drawHandler.drawMuteButton();
-          //   }
-          //   drawHandler.drawFiveCross(nextBlockValue);
-          //   drawHandler.drawAllBlocks(blocks);
-
-          //   drawHandler.drawScore(score);
-          //   drawHandler.drawVerticalSuperPowerButton();
-          //   drawHandler.drawHorizontalSuperPowerButton();
-          //   if (!pause) {
-          //     drawHandler.drawPauseButton();
-          //   } else {
-          //     drawHandler.drawPlayButton();
-          //   }
-          //   drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
-          //   jj -= mergingSpeed;
-          // }
-          dropAboveBlocks(x, y);
-          // while (ii < blocks[x][y - 1].y) {
-          //   drawHandler.drawBackground();
-          //   drawHandler.drawBorders();
-          //   drawHandler.drawTitle(nextBlockValue);
-          //   drawHandler.drawNextBlockHintText();
-          //   drawHandler.drawNextBlock(nextBlockValue);
-          //   drawHandler.drawTime(elapsedTime);
-          //   if (!mute) {
-          //     drawHandler.drawMusicButton();
-          //   } else {
-          //     drawHandler.drawMuteButton();
-          //   }
-          //   drawHandler.drawFiveCross(nextBlockValue);
-          //   drawHandler.drawAllBlocks(blocks);
-
-          //   drawHandler.drawScore(score);
-          //   drawHandler.drawVerticalSuperPowerButton();
-          //   drawHandler.drawHorizontalSuperPowerButton();
-          //   if (!pause) {
-          //     drawHandler.drawPauseButton();
-          //   } else {
-          //     drawHandler.drawPlayButton();
-          //   }
-          //   drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, ii));
-          //   ii += mergingSpeed;
-          // }
-          merge(x, y);
-          merge(x, y - 1);
-          merge(x - 1, y);
-
-          // check above
-//           merge(x, blocks[x].length - 1);
-//           merge(x - 1, blocks[x].length - 1);
+          gammaOccurance = true;
           return;
         }
       }
@@ -800,7 +856,7 @@ class DropTheNumber extends Game with TapDetector {
     }
     // Check left and right(horizontal shape)
     print("Try horizontal shape"); // debug
-    if (x > 0 && x < 4) {
+    if (horizontalOccurance || (x > 0 && x < 4)) {
       int leftLineY = blocks[x - 1].length - 1;
       int rightLineY = blocks[x + 1].length - 1;
       if (leftLineY >= y && rightLineY >= y) {
@@ -813,41 +869,7 @@ class DropTheNumber extends Game with TapDetector {
           blocks[x][y].v *= 4;
           dropAboveBlocks(x - 1, y);
           dropAboveBlocks(x + 1, y);
-          // while (ii > blocks[x][y].x && jj < blocks[x][y].x) {
-          //   drawHandler.drawBackground();
-          //   drawHandler.drawBorders();
-          //   drawHandler.drawTitle(nextBlockValue);
-          //   drawHandler.drawNextBlockHintText();
-          //   drawHandler.drawNextBlock(nextBlockValue);
-          //   drawHandler.drawTime(elapsedTime);
-          //   if (!mute) {
-          //     drawHandler.drawMusicButton();
-          //   } else {
-          //     drawHandler.drawMuteButton();
-          //   }
-          //   drawHandler.drawFiveCross(nextBlockValue);
-          //   drawHandler.drawAllBlocks(blocks);
-
-          //   drawHandler.drawScore(score);
-          //   drawHandler.drawVerticalSuperPowerButton();
-          //   drawHandler.drawHorizontalSuperPowerButton();
-          //   if (!pause) {
-          //     drawHandler.drawPauseButton();
-          //   } else {
-          //     drawHandler.drawPlayButton();
-          //   }
-          //   drawHandler.drawBlock(Block(old, ii, blocks[x][y].y));
-          //   drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
-          //   ii += mergingSpeed;
-          //   jj += mergingSpeed;
-          // }
-          merge(x, y);
-          merge(x - 1, y);
-          merge(x + 1, y);
-          // check above
-          merge(x, blocks[x].length - 1);
-          merge(x - 1, blocks[x - 1].length - 1);
-          merge(x + 1, blocks[x + 1].length - 1);
+          horizontalOccurance = true;
           return;
         }
       }
