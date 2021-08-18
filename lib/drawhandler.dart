@@ -371,7 +371,7 @@ class DrawHandler {
               tmpVertImage.height.toDouble()),
           Rect.fromLTWH(toAbsoluteX(a), toAbsoluteY(b), width, height),
           Paint());
-      delayGap();
+      // delayGap();
     }
     // drawVideo(verticalSuperPowerVideo, blocks[track][0].x - 5,
     //     blocks[track][0].y - 50, 300, 300);
@@ -403,7 +403,7 @@ class DrawHandler {
           Rect.fromLTWH(toAbsoluteX(x), toAbsoluteY(y), width, height),
           Paint());
 
-      await delayGap();
+      // await delayGap();
       print("load pic " + i.toString());
       print(tmpHorImg.height);
       print(tmpHorImg.width);

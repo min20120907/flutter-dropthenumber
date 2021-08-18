@@ -53,37 +53,42 @@ class DropTheNumber extends Game with TapDetector {
   // The highest score on the local game.
   int highestScore = 98237; // Temporary set the value for debug
   // The start time point of the game.
-  DateTime startTime;
+  DateTime startTime = DateTime.now();
   // The time elapsed of the game running from the start time.
-  Duration elapsedTime;
+  Duration elapsedTime = Duration.zero;
   // The time elapsed of the game pause.
-  Duration pauseElapsedTime;
+  Duration pauseElapsedTime = Duration.zero;
   // Get the maximum track among the blocks
 
   //cooldown
+  // ignore: non_constant_identifier_names
   Duration cooldown_period = Duration(seconds: 15);
   // The last time which horizontal superpower clicked
-  DateTime cooldown_time_hor;
+  // ignore: non_constant_identifier_names
+  DateTime cooldown_time_hor = DateTime.now();
   // Horizontal superpower cooldown duration
+  // ignore: non_constant_identifier_names
   Duration cool_down_hor = Duration.zero;
   // The last time which vertical superpower clicked
-  DateTime cooldown_time_vert;
+  // ignore: non_constant_identifier_names
+  DateTime cooldown_time_vert = DateTime.now();
   // Vertical superpower cooldown duration
+  // ignore: non_constant_identifier_names
   Duration cool_down_vert = Duration.zero;
   // LastLoopPaused
+  // ignore: non_constant_identifier_names
   bool LastLoopPaused = false;
   // Record the time stamp of pause
-  DateTime startTimeOfPause;
+  DateTime startTimeOfPause = DateTime.now();
   // Record the duration of pause phase
-  Duration pauseDuration;
-  Duration cdh, cdv;
-  bool blockedHor, blockedVert;
+  Duration pauseDuration = Duration.zero;
+  Duration cdh = Duration.zero, cdv = Duration.zero;
+  bool blockedHor = false, blockedVert = false;
 
   // Merge animation
 
   int old;
-  int x;
-  int y;
+  int x, y;
   double ii;
   double jj;
   double kk;
@@ -114,9 +119,8 @@ class DropTheNumber extends Game with TapDetector {
     return index;
   }
 
-  double mergingSpeed = 5;
-  DateTime cooldownTimeHor; // wip
-  DateTime cooldownTimeVert; // wip
+  double mergingSpeed = 3;
+
   /* Utils */
   // A generator of random values, import from 'dart:math'.
   Random random = Random();
@@ -129,7 +133,7 @@ class DropTheNumber extends Game with TapDetector {
   // Check if the number is within given lower boundary and upper boundary.
   bool inRange(double number, double lowerBoundary, double upperBoundary) =>
       number >= lowerBoundary && number <= upperBoundary;
-
+  Canvas cv;
   /**********************************************************************
     * Constructor
     **********************************************************************/
@@ -146,8 +150,8 @@ class DropTheNumber extends Game with TapDetector {
     pause = false;
     pauseElapsedTime = Duration();
     startTime = DateTime.now();
-    cooldown_time_hor = null;
-    cooldown_time_vert = null;
+    cooldown_time_hor = DateTime.now();
+    cooldown_time_vert = DateTime.now();
 
     // Called twice to be sure didn't used the next block value of last round.
     setupCurrentBlock();
@@ -199,7 +203,6 @@ class DropTheNumber extends Game with TapDetector {
     drawHandler.tryToInit();
     drawHandler.setCanvas(canvas);
     drawHandler.setSize(screenSize, canvasSize, canvasXOffset);
-
     // Draw start game screen. (It only show once when the game start)
     if (!startGameScreenFinished) {
       drawHandler.drawStartGameScreen();
@@ -235,8 +238,10 @@ class DropTheNumber extends Game with TapDetector {
       if (cdh < cooldown_period && cdh != null) {
         blockedHor = true;
         // draw the cross
+        drawHandler.drawBlockedHorizontalSuperpower();
       } else if (!pause) {
         blockedHor = false;
+        drawHandler.drawBlockedVerticalSuperpower();
       }
       // Vertical cross while cooldown
       if (cdv < cooldown_period && cdv != null) {
@@ -244,12 +249,6 @@ class DropTheNumber extends Game with TapDetector {
         // draw the cross
       } else if (!pause) {
         blockedVert = false;
-      }
-      if (blockedHor) {
-        drawHandler.drawBlockedHorizontalSuperpower();
-      }
-      if (blockedVert) {
-        drawHandler.drawBlockedVerticalSuperpower();
       }
       if (superHorBool) {
         drawHandler.playHorizontalSuperPowerAnimation();
@@ -264,64 +263,137 @@ class DropTheNumber extends Game with TapDetector {
 
       // if the t shape occurance is triggered
       if (tShapeOccurance) {
-        tShapeAnimation();
+        while (jj < blocks[x][y - 1].x && kk > blocks[x][y - 1].x) {
+          drawHandler.drawBackground();
+          drawHandler.drawBorders();
+          drawHandler.drawTitle(nextBlockValue);
+          drawHandler.drawNextBlockHintText();
+          drawHandler.drawNextBlock(nextBlockValue);
+          drawHandler.drawTime(elapsedTime);
+          if (!mute) {
+            drawHandler.drawMusicButton();
+          } else {
+            drawHandler.drawMuteButton();
+          }
+          drawHandler.drawFiveCross(nextBlockValue);
+          drawHandler.drawAllBlocks(blocks);
+
+          drawHandler.drawScore(score);
+          drawHandler.drawVerticalSuperPowerButton();
+          drawHandler.drawHorizontalSuperPowerButton();
+          if (!pause) {
+            drawHandler.drawPauseButton();
+          } else {
+            drawHandler.drawPlayButton();
+          }
+
+          ii += mergingSpeed;
+          jj += mergingSpeed;
+        }
+        while (ii < blocks[x][y - 1].y) {
+          drawHandler.drawBackground();
+          drawHandler.drawBorders();
+          drawHandler.drawTitle(nextBlockValue);
+          drawHandler.drawNextBlockHintText();
+          drawHandler.drawNextBlock(nextBlockValue);
+          drawHandler.drawTime(elapsedTime);
+          if (!mute) {
+            drawHandler.drawMusicButton();
+          } else {
+            drawHandler.drawMuteButton();
+          }
+          drawHandler.drawFiveCross(nextBlockValue);
+          drawHandler.drawAllBlocks(blocks);
+
+          drawHandler.drawScore(score);
+          drawHandler.drawVerticalSuperPowerButton();
+          drawHandler.drawHorizontalSuperPowerButton();
+          if (!pause) {
+            drawHandler.drawPauseButton();
+          } else {
+            drawHandler.drawPlayButton();
+          }
+
+          drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, ii));
+          ii += mergingSpeed;
+        }
+        try {
+          merge(x, y);
+        } catch (Exception) {}
+        try {
+          merge(x, y - 1);
+        } catch (Exception) {}
+        merge(x - 1, y);
+        try {} catch (Exception) {}
+        try {
+          merge(x + 1, y);
+        } catch (Exception) {}
+        // something about to check above
+        try {
+          merge(x, blocks[x].length - 1);
+        } catch (Exception) {}
+        try {
+          merge(x - 1, blocks[x - 1].length - 1);
+        } catch (Exception) {}
+        try {
+          merge(x + 1, blocks[x + 1].length - 1);
+        } catch (Exception) {}
         tShapeOccurance = false;
         return;
       }
-      // if the first phase of seven shape occurance is triggered
-      if (sevenOccurance) {
-        sevenShapeAnimation1();
-        sevenShapeAnimation2();
-        sevenOccurance = false;
-        return;
-      }
-      // if the first phase of gamma shape occurance is triggered
-      if (gammaOccurance) {
-        try {
-          gammaShapeAnimation1();
-          gammaShapeAnimation2();
-        } catch (Exception) {}
-        gammaOccurance = false;
-        return;
-      }
-      // if down occurance is triggered
+      // // if the first phase of seven shape occurance is triggered
+      // if (sevenOccurance) {
+      //   sevenShapeAnimation1();
+      //   sevenShapeAnimation2();
+      //   sevenOccurance = false;
+      //   return;
+      // }
+      // // if the first phase of gamma shape occurance is triggered
+      // if (gammaOccurance) {
+      //   gammaShapeAnimation1();
+      //   gammaShapeAnimation2();
+
+      //   gammaOccurance = false;
+      //   return;
+      // }
+      // // if down occurance is triggered
       if (downOccurance) {
-        downShapeAnimation();
+        print("render calling succeed!");
+        while (jj < blocks[x][y - 1].y) {
+          drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, jj));
+          jj += mergingSpeed;
+        }
+        try {
+          merge(x, y);
+        } catch (Exception) {}
+        try {
+          merge(x, y - 1);
+        } catch (Exception) {}
+        try {
+          merge(x, blocks[x].length - 1);
+        } catch (Exception) {}
         downOccurance = false;
         return;
       }
-      // if horizontal shape is triggered
-      if (horizontalOccurance) {
-        horizontalShapeAnimation();
-        horizontalOccurance = false;
-        return;
-      }
-      // if the left occurance is triggered
-      if (leftOccurance) {
-        leftShapeAnimation();
-        leftOccurance = false;
-        return;
-      }
-      // if the right occurance is triggered
-      if (rightOccurance) {
-        rightShapeAnimation();
-        rightOccurance = false;
-        return;
-      }
-      if (LastLoopPaused != pause) {
-        if (pause) {
-          startTimeOfPause = DateTime.now();
-        } else {
-          pauseDuration = DateTime.now().difference(startTimeOfPause);
-          if (cooldown_time_hor != null) {
-            cooldown_time_hor.add(pauseDuration);
-          }
-          if (cooldown_time_vert != null) {
-            cooldown_time_vert.add(pauseDuration);
-          }
-        }
-      }
-      LastLoopPaused = pause;
+      // // if horizontal shape is triggered
+      // if (horizontalOccurance) {
+      //   horizontalShapeAnimation();
+      //   horizontalOccurance = false;
+      //   return;
+      // }
+      // // if the left occurance is triggered
+      // if (leftOccurance) {
+      //   leftShapeAnimation();
+      //   leftOccurance = false;
+      //   return;
+      // }
+      // // if the right occurance is triggered
+      // if (rightOccurance) {
+      //   rightShapeAnimation();
+      //   rightOccurance = false;
+      //   return;
+      // }
+
       // if (!pause) {
       //     yAxis += 1;
       //     maxYAxis = (597 - 70 * blocks[currentTrack].length).toDouble();
@@ -347,7 +419,20 @@ class DropTheNumber extends Game with TapDetector {
     if (!pause && isGameRunning()) {
       // Update time
       elapsedTime = DateTime.now().difference(startTime) - pauseElapsedTime;
-
+      if (LastLoopPaused != pause) {
+        if (pause) {
+          startTimeOfPause = DateTime.now();
+        } else {
+          pauseDuration = DateTime.now().difference(startTimeOfPause);
+          if (cooldown_time_hor != null) {
+            cooldown_time_hor.add(pauseDuration);
+          }
+          if (cooldown_time_vert != null) {
+            cooldown_time_vert.add(pauseDuration);
+          }
+        }
+      }
+      LastLoopPaused = pause;
       // Drop block
       if (!dropCurrentBlock()) {
         // Hit solid block, current block cannot be drop any more!
@@ -390,72 +475,6 @@ class DropTheNumber extends Game with TapDetector {
       canvasSize = screenSize;
       canvasXOffset = 0;
     }
-  }
-
-  void tShapeAnimation() async {
-    while (jj < blocks[x][y - 1].x && kk > blocks[x][y - 1].x) {
-      drawHandler.drawBackground();
-      drawHandler.drawBorders();
-      drawHandler.drawTitle(nextBlockValue);
-      drawHandler.drawNextBlockHintText();
-      drawHandler.drawNextBlock(nextBlockValue);
-      drawHandler.drawTime(elapsedTime);
-      if (!mute) {
-        drawHandler.drawMusicButton();
-      } else {
-        drawHandler.drawMuteButton();
-      }
-      drawHandler.drawFiveCross(nextBlockValue);
-      drawHandler.drawAllBlocks(blocks);
-
-      drawHandler.drawScore(score);
-      drawHandler.drawVerticalSuperPowerButton();
-      drawHandler.drawHorizontalSuperPowerButton();
-      if (!pause) {
-        drawHandler.drawPauseButton();
-      } else {
-        drawHandler.drawPlayButton();
-      }
-
-      ii += mergingSpeed;
-      jj += mergingSpeed;
-    }
-    while (ii < blocks[x][y - 1].y) {
-      drawHandler.drawBackground();
-      drawHandler.drawBorders();
-      drawHandler.drawTitle(nextBlockValue);
-      drawHandler.drawNextBlockHintText();
-      drawHandler.drawNextBlock(nextBlockValue);
-      drawHandler.drawTime(elapsedTime);
-      if (!mute) {
-        drawHandler.drawMusicButton();
-      } else {
-        drawHandler.drawMuteButton();
-      }
-      drawHandler.drawFiveCross(nextBlockValue);
-      drawHandler.drawAllBlocks(blocks);
-
-      drawHandler.drawScore(score);
-      drawHandler.drawVerticalSuperPowerButton();
-      drawHandler.drawHorizontalSuperPowerButton();
-      if (!pause) {
-        drawHandler.drawPauseButton();
-      } else {
-        drawHandler.drawPlayButton();
-      }
-
-      drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, ii));
-      ii += mergingSpeed;
-    }
-    merge(x, y);
-    merge(x, y - 1);
-    merge(x - 1, y);
-    merge(x + 1, y);
-    //something about to check above
-    merge(x, blocks[x].length - 1);
-    merge(x - 1, blocks[x - 1].length - 1);
-    merge(x + 1, blocks[x + 1].length - 1);
-    return;
   }
 
   /**********************************************************************
@@ -502,12 +521,11 @@ class DropTheNumber extends Game with TapDetector {
       }
       // Horizontal super power clicked.
       else if (!pause && inRange(x, 65, 75) && inRange(y, 92.5, 97.5)) {
-        if (cooldown_time_hor == null) {
-          cooldown_time_hor = DateTime.now();
-          superHor();
-          print("Horizontal super power clicked!"); // debug
-          superHorBool = true;
-        }
+        cooldown_time_hor = DateTime.now();
+        superHor();
+        print("Horizontal super power clicked!"); // debug
+        superHorBool = true;
+
         cool_down_hor = DateTime.now().difference(cooldown_time_hor);
         if (cool_down_hor > cooldown_period) {
           cool_down_hor = Duration.zero;
@@ -519,12 +537,11 @@ class DropTheNumber extends Game with TapDetector {
       }
       // Vertical super power clicked.
       else if (!pause && inRange(x, 80, 90) && inRange(y, 92.5, 97.5)) {
-        if (cooldown_time_vert == null) {
-          cooldown_time_vert = DateTime.now();
-          print("Vertical super power clicked!"); // debug
-          superVertBool = true;
-          superVert();
-        }
+        cooldown_time_vert = DateTime.now();
+        print("Vertical super power clicked!"); // debug
+        superVertBool = true;
+        superVert();
+
         cool_down_vert = DateTime.now().difference(cooldown_time_vert);
         if (cool_down_vert > cooldown_period) {
           cool_down_vert = Duration.zero;
@@ -576,293 +593,10 @@ class DropTheNumber extends Game with TapDetector {
     }
   }
 
-  // Gamma shape animation phase 1
-  void gammaShapeAnimation1() async {
-    while (jj > blocks[x][y].x) {
-      drawHandler.drawBackground();
-      drawHandler.drawBorders();
-      drawHandler.drawTitle(nextBlockValue);
-      drawHandler.drawNextBlockHintText();
-      drawHandler.drawNextBlock(nextBlockValue);
-      drawHandler.drawTime(elapsedTime);
-      if (!mute) {
-        drawHandler.drawMusicButton();
-      } else {
-        drawHandler.drawMuteButton();
-      }
-      drawHandler.drawFiveCross(nextBlockValue);
-      drawHandler.drawAllBlocks(blocks);
-
-      drawHandler.drawScore(score);
-      drawHandler.drawVerticalSuperPowerButton();
-      drawHandler.drawHorizontalSuperPowerButton();
-      if (!pause) {
-        drawHandler.drawPauseButton();
-      } else {
-        drawHandler.drawPlayButton();
-      }
-      drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
-      jj -= mergingSpeed;
-    }
-  }
-
-  // Gamma shape animation phase 2
-  void gammaShapeAnimation2() async {
-    dropAboveBlocks(x, y);
-    while (ii < blocks[x][y - 1].y) {
-      drawHandler.drawBackground();
-      drawHandler.drawBorders();
-      drawHandler.drawTitle(nextBlockValue);
-      drawHandler.drawNextBlockHintText();
-      drawHandler.drawNextBlock(nextBlockValue);
-      drawHandler.drawTime(elapsedTime);
-      if (!mute) {
-        drawHandler.drawMusicButton();
-      } else {
-        drawHandler.drawMuteButton();
-      }
-      drawHandler.drawFiveCross(nextBlockValue);
-      drawHandler.drawAllBlocks(blocks);
-
-      drawHandler.drawScore(score);
-      drawHandler.drawVerticalSuperPowerButton();
-      drawHandler.drawHorizontalSuperPowerButton();
-      if (!pause) {
-        drawHandler.drawPauseButton();
-      } else {
-        drawHandler.drawPlayButton();
-      }
-      drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, ii));
-      ii += mergingSpeed;
-    }
-
-    merge(x, y);
-    merge(x, y - 1);
-    merge(x - 1, y);
-
-    // check above
-    merge(x, blocks[x].length - 1);
-    merge(x - 1, blocks[x].length - 1);
-    return;
-  }
-
-  // 7 Shape animation phase 1
-  void sevenShapeAnimation1() async {
-    while (jj < blocks[x][y].x) {
-      drawHandler.drawBackground();
-      drawHandler.drawBorders();
-      drawHandler.drawTitle(nextBlockValue);
-      drawHandler.drawNextBlockHintText();
-      drawHandler.drawNextBlock(nextBlockValue);
-      drawHandler.drawTime(elapsedTime);
-      if (!mute) {
-        drawHandler.drawMusicButton();
-      } else {
-        drawHandler.drawMuteButton();
-      }
-      drawHandler.drawFiveCross(nextBlockValue);
-      drawHandler.drawAllBlocks(blocks);
-    }
-
-    while (ii < blocks[x][y - 1].y) {
-      drawHandler.drawBackground();
-      drawHandler.drawBorders();
-      drawHandler.drawTitle(nextBlockValue);
-      drawHandler.drawNextBlockHintText();
-      drawHandler.drawNextBlock(nextBlockValue);
-      drawHandler.drawTime(elapsedTime);
-      if (!mute) {
-        drawHandler.drawMusicButton();
-      } else {
-        drawHandler.drawMuteButton();
-      }
-      drawHandler.drawFiveCross(nextBlockValue);
-      drawHandler.drawAllBlocks(blocks);
-
-      drawHandler.drawScore(score);
-      drawHandler.drawVerticalSuperPowerButton();
-      drawHandler.drawHorizontalSuperPowerButton();
-      if (!pause) {
-        drawHandler.drawPauseButton();
-      } else {
-        drawHandler.drawPlayButton();
-      }
-      drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
-      ii += mergingSpeed;
-    }
-  }
-
-// 7 Shape animation phase 2
-  void sevenShapeAnimation2() async {
-    drawHandler.drawScore(score);
-    drawHandler.drawVerticalSuperPowerButton();
-    drawHandler.drawHorizontalSuperPowerButton();
-    if (!pause) {
-      drawHandler.drawPauseButton();
-    } else {
-      drawHandler.drawPlayButton();
-    }
-    drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
-    jj += mergingSpeed;
-    dropAboveBlocks(x, y);
-    merge(x, y);
-    merge(x, y - 1);
-    merge(x - 1, y);
-    merge(x, blocks[x].length - 1);
-    merge(x - 1, blocks[x - 1].length - 1);
-    return;
-  }
-
-  // Horizontal shape animation
-  void horizontalShapeAnimation() async {
-    while (ii > blocks[x][y].x && jj < blocks[x][y].x) {
-      drawHandler.drawBackground();
-      drawHandler.drawBorders();
-      drawHandler.drawTitle(nextBlockValue);
-      drawHandler.drawNextBlockHintText();
-      drawHandler.drawNextBlock(nextBlockValue);
-      drawHandler.drawTime(elapsedTime);
-      if (!mute) {
-        drawHandler.drawMusicButton();
-      } else {
-        drawHandler.drawMuteButton();
-      }
-      drawHandler.drawFiveCross(nextBlockValue);
-      drawHandler.drawAllBlocks(blocks);
-
-      drawHandler.drawScore(score);
-      drawHandler.drawVerticalSuperPowerButton();
-      drawHandler.drawHorizontalSuperPowerButton();
-      if (!pause) {
-        drawHandler.drawPauseButton();
-      } else {
-        drawHandler.drawPlayButton();
-      }
-      drawHandler.drawBlock(Block(old, ii, blocks[x][y].y));
-      drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
-      ii += mergingSpeed;
-      jj += mergingSpeed;
-    }
-    merge(x, y);
-    merge(x - 1, y);
-    merge(x + 1, y);
-    // check above
-    merge(x, blocks[x].length - 1);
-    merge(x - 1, blocks[x - 1].length - 1);
-    merge(x + 1, blocks[x + 1].length - 1);
-    return;
-  }
-
-  // Right merge animation
-  void rightShapeAnimation() async {
-    while (jj > blocks[x][y].x) {
-      drawHandler.drawBackground();
-      drawHandler.drawBorders();
-      drawHandler.drawTitle(nextBlockValue);
-      drawHandler.drawNextBlockHintText();
-      drawHandler.drawNextBlock(nextBlockValue);
-      drawHandler.drawTime(elapsedTime);
-      if (!mute) {
-        drawHandler.drawMusicButton();
-      } else {
-        drawHandler.drawMuteButton();
-      }
-      drawHandler.drawFiveCross(nextBlockValue);
-      drawHandler.drawAllBlocks(blocks);
-
-      drawHandler.drawScore(score);
-      drawHandler.drawVerticalSuperPowerButton();
-      drawHandler.drawHorizontalSuperPowerButton();
-      if (!pause) {
-        drawHandler.drawPauseButton();
-      } else {
-        drawHandler.drawPlayButton();
-      }
-      drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
-      jj -= mergingSpeed;
-    }
-    merge(x, y);
-    merge(x + 1, y - 1);
-    merge(x + 1, blocks[x + 1].length - 1);
-    return;
-  }
-
-  // Left merge shape animation
-  void leftShapeAnimation() async {
-    while (jj > blocks[x][y].x) {
-      drawHandler.drawBackground();
-      drawHandler.drawBorders();
-      drawHandler.drawTitle(nextBlockValue);
-      drawHandler.drawNextBlockHintText();
-      drawHandler.drawNextBlock(nextBlockValue);
-      drawHandler.drawTime(elapsedTime);
-      if (!mute) {
-        drawHandler.drawMusicButton();
-      } else {
-        drawHandler.drawMuteButton();
-      }
-      drawHandler.drawFiveCross(nextBlockValue);
-      drawHandler.drawAllBlocks(blocks);
-
-      drawHandler.drawScore(score);
-      drawHandler.drawVerticalSuperPowerButton();
-      drawHandler.drawHorizontalSuperPowerButton();
-      if (!pause) {
-        drawHandler.drawPauseButton();
-      } else {
-        drawHandler.drawPlayButton();
-      }
-      drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
-      jj += mergingSpeed;
-    }
-    merge(x, y);
-    merge(x - 1, y - 1);
-    merge(x - 1, blocks[x + 1].length - 1);
-    return;
-  }
-
-  // up and down merge shape animation
-  void downShapeAnimation() async {
-    while (jj < blocks[x][y - 1].y) {
-      drawHandler.drawBackground();
-      drawHandler.drawBorders();
-      drawHandler.drawTitle(nextBlockValue);
-      drawHandler.drawNextBlockHintText();
-      drawHandler.drawNextBlock(nextBlockValue);
-      drawHandler.drawTime(elapsedTime);
-      if (!mute) {
-        drawHandler.drawMusicButton();
-      } else {
-        drawHandler.drawMuteButton();
-      }
-      drawHandler.drawFiveCross(nextBlockValue);
-      drawHandler.drawAllBlocks(blocks);
-
-      drawHandler.drawScore(score);
-      drawHandler.drawVerticalSuperPowerButton();
-      drawHandler.drawHorizontalSuperPowerButton();
-      if (!pause) {
-        drawHandler.drawPauseButton();
-      } else {
-        drawHandler.drawPlayButton();
-      }
-      drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, jj));
-      jj += mergingSpeed;
-    }
-    //         print("ONE"); // debug
-    merge(x, y);
-//         print("TWE"); // debug
-    merge(x, y - 1);
-//         print("THREE"); // debug
-    merge(x, blocks[x].length - 1);
-//         print("END"); // debug
-    return;
-  }
-
   /**********************************************************************
   * Add current block to solid blocks of current track.
   **********************************************************************/
-  void appendCurrentBlockToTrack() async {
+  void appendCurrentBlockToTrack() {
     // Height of every blocks
     double blockHeight = 9;
     // Make sure the x axis of current block is in the right position.
@@ -877,7 +611,7 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   // Merge method
-  void merge(int x, int y) async {
+  void merge(int x, int y) {
     this.x = x;
     this.y = y;
     print("merge (" + x.toString() + "," + y.toString() + ")"); // debug
@@ -886,7 +620,7 @@ class DropTheNumber extends Game with TapDetector {
 
     // Check left and right and down(T shape)
     print("Try T shape"); // debug
-    if (x > 0 && x < 4 && y > 0) {
+    if (tShapeOccurance || (x > 0 && x < 4 && y > 0)) {
       int leftLineY = blocks[x - 1].length - 1;
       int rightLineY = blocks[x + 1].length - 1;
       if (leftLineY >= y && rightLineY >= y) {
@@ -904,10 +638,9 @@ class DropTheNumber extends Game with TapDetector {
           dropAboveBlocks(x - 1, y);
           dropAboveBlocks(x + 1, y);
           dropAboveBlocks(x, y);
-          if (!tShapeOccurance) {
-            tShapeOccurance = true;
-            return;
-          }
+
+          tShapeOccurance = true;
+          return;
         }
       }
     }
@@ -919,16 +652,73 @@ class DropTheNumber extends Game with TapDetector {
         if (blocks[x][y].v == blocks[x + 1][y].v &&
             blocks[x][y].v == blocks[x][y - 1].v) {
           print("gamma shape"); // debug
-          old = blocks[x][y].v;
-          ii = blocks[x][y].y;
-          jj = blocks[x + 1][y].x;
+          int old = blocks[x][y].v;
+          double ii = blocks[x][y].y;
+          double jj = blocks[x + 1][y].x;
           blocks[x][y - 1].v *= 4;
           score += blocks[x][y - 1].v;
           dropAboveBlocks(x + 1, y);
-          if (!gammaOccurance) {
-            gammaOccurance = true;
-            return;
-          }
+          // while (jj > blocks[x][y].x) {
+          //   drawHandler.drawBackground();
+          //   drawHandler.drawBorders();
+          //   drawHandler.drawTitle(nextBlockValue);
+          //   drawHandler.drawNextBlockHintText();
+          //   drawHandler.drawNextBlock(nextBlockValue);
+          //   drawHandler.drawTime(elapsedTime);
+          //   if (!mute) {
+          //     drawHandler.drawMusicButton();
+          //   } else {
+          //     drawHandler.drawMuteButton();
+          //   }
+          //   drawHandler.drawFiveCross(nextBlockValue);
+          //   drawHandler.drawAllBlocks(blocks);
+
+          //   drawHandler.drawScore(score);
+          //   drawHandler.drawVerticalSuperPowerButton();
+          //   drawHandler.drawHorizontalSuperPowerButton();
+          //   if (!pause) {
+          //     drawHandler.drawPauseButton();
+          //   } else {
+          //     drawHandler.drawPlayButton();
+          //   }
+          //   drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+          //   jj -= mergingSpeed;
+          // }
+          dropAboveBlocks(x, y);
+          // while (ii < blocks[x][y - 1].y) {
+          //   drawHandler.drawBackground();
+          //   drawHandler.drawBorders();
+          //   drawHandler.drawTitle(nextBlockValue);
+          //   drawHandler.drawNextBlockHintText();
+          //   drawHandler.drawNextBlock(nextBlockValue);
+          //   drawHandler.drawTime(elapsedTime);
+          //   if (!mute) {
+          //     drawHandler.drawMusicButton();
+          //   } else {
+          //     drawHandler.drawMuteButton();
+          //   }
+          //   drawHandler.drawFiveCross(nextBlockValue);
+          //   drawHandler.drawAllBlocks(blocks);
+
+          //   drawHandler.drawScore(score);
+          //   drawHandler.drawVerticalSuperPowerButton();
+          //   drawHandler.drawHorizontalSuperPowerButton();
+          //   if (!pause) {
+          //     drawHandler.drawPauseButton();
+          //   } else {
+          //     drawHandler.drawPlayButton();
+          //   }
+          //   drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, ii));
+          //   ii += mergingSpeed;
+          // }
+          merge(x, y);
+          merge(x, y - 1);
+          merge(x - 1, y);
+
+          // check above
+//           merge(x, blocks[x].length - 1);
+//           merge(x - 1, blocks[x].length - 1);
+          return;
         }
       }
     }
@@ -941,16 +731,70 @@ class DropTheNumber extends Game with TapDetector {
         if (blocks[x][y].v == blocks[x - 1][y].v &&
             blocks[x][y].v == blocks[x][y - 1].v) {
           print("7 shape"); // debug
-          old = blocks[x][y].v;
-          ii = blocks[x][y].y;
-          jj = blocks[x - 1][y].x;
+          int old = blocks[x][y].v;
+          double ii = blocks[x][y].y;
+          double jj = blocks[x - 1][y].x;
           score += blocks[x][y - 1].v;
           blocks[x][y - 1].v *= 4;
           dropAboveBlocks(x - 1, y);
-          if (!sevenOccurance) {
-            sevenOccurance = true;
-            return;
-          }
+          // while (jj < blocks[x][y].x) {
+          //   drawHandler.drawBackground();
+          //   drawHandler.drawBorders();
+          //   drawHandler.drawTitle(nextBlockValue);
+          //   drawHandler.drawNextBlockHintText();
+          //   drawHandler.drawNextBlock(nextBlockValue);
+          //   drawHandler.drawTime(elapsedTime);
+          //   if (!mute) {
+          //     drawHandler.drawMusicButton();
+          //   } else {
+          //     drawHandler.drawMuteButton();
+          //   }
+          //   drawHandler.drawFiveCross(nextBlockValue);
+          //   drawHandler.drawAllBlocks(blocks);
+          dropAboveBlocks(x, y);
+          //   drawHandler.drawScore(score);
+          //   drawHandler.drawVerticalSuperPowerButton();
+          //   drawHandler.drawHorizontalSuperPowerButton();
+          //   if (!pause) {
+          //     drawHandler.drawPauseButton();
+          //   } else {
+          //     drawHandler.drawPlayButton();
+          //   }
+          //   drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+          //   jj += mergingSpeed;
+          // }
+          // while (ii < blocks[x][y - 1].y) {
+          //   drawHandler.drawBackground();
+          //   drawHandler.drawBorders();
+          //   drawHandler.drawTitle(nextBlockValue);
+          //   drawHandler.drawNextBlockHintText();
+          //   drawHandler.drawNextBlock(nextBlockValue);
+          //   drawHandler.drawTime(elapsedTime);
+          //   if (!mute) {
+          //     drawHandler.drawMusicButton();
+          //   } else {
+          //     drawHandler.drawMuteButton();
+          //   }
+          //   drawHandler.drawFiveCross(nextBlockValue);
+          //   drawHandler.drawAllBlocks(blocks);
+
+          //   drawHandler.drawScore(score);
+          //   drawHandler.drawVerticalSuperPowerButton();
+          //   drawHandler.drawHorizontalSuperPowerButton();
+          //   if (!pause) {
+          //     drawHandler.drawPauseButton();
+          //   } else {
+          //     drawHandler.drawPlayButton();
+          //   }
+          //   drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+          //   ii += mergingSpeed;
+          // }
+          merge(x, y);
+          merge(x, y - 1);
+          merge(x - 1, y);
+          merge(x, blocks[x].length - 1);
+          merge(x - 1, blocks[x - 1].length - 1);
+          return;
         }
       }
     }
@@ -963,16 +807,48 @@ class DropTheNumber extends Game with TapDetector {
         if (blocks[x][y].v == blocks[x - 1][y].v &&
             blocks[x][y].v == blocks[x + 1][y].v) {
           print("horizontal shape"); // debug
-          old = blocks[x][y].v;
-          ii = blocks[x + 1][y].x;
-          jj = blocks[x - 1][y].x;
+          int old = blocks[x][y].v;
+          double ii = blocks[x + 1][y].x;
+          double jj = blocks[x - 1][y].x;
           blocks[x][y].v *= 4;
           dropAboveBlocks(x - 1, y);
           dropAboveBlocks(x + 1, y);
-          if (!horizontalOccurance) {
-            horizontalOccurance = true;
-            return;
-          }
+          // while (ii > blocks[x][y].x && jj < blocks[x][y].x) {
+          //   drawHandler.drawBackground();
+          //   drawHandler.drawBorders();
+          //   drawHandler.drawTitle(nextBlockValue);
+          //   drawHandler.drawNextBlockHintText();
+          //   drawHandler.drawNextBlock(nextBlockValue);
+          //   drawHandler.drawTime(elapsedTime);
+          //   if (!mute) {
+          //     drawHandler.drawMusicButton();
+          //   } else {
+          //     drawHandler.drawMuteButton();
+          //   }
+          //   drawHandler.drawFiveCross(nextBlockValue);
+          //   drawHandler.drawAllBlocks(blocks);
+
+          //   drawHandler.drawScore(score);
+          //   drawHandler.drawVerticalSuperPowerButton();
+          //   drawHandler.drawHorizontalSuperPowerButton();
+          //   if (!pause) {
+          //     drawHandler.drawPauseButton();
+          //   } else {
+          //     drawHandler.drawPlayButton();
+          //   }
+          //   drawHandler.drawBlock(Block(old, ii, blocks[x][y].y));
+          //   drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+          //   ii += mergingSpeed;
+          //   jj += mergingSpeed;
+          // }
+          merge(x, y);
+          merge(x - 1, y);
+          merge(x + 1, y);
+          // check above
+          merge(x, blocks[x].length - 1);
+          merge(x - 1, blocks[x - 1].length - 1);
+          merge(x + 1, blocks[x + 1].length - 1);
+          return;
         }
       }
     }
@@ -983,15 +859,16 @@ class DropTheNumber extends Game with TapDetector {
       if (rightLineY >= y) {
         if (blocks[x][y].v == blocks[x + 1][y].v) {
           print("check right"); // debug
-          old = blocks[x][y].v;
-          jj = blocks[x + 1][y].x;
+          this.old = blocks[x][y].v;
+          this.jj = blocks[x + 1][y].x;
           blocks[x][y].v *= 2;
           score += blocks[x][y].v;
           dropAboveBlocks(x + 1, y);
-          if (!rightOccurance) {
-            rightOccurance = true;
-            return;
-          }
+
+          merge(x, y);
+          merge(x + 1, y - 1);
+          merge(x + 1, blocks[x + 1].length - 1);
+          return;
         }
       }
     }
@@ -1003,32 +880,60 @@ class DropTheNumber extends Game with TapDetector {
       if (leftLineY >= y) {
         if (blocks[x][y].v == blocks[x - 1][y].v) {
           print("check left"); // debug
-          old = blocks[x][y].v;
+          int old = blocks[x][y].v;
           double jj = blocks[x - 1][y].x;
           blocks[x][y].v *= 2;
           score += blocks[x][y].v;
           dropAboveBlocks(x - 1, y);
-          if (!leftOccurance) {
-            leftOccurance = true;
-            return;
-          }
+          // while (jj > blocks[x][y].x) {
+          //   drawHandler.drawBackground();
+          //   drawHandler.drawBorders();
+          //   drawHandler.drawTitle(nextBlockValue);
+          //   drawHandler.drawNextBlockHintText();
+          //   drawHandler.drawNextBlock(nextBlockValue);
+          //   drawHandler.drawTime(elapsedTime);
+          //   if (!mute) {
+          //     drawHandler.drawMusicButton();
+          //   } else {
+          //     drawHandler.drawMuteButton();
+          //   }
+          //   drawHandler.drawFiveCross(nextBlockValue);
+          //   drawHandler.drawAllBlocks(blocks);
+
+          //   drawHandler.drawScore(score);
+          //   drawHandler.drawVerticalSuperPowerButton();
+          //   drawHandler.drawHorizontalSuperPowerButton();
+          //   if (!pause) {
+          //     drawHandler.drawPauseButton();
+          //   } else {
+          //     drawHandler.drawPlayButton();
+          //   }
+          //   drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+          //   jj += mergingSpeed;
+          // }
+          merge(x, y);
+          merge(x - 1, y - 1);
+          merge(x - 1, blocks[x + 1].length - 1);
+          return;
         }
       }
     }
 
     // Check down
     print("Try check down"); // debug
-    if (y > 0) {
-      if (blocks[x][y].v == blocks[x][y - 1].v) {
-        print("Check down"); // debug
-        jj = blocks[x][y].y;
-        old = blocks[x][y].v;
-        blocks[x][y - 1].v *= 2;
-        score += blocks[x][y - 1].v;
-        dropAboveBlocks(x, y);
-        if (!downOccurance) {
-          downOccurance = true;
-          return;
+    if (y > 0 || downOccurance) {
+      if (blocks[x][y - 1] != null) {
+        if (blocks[x][y].v == blocks[x][y - 1].v) {
+          print("Check down"); // debug
+          this.jj = blocks[x][y].y;
+          this.old = blocks[x][y].v;
+          blocks[x][y - 1].v *= 2;
+          score += blocks[x][y - 1].v;
+          dropAboveBlocks(x, y);
+          if (!downOccurance) {
+            downOccurance = true;
+            return;
+          }
         }
       }
     }
