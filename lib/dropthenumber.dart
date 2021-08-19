@@ -263,59 +263,77 @@ class DropTheNumber extends Game with TapDetector {
 
       // if the t shape occurance is triggered
       if (tShapeOccurance) {
-        while (jj < blocks[x][y - 1].x && kk > blocks[x][y - 1].x) {
-          drawHandler.drawBackground();
-          drawHandler.drawBorders();
-          drawHandler.drawTitle(nextBlockValue);
-          drawHandler.drawNextBlockHintText();
-          drawHandler.drawNextBlock(nextBlockValue);
-          drawHandler.drawTime(elapsedTime);
-          if (!mute) {
-            drawHandler.drawMusicButton();
-          } else {
-            drawHandler.drawMuteButton();
-          }
-          drawHandler.drawFiveCross(nextBlockValue);
-          drawHandler.drawAllBlocks(blocks);
+        try {
+          while (jj < blocks[x][y - 1].x && kk > blocks[x][y - 1].x) {
+            drawHandler.drawBackground();
+            drawHandler.drawBorders();
+            drawHandler.drawTitle(nextBlockValue);
+            drawHandler.drawNextBlockHintText();
+            drawHandler.drawNextBlock(nextBlockValue);
+            drawHandler.drawTime(elapsedTime);
+            if (!mute) {
+              drawHandler.drawMusicButton();
+            } else {
+              drawHandler.drawMuteButton();
+            }
+            drawHandler.drawFiveCross(nextBlockValue);
+            drawHandler.drawAllBlocks(blocks);
 
-          drawHandler.drawScore(score);
-          drawHandler.drawVerticalSuperPowerButton();
-          drawHandler.drawHorizontalSuperPowerButton();
-          if (!pause) {
-            drawHandler.drawPauseButton();
-          } else {
-            drawHandler.drawPlayButton();
-          }
+            drawHandler.drawScore(score);
+            drawHandler.drawVerticalSuperPowerButton();
+            drawHandler.drawHorizontalSuperPowerButton();
+            if (!pause) {
+              drawHandler.drawPauseButton();
+            } else {
+              drawHandler.drawPlayButton();
+            }
 
-          ii += mergingSpeed;
-          jj += mergingSpeed;
+            ii += mergingSpeed;
+            jj += mergingSpeed;
+          }
+        } catch (RangeError) {
+          print("Range Error occurs in the coordinate: " +
+              "(" +
+              x.toString() +
+              "," +
+              y.toString() +
+              ")");
         }
-        while (ii < blocks[x][y - 1].y) {
-          drawHandler.drawBackground();
-          drawHandler.drawBorders();
-          drawHandler.drawTitle(nextBlockValue);
-          drawHandler.drawNextBlockHintText();
-          drawHandler.drawNextBlock(nextBlockValue);
-          drawHandler.drawTime(elapsedTime);
-          if (!mute) {
-            drawHandler.drawMusicButton();
-          } else {
-            drawHandler.drawMuteButton();
-          }
-          drawHandler.drawFiveCross(nextBlockValue);
-          drawHandler.drawAllBlocks(blocks);
+        try {
+          while (ii < blocks[x][y - 1].y) {
+            drawHandler.drawBackground();
+            drawHandler.drawBorders();
+            drawHandler.drawTitle(nextBlockValue);
+            drawHandler.drawNextBlockHintText();
+            drawHandler.drawNextBlock(nextBlockValue);
+            drawHandler.drawTime(elapsedTime);
+            if (!mute) {
+              drawHandler.drawMusicButton();
+            } else {
+              drawHandler.drawMuteButton();
+            }
+            drawHandler.drawFiveCross(nextBlockValue);
+            drawHandler.drawAllBlocks(blocks);
 
-          drawHandler.drawScore(score);
-          drawHandler.drawVerticalSuperPowerButton();
-          drawHandler.drawHorizontalSuperPowerButton();
-          if (!pause) {
-            drawHandler.drawPauseButton();
-          } else {
-            drawHandler.drawPlayButton();
-          }
+            drawHandler.drawScore(score);
+            drawHandler.drawVerticalSuperPowerButton();
+            drawHandler.drawHorizontalSuperPowerButton();
+            if (!pause) {
+              drawHandler.drawPauseButton();
+            } else {
+              drawHandler.drawPlayButton();
+            }
 
-          drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, ii));
-          ii += mergingSpeed;
+            drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, ii));
+            ii += mergingSpeed;
+          }
+        } catch (RangeError) {
+          print("Range Error occurs in the coordinate: " +
+              "(" +
+              x.toString() +
+              "," +
+              y.toString() +
+              ")");
         }
         try {
           merge(x, y);
@@ -343,62 +361,73 @@ class DropTheNumber extends Game with TapDetector {
       }
       // if the first phase of seven shape occurance is triggered
       if (sevenOccurance) {
-        while (jj < blocks[x][y].x) {
-          drawHandler.drawBackground();
-          drawHandler.drawBorders();
-          drawHandler.drawTitle(nextBlockValue);
-          drawHandler.drawNextBlockHintText();
-          drawHandler.drawNextBlock(nextBlockValue);
-          drawHandler.drawTime(elapsedTime);
-          if (!mute) {
-            drawHandler.drawMusicButton();
-          } else {
-            drawHandler.drawMuteButton();
+        try {
+          while (jj < blocks[x][y].x) {
+            drawHandler.drawBackground();
+            drawHandler.drawBorders();
+            drawHandler.drawTitle(nextBlockValue);
+            drawHandler.drawNextBlockHintText();
+            drawHandler.drawNextBlock(nextBlockValue);
+            drawHandler.drawTime(elapsedTime);
+            if (!mute) {
+              drawHandler.drawMusicButton();
+            } else {
+              drawHandler.drawMuteButton();
+            }
+            drawHandler.drawFiveCross(nextBlockValue);
+            drawHandler.drawAllBlocks(blocks);
+            dropAboveBlocks(x, y);
+            drawHandler.drawScore(score);
+            drawHandler.drawVerticalSuperPowerButton();
+            drawHandler.drawHorizontalSuperPowerButton();
+            if (!pause) {
+              drawHandler.drawPauseButton();
+            } else {
+              drawHandler.drawPlayButton();
+            }
+            try {
+              drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+            } catch (Exception) {}
+            jj += mergingSpeed;
           }
-          drawHandler.drawFiveCross(nextBlockValue);
-          drawHandler.drawAllBlocks(blocks);
-          dropAboveBlocks(x, y);
-          drawHandler.drawScore(score);
-          drawHandler.drawVerticalSuperPowerButton();
-          drawHandler.drawHorizontalSuperPowerButton();
-          if (!pause) {
-            drawHandler.drawPauseButton();
-          } else {
-            drawHandler.drawPlayButton();
-          }
-          try {
-            drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
-          } catch (Exception) {}
-          jj += mergingSpeed;
+        } catch (RangeError) {
+          print("Range Error occurs in the coordinate: " +
+              "(" +
+              x.toString() +
+              "," +
+              y.toString() +
+              ")");
         }
-        while (ii < blocks[x][y - 1].y) {
-          drawHandler.drawBackground();
-          drawHandler.drawBorders();
-          drawHandler.drawTitle(nextBlockValue);
-          drawHandler.drawNextBlockHintText();
-          drawHandler.drawNextBlock(nextBlockValue);
-          drawHandler.drawTime(elapsedTime);
-          if (!mute) {
-            drawHandler.drawMusicButton();
-          } else {
-            drawHandler.drawMuteButton();
-          }
-          drawHandler.drawFiveCross(nextBlockValue);
-          drawHandler.drawAllBlocks(blocks);
+        try {
+          while (ii < blocks[x][y - 1].y) {
+            drawHandler.drawBackground();
+            drawHandler.drawBorders();
+            drawHandler.drawTitle(nextBlockValue);
+            drawHandler.drawNextBlockHintText();
+            drawHandler.drawNextBlock(nextBlockValue);
+            drawHandler.drawTime(elapsedTime);
+            if (!mute) {
+              drawHandler.drawMusicButton();
+            } else {
+              drawHandler.drawMuteButton();
+            }
+            drawHandler.drawFiveCross(nextBlockValue);
+            drawHandler.drawAllBlocks(blocks);
 
-          drawHandler.drawScore(score);
-          drawHandler.drawVerticalSuperPowerButton();
-          drawHandler.drawHorizontalSuperPowerButton();
-          if (!pause) {
-            drawHandler.drawPauseButton();
-          } else {
-            drawHandler.drawPlayButton();
+            drawHandler.drawScore(score);
+            drawHandler.drawVerticalSuperPowerButton();
+            drawHandler.drawHorizontalSuperPowerButton();
+            if (!pause) {
+              drawHandler.drawPauseButton();
+            } else {
+              drawHandler.drawPlayButton();
+            }
+            try {
+              drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+            } catch (Exception) {}
+            ii += mergingSpeed;
           }
-          try {
-            drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
-          } catch (Exception) {}
-          ii += mergingSpeed;
-        }
+        } catch (RangeError) {}
         try {
           merge(x, y);
         } catch (Exception) {}
@@ -419,62 +448,79 @@ class DropTheNumber extends Game with TapDetector {
       }
       // // if the first phase of gamma shape occurance is triggered
       if (gammaOccurance) {
-        while (jj > blocks[x][y].x) {
-          drawHandler.drawBackground();
-          drawHandler.drawBorders();
-          drawHandler.drawTitle(nextBlockValue);
-          drawHandler.drawNextBlockHintText();
-          drawHandler.drawNextBlock(nextBlockValue);
-          drawHandler.drawTime(elapsedTime);
-          if (!mute) {
-            drawHandler.drawMusicButton();
-          } else {
-            drawHandler.drawMuteButton();
-          }
-          drawHandler.drawFiveCross(nextBlockValue);
-          drawHandler.drawAllBlocks(blocks);
+        try {
+          while (jj > blocks[x][y].x) {
+            drawHandler.drawBackground();
+            drawHandler.drawBorders();
+            drawHandler.drawTitle(nextBlockValue);
+            drawHandler.drawNextBlockHintText();
+            drawHandler.drawNextBlock(nextBlockValue);
+            drawHandler.drawTime(elapsedTime);
+            if (!mute) {
+              drawHandler.drawMusicButton();
+            } else {
+              drawHandler.drawMuteButton();
+            }
+            drawHandler.drawFiveCross(nextBlockValue);
+            drawHandler.drawAllBlocks(blocks);
 
-          drawHandler.drawScore(score);
-          drawHandler.drawVerticalSuperPowerButton();
-          drawHandler.drawHorizontalSuperPowerButton();
-          if (!pause) {
-            drawHandler.drawPauseButton();
-          } else {
-            drawHandler.drawPlayButton();
+            drawHandler.drawScore(score);
+            drawHandler.drawVerticalSuperPowerButton();
+            drawHandler.drawHorizontalSuperPowerButton();
+            if (!pause) {
+              drawHandler.drawPauseButton();
+            } else {
+              drawHandler.drawPlayButton();
+            }
+            try {
+              drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+            } catch (Exception) {}
+            jj -= mergingSpeed;
           }
-          try {
-            drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
-          } catch (Exception) {}
-          jj -= mergingSpeed;
+        } catch (RangeError) {
+          print("Range Error occurs in the coordinate: " +
+              "(" +
+              x.toString() +
+              "," +
+              y.toString() +
+              ")");
         }
         dropAboveBlocks(x, y);
-        while (ii < blocks[x][y - 1].y) {
-          drawHandler.drawBackground();
-          drawHandler.drawBorders();
-          drawHandler.drawTitle(nextBlockValue);
-          drawHandler.drawNextBlockHintText();
-          drawHandler.drawNextBlock(nextBlockValue);
-          drawHandler.drawTime(elapsedTime);
-          if (!mute) {
-            drawHandler.drawMusicButton();
-          } else {
-            drawHandler.drawMuteButton();
-          }
-          drawHandler.drawFiveCross(nextBlockValue);
-          drawHandler.drawAllBlocks(blocks);
+        try {
+          while (ii < blocks[x][y - 1].y) {
+            drawHandler.drawBackground();
+            drawHandler.drawBorders();
+            drawHandler.drawTitle(nextBlockValue);
+            drawHandler.drawNextBlockHintText();
+            drawHandler.drawNextBlock(nextBlockValue);
+            drawHandler.drawTime(elapsedTime);
+            if (!mute) {
+              drawHandler.drawMusicButton();
+            } else {
+              drawHandler.drawMuteButton();
+            }
+            drawHandler.drawFiveCross(nextBlockValue);
+            drawHandler.drawAllBlocks(blocks);
 
-          drawHandler.drawScore(score);
-          drawHandler.drawVerticalSuperPowerButton();
-          drawHandler.drawHorizontalSuperPowerButton();
-          if (!pause) {
-            drawHandler.drawPauseButton();
-          } else {
-            drawHandler.drawPlayButton();
+            drawHandler.drawScore(score);
+            drawHandler.drawVerticalSuperPowerButton();
+            drawHandler.drawHorizontalSuperPowerButton();
+            if (!pause) {
+              drawHandler.drawPauseButton();
+            } else {
+              drawHandler.drawPlayButton();
+            }
+            drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, ii));
+            ii += mergingSpeed;
           }
-          drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, ii));
-          ii += mergingSpeed;
+        } catch (RangeError) {
+          print("Range Error occurs in the coordinate: " +
+              "(" +
+              x.toString() +
+              "," +
+              y.toString() +
+              ")");
         }
-
         try {
           merge(x, y);
         } catch (Exception) {}
@@ -499,11 +545,20 @@ class DropTheNumber extends Game with TapDetector {
       // // if down occurance is triggered
       if (downOccurance) {
         print("render calling succeed!");
-        while (jj < blocks[x][y - 1].y) {
-          try {
-            drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, jj));
-          } catch (Exception) {}
-          jj += mergingSpeed;
+        try {
+          while (jj < blocks[x][y - 1].y) {
+            try {
+              drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, jj));
+            } catch (Exception) {}
+            jj += mergingSpeed;
+          }
+        } catch (RangeError) {
+          print("Range Error occurs in the coordinate: " +
+              "(" +
+              x.toString() +
+              "," +
+              y.toString() +
+              ")");
         }
         try {
           merge(x, y);
@@ -519,37 +574,46 @@ class DropTheNumber extends Game with TapDetector {
       }
       // if horizontal shape is triggered
       if (horizontalOccurance) {
-        while (ii > blocks[x][y].x && jj < blocks[x][y].x) {
-          drawHandler.drawBackground();
-          drawHandler.drawBorders();
-          drawHandler.drawTitle(nextBlockValue);
-          drawHandler.drawNextBlockHintText();
-          drawHandler.drawNextBlock(nextBlockValue);
-          drawHandler.drawTime(elapsedTime);
-          if (!mute) {
-            drawHandler.drawMusicButton();
-          } else {
-            drawHandler.drawMuteButton();
-          }
-          drawHandler.drawFiveCross(nextBlockValue);
-          drawHandler.drawAllBlocks(blocks);
+        try {
+          while (ii > blocks[x][y].x && jj < blocks[x][y].x) {
+            drawHandler.drawBackground();
+            drawHandler.drawBorders();
+            drawHandler.drawTitle(nextBlockValue);
+            drawHandler.drawNextBlockHintText();
+            drawHandler.drawNextBlock(nextBlockValue);
+            drawHandler.drawTime(elapsedTime);
+            if (!mute) {
+              drawHandler.drawMusicButton();
+            } else {
+              drawHandler.drawMuteButton();
+            }
+            drawHandler.drawFiveCross(nextBlockValue);
+            drawHandler.drawAllBlocks(blocks);
 
-          drawHandler.drawScore(score);
-          drawHandler.drawVerticalSuperPowerButton();
-          drawHandler.drawHorizontalSuperPowerButton();
-          if (!pause) {
-            drawHandler.drawPauseButton();
-          } else {
-            drawHandler.drawPlayButton();
+            drawHandler.drawScore(score);
+            drawHandler.drawVerticalSuperPowerButton();
+            drawHandler.drawHorizontalSuperPowerButton();
+            if (!pause) {
+              drawHandler.drawPauseButton();
+            } else {
+              drawHandler.drawPlayButton();
+            }
+            try {
+              drawHandler.drawBlock(Block(old, ii, blocks[x][y].y));
+            } catch (Exception) {}
+            try {
+              drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+            } catch (Exception) {}
+            ii += mergingSpeed;
+            jj += mergingSpeed;
           }
-          try {
-            drawHandler.drawBlock(Block(old, ii, blocks[x][y].y));
-          } catch (Exception) {}
-          try {
-            drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
-          } catch (Exception) {}
-          ii += mergingSpeed;
-          jj += mergingSpeed;
+        } catch (RangeError) {
+          print("Range Error occurs in the coordinate: " +
+              "(" +
+              x.toString() +
+              "," +
+              y.toString() +
+              ")");
         }
         try {
           merge(x, y);
@@ -575,33 +639,42 @@ class DropTheNumber extends Game with TapDetector {
       }
       // // if the left occurance is triggered
       if (leftOccurance) {
-        while (jj > blocks[x][y].x) {
-          drawHandler.drawBackground();
-          drawHandler.drawBorders();
-          drawHandler.drawTitle(nextBlockValue);
-          drawHandler.drawNextBlockHintText();
-          drawHandler.drawNextBlock(nextBlockValue);
-          drawHandler.drawTime(elapsedTime);
-          if (!mute) {
-            drawHandler.drawMusicButton();
-          } else {
-            drawHandler.drawMuteButton();
-          }
-          drawHandler.drawFiveCross(nextBlockValue);
-          drawHandler.drawAllBlocks(blocks);
+        try {
+          while (jj > blocks[x][y].x) {
+            drawHandler.drawBackground();
+            drawHandler.drawBorders();
+            drawHandler.drawTitle(nextBlockValue);
+            drawHandler.drawNextBlockHintText();
+            drawHandler.drawNextBlock(nextBlockValue);
+            drawHandler.drawTime(elapsedTime);
+            if (!mute) {
+              drawHandler.drawMusicButton();
+            } else {
+              drawHandler.drawMuteButton();
+            }
+            drawHandler.drawFiveCross(nextBlockValue);
+            drawHandler.drawAllBlocks(blocks);
 
-          drawHandler.drawScore(score);
-          drawHandler.drawVerticalSuperPowerButton();
-          drawHandler.drawHorizontalSuperPowerButton();
-          if (!pause) {
-            drawHandler.drawPauseButton();
-          } else {
-            drawHandler.drawPlayButton();
+            drawHandler.drawScore(score);
+            drawHandler.drawVerticalSuperPowerButton();
+            drawHandler.drawHorizontalSuperPowerButton();
+            if (!pause) {
+              drawHandler.drawPauseButton();
+            } else {
+              drawHandler.drawPlayButton();
+            }
+            try {
+              drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+            } catch (Exception) {}
+            jj += mergingSpeed;
           }
-          try {
-            drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
-          } catch (Exception) {}
-          jj += mergingSpeed;
+        } catch (RangeError) {
+          print("Range Error occurs in the coordinate: " +
+              "(" +
+              x.toString() +
+              "," +
+              y.toString() +
+              ")");
         }
         try {
           merge(x, y);
@@ -617,29 +690,38 @@ class DropTheNumber extends Game with TapDetector {
       }
       // // if the right occurance is triggered
       if (rightOccurance) {
-        while (jj > blocks[x][y].x) {
-          drawHandler.drawBackground();
-          drawHandler.drawBorders();
-          drawHandler.drawTitle(nextBlockValue);
-          drawHandler.drawNextBlockHintText();
-          drawHandler.drawNextBlock(nextBlockValue);
-          drawHandler.drawTime(elapsedTime);
-          if (!mute) {
-            drawHandler.drawMusicButton();
-          } else {
-            drawHandler.drawMuteButton();
+        try {
+          while (jj > blocks[x][y].x) {
+            drawHandler.drawBackground();
+            drawHandler.drawBorders();
+            drawHandler.drawTitle(nextBlockValue);
+            drawHandler.drawNextBlockHintText();
+            drawHandler.drawNextBlock(nextBlockValue);
+            drawHandler.drawTime(elapsedTime);
+            if (!mute) {
+              drawHandler.drawMusicButton();
+            } else {
+              drawHandler.drawMuteButton();
+            }
+            drawHandler.drawFiveCross(nextBlockValue);
+            drawHandler.drawAllBlocks(blocks);
+            drawHandler.drawScore(score);
+            drawHandler.drawVerticalSuperPowerButton();
+            drawHandler.drawHorizontalSuperPowerButton();
+            if (!pause) {
+              try {
+                drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+              } catch (Exception) {}
+              jj -= mergingSpeed;
+            }
           }
-          drawHandler.drawFiveCross(nextBlockValue);
-          drawHandler.drawAllBlocks(blocks);
-          drawHandler.drawScore(score);
-          drawHandler.drawVerticalSuperPowerButton();
-          drawHandler.drawHorizontalSuperPowerButton();
-          if (!pause) {
-            try {
-              drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
-            } catch (Exception) {}
-            jj -= mergingSpeed;
-          }
+        } catch (RangeError) {
+          print("Range Error occurs in the coordinate: " +
+              "(" +
+              x.toString() +
+              "," +
+              y.toString() +
+              ")");
         }
         try {
           merge(x, y);
@@ -653,6 +735,22 @@ class DropTheNumber extends Game with TapDetector {
         rightOccurance = false;
         return;
       }
+      // Update time
+      elapsedTime = DateTime.now().difference(startTime) - pauseElapsedTime;
+      if (LastLoopPaused != pause) {
+        if (pause) {
+          startTimeOfPause = DateTime.now();
+        } else {
+          pauseDuration = DateTime.now().difference(startTimeOfPause);
+          if (cooldown_time_hor != null) {
+            cooldown_time_hor.add(pauseDuration);
+          }
+          if (cooldown_time_vert != null) {
+            cooldown_time_vert.add(pauseDuration);
+          }
+        }
+      }
+      LastLoopPaused = pause;
 
       // if (!pause) {
       //     yAxis += 1;
@@ -677,22 +775,6 @@ class DropTheNumber extends Game with TapDetector {
     // print("Lag: " + (lagPercentage).toString() + "%");
 
     if (!pause && isGameRunning()) {
-      // Update time
-      elapsedTime = DateTime.now().difference(startTime) - pauseElapsedTime;
-      if (LastLoopPaused != pause) {
-        if (pause) {
-          startTimeOfPause = DateTime.now();
-        } else {
-          pauseDuration = DateTime.now().difference(startTimeOfPause);
-          if (cooldown_time_hor != null) {
-            cooldown_time_hor.add(pauseDuration);
-          }
-          if (cooldown_time_vert != null) {
-            cooldown_time_vert.add(pauseDuration);
-          }
-        }
-      }
-      LastLoopPaused = pause;
       // Drop block
       if (!dropCurrentBlock()) {
         // Hit solid block, current block cannot be drop any more!
@@ -906,7 +988,7 @@ class DropTheNumber extends Game with TapDetector {
     }
     // Check right and down(Gamma shape)
     print("Try gamma shape"); // debug
-    if ((x < 4 && y > 0) || gammaOccurance) {
+    if (gammaOccurance || (x < 4 && y > 0)) {
       int rightLineY = blocks[x + 1].length - 1;
       if (rightLineY >= y) {
         if (blocks[x][y].v == blocks[x + 1][y].v &&
@@ -925,7 +1007,7 @@ class DropTheNumber extends Game with TapDetector {
     }
     // Check left and down(7 Shape)
     print("Try 7 shape"); // debug
-    if ((x > 0 && y > 0) || sevenOccurance) {
+    if (sevenOccurance || (x > 0 && y > 0)) {
       int leftLineY = blocks[x - 1].length - 1;
 //       if (leftLineY > 0) { // Error occurs here!!!!!
       if (leftLineY >= y) {
@@ -965,7 +1047,7 @@ class DropTheNumber extends Game with TapDetector {
     }
     // Check right
     print("Try check right"); // debug
-    if (x < 4 || rightOccurance) {
+    if (rightOccurance || x < 4) {
       int rightLineY = blocks[x + 1].length - 1;
       if (rightLineY >= y) {
         if (blocks[x][y].v == blocks[x + 1][y].v) {
@@ -984,7 +1066,7 @@ class DropTheNumber extends Game with TapDetector {
 
     // Check left
     print("Try check left"); // debug
-    if (x > 0 || leftOccurance) {
+    if (leftOccurance || x > 0) {
       int leftLineY = blocks[x - 1].length - 1;
       if (leftLineY >= y) {
         if (blocks[x][y].v == blocks[x - 1][y].v) {
@@ -1002,7 +1084,7 @@ class DropTheNumber extends Game with TapDetector {
 
     // Check down
     print("Try check down"); // debug
-    if (y > 0 || downOccurance) {
+    if (downOccurance || y > 0) {
       if (blocks[x][y - 1] != null) {
         if (blocks[x][y].v == blocks[x][y - 1].v) {
           print("Check down"); // debug

@@ -9,6 +9,7 @@ void main() {
   Util flameUtil = Util();
   flameUtil.fullScreen();
   flameUtil.setOrientation(DeviceOrientation.portraitUp);
+  flameUtil.setPortraitUpOnly();
   DropTheNumber game = DropTheNumber();
 
   runApp(game.widget);
