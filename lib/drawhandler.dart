@@ -109,9 +109,8 @@ class DrawHandler {
   void initImages() {
     loadUiImage("assets/image/startGamePage.png")
         .then((value) => startGameImage = value);
-    loadUiImage("assets/image/volumeOn1.png")
-        .then((value) => volumeOn1 = value);
-    loadUiImage("assets/image/volume-down2.png")
+    loadUiImage("assets/image/volumeOn.png").then((value) => volumeOn1 = value);
+    loadUiImage("assets/image/volumedown.png")
         .then((value) => volumeDown1 = value);
     loadUiImage("assets/image/background.jpg")
         .then((value) => backgroundImage = value);
@@ -147,8 +146,11 @@ class DrawHandler {
     **********************************************************************/
   void drawStartGameScreen() {
     drawFullScreenImage(startGameImage);
-    drawImage(volumeDown1, 60, 34.5, 42, 11);
-    drawImage(volumeOn1, 55, 35, 15, 10);
+    drawText('2048 V2', 50, 3, Colors.white, 80);
+    drawText('START', 50, 30, Colors.white, 60);
+    drawRectStroke(20, 30, 60, 10, Colors.white, 10);
+    drawImage(volumeDown1, 87, 80, 12, 8);
+    drawImage(volumeOn1, 87, 90, 12, 8);
   }
 
   /**********************************************************************
