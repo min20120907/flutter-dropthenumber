@@ -364,8 +364,8 @@ class DrawHandler {
       int track, List<List<Block>> blocks) async {
     double a = 5, b = 2, width = 400, height = 600;
     for (int i = 1; i < 68; i++) {
-      loadUiImage("assets/video/fire/" + i.toString() + ".png")
-          .then((value) => tmpVertImage = value);
+      ui.Image tmpVertImg =
+          await loadUiImage("assets/video/glow/" + i.toString() + ".png");
 
       canvas.drawImageRect(
           tmpVertImage,
@@ -397,7 +397,6 @@ class DrawHandler {
     for (int i = 1; i < 100; i++) {
       ui.Image tmpHorImg =
           await loadUiImage("assets/video/glow/" + i.toString() + ".png");
-      canvas.save();
       canvas.drawImageRect(
           tmpHorImg,
           Rect.fromLTWH(
