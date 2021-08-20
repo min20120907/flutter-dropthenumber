@@ -769,7 +769,7 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   // Merge method
-  void merge(int x, int y) {
+  void merge(int x, int y) async {
     this.x = x;
     this.y = y;
     print("merge (" + x.toString() + "," + y.toString() + ")"); // debug
