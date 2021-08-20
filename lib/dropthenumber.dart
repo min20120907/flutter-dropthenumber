@@ -82,7 +82,7 @@ class DropTheNumber extends Game with TapDetector {
   DateTime startTimeOfPause = DateTime.now();
   // Record the duration of pause phase
   Duration pauseDuration = Duration.zero;
-  Duration cdh = Duration.zero, cdv = Duration.zero;
+  Duration cdh, cdv;
   bool blockedHor = false, blockedVert = false;
 
   // Merge animation
@@ -238,17 +238,24 @@ class DropTheNumber extends Game with TapDetector {
       if (cdh < cooldown_period && cdh != null) {
         blockedHor = true;
         // draw the cross
-        drawHandler.drawBlockedHorizontalSuperpower();
+
       } else if (!pause) {
         blockedHor = false;
       }
+
       // Vertical cross while cooldown
       if (cdv < cooldown_period && cdv != null) {
         blockedVert = true;
-        drawHandler.drawBlockedVerticalSuperpower();
+
         // draw the cross
       } else if (!pause) {
         blockedVert = false;
+      }
+      if (blockedVert) {
+        drawHandler.drawBlockedVerticalSuperpower();
+      }
+      if (blockedHor) {
+        drawHandler.drawBlockedHorizontalSuperpower();
       }
       if (superHorBool) {
         //drawHandler.playHorizontalSuperPowerAnimation();
@@ -678,10 +685,12 @@ class DropTheNumber extends Game with TapDetector {
       }
       // Horizontal super power clicked.
       else if (!pause && inRange(x, 65, 75) && inRange(y, 92.5, 97.5)) {
-        cooldown_time_hor = DateTime.now();
-        superHor();
-        print("Horizontal super power clicked!"); // debug
-        superHorBool = true;
+        if (cooldown_time_hor == null) {
+          cooldown_time_hor = DateTime.now();
+          superHor();
+          print("Horizontal super power clicked!"); // debug
+          superHorBool = true;
+        }
 
         cool_down_hor = DateTime.now().difference(cooldown_time_hor);
         if (cool_down_hor > cooldown_period) {
@@ -694,10 +703,12 @@ class DropTheNumber extends Game with TapDetector {
       }
       // Vertical super power clicked.
       else if (!pause && inRange(x, 80, 90) && inRange(y, 92.5, 97.5)) {
-        cooldown_time_vert = DateTime.now();
-        print("Vertical super power clicked!"); // debug
-        superVertBool = true;
-        superVert();
+        if (cooldown_time_vert == null) {
+          cooldown_time_vert = DateTime.now();
+          print("Vertical super power clicked!"); // debug
+          superVertBool = true;
+          superVert();
+        }
 
         cool_down_vert = DateTime.now().difference(cooldown_time_vert);
         if (cool_down_vert > cooldown_period) {
