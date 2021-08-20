@@ -299,6 +299,9 @@ class DropTheNumber extends Game with TapDetector {
           merge(x, y - 1);
         } catch (Exception) {}
         try {
+          merge(x - 1, y);
+        } catch (Exception) {}
+        try {
           merge(x + 1, y);
         } catch (Exception) {}
         // something about to check above
@@ -306,7 +309,10 @@ class DropTheNumber extends Game with TapDetector {
           merge(x, blocks[x].length - 1);
         } catch (Exception) {}
         try {
-          merge(x + 1, blocks[x + 1].length - 1);
+          merge(x - 1, blocks[x + 1].length - 1);
+        } catch (Exception) {}
+        try {
+          merge(x + 1, blocks[x - 1].length - 1);
         } catch (Exception) {}
         tShapeOccurance = false;
         return;
@@ -338,7 +344,7 @@ class DropTheNumber extends Game with TapDetector {
         try {
           while (ii < blocks[x][y - 1].y) {
             try {
-              drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+              drawHandler.drawBlock(Block(old, ii, blocks[x][y].y));
             } catch (Exception) {}
             ii += mergingSpeed;
           }
@@ -407,7 +413,7 @@ class DropTheNumber extends Game with TapDetector {
           merge(x, blocks[x].length - 1);
         } catch (Exception) {}
         try {
-          merge(x + 1, blocks[x].length - 1);
+          merge(x + 1, blocks[x + 1].length - 1);
         } catch (Exception) {}
 
         gammaOccurance = false;
@@ -415,7 +421,6 @@ class DropTheNumber extends Game with TapDetector {
       }
       // // if down occurance is triggered
       if (downOccurance) {
-        print("render calling succeed!");
         try {
           while (jj < blocks[x][y - 1].y) {
             try {
@@ -510,7 +515,7 @@ class DropTheNumber extends Game with TapDetector {
           merge(x - 1, y - 1);
         } catch (Exception) {}
         try {
-          merge(x - 1, blocks[x + 1].length - 1);
+          merge(x - 1, blocks[x - 1].length - 1);
         } catch (Exception) {}
         leftOccurance = false;
         return;
