@@ -65,13 +65,13 @@ class DropTheNumber extends Game with TapDetector {
   Duration cooldown_period = Duration(seconds: 15);
   // The last time which horizontal superpower clicked
   // ignore: non_constant_identifier_names
-  DateTime cooldown_time_hor = DateTime.now();
+  DateTime cooldown_time_hor;
   // Horizontal superpower cooldown duration
   // ignore: non_constant_identifier_names
   Duration cool_down_hor = Duration.zero;
   // The last time which vertical superpower clicked
   // ignore: non_constant_identifier_names
-  DateTime cooldown_time_vert = DateTime.now();
+  DateTime cooldown_time_vert;
   // Vertical superpower cooldown duration
   // ignore: non_constant_identifier_names
   Duration cool_down_vert = Duration.zero;
@@ -241,26 +241,40 @@ class DropTheNumber extends Game with TapDetector {
         drawHandler.drawBlockedHorizontalSuperpower();
       } else if (!pause) {
         blockedHor = false;
-        drawHandler.drawBlockedVerticalSuperpower();
       }
       // Vertical cross while cooldown
       if (cdv < cooldown_period && cdv != null) {
         blockedVert = true;
+        drawHandler.drawBlockedVerticalSuperpower();
         // draw the cross
       } else if (!pause) {
         blockedVert = false;
       }
       if (superHorBool) {
-        drawHandler.playHorizontalSuperPowerAnimation();
+        //drawHandler.playHorizontalSuperPowerAnimation();
         superHorBool = false;
         return;
       }
       if (superVertBool) {
-        drawHandler.playVerticalSuperPowerAnimation(getMaxTrack(), blocks);
+        //drawHandler.playVerticalSuperPowerAnimation(getMaxTrack(), blocks);
         superVertBool = false;
         return;
       }
-
+      // Update time
+      if (LastLoopPaused != pause) {
+        if (pause) {
+          startTimeOfPause = DateTime.now();
+        } else {
+          pauseDuration = DateTime.now().difference(startTimeOfPause);
+          if (cooldown_time_hor != null) {
+            cooldown_time_hor.add(pauseDuration);
+          }
+          if (cooldown_time_vert != null) {
+            cooldown_time_vert.add(pauseDuration);
+          }
+        }
+      }
+      LastLoopPaused = pause;
       // if the t shape occurance is triggered
       if (tShapeOccurance) {
         try {
@@ -551,22 +565,6 @@ class DropTheNumber extends Game with TapDetector {
         rightOccurance = false;
         return;
       }
-      // Update time
-      elapsedTime = DateTime.now().difference(startTime) - pauseElapsedTime;
-      if (LastLoopPaused != pause) {
-        if (pause) {
-          startTimeOfPause = DateTime.now();
-        } else {
-          pauseDuration = DateTime.now().difference(startTimeOfPause);
-          if (cooldown_time_hor != null) {
-            cooldown_time_hor.add(pauseDuration);
-          }
-          if (cooldown_time_vert != null) {
-            cooldown_time_vert.add(pauseDuration);
-          }
-        }
-      }
-      LastLoopPaused = pause;
 
       // if (!pause) {
       //     yAxis += 1;
@@ -591,6 +589,7 @@ class DropTheNumber extends Game with TapDetector {
     // print("Lag: " + (lagPercentage).toString() + "%");
 
     if (!pause && isGameRunning()) {
+      elapsedTime = DateTime.now().difference(startTime) - pauseElapsedTime;
       // Drop block
       if (!dropCurrentBlock()) {
         // Hit solid block, current block cannot be drop any more!
