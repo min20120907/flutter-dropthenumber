@@ -265,6 +265,8 @@ class DropTheNumber extends Game with TapDetector {
       if (tShapeOccurance) {
         try {
           while (jj < blocks[x][y - 1].x && kk > blocks[x][y - 1].x) {
+            drawHandler.drawBlock(Block(old, blocks[x][y].y, ii));
+            drawHandler.drawBlock(Block(old, blocks[x][y].y, jj));
             ii += mergingSpeed;
             jj += mergingSpeed;
           }
@@ -276,6 +278,7 @@ class DropTheNumber extends Game with TapDetector {
               y.toString() +
               ")");
         }
+        dropAboveBlocks(x, y);
         try {
           while (ii < blocks[x][y - 1].y) {
             drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, ii));
@@ -787,7 +790,6 @@ class DropTheNumber extends Game with TapDetector {
           score += blocks[x][y - 1].v;
           dropAboveBlocks(x - 1, y);
           dropAboveBlocks(x + 1, y);
-          dropAboveBlocks(x, y);
 
           tShapeOccurance = true;
           return;
