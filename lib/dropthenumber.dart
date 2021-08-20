@@ -341,17 +341,12 @@ class DropTheNumber extends Game with TapDetector {
         try {
           merge(x, y - 1);
         } catch (Exception) {}
-        merge(x - 1, y);
-        try {} catch (Exception) {}
         try {
           merge(x + 1, y);
         } catch (Exception) {}
         // something about to check above
         try {
           merge(x, blocks[x].length - 1);
-        } catch (Exception) {}
-        try {
-          merge(x - 1, blocks[x - 1].length - 1);
         } catch (Exception) {}
         try {
           merge(x + 1, blocks[x + 1].length - 1);
@@ -528,7 +523,7 @@ class DropTheNumber extends Game with TapDetector {
           merge(x, y - 1);
         } catch (Exception) {}
         try {
-          merge(x - 1, y);
+          merge(x + 1, y);
         } catch (Exception) {}
 
         // check above
@@ -536,7 +531,7 @@ class DropTheNumber extends Game with TapDetector {
           merge(x, blocks[x].length - 1);
         } catch (Exception) {}
         try {
-          merge(x - 1, blocks[x].length - 1);
+          merge(x + 1, blocks[x].length - 1);
         } catch (Exception) {}
 
         gammaOccurance = false;
