@@ -1,3 +1,4 @@
+// Block class storing every blocks stat
 class Block {
     int v = 0;
     double x = 0, y = 0;
