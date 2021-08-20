@@ -107,7 +107,7 @@ class DrawHandler {
     * Initial images like music image, backgroundImage, etc.
     **********************************************************************/
   void initImages() {
-    loadUiImage("assets/image/startGamePage.jpg")
+    loadUiImage("assets/image/startGamePage.png")
         .then((value) => startGameImage = value);
     loadUiImage("assets/image/volumeOn1.png")
         .then((value) => volumeOn1 = value);
@@ -378,12 +378,12 @@ class DrawHandler {
   }
 
   void drawBlockedHorizontalSuperpower() {
-    drawText("X", 70, 92.5, Colors.black, 20);
+    drawText("X", 74.5, 91, Colors.black, 55);
     drawRectStroke(70, 92.5, 9, 5, Colors.black, 3);
   }
 
   void drawBlockedVerticalSuperpower() {
-    drawText("X", 82, 92.5, Colors.black, 20);
+    drawText("X", 86.5, 91, Colors.black, 55);
     drawRectStroke(82, 92.5, 9, 5, Colors.black, 3);
   }
 
