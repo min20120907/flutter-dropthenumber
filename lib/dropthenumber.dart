@@ -105,7 +105,10 @@ class DropTheNumber extends Game with TapDetector {
   bool gammaOccurance = false;
   // 7 Shape occurance check boolean variable
   bool sevenOccurance = false;
-
+  // first occurance of horizontal super power
+  bool firstHorizontalOccurance = true;
+  // first occurance of vertical super power
+  bool firstVerticalOccurance = true;
   int getMaxTrack() {
     int maximum = blocks[0].length, index = 0;
     for (int i = 1; i < 5; i++) maximum = max(blocks[i].length, maximum);
@@ -235,21 +238,23 @@ class DropTheNumber extends Game with TapDetector {
       cdh = DateTime.now().difference(cooldown_time_hor);
       cdv = DateTime.now().difference(cooldown_time_vert);
       // Horizontal cross while cooldown
-      if (cdh < cooldown_period && cdh != null) {
+      if (cdh < cooldown_period && cdh != null && !firstHorizontalOccurance) {
         blockedHor = true;
         // draw the cross
 
-      } else if (!pause) {
+      } else if (!pause || firstHorizontalOccurance) {
         blockedHor = false;
+        firstHorizontalOccurance = false;
       }
 
       // Vertical cross while cooldown
-      if (cdv < cooldown_period && cdv != null) {
+      if (cdv < cooldown_period && cdv != null && !firstVerticalOccurance) {
         blockedVert = true;
 
         // draw the cross
-      } else if (!pause) {
+      } else if (!pause || firstVerticalOccurance) {
         blockedVert = false;
+        firstVerticalOccurance = false;
       }
       if (blockedVert) {
         drawHandler.drawBlockedVerticalSuperpower();
@@ -685,11 +690,12 @@ class DropTheNumber extends Game with TapDetector {
       }
       // Horizontal super power clicked.
       else if (!pause && inRange(x, 65, 75) && inRange(y, 92.5, 97.5)) {
-        if (cooldown_time_hor == null) {
+        if (cooldown_time_hor == null || firstHorizontalOccurance) {
           cooldown_time_hor = DateTime.now();
           superHor();
           print("Horizontal super power clicked!"); // debug
           superHorBool = true;
+          firstHorizontalOccurance;
         }
 
         cool_down_hor = DateTime.now().difference(cooldown_time_hor);
@@ -703,10 +709,11 @@ class DropTheNumber extends Game with TapDetector {
       }
       // Vertical super power clicked.
       else if (!pause && inRange(x, 80, 90) && inRange(y, 92.5, 97.5)) {
-        if (cooldown_time_vert == null) {
+        if (cooldown_time_vert == null || firstVerticalOccurance) {
           cooldown_time_vert = DateTime.now();
           print("Vertical super power clicked!"); // debug
           superVertBool = true;
+          firstVerticalOccurance = false;
           superVert();
         }
 
