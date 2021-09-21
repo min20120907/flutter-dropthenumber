@@ -146,9 +146,9 @@ class DrawHandler {
     **********************************************************************/
   void drawStartGameScreen() {
     drawFullScreenImage(startGameImage);
-    drawText('2048 V2', 50, 3, Colors.white, 80);
-    drawText('START', 50, 30, Colors.white, 60);
-    drawRectStroke(20, 30, 60, 10, Colors.white, 10);
+    drawText('2048 V2', 50, 3, Colors.white, 60);
+    drawText('START', 52, 30.5, Colors.white, 40);
+    drawRectStroke(33, 30, 37, 7, Colors.white, 7);
     drawImage(volumeDown1, 87, 80, 12, 8);
     drawImage(volumeOn1, 87, 90, 12, 8);
   }
@@ -485,6 +485,21 @@ class DrawHandler {
     * The x and y are coordinate the text center.
     **********************************************************************/
   void drawText(String text, double x, double y, Color color, double fontSize) {
+    TextPainter(
+      text: TextSpan(
+          text: text, style: TextStyle(color: color, fontSize: fontSize)),
+      textDirection: TextDirection.ltr,
+      textAlign: TextAlign.center,
+    )
+      ..layout(minWidth: canvasSize.width, maxWidth: canvasSize.width)
+      ..paint(
+          canvas,
+          Offset(toAbsoluteX(x) - (canvasSize.width / 2) + canvasXOffset,
+              toAbsoluteY(y)));
+  }
+
+  void drawText2(
+      String text, double x, double y, Color color, double fontSize) {
     TextPainter(
       text: TextSpan(
           text: text, style: TextStyle(color: color, fontSize: fontSize)),
