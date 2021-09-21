@@ -661,7 +661,7 @@ class DropTheNumber extends Game with TapDetector {
 
     // Game start
     if (!startGameScreenFinished) {
-      if (inRange(x, 21, 80) && inRange(y, 30, 40)) {
+      if (inRange(x, 32, 70) && inRange(y, 29, 37)) {
         startGameScreenFinished = true;
       }
       //   if (inRange(x, 20, 30) && inRange(y, 30, 40)) {
