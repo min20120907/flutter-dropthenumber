@@ -30,4 +30,8 @@ flutter:
     - assets/video/power2/
     - assets/video/glow/
     - assets/video/fire/
+  fonts:
+  - family: DancingScript
+    fonts:
+    - asset: assets/Dancing_Script/dancing_script.ttf
 

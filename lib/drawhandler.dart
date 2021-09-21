@@ -146,9 +146,9 @@ class DrawHandler {
     **********************************************************************/
   void drawStartGameScreen() {
     drawFullScreenImage(startGameImage);
-    drawText('2048 V2', 50, 3, Colors.white, 60);
-    drawText('START', 52, 30.5, Colors.white, 40);
-    drawRectStroke(33, 30, 37, 7, Colors.white, 7);
+    drawText2('2048 V2', 50, 3, Colors.white, 60);
+    drawText2('START', 52, 30.5, Colors.white, 40);
+    drawRectStroke(33, 30, 37, 7, Colors.white, 5);
     drawImage(volumeDown1, 87, 80, 12, 8);
     drawImage(volumeOn1, 87, 90, 12, 8);
   }
@@ -463,7 +463,6 @@ class DrawHandler {
       ..color = color
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth;
-
     canvas.drawRect(rect, paint);
   }
 
@@ -502,7 +501,24 @@ class DrawHandler {
       String text, double x, double y, Color color, double fontSize) {
     TextPainter(
       text: TextSpan(
-          text: text, style: TextStyle(color: color, fontSize: fontSize)),
+          text: text,
+          style: TextStyle(
+            color: color,
+            fontSize: fontSize,
+            fontFamily: 'DancingScript',
+            shadows: [
+              Shadow(
+                color: Colors.deepPurple,
+                blurRadius: 12.0,
+                offset: Offset(-5.0, 5.0),
+              ),
+              Shadow(
+                color: Colors.white,
+                blurRadius: 12.0,
+                offset: Offset(10.0, 5.0),
+              ),
+            ],
+          )),
       textDirection: TextDirection.ltr,
       textAlign: TextAlign.center,
     )
