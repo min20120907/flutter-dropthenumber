@@ -16,6 +16,7 @@ dependencies:
   flame: ^0.29.4
   flutter_screenutil: ^5.0.0+2
   sprintf: "^4.0.0"
+  audioplayers: ^0.18.3
 
 
 dev_dependencies:
