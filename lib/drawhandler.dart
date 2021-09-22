@@ -148,7 +148,8 @@ class DrawHandler {
     drawFullScreenImage(startGameImage);
     drawText2('2048 V2', 50, 3, Colors.white, 60);
     drawText2('START', 52, 30.5, Colors.white, 40);
-    drawRectStroke(33, 30, 37, 7, Colors.white, 5);
+    // drawRectStroke(33, 30, 37, 7, Colors.white, 5);
+    drawRectStroke2(33, 30, 37, 7, Colors.white, 5);
     drawImage(volumeDown1, 87, 80, 12, 8);
     drawImage(volumeOn1, 87, 90, 12, 8);
   }
@@ -463,6 +464,26 @@ class DrawHandler {
       ..color = color
       ..style = PaintingStyle.stroke
       ..strokeWidth = strokeWidth;
+    canvas.drawRect(rect, paint);
+  }
+
+  void drawRectStroke2(double x, double y, double width, double height,
+      Color color, double strokeWidth) {
+    Rect rect = Rect.fromLTWH(toAbsoluteX(x) + canvasXOffset, toAbsoluteY(y),
+        toAbsoluteX(width), toAbsoluteY(height));
+    Paint paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = strokeWidth;
+    Container(
+      // padding: const EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+        border: Border(
+          top: BorderSide(width: 16.0, color: Colors.lightBlue.shade50),
+          bottom: BorderSide(width: 16.0, color: Colors.lightBlue.shade900),
+        ),
+      ),
+    );
     canvas.drawRect(rect, paint);
   }
 
