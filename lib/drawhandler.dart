@@ -63,6 +63,7 @@ class DrawHandler {
   ui.Image startImage;
   ui.Image startborderImage;
   ui.Image tmpVertImage;
+  ui.Image mute1;
 
   /**********************************************************************
     * Constructor
@@ -110,6 +111,7 @@ class DrawHandler {
     loadUiImage("assets/image/startGamePage.png")
         .then((value) => startGameImage = value);
     loadUiImage("assets/image/volumeOn.png").then((value) => volumeOn1 = value);
+    loadUiImage("assets/image/mute1.png").then((value) => mute1 = value);
     loadUiImage("assets/image/volumedown.png")
         .then((value) => volumeDown1 = value);
     loadUiImage("assets/image/background.jpg")
@@ -152,6 +154,7 @@ class DrawHandler {
     drawRectStroke2(33, 30, 37, 7, Colors.white, 5);
     drawImage(volumeDown1, 87, 80, 12, 8);
     drawImage(volumeOn1, 87, 90, 12, 8);
+    drawImage(mute1, 87, 70, 12, 8);
   }
 
   /**********************************************************************

@@ -88,7 +88,6 @@ class DropTheNumber extends Game with TapDetector {
 
   // Merge animation
 
-
   bool firstHorizontalOccurance = true;
   // first occurance of vertical super power
   bool firstVerticalOccurance = true;
@@ -270,7 +269,6 @@ class DropTheNumber extends Game with TapDetector {
         }
       }
       LastLoopPaused = pause;
-      
     }
     // Draw game over screen.
     else {
@@ -353,13 +351,17 @@ class DropTheNumber extends Game with TapDetector {
         startGameScreenFinished = true;
       }
       if (inRange(x, 87, 99) && inRange(y, 80, 88)) {
-        if(volume<1.0) volume+=0.1;
+        if (volume < 1.0) volume += 0.1;
         Flame.bgm.audioPlayer.setVolume(volume);
         print(volume);
       }
       if (inRange(x, 87, 99) && inRange(y, 90, 98)) {
-        if(volume>0)volume-=0.1;
+        if (volume > 0) volume -= 0.1;
         Flame.bgm.audioPlayer.setVolume(volume);
+        print(volume);
+      }
+      if (inRange(x, 87, 99) && inRange(y, 70, 78)) {
+        Flame.bgm.audioPlayer.stop();
         print(volume);
       }
     }
@@ -479,7 +481,7 @@ class DropTheNumber extends Game with TapDetector {
     merge(currentTrack, blocks[currentTrack].length - 1);
   }
 
-   // Merge method
+  // Merge method
   void merge(int x, int y) {
     print("merge (" + x.toString() + "," + y.toString() + ")"); // debug
     if (x < 0 || x > 5) return;
@@ -504,7 +506,7 @@ class DropTheNumber extends Game with TapDetector {
           score += blocks[x][y - 1].v;
           dropAboveBlocks(x - 1, y);
           dropAboveBlocks(x + 1, y);
-          dropAboveBlocks(x,y);
+          dropAboveBlocks(x, y);
 
           // while (jj < blocks[x][y - 1].x && kk > blocks[x][y - 1].x) {
           //   drawHandler.drawBackground();
@@ -655,7 +657,7 @@ class DropTheNumber extends Game with TapDetector {
     if (x > 0 && y > 0) {
       int leftLineY = blocks[x - 1].length - 1;
 //       if (leftLineY > 0) { // Error occurs here!!!!!
-        if (leftLineY >= y) {
+      if (leftLineY >= y) {
         if (blocks[x][y].v == blocks[x - 1][y].v &&
             blocks[x][y].v == blocks[x][y - 1].v) {
           print("7 shape"); // debug
