@@ -13,5 +13,5 @@ void main() {
   DropTheNumber game = DropTheNumber();
 
   runApp(game.widget);
-  Flame.bgm.play("edm.mp3", volume: 0.5);
+  Flame.bgm.play("edm.mp3", volume: DropTheNumber.volume);
 }

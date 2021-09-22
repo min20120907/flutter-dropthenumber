@@ -36,6 +36,7 @@ class DropTheNumber extends Game with TapDetector {
   bool superHorBool = false;
   // If the vertical superpower is triggered
   bool superVertBool = false;
+  static double volume = 0.5;
   // If the game is paused.
   bool pause;
   // If the game is muted.
@@ -351,10 +352,16 @@ class DropTheNumber extends Game with TapDetector {
       if (inRange(x, 32, 70) && inRange(y, 29, 37)) {
         startGameScreenFinished = true;
       }
-      //   if (inRange(x, 20, 30) && inRange(y, 30, 40)) {
-      //     Flame.bgm.audioPlayer.setVolume(0.6);
-      //   }
-      //   if (inRange(x, 20, 30) && inRange(y, 30, 40)) {}
+      if (inRange(x, 87, 99) && inRange(y, 80, 88)) {
+        if(volume<1.0) volume+=0.1;
+        Flame.bgm.audioPlayer.setVolume(volume);
+        print(volume);
+      }
+      if (inRange(x, 87, 99) && inRange(y, 90, 98)) {
+        if(volume>0)volume-=0.1;
+        Flame.bgm.audioPlayer.setVolume(volume);
+        print(volume);
+      }
     }
     // Game running
     else if (!gameOver) {
