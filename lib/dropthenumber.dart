@@ -361,7 +361,7 @@ class DropTheNumber extends Game with TapDetector {
         print(volume);
       }
       if (inRange(x, 87, 99) && inRange(y, 70, 78)) {
-        Flame.bgm.audioPlayer.setVolume(0);
+        toggleMute();
         print(0);
       }
     }
