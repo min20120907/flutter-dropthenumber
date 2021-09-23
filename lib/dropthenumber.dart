@@ -191,6 +191,11 @@ class DropTheNumber extends Game with TapDetector {
     // Draw start game screen. (It only show once when the game start)
     if (!startGameScreenFinished) {
       drawHandler.drawStartGameScreen();
+      if (!mute) {
+        drawHandler.drawMusicButtonStart();
+      } else {
+        drawHandler.drawMuteButtonStart();
+      }
     }
     // Draw game running screen.
     else if (!gameOver) {
@@ -362,7 +367,6 @@ class DropTheNumber extends Game with TapDetector {
       }
       if (inRange(x, 87, 99) && inRange(y, 70, 78)) {
         toggleMute();
-        print(0);
       }
     }
     // Game running
