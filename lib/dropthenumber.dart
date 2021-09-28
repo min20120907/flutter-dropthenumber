@@ -24,8 +24,8 @@ class DropTheNumber extends Game with TapDetector {
   Size canvasSize;
   // Left offset of the canvas left.
   double canvasXOffset;
-  // If the start game screen is showed, it only show once when the game start.
-  bool startGameScreenFinished = false;
+  // If the start page is showed, it only show once when the game start.
+  bool startPageScreenFinished = false;
   // Check whether the icon is clicked
   bool volumeOn;
   // Check whether the icon is clicked
@@ -189,12 +189,12 @@ class DropTheNumber extends Game with TapDetector {
     drawHandler.setCanvas(canvas);
     drawHandler.setSize(screenSize, canvasSize, canvasXOffset);
     // Draw start game screen. (It only show once when the game start)
-    if (!startGameScreenFinished) {
-      drawHandler.drawStartGameScreen();
+    if (!startPageScreenFinished) {
+      drawHandler.drawStartPageScreen();
       if (!mute) {
-        drawHandler.drawMusicButtonStart();
+        drawHandler.drawStartPageMusicButton();
       } else {
-        drawHandler.drawMuteButtonStart();
+        drawHandler.drawStartPageMuteButton();
       }
     }
     // Draw game running screen.
@@ -351,9 +351,9 @@ class DropTheNumber extends Game with TapDetector {
     // yAxis = event.globalPosition.dy;
 
     // Game start
-    if (!startGameScreenFinished) {
+    if (!startPageScreenFinished) {
       if (inRange(x, 32, 70) && inRange(y, 29, 37)) {
-        startGameScreenFinished = true;
+        startPageScreenFinished = true;
       }
       if (inRange(x, 87, 99) && inRange(y, 80, 88)) {
         if (volume < 1.0) volume += 0.1;
@@ -955,7 +955,7 @@ class DropTheNumber extends Game with TapDetector {
   * If the game is started and not game over.
   **********************************************************************/
   bool isGameRunning() {
-    if (startGameScreenFinished && !gameOver) {
+    if (startPageScreenFinished && !gameOver) {
       return true;
     } else {
       return false;
