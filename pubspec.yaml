@@ -27,6 +27,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/image/
+    - assets/image/startPage/
     - assets/audio/
     - assets/video/power1/
     - assets/video/power2/

@@ -49,25 +49,25 @@ class DrawHandler {
     Color.fromRGBO(194, 194, 214, 1.0)
   ];
   // Images which will be load later.
-  ui.Image startGameImage;
-  ui.Image volumeOn1;
-  ui.Image volumeDown1;
+  // Start Page
+  ui.Image startPageBackgroundImage;
+  ui.Image startPageTitleBorderImage;
+  ui.Image startPageButtonBorderImage;
+  ui.Image startPageMusicImage;
+  ui.Image startPageMuteImage;
+  ui.Image startPageVolumeUpImage;
+  ui.Image startPageVolumeDownImage;
+  // Game
   ui.Image backgroundImage;
   ui.Image musicImage;
   ui.Image muteImage;
+  ui.Image startButtonImage;
+  ui.Image startButtonBorderImage;
   ui.Image pauseImage;
   ui.Image playImage;
   ui.Image horizontalSuperPowerImage;
   ui.Image verticalSuperPowerImage;
-  ui.Image superHor1;
-  ui.Image startImage;
-  ui.Image startborderImage;
   ui.Image tmpVertImage;
-  // ui.Image mute1;
-  ui.Image mute1;
-  ui.Image music1;
-  ui.Image borderStartPage;
-  ui.Image titleBorder;
 
   /**********************************************************************
     * Constructor
@@ -103,7 +103,7 @@ class DrawHandler {
   void tryToInit() {
     if (!initialized) {
       initImages();
-      initVideos();
+//       initVideos();
       initialized = true;
     }
   }
@@ -112,70 +112,80 @@ class DrawHandler {
     * Initial images like music image, backgroundImage, etc.
     **********************************************************************/
   void initImages() {
-    loadUiImage("assets/image/startGamePage.png")
-        .then((value) => startGameImage = value);
-    loadUiImage("assets/image/volumeOn.png").then((value) => volumeOn1 = value);
-    loadUiImage("assets/image/muteStartPage.png")
-        .then((value) => mute1 = value);
-    loadUiImage("assets/image/musicStartPage.png")
-        .then((value) => music1 = value);
-    loadUiImage("assets/image/volumedown.png")
-        .then((value) => volumeDown1 = value);
+    // Start page
+    loadUiImage("assets/image/startPage/background.png")
+        .then((value) => startPageBackgroundImage = value);
+    loadUiImage("assets/image/startPage/titleBorder.png")
+        .then((value) => startPageTitleBorderImage = value);
+    loadUiImage("assets/image/startPage/buttonBorder.png")
+        .then((value) => startPageButtonBorderImage = value);
+    loadUiImage("assets/image/startPage/music.png")
+        .then((value) => startPageMusicImage = value);
+    loadUiImage("assets/image/startPage/mute.png")
+        .then((value) => startPageMuteImage = value);
+    loadUiImage("assets/image/startPage/volumeUp.png")
+        .then((value) => startPageVolumeUpImage = value);
+    loadUiImage("assets/image/startPage/volumeDown.png")
+        .then((value) => startPageVolumeDownImage = value);
+    // Game
     loadUiImage("assets/image/background.jpg")
         .then((value) => backgroundImage = value);
-    loadUiImage("assets/image/music.png").then((value) => musicImage = value);
-    loadUiImage("assets/image/mute.png").then((value) => muteImage = value);
-    loadUiImage("assets/image/pause.png").then((value) => pauseImage = value);
-    loadUiImage("assets/image/play.png").then((value) => playImage = value);
-    loadUiImage("assets/image/titleBorder.png")
-        .then((value) => titleBorder = value);
-    loadUiImage("assets/image/borderStartPage.png")
-        .then((value) => borderStartPage = value);
+    loadUiImage("assets/image/music.png")
+        .then((value) => musicImage = value);
+    loadUiImage("assets/image/mute.png")
+        .then((value) => muteImage = value);
+    loadUiImage("assets/image/pause.png")
+        .then((value) => pauseImage = value);
+    loadUiImage("assets/image/play.png")
+        .then((value) => playImage = value);
     loadUiImage("assets/image/glow.png")
         .then((value) => horizontalSuperPowerImage = value);
     loadUiImage("assets/image/verticalSuperPower.png")
         .then((value) => verticalSuperPowerImage = value);
-    loadUiImage("assets/image/start.png").then((value) => startImage = value);
-    loadUiImage("assets/image/startBorder.png")
-        .then((value) => startborderImage = value);
+    loadUiImage("assets/image/startButton.png")
+        .then((value) => startButtonImage = value);
+    loadUiImage("assets/image/startButtonBorder.png")
+        .then((value) => startButtonBorderImage = value);
   }
 
   /**********************************************************************
     * Initial super power animation video.
     * The video is combine by lots of (.png) files.
     **********************************************************************/
-  void initVideos() {
+//   void initVideos() {
     // loadUiImage("assets/video/power1/1.png")
     //     .then((value) => horizontalSuperPowerVideo.add(value));
 
     //load glow video
 
     // print(horizontalSuperPowerVideo);
-  }
+//   }
 
   /**********************************************************************
     * Draw the screen before the game start.
     * The screen will only show once when the game start.
     **********************************************************************/
-  void drawStartGameScreen() {
-    drawFullScreenImage(startGameImage);
+  void drawStartPageScreen() {
+    drawFullScreenImage(startPageBackgroundImage);
     drawText2('2048 V.2', 50, 3, Colors.white, 60);
     drawText2('START', 52, 30.5, Colors.white, 40);
-    drawImage(volumeDown1, 87, 80, 12, 8);
-    drawImage(volumeOn1, 87, 90, 12, 8);
-    drawImage(borderStartPage, 32, 27.7, 40, 20);
-    drawImage(titleBorder, 0, -5.5, 100, 28);
+    drawImage(startPageVolumeUpImage, 87, 80, 12, 8);
+    drawImage(startPageVolumeDownImage, 87, 90, 12, 8);
+    drawImage(startPageButtonBorderImage, 32, 27.7, 40, 20);
+    drawImage(startPageTitleBorderImage, 0, -5.5, 100, 28);
   }
-
-  void drawMuteButtonStart() {
-    drawImage(mute1, 89, 71, 8.5, 6.5);
-  }
-
   /**********************************************************************
-    * Draw music button.
+    * Draw music button on the start page.
     **********************************************************************/
-  void drawMusicButtonStart() {
-    drawImage(music1, 89, 71, 8.5, 6.5);
+  void drawStartPageMusicButton() {
+    drawImage(startPageMusicImage, 89, 71, 8.5, 6.5);
+  }
+
+   /**********************************************************************
+    * Draw mute button on the start page.
+    **********************************************************************/
+  void drawStartPageMuteButton() {
+    drawImage(startPageMuteImage, 89, 71, 8.5, 6.5);
   }
 
   /**********************************************************************
@@ -303,8 +313,8 @@ class DrawHandler {
   void drawPlayButton() {
     // Play button image
     drawImage(playImage, 11.5, 93.25, 5, 3.5);
-    drawImage(startImage, 30.5, 37.25, 40, 26);
-    drawImage(startborderImage, 30.5, 37.25, 40, 26);
+    drawImage(startButtonImage, 30.5, 37.25, 40, 26);
+    drawImage(startButtonBorderImage, 30.5, 37.25, 40, 26);
     // Play button border
     drawRectStroke(9, 92.5, 10, 5, Colors.white, 3);
   }
