@@ -164,7 +164,7 @@ class DrawHandler {
   void drawStartPageScreen() {
     drawFullScreenImage(startPageBackgroundImage);
     drawText2('2048 V.2', 50, 3, Colors.white, 60);
-    drawText2('START', 52, 30.5, Colors.white, 40);
+    drawText2('START', 52, 30.5, Colors.white, 35);
     drawImage(startPageVolumeUpImage, 87, 80, 12, 8);
     drawImage(startPageVolumeDownImage, 87, 90, 12, 8);
     drawImage(startPageButtonBorderImage, 32, 27.7, 40, 20);
