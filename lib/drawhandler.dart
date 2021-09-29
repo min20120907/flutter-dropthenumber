@@ -130,14 +130,10 @@ class DrawHandler {
     // Game
     loadUiImage("assets/image/background.jpg")
         .then((value) => backgroundImage = value);
-    loadUiImage("assets/image/music.png")
-        .then((value) => musicImage = value);
-    loadUiImage("assets/image/mute.png")
-        .then((value) => muteImage = value);
-    loadUiImage("assets/image/pause.png")
-        .then((value) => pauseImage = value);
-    loadUiImage("assets/image/play.png")
-        .then((value) => playImage = value);
+    loadUiImage("assets/image/music.png").then((value) => musicImage = value);
+    loadUiImage("assets/image/mute.png").then((value) => muteImage = value);
+    loadUiImage("assets/image/pause.png").then((value) => pauseImage = value);
+    loadUiImage("assets/image/play.png").then((value) => playImage = value);
     loadUiImage("assets/image/glow.png")
         .then((value) => horizontalSuperPowerImage = value);
     loadUiImage("assets/image/verticalSuperPower.png")
@@ -153,12 +149,12 @@ class DrawHandler {
     * The video is combine by lots of (.png) files.
     **********************************************************************/
 //   void initVideos() {
-    // loadUiImage("assets/video/power1/1.png")
-    //     .then((value) => horizontalSuperPowerVideo.add(value));
+  // loadUiImage("assets/video/power1/1.png")
+  //     .then((value) => horizontalSuperPowerVideo.add(value));
 
-    //load glow video
+  //load glow video
 
-    // print(horizontalSuperPowerVideo);
+  // print(horizontalSuperPowerVideo);
 //   }
 
   /**********************************************************************
@@ -168,12 +164,13 @@ class DrawHandler {
   void drawStartPageScreen() {
     drawFullScreenImage(startPageBackgroundImage);
     drawText2('2048 V.2', 50, 3, Colors.white, 60);
-    drawText2('START', 52, 30.5, Colors.white, 40);
+    drawText2('START', 52, 30.5, Colors.white, 35);
     drawImage(startPageVolumeUpImage, 87, 80, 12, 8);
     drawImage(startPageVolumeDownImage, 87, 90, 12, 8);
     drawImage(startPageButtonBorderImage, 32, 27.7, 40, 20);
     drawImage(startPageTitleBorderImage, 0, -5.5, 100, 28);
   }
+
   /**********************************************************************
     * Draw music button on the start page.
     **********************************************************************/
@@ -181,7 +178,7 @@ class DrawHandler {
     drawImage(startPageMusicImage, 89, 71, 8.5, 6.5);
   }
 
-   /**********************************************************************
+  /**********************************************************************
     * Draw mute button on the start page.
     **********************************************************************/
   void drawStartPageMuteButton() {

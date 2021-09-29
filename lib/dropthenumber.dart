@@ -512,60 +512,60 @@ class DropTheNumber extends Game with TapDetector {
           dropAboveBlocks(x, y - 1);
           blocks[x][y - 1].v *= 8;
 
-          // while (jj < blocks[x][y - 1].x && kk > blocks[x][y - 1].x) {
-          //   drawHandler.drawBackground();
-          //   drawHandler.drawBorders();
-          //   drawHandler.drawTitle(nextBlockValue);
-          //   drawHandler.drawNextBlockHintText();
-          //   drawHandler.drawNextBlock(nextBlockValue);
-          //   drawHandler.drawTime(elapsedTime);
-          //   if (!mute) {
-          //     drawHandler.drawMusicButton();
-          //   } else {
-          //     drawHandler.drawMuteButton();
-          //   }
-          //   drawHandler.drawFiveCross();
-          //   drawHandler.drawAllBlocks(blocks);
+          while (jj < blocks[x][y - 1].x && kk > blocks[x][y - 1].x) {
+            drawHandler.drawBackground();
+            drawHandler.drawBorders();
+            drawHandler.drawTitle(nextBlockValue);
+            drawHandler.drawNextBlockHintText();
+            drawHandler.drawNextBlock(nextBlockValue);
+            drawHandler.drawTime(elapsedTime);
+            if (!mute) {
+              drawHandler.drawMusicButton();
+            } else {
+              drawHandler.drawMuteButton();
+            }
+            drawHandler.drawFiveCross(nextBlockValue);
+            drawHandler.drawAllBlocks(blocks);
 
-          //   drawHandler.drawScore(score);
-          //   drawHandler.drawVerticalSuperPowerButton();
-          //   drawHandler.drawHorizontalSuperPowerButton();
-          //   if (!pause) {
-          //     drawHandler.drawPauseButton();
-          //   } else {
-          //     drawHandler.drawPlayButton();
-          //   }
+            drawHandler.drawScore(score);
+            drawHandler.drawVerticalSuperPowerButton();
+            drawHandler.drawHorizontalSuperPowerButton();
+            if (!pause) {
+              drawHandler.drawPauseButton();
+            } else {
+              drawHandler.drawPlayButton();
+            }
 
-          //   ii += mergingSpeed;
-          //   jj += mergingSpeed;
-          // }
-          // while (ii < blocks[x][y - 1].y) {
-          //   drawHandler.drawBackground();
-          //   drawHandler.drawBorders();
-          //   drawHandler.drawTitle(nextBlockValue);
-          //   drawHandler.drawNextBlockHintText();
-          //   drawHandler.drawNextBlock(nextBlockValue);
-          //   drawHandler.drawTime(elapsedTime);
-          //   if (!mute) {
-          //     drawHandler.drawMusicButton();
-          //   } else {
-          //     drawHandler.drawMuteButton();
-          //   }
-          //   drawHandler.drawFiveCross();
-          //   drawHandler.drawAllBlocks(blocks);
+            ii += mergingSpeed;
+            jj += mergingSpeed;
+          }
+          while (ii < blocks[x][y - 1].y) {
+            drawHandler.drawBackground();
+            drawHandler.drawBorders();
+            drawHandler.drawTitle(nextBlockValue);
+            drawHandler.drawNextBlockHintText();
+            drawHandler.drawNextBlock(nextBlockValue);
+            drawHandler.drawTime(elapsedTime);
+            if (!mute) {
+              drawHandler.drawMusicButton();
+            } else {
+              drawHandler.drawMuteButton();
+            }
+            drawHandler.drawFiveCross(nextBlockValue);
+            drawHandler.drawAllBlocks(blocks);
 
-          //   drawHandler.drawScore(score);
-          //   drawHandler.drawVerticalSuperPowerButton();
-          //   drawHandler.drawHorizontalSuperPowerButton();
-          //   if (!pause) {
-          //     drawHandler.drawPauseButton();
-          //   } else {
-          //     drawHandler.drawPlayButton();
-          //   }
+            drawHandler.drawScore(score);
+            drawHandler.drawVerticalSuperPowerButton();
+            drawHandler.drawHorizontalSuperPowerButton();
+            if (!pause) {
+              drawHandler.drawPauseButton();
+            } else {
+              drawHandler.drawPlayButton();
+            }
 
-          //   drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, ii));
-          //   ii += mergingSpeed;
-          // }
+            drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, ii));
+            ii += mergingSpeed;
+          }
           merge(x, y);
           merge(x, y - 1);
           merge(x - 1, y);
@@ -593,59 +593,59 @@ class DropTheNumber extends Game with TapDetector {
           dropAboveBlocks(x + 1, y);
           dropAboveBlocks(x, y - 1);
           blocks[x][y - 1].v *= 4;
-          // while (jj > blocks[x][y].x) {
-          //   drawHandler.drawBackground();
-          //   drawHandler.drawBorders();
-          //   drawHandler.drawTitle(nextBlockValue);
-          //   drawHandler.drawNextBlockHintText();
-          //   drawHandler.drawNextBlock(nextBlockValue);
-          //   drawHandler.drawTime(elapsedTime);
-          //   if (!mute) {
-          //     drawHandler.drawMusicButton();
-          //   } else {
-          //     drawHandler.drawMuteButton();
-          //   }
-          //   drawHandler.drawFiveCross();
-          //   drawHandler.drawAllBlocks(blocks);
+          while (jj > blocks[x][y].x) {
+            drawHandler.drawBackground();
+            drawHandler.drawBorders();
+            drawHandler.drawTitle(nextBlockValue);
+            drawHandler.drawNextBlockHintText();
+            drawHandler.drawNextBlock(nextBlockValue);
+            drawHandler.drawTime(elapsedTime);
+            if (!mute) {
+              drawHandler.drawMusicButton();
+            } else {
+              drawHandler.drawMuteButton();
+            }
+            drawHandler.drawFiveCross(nextBlockValue);
+            drawHandler.drawAllBlocks(blocks);
 
-          //   drawHandler.drawScore(score);
-          //   drawHandler.drawVerticalSuperPowerButton();
-          //   drawHandler.drawHorizontalSuperPowerButton();
-          //   if (!pause) {
-          //     drawHandler.drawPauseButton();
-          //   } else {
-          //     drawHandler.drawPlayButton();
-          //   }
-          //   drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
-          //   jj -= mergingSpeed;
-          // }
+            drawHandler.drawScore(score);
+            drawHandler.drawVerticalSuperPowerButton();
+            drawHandler.drawHorizontalSuperPowerButton();
+            if (!pause) {
+              drawHandler.drawPauseButton();
+            } else {
+              drawHandler.drawPlayButton();
+            }
+            drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+            jj -= mergingSpeed;
+          }
 
-          // while (ii < blocks[x][y - 1].y) {
-          //   drawHandler.drawBackground();
-          //   drawHandler.drawBorders();
-          //   drawHandler.drawTitle(nextBlockValue);
-          //   drawHandler.drawNextBlockHintText();
-          //   drawHandler.drawNextBlock(nextBlockValue);
-          //   drawHandler.drawTime(elapsedTime);
-          //   if (!mute) {
-          //     drawHandler.drawMusicButton();
-          //   } else {
-          //     drawHandler.drawMuteButton();
-          //   }
-          //   drawHandler.drawFiveCross();
-          //   drawHandler.drawAllBlocks(blocks);
+          while (ii < blocks[x][y - 1].y) {
+            drawHandler.drawBackground();
+            drawHandler.drawBorders();
+            drawHandler.drawTitle(nextBlockValue);
+            drawHandler.drawNextBlockHintText();
+            drawHandler.drawNextBlock(nextBlockValue);
+            drawHandler.drawTime(elapsedTime);
+            if (!mute) {
+              drawHandler.drawMusicButton();
+            } else {
+              drawHandler.drawMuteButton();
+            }
+            drawHandler.drawFiveCross(nextBlockValue);
+            drawHandler.drawAllBlocks(blocks);
 
-          //   drawHandler.drawScore(score);
-          //   drawHandler.drawVerticalSuperPowerButton();
-          //   drawHandler.drawHorizontalSuperPowerButton();
-          //   if (!pause) {
-          //     drawHandler.drawPauseButton();
-          //   } else {
-          //     drawHandler.drawPlayButton();
-          //   }
-          //   drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, ii));
-          //   ii += mergingSpeed;
-          // }
+            drawHandler.drawScore(score);
+            drawHandler.drawVerticalSuperPowerButton();
+            drawHandler.drawHorizontalSuperPowerButton();
+            if (!pause) {
+              drawHandler.drawPauseButton();
+            } else {
+              drawHandler.drawPlayButton();
+            }
+            drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, ii));
+            ii += mergingSpeed;
+          }
           merge(x, y);
           merge(x, y - 1);
           merge(x + 1, y);
@@ -673,58 +673,58 @@ class DropTheNumber extends Game with TapDetector {
           dropAboveBlocks(x - 1, y);
           dropAboveBlocks(x, y - 1);
           blocks[x][y - 1].v *= 4;
-          // while (jj < blocks[x][y].x) {
-          //   drawHandler.drawBackground();
-          //   drawHandler.drawBorders();
-          //   drawHandler.drawTitle(nextBlockValue);
-          //   drawHandler.drawNextBlockHintText();
-          //   drawHandler.drawNextBlock(nextBlockValue);
-          //   drawHandler.drawTime(elapsedTime);
-          //   if (!mute) {
-          //     drawHandler.drawMusicButton();
-          //   } else {
-          //     drawHandler.drawMuteButton();
-          //   }
-          //   drawHandler.drawFiveCross();
-          //   drawHandler.drawAllBlocks(blocks);
+          while (jj < blocks[x][y].x) {
+            drawHandler.drawBackground();
+            drawHandler.drawBorders();
+            drawHandler.drawTitle(nextBlockValue);
+            drawHandler.drawNextBlockHintText();
+            drawHandler.drawNextBlock(nextBlockValue);
+            drawHandler.drawTime(elapsedTime);
+            if (!mute) {
+              drawHandler.drawMusicButton();
+            } else {
+              drawHandler.drawMuteButton();
+            }
+            drawHandler.drawFiveCross(nextBlockValue);
+            drawHandler.drawAllBlocks(blocks);
 
-          //   drawHandler.drawScore(score);
-          //   drawHandler.drawVerticalSuperPowerButton();
-          //   drawHandler.drawHorizontalSuperPowerButton();
-          //   if (!pause) {
-          //     drawHandler.drawPauseButton();
-          //   } else {
-          //     drawHandler.drawPlayButton();
-          //   }
-          //   drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
-          //   jj += mergingSpeed;
-          // }
-          // while (ii < blocks[x][y - 1].y) {
-          //   drawHandler.drawBackground();
-          //   drawHandler.drawBorders();
-          //   drawHandler.drawTitle(nextBlockValue);
-          //   drawHandler.drawNextBlockHintText();
-          //   drawHandler.drawNextBlock(nextBlockValue);
-          //   drawHandler.drawTime(elapsedTime);
-          //   if (!mute) {
-          //     drawHandler.drawMusicButton();
-          //   } else {
-          //     drawHandler.drawMuteButton();
-          //   }
-          //   drawHandler.drawFiveCross();
-          //   drawHandler.drawAllBlocks(blocks);
+            drawHandler.drawScore(score);
+            drawHandler.drawVerticalSuperPowerButton();
+            drawHandler.drawHorizontalSuperPowerButton();
+            if (!pause) {
+              drawHandler.drawPauseButton();
+            } else {
+              drawHandler.drawPlayButton();
+            }
+            drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+            jj += mergingSpeed;
+          }
+          while (ii < blocks[x][y - 1].y) {
+            drawHandler.drawBackground();
+            drawHandler.drawBorders();
+            drawHandler.drawTitle(nextBlockValue);
+            drawHandler.drawNextBlockHintText();
+            drawHandler.drawNextBlock(nextBlockValue);
+            drawHandler.drawTime(elapsedTime);
+            if (!mute) {
+              drawHandler.drawMusicButton();
+            } else {
+              drawHandler.drawMuteButton();
+            }
+            drawHandler.drawFiveCross(nextBlockValue);
+            drawHandler.drawAllBlocks(blocks);
 
-          //   drawHandler.drawScore(score);
-          //   drawHandler.drawVerticalSuperPowerButton();
-          //   drawHandler.drawHorizontalSuperPowerButton();
-          //   if (!pause) {
-          //     drawHandler.drawPauseButton();
-          //   } else {
-          //     drawHandler.drawPlayButton();
-          //   }
-          //   drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
-          //   ii += mergingSpeed;
-          // }
+            drawHandler.drawScore(score);
+            drawHandler.drawVerticalSuperPowerButton();
+            drawHandler.drawHorizontalSuperPowerButton();
+            if (!pause) {
+              drawHandler.drawPauseButton();
+            } else {
+              drawHandler.drawPlayButton();
+            }
+            drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+            ii += mergingSpeed;
+          }
           merge(x, y);
           merge(x, y - 1);
           merge(x - 1, y);
@@ -750,34 +750,34 @@ class DropTheNumber extends Game with TapDetector {
           dropAboveBlocks(x - 1, y);
           dropAboveBlocks(x + 1, y);
           blocks[x][y].v *= 4;
-          // while (ii > blocks[x][y].x && jj < blocks[x][y].x) {
-          //   drawHandler.drawBackground();
-          //   drawHandler.drawBorders();
-          //   drawHandler.drawTitle(nextBlockValue);
-          //   drawHandler.drawNextBlockHintText();
-          //   drawHandler.drawNextBlock(nextBlockValue);
-          //   drawHandler.drawTime(elapsedTime);
-          //   if (!mute) {
-          //     drawHandler.drawMusicButton();
-          //   } else {
-          //     drawHandler.drawMuteButton();
-          //   }
-          //   drawHandler.drawFiveCross();
-          //   drawHandler.drawAllBlocks(blocks);
+          while (ii > blocks[x][y].x && jj < blocks[x][y].x) {
+            drawHandler.drawBackground();
+            drawHandler.drawBorders();
+            drawHandler.drawTitle(nextBlockValue);
+            drawHandler.drawNextBlockHintText();
+            drawHandler.drawNextBlock(nextBlockValue);
+            drawHandler.drawTime(elapsedTime);
+            if (!mute) {
+              drawHandler.drawMusicButton();
+            } else {
+              drawHandler.drawMuteButton();
+            }
+            drawHandler.drawFiveCross(nextBlockValue);
+            drawHandler.drawAllBlocks(blocks);
 
-          //   drawHandler.drawScore(score);
-          //   drawHandler.drawVerticalSuperPowerButton();
-          //   drawHandler.drawHorizontalSuperPowerButton();
-          //   if (!pause) {
-          //     drawHandler.drawPauseButton();
-          //   } else {
-          //     drawHandler.drawPlayButton();
-          //   }
-          //   drawHandler.drawBlock(Block(old, ii, blocks[x][y].y));
-          //   drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
-          //   ii += mergingSpeed;
-          //   jj += mergingSpeed;
-          // }
+            drawHandler.drawScore(score);
+            drawHandler.drawVerticalSuperPowerButton();
+            drawHandler.drawHorizontalSuperPowerButton();
+            if (!pause) {
+              drawHandler.drawPauseButton();
+            } else {
+              drawHandler.drawPlayButton();
+            }
+            drawHandler.drawBlock(Block(old, ii, blocks[x][y].y));
+            drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+            ii += mergingSpeed;
+            jj += mergingSpeed;
+          }
           merge(x, y);
           merge(x - 1, y);
           merge(x + 1, y);
@@ -801,32 +801,32 @@ class DropTheNumber extends Game with TapDetector {
           score += blocks[x][y].v;
           dropAboveBlocks(x + 1, y);
           blocks[x][y].v *= 2;
-          // while (jj > blocks[x][y].x) {
-          //   drawHandler.drawBackground();
-          //   drawHandler.drawBorders();
-          //   drawHandler.drawTitle(nextBlockValue);
-          //   drawHandler.drawNextBlockHintText();
-          //   drawHandler.drawNextBlock(nextBlockValue);
-          //   drawHandler.drawTime(elapsedTime);
-          //   if (!mute) {
-          //     drawHandler.drawMusicButton();
-          //   } else {
-          //     drawHandler.drawMuteButton();
-          //   }
-          //   drawHandler.drawFiveCross();
-          //   drawHandler.drawAllBlocks(blocks);
+          while (jj > blocks[x][y].x) {
+            drawHandler.drawBackground();
+            drawHandler.drawBorders();
+            drawHandler.drawTitle(nextBlockValue);
+            drawHandler.drawNextBlockHintText();
+            drawHandler.drawNextBlock(nextBlockValue);
+            drawHandler.drawTime(elapsedTime);
+            if (!mute) {
+              drawHandler.drawMusicButton();
+            } else {
+              drawHandler.drawMuteButton();
+            }
+            drawHandler.drawFiveCross(nextBlockValue);
+            drawHandler.drawAllBlocks(blocks);
 
-          //   drawHandler.drawScore(score);
-          //   drawHandler.drawVerticalSuperPowerButton();
-          //   drawHandler.drawHorizontalSuperPowerButton();
-          //   if (!pause) {
-          //     drawHandler.drawPauseButton();
-          //   } else {
-          //     drawHandler.drawPlayButton();
-          //   }
-          //   drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
-          //   jj -= mergingSpeed;
-          // }
+            drawHandler.drawScore(score);
+            drawHandler.drawVerticalSuperPowerButton();
+            drawHandler.drawHorizontalSuperPowerButton();
+            if (!pause) {
+              drawHandler.drawPauseButton();
+            } else {
+              drawHandler.drawPlayButton();
+            }
+            drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+            jj -= mergingSpeed;
+          }
           merge(x, y);
           merge(x + 1, y - 1);
           merge(x + 1, blocks[x + 1].length - 1);
@@ -847,32 +847,32 @@ class DropTheNumber extends Game with TapDetector {
           score += blocks[x][y].v;
           dropAboveBlocks(x - 1, y);
           blocks[x][y].v *= 2;
-          // while (jj > blocks[x][y].x) {
-          //   drawHandler.drawBackground();
-          //   drawHandler.drawBorders();
-          //   drawHandler.drawTitle(nextBlockValue);
-          //   drawHandler.drawNextBlockHintText();
-          //   drawHandler.drawNextBlock(nextBlockValue);
-          //   drawHandler.drawTime(elapsedTime);
-          //   if (!mute) {
-          //     drawHandler.drawMusicButton();
-          //   } else {
-          //     drawHandler.drawMuteButton();
-          //   }
-          //   drawHandler.drawFiveCross();
-          //   drawHandler.drawAllBlocks(blocks);
+          while (jj > blocks[x][y].x) {
+            drawHandler.drawBackground();
+            drawHandler.drawBorders();
+            drawHandler.drawTitle(nextBlockValue);
+            drawHandler.drawNextBlockHintText();
+            drawHandler.drawNextBlock(nextBlockValue);
+            drawHandler.drawTime(elapsedTime);
+            if (!mute) {
+              drawHandler.drawMusicButton();
+            } else {
+              drawHandler.drawMuteButton();
+            }
+            drawHandler.drawFiveCross(nextBlockValue);
+            drawHandler.drawAllBlocks(blocks);
 
-          //   drawHandler.drawScore(score);
-          //   drawHandler.drawVerticalSuperPowerButton();
-          //   drawHandler.drawHorizontalSuperPowerButton();
-          //   if (!pause) {
-          //     drawHandler.drawPauseButton();
-          //   } else {
-          //     drawHandler.drawPlayButton();
-          //   }
-          //   drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
-          //   jj += mergingSpeed;
-          // }
+            drawHandler.drawScore(score);
+            drawHandler.drawVerticalSuperPowerButton();
+            drawHandler.drawHorizontalSuperPowerButton();
+            if (!pause) {
+              drawHandler.drawPauseButton();
+            } else {
+              drawHandler.drawPlayButton();
+            }
+            drawHandler.drawBlock(Block(old, jj, blocks[x][y].y));
+            jj += mergingSpeed;
+          }
           merge(x, y);
           merge(x - 1, y - 1);
           merge(x - 1, blocks[x - 1].length - 1);
@@ -891,32 +891,32 @@ class DropTheNumber extends Game with TapDetector {
         score += blocks[x][y - 1].v;
         dropAboveBlocks(x, y - 1);
         blocks[x][y - 1].v *= 2;
-        // while (jj < blocks[x][y - 1].y) {
-        //   drawHandler.drawBackground();
-        //   drawHandler.drawBorders();
-        //   drawHandler.drawTitle(nextBlockValue);
-        //   drawHandler.drawNextBlockHintText();
-        //   drawHandler.drawNextBlock(nextBlockValue);
-        //   drawHandler.drawTime(elapsedTime);
-        //   if (!mute) {
-        //     drawHandler.drawMusicButton();
-        //   } else {
-        //     drawHandler.drawMuteButton();
-        //   }
-        //   drawHandler.drawFiveCross();
-        //   drawHandler.drawAllBlocks(blocks);
+        while (jj < blocks[x][y - 1].y) {
+          drawHandler.drawBackground();
+          drawHandler.drawBorders();
+          drawHandler.drawTitle(nextBlockValue);
+          drawHandler.drawNextBlockHintText();
+          drawHandler.drawNextBlock(nextBlockValue);
+          drawHandler.drawTime(elapsedTime);
+          if (!mute) {
+            drawHandler.drawMusicButton();
+          } else {
+            drawHandler.drawMuteButton();
+          }
+          drawHandler.drawFiveCross(nextBlockValue);
+          drawHandler.drawAllBlocks(blocks);
 
-        //   drawHandler.drawScore(score);
-        //   drawHandler.drawVerticalSuperPowerButton();
-        //   drawHandler.drawHorizontalSuperPowerButton();
-        //   if (!pause) {
-        //     drawHandler.drawPauseButton();
-        //   } else {
-        //     drawHandler.drawPlayButton();
-        //   }
-        //   drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, jj));
-        //   jj += mergingSpeed;
-        // }
+          drawHandler.drawScore(score);
+          drawHandler.drawVerticalSuperPowerButton();
+          drawHandler.drawHorizontalSuperPowerButton();
+          if (!pause) {
+            drawHandler.drawPauseButton();
+          } else {
+            drawHandler.drawPlayButton();
+          }
+          drawHandler.drawBlock(Block(old, blocks[x][y - 1].x, jj));
+          jj += mergingSpeed;
+        }
         merge(x, y);
         merge(x, y - 1);
         merge(x, blocks[x].length - 1);
