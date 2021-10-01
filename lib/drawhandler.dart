@@ -109,8 +109,9 @@ class DrawHandler {
   }
 
   /**********************************************************************
-    * Initial images like music image, backgroundImage, etc.
-    **********************************************************************/
+  * Initial images like music image, backgroundImage, etc.
+  * Remember to add the path to "pubspec.yaml' or the resource may not show up.
+  **********************************************************************/
   void initImages() {
     // Start page
     loadUiImage("assets/image/startPage/background.png")
