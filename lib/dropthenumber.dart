@@ -501,10 +501,6 @@ class DropTheNumber extends Game with TapDetector {
             blocks[x][y].v == blocks[x + 1][y].v &&
             blocks[x][y].v == blocks[x][y - 1].v) {
           print("T shape"); // debug
-          int old = blocks[x][y].v;
-          double ii = blocks[x][y].y;
-          double jj = blocks[x - 1][y].x;
-          double kk = blocks[x + 1][y].x;
 
           score += blocks[x][y - 1].v;
           dropAboveBlocks(x - 1, y);
@@ -532,9 +528,6 @@ class DropTheNumber extends Game with TapDetector {
         if (blocks[x][y].v == blocks[x + 1][y].v &&
             blocks[x][y].v == blocks[x][y - 1].v) {
           print("gamma shape"); // debug
-          int old = blocks[x][y].v;
-          double ii = blocks[x][y].y;
-          double jj = blocks[x + 1][y].x;
           score += blocks[x][y - 1].v;
           dropAboveBlocks(x + 1, y);
           dropAboveBlocks(x, y - 1);
@@ -560,9 +553,6 @@ class DropTheNumber extends Game with TapDetector {
         if (blocks[x][y].v == blocks[x - 1][y].v &&
             blocks[x][y].v == blocks[x][y - 1].v) {
           print("7 shape"); // debug
-          int old = blocks[x][y].v;
-          double ii = blocks[x][y].y;
-          double jj = blocks[x - 1][y].x;
           score += blocks[x][y - 1].v;
           dropAboveBlocks(x - 1, y);
           dropAboveBlocks(x, y - 1);
@@ -587,9 +577,6 @@ class DropTheNumber extends Game with TapDetector {
         if (blocks[x][y].v == blocks[x - 1][y].v &&
             blocks[x][y].v == blocks[x + 1][y].v) {
           print("horizontal shape"); // debug
-          int old = blocks[x][y].v;
-          double ii = blocks[x + 1][y].x;
-          double jj = blocks[x - 1][y].x;
           dropAboveBlocks(x - 1, y);
           dropAboveBlocks(x + 1, y);
           blocks[x][y].v *= 4;
@@ -652,8 +639,6 @@ class DropTheNumber extends Game with TapDetector {
     if (y > 0) {
       if (blocks[x][y].v == blocks[x][y - 1].v) {
         print("Check down"); // debug
-        double jj = blocks[x][y].y;
-        int old = blocks[x][y].v;
         score += blocks[x][y - 1].v;
         dropAboveBlocks(x, y - 1);
         blocks[x][y - 1].v *= 2;
