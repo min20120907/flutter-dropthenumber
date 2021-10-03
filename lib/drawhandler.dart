@@ -379,6 +379,10 @@ class DrawHandler {
     * Draw the current dropping block on the canvas.
     **********************************************************************/
   void drawBlock(Block block) {
+    // If block value is zero, ignore the block.
+    if(block.v==0) {
+      return;
+    }
     double width = 14;
     double height = 9;
 
@@ -463,6 +467,9 @@ class DrawHandler {
     * Get block color by given block value.
     **********************************************************************/
   Color getBlockColorByValue(int value) {
+    if(value == 0) {
+      return Color.fromRGBO(0, 0, 0, 0.0);
+    }
     return getBlockColorByIndex((log(value) / log(2)).toInt() - 1);
   }
 
