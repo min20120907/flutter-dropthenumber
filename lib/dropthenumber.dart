@@ -438,6 +438,7 @@ class DropTheNumber extends Game with TapDetector {
         blocks = [[], [], [], [], []];
         resetGame();
       } else if (inRange(x, 53, 79) && inRange(y, 68, 73)) {
+        startPageScreenFinished = false;
         print("Quit button clicked!"); // debug
       }
     }
@@ -631,8 +632,6 @@ class DropTheNumber extends Game with TapDetector {
       if (rightLineY >= y) {
         if (blocks[x][y].v == blocks[x + 1][y].v) {
           print("check right"); // debug
-          int old = blocks[x][y].v;
-          double jj = blocks[x + 1][y].x;
           score += blocks[x][y].v;
           dropAboveBlocks(x + 1, y);
           blocks[x][y].v *= 2;
@@ -652,8 +651,6 @@ class DropTheNumber extends Game with TapDetector {
       if (leftLineY >= y) {
         if (blocks[x][y].v == blocks[x - 1][y].v) {
           print("check left"); // debug
-          int old = blocks[x][y].v;
-          double jj = blocks[x - 1][y].x;
           score += blocks[x][y].v;
           dropAboveBlocks(x - 1, y);
           blocks[x][y].v *= 2;
