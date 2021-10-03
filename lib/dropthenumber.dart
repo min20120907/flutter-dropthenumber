@@ -441,6 +441,7 @@ class DropTheNumber extends Game with TapDetector {
         blocks = [[], [], [], [], []];
         resetGame();
       } else if (inRange(x, 53, 79) && inRange(y, 68, 73)) {
+        startPageScreenFinished = false;
         print("Quit button clicked!"); // debug
       }
     }
