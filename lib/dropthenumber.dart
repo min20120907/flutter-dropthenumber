@@ -13,7 +13,7 @@ import 'package:flutter/widgets.dart';
 import 'package:sprintf/sprintf.dart';
 import 'package:dropthenumber/drawhandler.dart';
 import 'block.dart';
-import 'mergingStatus.dart';
+import 'mergingstatus.dart';
 
 class DropTheNumber extends Game with TapDetector {
   /* Setting */
@@ -78,7 +78,6 @@ class DropTheNumber extends Game with TapDetector {
   // Vertical superpower cooldown duration
   // ignore: non_constant_identifier_names
   Duration cool_down_vert = Duration.zero;
-  // LastLoopPaused
   // ignore: non_constant_identifier_names
   bool LastLoopPaused = false;
   // Record the time stamp of pause
@@ -94,9 +93,21 @@ class DropTheNumber extends Game with TapDetector {
   // When it is merging, game logic should stop
   MergingStatus mergingStatus = MergingStatus.none;
   // The position of merging center block.
-  Point mergingBlock = null; // here
-  // Record the current merging step, for example T shape have two steps.
-//   Point mergingStep = 0;
+  Point mergingBlock;
+
+  /* Utils */
+  // A generator of random values, import from 'dart:math'.
+  Random random = Random();
+  // Draw handler for helping to draw everything on screen.
+  DrawHandler drawHandler = DrawHandler();
+  // Convert the absolute x to relative x.
+  double toRelativeX(double x) => (x - canvasXOffset) * 100 / canvasSize.width;
+  // Convert the absolute y to relative y.
+  double toRelativeY(double y) => y * 100 / canvasSize.height;
+  // Check if the number is within given lower boundary and upper boundary.
+  bool inRange(double number, double lowerBoundary, double upperBoundary) =>
+      number >= lowerBoundary && number <= upperBoundary;
+  Canvas cv;
 
   bool firstHorizontalOccurance = true;
   // first occurance of vertical super power
@@ -114,20 +125,6 @@ class DropTheNumber extends Game with TapDetector {
     return index;
   }
 
-
-  /* Utils */
-  // A generator of random values, import from 'dart:math'.
-  Random random = Random();
-  // Draw handler for helping to draw everything on screen.
-  DrawHandler drawHandler = DrawHandler();
-  // Convert the absolute x to relative x.
-  double toRelativeX(double x) => (x - canvasXOffset) * 100 / canvasSize.width;
-  // Convert the absolute y to relative y.
-  double toRelativeY(double y) => y * 100 / canvasSize.height;
-  // Check if the number is within given lower boundary and upper boundary.
-  bool inRange(double number, double lowerBoundary, double upperBoundary) =>
-      number >= lowerBoundary && number <= upperBoundary;
-  Canvas cv;
   /**********************************************************************
   * Constructor
   **********************************************************************/
@@ -150,24 +147,6 @@ class DropTheNumber extends Game with TapDetector {
     // Called twice to be sure didn't used the next block value of last round.
     setupCurrentBlock();
     setupCurrentBlock();
-  }
-
-  // Super Horizontal power
-  void superHor() {
-    for (int i = 0; i < 5; i++) {
-      try {
-        blocks[i].removeAt(0);
-      } catch (Exception) {
-        print("except hor1");
-      }
-      for (int j = 0; j < blocks[i].length; j++) {
-        try {
-          blocks[i][j].y += 9;
-        } catch (Exception) {
-          print("except hor2");
-        }
-      }
-    }
   }
 
   /**********************************************************************
@@ -321,7 +300,29 @@ class DropTheNumber extends Game with TapDetector {
     }
   }
 
-  // Super horizontal power
+  /**********************************************************************
+  * Super Horizontal Power
+  **********************************************************************/
+  void superHor() {
+    for (int i = 0; i < 5; i++) {
+      try {
+        blocks[i].removeAt(0);
+      } catch (Exception) {
+        print("except hor1");
+      }
+      for (int j = 0; j < blocks[i].length; j++) {
+        try {
+          blocks[i][j].y += 9;
+        } catch (Exception) {
+          print("except hor2");
+        }
+      }
+    }
+  }
+
+  /**********************************************************************
+  * Super Vertical Power
+  **********************************************************************/
   void superVert() {
     int maxTrack = getMaxTrack();
     print("max track is " + maxTrack.toString());
@@ -678,6 +679,7 @@ class DropTheNumber extends Game with TapDetector {
       }
     }
   }
+
   /**********************************************************************
   * Try to drop the current block, return true if the drop is successed.
   * If current block is going to touch a solid block, it failed to drop and return false.
@@ -686,8 +688,7 @@ class DropTheNumber extends Game with TapDetector {
     // Height of every blocks
     double blockHeight = 9;
     // The highest y in the current track
-    double currentTrackHighestSolidY =
-        87 - blockHeight * blocks[currentTrack].length;
+    double currentTrackHighestSolidY = 87 - blockHeight * blocks[currentTrack].length;
     // The bottom y of current block in the next round.
     double currentBlockBottomY = currentBlock.y + blockHeight + dropSpeed / 60;
 
@@ -720,7 +721,6 @@ class DropTheNumber extends Game with TapDetector {
   /**********************************************************************
   * Merge method
   **********************************************************************/
-//   MergeStatus lastRoundMergeStatus;
   void merge(int x, int y) {
     if (x < 0 || x > 5) return;
     if (y < 0 || blocks[x].length - 1 < y) return;
