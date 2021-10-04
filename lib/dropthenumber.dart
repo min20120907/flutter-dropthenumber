@@ -380,9 +380,13 @@ class DropTheNumber extends Game with TapDetector {
       if (inRange(x, 87, 99) && inRange(y, 70, 78)) {
         toggleMute();
       }
-      // if (inRange(x, 2, 12) && inRange(y, 91.3, 98.3)) {
-      //   print(x);
-      // }
+      if (inRange(x, 2, 12) && inRange(y, 91.3, 98.3)) {
+        print(x);
+      }
+      // main page quit button
+      if (inRange(x, 2, 12) && inRange(y, 91, 98)) {
+        exit(0);
+      }
     }
 
     // Game running
@@ -461,10 +465,6 @@ class DropTheNumber extends Game with TapDetector {
         startPageScreenFinished = false;
         print("home button clicked!"); // debug
       }
-    }
-    // main page quit button
-    if (inRange(x, 2, 12) && inRange(y, 91, 98)) {
-      exit(0);
     }
   }
 
