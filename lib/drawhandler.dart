@@ -59,6 +59,8 @@ class DrawHandler {
   ui.Image startPageVolumeDownImage;
   // Game
   ui.Image backgroundImage;
+  ui.Image overImage;
+  ui.Image exitImage;
   ui.Image musicImage;
   ui.Image muteImage;
   ui.Image startButtonImage;
@@ -68,6 +70,7 @@ class DrawHandler {
   ui.Image horizontalSuperPowerImage;
   ui.Image verticalSuperPowerImage;
   ui.Image tmpVertImage;
+  ui.Image homeImage;
 
   /**********************************************************************
   * Constructor
@@ -131,14 +134,10 @@ class DrawHandler {
     // Game
     loadUiImage("assets/image/background.jpg")
         .then((value) => backgroundImage = value);
-    loadUiImage("assets/image/music.png")
-        .then((value) => musicImage = value);
-    loadUiImage("assets/image/mute.png")
-        .then((value) => muteImage = value);
-    loadUiImage("assets/image/pause.png")
-        .then((value) => pauseImage = value);
-    loadUiImage("assets/image/play.png")
-        .then((value) => playImage = value);
+    loadUiImage("assets/image/music.png").then((value) => musicImage = value);
+    loadUiImage("assets/image/mute.png").then((value) => muteImage = value);
+    loadUiImage("assets/image/pause.png").then((value) => pauseImage = value);
+    loadUiImage("assets/image/play.png").then((value) => playImage = value);
     loadUiImage("assets/image/glow.png")
         .then((value) => horizontalSuperPowerImage = value);
     loadUiImage("assets/image/verticalSuperPower.png")
@@ -147,6 +146,10 @@ class DrawHandler {
         .then((value) => startButtonImage = value);
     loadUiImage("assets/image/startButtonBorder.png")
         .then((value) => startButtonBorderImage = value);
+    loadUiImage("assets/image/exit.png").then((value) => exitImage = value);
+    loadUiImage("assets/image/home.png").then((value) => homeImage = value);
+    loadUiImage("assets/image/gameover1.jpg")
+        .then((value) => overImage = value);
   }
 
   /**********************************************************************
@@ -154,12 +157,12 @@ class DrawHandler {
   * The video is combine by lots of (.png) files.
   **********************************************************************/
 //   void initVideos() {
-    // loadUiImage("assets/video/power1/1.png")
-    //     .then((value) => horizontalSuperPowerVideo.add(value));
+  // loadUiImage("assets/video/power1/1.png")
+  //     .then((value) => horizontalSuperPowerVideo.add(value));
 
-    //load glow video
+  //load glow video
 
-    // print(horizontalSuperPowerVideo);
+  // print(horizontalSuperPowerVideo);
 //   }
 
   /**********************************************************************
@@ -174,7 +177,9 @@ class DrawHandler {
     drawImage(startPageVolumeDownImage, 87, 90, 12, 8);
     drawImage(startPageButtonBorderImage, 32, 27.7, 40, 20);
     drawImage(startPageTitleBorderImage, 0, -5.5, 100, 28);
+    drawImage(exitImage, 2, 91.3, 10, 7);
   }
+
   /**********************************************************************
   * Draw music button on the start page.
   **********************************************************************/
@@ -352,19 +357,20 @@ class DrawHandler {
   * Draw the game over screen.
   **********************************************************************/
   void drawGameOverScreen(int score, int highestScore, Duration elapsedTime) {
-    drawRect(0, 0, 100, 100, Colors.white);
-    drawText("Game Over", 50, 20, Colors.black, 50);
+    drawFullScreenImage(overImage);
+    drawText2("Game Over", 50, 15, Colors.white, 65);
     if (elapsedTime == null) {
       elapsedTime = Duration();
     }
-    drawText("TIME: " + getTimeformat(elapsedTime), 49, 35, Colors.black, 30);
-    drawText(
-        "Highest Score: " + highestScore.toString(), 50, 45, Colors.black, 30);
-    drawText("Your Score: " + score.toString(), 45, 55, Colors.black, 30);
-    drawRectStroke(20, 68, 27, 5, Colors.black, 5);
-    drawText("Restart", 33.5, 68.5, Colors.black, 25);
-    drawRectStroke(53, 68, 27, 5, Colors.black, 5);
-    drawText("Quit", 66, 68.5, Colors.black, 25);
+    drawText2("TIME: " + getTimeformat(elapsedTime), 49, 35, Colors.white, 40);
+    drawText2(
+        "Highest Score: " + highestScore.toString(), 50, 45, Colors.white, 40);
+    drawText2("Your Score: " + score.toString(), 45, 55, Colors.white, 40);
+    drawImage(startPageButtonBorderImage, 18.5, 66.5, 33, 17);
+    drawText2("Restart", 34.5, 68.5, Colors.white, 35);
+    drawImage(startPageButtonBorderImage, 50.5, 66.5, 33, 17);
+    drawText2("Quit", 66, 68.5, Colors.white, 35);
+    drawImage(homeImage, 1, 91.5, 12, 8);
   }
 
   /**********************************************************************
@@ -381,7 +387,7 @@ class DrawHandler {
   **********************************************************************/
   void drawBlock(Block block) {
     // If block value is zero, ignore the block.
-    if(block.v==0) {
+    if (block.v == 0) {
       return;
     }
     double width = 14;
@@ -468,7 +474,7 @@ class DrawHandler {
   * Get block color by given block value.
   **********************************************************************/
   Color getBlockColorByValue(int value) {
-    if(value == 0) {
+    if (value == 0) {
       return Color.fromRGBO(0, 0, 0, 0.0);
     }
     return getBlockColorByIndex((log(value) / log(2)).toInt() - 1);
