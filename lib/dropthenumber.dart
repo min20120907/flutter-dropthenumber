@@ -462,6 +462,10 @@ class DropTheNumber extends Game with TapDetector {
         print("home button clicked!"); // debug
       }
     }
+    // main page quit button
+    if (inRange(x, 2, 12) && inRange(y, 91, 98)) {
+      exit(0);
+    }
   }
 
   /**********************************************************************
