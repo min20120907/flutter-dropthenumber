@@ -458,7 +458,6 @@ class DropTheNumber extends Game with TapDetector {
       } else if (inRange(x, 2, 11) && inRange(y, 92, 99.5)) {
         startPageScreenFinished = false;
         print("home button clicked!"); // debug
-        exit(0); // debug
       }
     }
   }
