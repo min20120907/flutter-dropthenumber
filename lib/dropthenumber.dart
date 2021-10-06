@@ -160,6 +160,31 @@ class DropTheNumber extends Game with TapDetector {
     if (nextBlockValue == null) {
       nextBlockValue = pow(2, random.nextInt(MAXPOWER) + POWEROFFSET).toInt();
     }
+    //  else if (score >= 500) {
+    //   MAXPOWER = 6; // Temporary set to small number for debug
+    //   currentTrack = random.nextInt(MAXPOWER);
+    //   currentBlock =
+    //       Block(nextBlockValue, (15 + 14 * currentTrack).toDouble(), 30);
+    //   nextBlockValue = pow(2, random.nextInt(MAXPOWER) + POWEROFFSET).toInt();
+    // } else if (score >= 600) {
+    //   MAXPOWER = 7; // Temporary set to small number for debug
+    //   currentTrack = random.nextInt(MAXPOWER);
+    //   currentBlock =
+    //       Block(nextBlockValue, (15 + 14 * currentTrack).toDouble(), 30);
+    //   nextBlockValue = pow(2, random.nextInt(MAXPOWER) + POWEROFFSET).toInt();
+    // } else if (score >= 700) {
+    //   MAXPOWER = 8; // Temporary set to small number for debug
+    //   currentTrack = random.nextInt(MAXPOWER);
+    //   currentBlock =
+    //       Block(nextBlockValue, (15 + 14 * currentTrack).toDouble(), 30);
+    //   nextBlockValue = pow(2, random.nextInt(MAXPOWER) + POWEROFFSET).toInt();
+    // } else {
+    //   // MAXPOWER = 5;
+    //   currentTrack = random.nextInt(5);
+    //   currentBlock =
+    //       Block(nextBlockValue, (15 + 14 * currentTrack).toDouble(), 30);
+    //   nextBlockValue = pow(2, random.nextInt(MAXPOWER) + POWEROFFSET).toInt();
+    // }
     currentTrack = random.nextInt(5);
     currentBlock =
         Block(nextBlockValue, (15 + 14 * currentTrack).toDouble(), 30);
