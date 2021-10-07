@@ -445,11 +445,11 @@ class DrawHandler {
   **********************************************************************/
   /* Settings */
   // Add extra width to horizontal superpower animation.
-  double horizontalSuperpowerExtraWidth = 20;
+  double horizontalSuperpowerExtraWidth = 25;
   // Add extra height to horizontal superpower animation.
   double horizontalSuperpowerExtraHeight = 5;
   // Adjust the x coordinate of horizontal superpower animation.
-  double horizontalSuperpowerXOffset = -20;
+  double horizontalSuperpowerXOffset = -25;
   // Adjust the y coordinate of horizontal superpower animation.
   double horizontalSuperpowerYOffset = 0;
 
@@ -482,11 +482,11 @@ class DrawHandler {
   **********************************************************************/
   /* Settings */
   // Add extra width to vertical superpower animation.
-  double verticalSuperpowerExtraWidth = 20;
+  double verticalSuperpowerExtraWidth = 40;
   // Add extra height to vertical superpower animation.
   double verticalSuperpowerExtraHeight = 0;
   // Adjust the x coordinate of vertical superpower animation.
-  double verticalSuperpowerXOffset = -10;
+  double verticalSuperpowerXOffset = -20;
   // Adjust the y coordinate of vertical superpower animation.
   double verticalSuperpowerYOffset = 0;
 
@@ -494,7 +494,6 @@ class DrawHandler {
     double imageHeight = 60;
 //     drawImage(verticalSuperpowerAnimation[animationFrameIndex], 15.0 + 14 * track, 90 - imageHeight, 14, imageHeight);
     drawImage(verticalSuperpowerAnimation[animationFrameIndex], 15.0 + 14 * track + verticalSuperpowerXOffset, 90 - imageHeight + verticalSuperpowerYOffset, 14 + verticalSuperpowerExtraWidth, imageHeight + verticalSuperpowerExtraHeight);
-    print("Success");
   }
 
 //   void playVerticalSuperpowerAnimation(
