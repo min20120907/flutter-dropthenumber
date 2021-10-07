@@ -441,7 +441,7 @@ class DropTheNumber extends Game with TapDetector {
         }
       }
       // Horizontal superpower clicked.
-      else if (inRange(x, 65, 75) && inRange(y, 92.5, 97.5)) {
+      else if (inRange(x, 70, 79) && inRange(y, 92.5, 97.5)) {
         if (cooldown_time_hor == null || firstHorizontalOccurance) {
           cooldown_time_hor = DateTime.now();
           triggerHorizontalSuperpower();

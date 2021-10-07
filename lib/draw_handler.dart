@@ -497,7 +497,7 @@ class DrawHandler {
 //     drawImage(verticalSuperpowerAnimation[animationFrameIndex], 15.0 + 14 * track, 90 - imageHeight, 14, imageHeight);
     drawImage(
         verticalSuperpowerAnimation[animationFrameIndex],
-        4.5 + 14 * track + verticalSuperpowerXOffset,
+        4.7 + 14 * track + verticalSuperpowerXOffset,
         90 - imageHeight + verticalSuperpowerYOffset,
         34 + verticalSuperpowerExtraWidth,
         imageHeight + verticalSuperpowerExtraHeight);
