@@ -208,8 +208,7 @@ class DrawHandler {
   * The screen will only show once when the game start.
   **********************************************************************/
   void drawStartPageScreen() {
-    drawFullScreenImage(startPageBackgroundImage); //here!!
-//     drawFullScreenImage(verticalSuperpowerAnimation[0]);
+    drawFullScreenImage(startPageBackgroundImage);
     drawText2('2048 V.2', 50, 3, Colors.white, 60);
     drawText2('START', 52, 30.5, Colors.white, 38);
     drawImage(startPageVolumeUpImage, 87, 80, 12, 8);
@@ -494,7 +493,7 @@ class DrawHandler {
   void drawVerticalSuperpowerAnimationImage(int animationFrameIndex, int track) {
     double imageHeight = 60;
 //     drawImage(verticalSuperpowerAnimation[animationFrameIndex], 15.0 + 14 * track, 90 - imageHeight, 14, imageHeight);
-    drawImage(verticalSuperpowerAnimation[animationFrameIndex], 15.0 + 14 * track + verticalSuperpowerXOffset, 90 - imageHeight + verticalSuperpowerYOffset, 14 + verticalSuperpowerExtraWidth, imageHeight + verticalSuperpowerExtraHeight);//here
+    drawImage(verticalSuperpowerAnimation[animationFrameIndex], 15.0 + 14 * track + verticalSuperpowerXOffset, 90 - imageHeight + verticalSuperpowerYOffset, 14 + verticalSuperpowerExtraWidth, imageHeight + verticalSuperpowerExtraHeight);
     print("Success");
   }
 

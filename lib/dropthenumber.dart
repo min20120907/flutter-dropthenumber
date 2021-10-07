@@ -335,22 +335,6 @@ class DropTheNumber extends Game with TapDetector {
   **********************************************************************/
   void triggerHorizontalSuperpower() {
     superpowerStatus = SuperpowerStatus.horizontalSuperpower;
-    /* hereSkipped
-    for (int i = 0; i < 5; i++) {
-      try {
-        blocks[i].removeAt(0);
-      } catch (Exception) {
-        print("except hor1");
-      }
-      for (int j = 0; j < blocks[i].length; j++) {
-        try {
-          blocks[i][j].y += 9;
-        } catch (Exception) {
-          print("except hor2");
-        }
-      }
-    }
-    */
   }
 
   /**********************************************************************
@@ -362,10 +346,6 @@ class DropTheNumber extends Game with TapDetector {
     verticalSuperpowerTrack = highestTrack;
     print("highest track is " + highestTrack.toString());
     superpowerStatus = SuperpowerStatus.verticalSuperpower;
-    /* hereSkipped
-    blocks.removeAt(highestTrack);
-    blocks.insert(highestTrack, []);
-    */
   }
 
   /**********************************************************************
