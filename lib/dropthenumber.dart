@@ -38,9 +38,9 @@ class DropTheNumber extends Game with TapDetector {
   // If the game is game over, waiting for restart.
   bool gameOver;
   // If the horizontal superpower is clicked
-  bool superHorBool = false;
+//   bool superHorBool = false;
   // If the vertical superpower is triggered
-  bool superVertBool = false;
+//   bool superVertBool = false;
   //
   static double volume = 0.5;
   // If the game is paused.
