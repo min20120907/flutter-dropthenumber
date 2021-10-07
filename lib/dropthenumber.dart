@@ -69,7 +69,7 @@ class DropTheNumber extends Game with TapDetector {
 
   //cooldown
   // ignore: non_constant_identifier_names
-  Duration cooldown_period = Duration(seconds: 120);
+  Duration cooldown_period = Duration(seconds: 10);
   // The last time which horizontal superpower clicked
   // ignore: non_constant_identifier_names
   DateTime cooldown_time_hor;
@@ -105,7 +105,8 @@ class DropTheNumber extends Game with TapDetector {
   // Convert the absolute y to relative y.
   double toRelativeY(double y) => y * 100 / canvasSize.height;
   // Check if the number is within given lower boundary and upper boundary.
-  bool inRange(double number, double lowerBoundary, double upperBoundary) => number >= lowerBoundary && number <= upperBoundary;
+  bool inRange(double number, double lowerBoundary, double upperBoundary) =>
+      number >= lowerBoundary && number <= upperBoundary;
   Canvas cv;
 
   //
@@ -252,10 +253,11 @@ class DropTheNumber extends Game with TapDetector {
 
       // draw superpower animation
       if (superpowerStatus == SuperpowerStatus.horizontalSuperpower) {
-        drawHandler.drawHorizontalSuperpowerAnimationImage(superpowerAnimationFrameIndex);
-      }
-      else if (superpowerStatus == SuperpowerStatus.verticalSuperpower) {
-        drawHandler.drawVerticalSuperpowerAnimationImage(superpowerAnimationFrameIndex, verticalSuperpowerTrack);
+        drawHandler.drawHorizontalSuperpowerAnimationImage(
+            superpowerAnimationFrameIndex);
+      } else if (superpowerStatus == SuperpowerStatus.verticalSuperpower) {
+        drawHandler.drawVerticalSuperpowerAnimationImage(
+            superpowerAnimationFrameIndex, verticalSuperpowerTrack);
       }
 
 //       if (superHorBool) {
@@ -495,6 +497,7 @@ class DropTheNumber extends Game with TapDetector {
       }
     }
   }
+
   /**********************************************************************
   * Keep running the unfinish superpower animation.
   **********************************************************************/
@@ -518,53 +521,60 @@ class DropTheNumber extends Game with TapDetector {
 
   void runSuperpower() {
     switch (superpowerStatus) {
-      case SuperpowerStatus.horizontalSuperpower: {
-        if (superpowerAnimationFrameIndex <= horizontalSuperpowerAnimationLength) {
+      case SuperpowerStatus.horizontalSuperpower:
+        {
+          if (superpowerAnimationFrameIndex <=
+              horizontalSuperpowerAnimationLength) {
 //           drawHandler.drawHorizontalSuperpowerAnimationImage(superpowerAnimationFrameIndex);
 
-          animationImageFrameCounter++;
-          if (animationImageFrameCounter >= animationImageFrame) {
-            animationImageFrameCounter = 0;
-            superpowerAnimationFrameIndex ++;
-          }
-
-        }
-        if (superpowerAnimationFrameIndex >= horizontalSuperpowerAnimationLength) {
-          superpowerStatus = SuperpowerStatus.none;
-          superpowerAnimationFrameIndex = 0;
-
-          for(int i=0; i<5; i++) {
-            if(blocks[i].length > 0) {
-              blocks[i].removeLast();
+            animationImageFrameCounter++;
+            if (animationImageFrameCounter >= animationImageFrame) {
+              animationImageFrameCounter = 0;
+              superpowerAnimationFrameIndex++;
             }
           }
-        }
-        break;
-      }
+          if (superpowerAnimationFrameIndex >=
+              horizontalSuperpowerAnimationLength) {
+            superpowerStatus = SuperpowerStatus.none;
+            superpowerAnimationFrameIndex = 0;
 
-      case SuperpowerStatus.verticalSuperpower: {
-        if (superpowerAnimationFrameIndex <= verticalSuperpowerAnimationLength) {
-          animationImageFrameCounter++;
-          if (animationImageFrameCounter >= animationImageFrame) {
-            animationImageFrameCounter = 0;
-            superpowerAnimationFrameIndex ++;
+            for (int i = 0; i < 5; i++) {
+              if (blocks[i].length > 0) {
+                blocks[i].removeLast();
+              }
+            }
           }
+          break;
         }
-        if (superpowerAnimationFrameIndex >= verticalSuperpowerAnimationLength) {
+
+      case SuperpowerStatus.verticalSuperpower:
+        {
+          if (superpowerAnimationFrameIndex <=
+              verticalSuperpowerAnimationLength) {
+            animationImageFrameCounter++;
+            if (animationImageFrameCounter >= animationImageFrame) {
+              animationImageFrameCounter = 0;
+              superpowerAnimationFrameIndex++;
+            }
+          }
+          if (superpowerAnimationFrameIndex >=
+              verticalSuperpowerAnimationLength) {
+            superpowerStatus = SuperpowerStatus.none;
+            superpowerAnimationFrameIndex = 0;
+
+            blocks[verticalSuperpowerTrack].clear();
+          }
+          break;
+        }
+
+      default:
+        {
+          print(
+              "Error! Unsupport support superpower animation running in runSuperpower(), skipped!");
           superpowerStatus = SuperpowerStatus.none;
           superpowerAnimationFrameIndex = 0;
-
-          blocks[verticalSuperpowerTrack].clear();
+          break;
         }
-        break;
-      }
-
-      default: {
-        print("Error! Unsupport support superpower animation running in runSuperpower(), skipped!");
-        superpowerStatus = SuperpowerStatus.none;
-        superpowerAnimationFrameIndex = 0;
-        break;
-      }
     }
   }
 
@@ -580,199 +590,207 @@ class DropTheNumber extends Game with TapDetector {
     int x = mergingBlock.x;
     int y = mergingBlock.y;
     switch (mergingStatus) {
-      case MergingStatus.tShape: {
-        // Merge step one
-        if (blocks[x - 1][y].x + mergingSpeed < blocks[x][y].x) {
-          blocks[x - 1][y].x += mergingSpeed;
-          blocks[x + 1][y].x -= mergingSpeed;
-        } else if (blocks[x - 1][y].x != blocks[x][y].x) {
-          blocks[x - 1][y].x = blocks[x][y].x;
-          blocks[x + 1][y].x = blocks[x][y].x;
-          // Set the value to zero, the drawHandler will not draw these block any more.
-          blocks[x - 1][y].v = 0;
-          blocks[x + 1][y].v = 0;
+      case MergingStatus.tShape:
+        {
+          // Merge step one
+          if (blocks[x - 1][y].x + mergingSpeed < blocks[x][y].x) {
+            blocks[x - 1][y].x += mergingSpeed;
+            blocks[x + 1][y].x -= mergingSpeed;
+          } else if (blocks[x - 1][y].x != blocks[x][y].x) {
+            blocks[x - 1][y].x = blocks[x][y].x;
+            blocks[x + 1][y].x = blocks[x][y].x;
+            // Set the value to zero, the drawHandler will not draw these block any more.
+            blocks[x - 1][y].v = 0;
+            blocks[x + 1][y].v = 0;
+          }
+          // Merge step two
+          else if (blocks[x][y].y + mergingSpeed < blocks[x][y - 1].y) {
+            blocks[x][y].y += mergingSpeed;
+          } else if (blocks[x][y].y != blocks[x][y - 1].y) {
+            blocks[x][y].y = blocks[x][y - 1].y;
+            // Set the value to zero, the drawHandler will not draw this block any more.
+            blocks[x][y].v = 0;
+          }
+          // Merge done
+          else {
+            mergingStatus = MergingStatus.none;
+            blocks[x][y - 1].v *= 8;
+            score += blocks[x][y - 1].v;
+            dropAboveBlocks(x - 1, y);
+            dropAboveBlocks(x + 1, y);
+            dropAboveBlocks(x, y);
+
+            merge(x, y);
+            merge(x, y - 1);
+            merge(x - 1, y);
+            merge(x + 1, y);
+          }
+
+          break;
         }
-        // Merge step two
-        else if (blocks[x][y].y + mergingSpeed < blocks[x][y - 1].y) {
-          blocks[x][y].y += mergingSpeed;
-        } else if (blocks[x][y].y != blocks[x][y - 1].y) {
-          blocks[x][y].y = blocks[x][y - 1].y;
-          // Set the value to zero, the drawHandler will not draw this block any more.
-          blocks[x][y].v = 0;
+
+      case MergingStatus.gammaShape:
+        {
+          // Merge step one
+          if (blocks[x + 1][y].x - mergingSpeed > blocks[x][y].x) {
+            blocks[x + 1][y].x -= mergingSpeed;
+          } else if (blocks[x + 1][y].x != blocks[x][y].x) {
+            blocks[x + 1][y].x = blocks[x][y].x;
+            // Set the value to zero, the drawHandler will not draw this block any more.
+            blocks[x + 1][y].v = 0;
+          }
+          // Merge step two
+          else if (blocks[x][y].y + mergingSpeed < blocks[x][y - 1].y) {
+            blocks[x][y].y += mergingSpeed;
+          } else if (blocks[x][y].y != blocks[x][y - 1].y) {
+            blocks[x][y].y = blocks[x][y - 1].y;
+            // Set the value to zero, the drawHandler will not draw this block any more.
+            blocks[x][y].v = 0;
+          }
+          // Merge done
+          else {
+            mergingStatus = MergingStatus.none;
+            blocks[x][y - 1].v *= 4;
+            score += blocks[x][y - 1].v;
+            dropAboveBlocks(x + 1, y);
+            dropAboveBlocks(x, y);
+
+            merge(x, y);
+            merge(x, y - 1);
+            merge(x + 1, y);
+          }
+
+          break;
         }
-        // Merge done
-        else {
+
+      case MergingStatus.sevenShape:
+        {
+          // Merge step one
+          if (blocks[x - 1][y].x + mergingSpeed < blocks[x][y].x) {
+            blocks[x - 1][y].x += mergingSpeed;
+          } else if (blocks[x - 1][y].x != blocks[x][y].x) {
+            blocks[x - 1][y].x = blocks[x][y].x;
+            // Set the value to zero, the drawHandler will not draw this block any more.
+            blocks[x - 1][y].v = 0;
+          }
+          // Merge step two
+          else if (blocks[x][y].y + mergingSpeed < blocks[x][y - 1].y) {
+            blocks[x][y].y += mergingSpeed;
+          } else if (blocks[x][y].y != blocks[x][y - 1].y) {
+            blocks[x][y].y = blocks[x][y - 1].y;
+            // Set the value to zero, the drawHandler will not draw this block any more.
+            blocks[x][y].v = 0;
+          }
+          // Merge done
+          else {
+            mergingStatus = MergingStatus.none;
+            blocks[x][y - 1].v *= 4;
+            score += blocks[x][y - 1].v;
+            dropAboveBlocks(x - 1, y);
+            dropAboveBlocks(x, y);
+
+            merge(x, y);
+            merge(x, y - 1);
+            merge(x - 1, y);
+          }
+
+          break;
+        }
+
+      case MergingStatus.horizontalShape:
+        {
+          if (blocks[x - 1][y].x + mergingSpeed < blocks[x][y].x) {
+            blocks[x - 1][y].x += mergingSpeed;
+            blocks[x + 1][y].x -= mergingSpeed;
+          } else if (blocks[x - 1][y].x != blocks[x][y].x) {
+            blocks[x - 1][y].x = blocks[x][y].x;
+            blocks[x + 1][y].x = blocks[x][y].x;
+            // Set the value to zero, the drawHandler will not draw these block any more.
+            blocks[x - 1][y].v = 0;
+            blocks[x + 1][y].v = 0;
+          } else {
+            mergingStatus = MergingStatus.none;
+            blocks[x][y].v *= 4;
+            score += blocks[x][y].v;
+            dropAboveBlocks(x - 1, y);
+            dropAboveBlocks(x + 1, y);
+
+            merge(x, y);
+            merge(x - 1, y);
+            merge(x + 1, y);
+          }
+          break;
+        }
+
+      case MergingStatus.rightShape:
+        {
+          if (blocks[x + 1][y].x - mergingSpeed > blocks[x][y].x) {
+            blocks[x + 1][y].x -= mergingSpeed;
+          } else if (blocks[x + 1][y].x != blocks[x][y].x) {
+            blocks[x + 1][y].x = blocks[x][y].x;
+            // Set the value to zero, the drawHandler will not draw this block any more.
+            blocks[x + 1][y].v = 0;
+          } else {
+            mergingStatus = MergingStatus.none;
+            blocks[x][y].v *= 2;
+            score += blocks[x][y].v;
+            dropAboveBlocks(x + 1, y);
+
+            merge(x, y);
+            merge(x + 1, y);
+          }
+
+          break;
+        }
+
+      case MergingStatus.leftShape:
+        {
+          if (blocks[x - 1][y].x + mergingSpeed < blocks[x][y].x) {
+            blocks[x - 1][y].x += mergingSpeed;
+          } else if (blocks[x - 1][y].x != blocks[x][y].x) {
+            blocks[x - 1][y].x = blocks[x][y].x;
+            // Set the value to zero, the drawHandler will not draw this block any more.
+            blocks[x - 1][y].v = 0;
+          } else {
+            mergingStatus = MergingStatus.none;
+            blocks[x][y].v *= 2;
+            score += blocks[x][y].v;
+            dropAboveBlocks(x - 1, y);
+
+            merge(x, y);
+            merge(x - 1, y);
+          }
+
+          break;
+        }
+
+      case MergingStatus.downShape:
+        {
+          if (blocks[x][y].y + mergingSpeed < blocks[x][y - 1].y) {
+            blocks[x][y].y += mergingSpeed;
+          } else if (blocks[x][y].y != blocks[x][y - 1].y) {
+            blocks[x][y].y = blocks[x][y - 1].y;
+            // Set the value to zero, the drawHandler will not draw this block any more.
+            blocks[x][y].v = 0;
+          } else {
+            mergingStatus = MergingStatus.none;
+            blocks[x][y - 1].v *= 2;
+            score += blocks[x][y - 1].v;
+            dropAboveBlocks(x, y);
+
+            merge(x, y);
+            merge(x, y - 1);
+          }
+          break;
+        }
+
+      default:
+        {
+          print(
+              "Error! Undefine shape merging in runMergingAnimation(), skipped.");
           mergingStatus = MergingStatus.none;
-          blocks[x][y - 1].v *= 8;
-          score += blocks[x][y - 1].v;
-          dropAboveBlocks(x - 1, y);
-          dropAboveBlocks(x + 1, y);
-          dropAboveBlocks(x, y);
-
-          merge(x, y);
-          merge(x, y - 1);
-          merge(x - 1, y);
-          merge(x + 1, y);
+          break;
         }
-
-        break;
-      }
-
-      case MergingStatus.gammaShape: {
-        // Merge step one
-        if (blocks[x + 1][y].x - mergingSpeed > blocks[x][y].x) {
-          blocks[x + 1][y].x -= mergingSpeed;
-        } else if (blocks[x + 1][y].x != blocks[x][y].x) {
-          blocks[x + 1][y].x = blocks[x][y].x;
-          // Set the value to zero, the drawHandler will not draw this block any more.
-          blocks[x + 1][y].v = 0;
-        }
-        // Merge step two
-        else if (blocks[x][y].y + mergingSpeed < blocks[x][y - 1].y) {
-          blocks[x][y].y += mergingSpeed;
-        } else if (blocks[x][y].y != blocks[x][y - 1].y) {
-          blocks[x][y].y = blocks[x][y - 1].y;
-          // Set the value to zero, the drawHandler will not draw this block any more.
-          blocks[x][y].v = 0;
-        }
-        // Merge done
-        else {
-          mergingStatus = MergingStatus.none;
-          blocks[x][y - 1].v *= 4;
-          score += blocks[x][y - 1].v;
-          dropAboveBlocks(x + 1, y);
-          dropAboveBlocks(x, y);
-
-          merge(x, y);
-          merge(x, y - 1);
-          merge(x + 1, y);
-        }
-
-        break;
-      }
-
-      case MergingStatus.sevenShape: {
-        // Merge step one
-        if (blocks[x - 1][y].x + mergingSpeed < blocks[x][y].x) {
-          blocks[x - 1][y].x += mergingSpeed;
-        } else if (blocks[x - 1][y].x != blocks[x][y].x) {
-          blocks[x - 1][y].x = blocks[x][y].x;
-          // Set the value to zero, the drawHandler will not draw this block any more.
-          blocks[x - 1][y].v = 0;
-        }
-        // Merge step two
-        else if (blocks[x][y].y + mergingSpeed < blocks[x][y - 1].y) {
-          blocks[x][y].y += mergingSpeed;
-        } else if (blocks[x][y].y != blocks[x][y - 1].y) {
-          blocks[x][y].y = blocks[x][y - 1].y;
-          // Set the value to zero, the drawHandler will not draw this block any more.
-          blocks[x][y].v = 0;
-        }
-        // Merge done
-        else {
-          mergingStatus = MergingStatus.none;
-          blocks[x][y - 1].v *= 4;
-          score += blocks[x][y - 1].v;
-          dropAboveBlocks(x - 1, y);
-          dropAboveBlocks(x, y);
-
-          merge(x, y);
-          merge(x, y - 1);
-          merge(x - 1, y);
-        }
-
-        break;
-      }
-
-      case MergingStatus.horizontalShape: {
-        if (blocks[x - 1][y].x + mergingSpeed < blocks[x][y].x) {
-          blocks[x - 1][y].x += mergingSpeed;
-          blocks[x + 1][y].x -= mergingSpeed;
-        } else if (blocks[x - 1][y].x != blocks[x][y].x) {
-          blocks[x - 1][y].x = blocks[x][y].x;
-          blocks[x + 1][y].x = blocks[x][y].x;
-          // Set the value to zero, the drawHandler will not draw these block any more.
-          blocks[x - 1][y].v = 0;
-          blocks[x + 1][y].v = 0;
-        } else {
-          mergingStatus = MergingStatus.none;
-          blocks[x][y].v *= 4;
-          score += blocks[x][y].v;
-          dropAboveBlocks(x - 1, y);
-          dropAboveBlocks(x + 1, y);
-
-          merge(x, y);
-          merge(x - 1, y);
-          merge(x + 1, y);
-        }
-        break;
-      }
-
-      case MergingStatus.rightShape: {
-        if (blocks[x + 1][y].x - mergingSpeed > blocks[x][y].x) {
-          blocks[x + 1][y].x -= mergingSpeed;
-        } else if (blocks[x + 1][y].x != blocks[x][y].x) {
-          blocks[x + 1][y].x = blocks[x][y].x;
-          // Set the value to zero, the drawHandler will not draw this block any more.
-          blocks[x + 1][y].v = 0;
-        } else {
-          mergingStatus = MergingStatus.none;
-          blocks[x][y].v *= 2;
-          score += blocks[x][y].v;
-          dropAboveBlocks(x + 1, y);
-
-          merge(x, y);
-          merge(x + 1, y);
-        }
-
-        break;
-      }
-
-      case MergingStatus.leftShape: {
-        if (blocks[x - 1][y].x + mergingSpeed < blocks[x][y].x) {
-          blocks[x - 1][y].x += mergingSpeed;
-        } else if (blocks[x - 1][y].x != blocks[x][y].x) {
-          blocks[x - 1][y].x = blocks[x][y].x;
-          // Set the value to zero, the drawHandler will not draw this block any more.
-          blocks[x - 1][y].v = 0;
-        } else {
-          mergingStatus = MergingStatus.none;
-          blocks[x][y].v *= 2;
-          score += blocks[x][y].v;
-          dropAboveBlocks(x - 1, y);
-
-          merge(x, y);
-          merge(x - 1, y);
-        }
-
-        break;
-      }
-
-      case MergingStatus.downShape: {
-        if (blocks[x][y].y + mergingSpeed < blocks[x][y - 1].y) {
-          blocks[x][y].y += mergingSpeed;
-        } else if (blocks[x][y].y != blocks[x][y - 1].y) {
-          blocks[x][y].y = blocks[x][y - 1].y;
-          // Set the value to zero, the drawHandler will not draw this block any more.
-          blocks[x][y].v = 0;
-        } else {
-          mergingStatus = MergingStatus.none;
-          blocks[x][y - 1].v *= 2;
-          score += blocks[x][y - 1].v;
-          dropAboveBlocks(x, y);
-
-          merge(x, y);
-          merge(x, y - 1);
-        }
-        break;
-      }
-
-      default: {
-        print(
-            "Error! Undefine shape merging in runMergingAnimation(), skipped.");
-        mergingStatus = MergingStatus.none;
-        break;
-      }
     }
   }
 
@@ -784,7 +802,8 @@ class DropTheNumber extends Game with TapDetector {
     // Height of every blocks
     double blockHeight = 9;
     // The highest y in the current track
-    double currentTrackHighestSolidY = 87 - blockHeight * blocks[currentTrack].length;
+    double currentTrackHighestSolidY =
+        87 - blockHeight * blocks[currentTrack].length;
     // The bottom y of current block in the next round.
     double currentBlockBottomY = currentBlock.y + blockHeight + dropSpeed / 60;
 

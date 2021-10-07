@@ -89,7 +89,7 @@ class DrawHandler {
   **********************************************************************/
   /* Settings */
   // Picture count of horizontal superpower Animation
-  static const int horizontalSuperpowerAnimationLength = 15; // full is 215
+  static const int horizontalSuperpowerAnimationLength = 86; // full is 215
   // Picture count of vertical superpower Animation
   static const int verticalSuperpowerAnimationLength = 15; // full is 67
 
@@ -153,14 +153,10 @@ class DrawHandler {
     // Game
     loadUiImage("assets/image/background.jpg")
         .then((value) => backgroundImage = value);
-    loadUiImage("assets/image/music.png")
-        .then((value) => musicImage = value);
-    loadUiImage("assets/image/mute.png")
-        .then((value) => muteImage = value);
-    loadUiImage("assets/image/pause.png")
-        .then((value) => pauseImage = value);
-    loadUiImage("assets/image/play.png")
-        .then((value) => playImage = value);
+    loadUiImage("assets/image/music.png").then((value) => musicImage = value);
+    loadUiImage("assets/image/mute.png").then((value) => muteImage = value);
+    loadUiImage("assets/image/pause.png").then((value) => pauseImage = value);
+    loadUiImage("assets/image/play.png").then((value) => playImage = value);
     loadUiImage("assets/image/horizontalSuperpower.png")
         .then((value) => horizontalSuperpowerImage = value);
     loadUiImage("assets/image/verticalSuperpower.png")
@@ -169,10 +165,8 @@ class DrawHandler {
         .then((value) => startButtonImage = value);
     loadUiImage("assets/image/startButtonBorder.png")
         .then((value) => startButtonBorderImage = value);
-    loadUiImage("assets/image/exit.png")
-        .then((value) => exitImage = value);
-    loadUiImage("assets/image/home.png")
-        .then((value) => homeImage = value);
+    loadUiImage("assets/image/exit.png").then((value) => exitImage = value);
+    loadUiImage("assets/image/home.png").then((value) => homeImage = value);
     loadUiImage("assets/image/gameover1.jpg")
         .then((value) => overImage = value);
   }
@@ -183,8 +177,9 @@ class DrawHandler {
   **********************************************************************/
   List<ui.Image> horizontalSuperpowerAnimation = [];
 
-  void initHorizontalSuperpowerAnimation(int horizontalSuperpowerAnimationLength) {
-    for(int i=0; i<horizontalSuperpowerAnimationLength; i++) {
+  void initHorizontalSuperpowerAnimation(
+      int horizontalSuperpowerAnimationLength) {
+    for (int i = 68; i < horizontalSuperpowerAnimationLength; i++) {
       loadUiImage("assets/video/horizontalSuperpower/" + i.toString() + ".png")
           .then((value) => horizontalSuperpowerAnimation.add(value));
     }
@@ -197,7 +192,7 @@ class DrawHandler {
   List<ui.Image> verticalSuperpowerAnimation = [];
 
   void initVerticalSuperpowerAnimation(int verticalSuperpowerAnimationLength) {
-    for(int i=0; i<verticalSuperpowerAnimationLength; i++) {
+    for (int i = 0; i < verticalSuperpowerAnimationLength; i++) {
       loadUiImage("assets/video/verticalSuperpower/" + i.toString() + ".png")
           .then((value) => verticalSuperpowerAnimation.add(value));
     }
@@ -265,7 +260,8 @@ class DrawHandler {
   * The title color are the same as the color of next block rectangle.
   **********************************************************************/
   void drawTitle(int nextBlockValue) {
-    drawText('Drop The Number', 50, 6.5, getBlockColorByValue(nextBlockValue), 35);
+    drawText(
+        'Drop The Number', 50, 6.5, getBlockColorByValue(nextBlockValue), 35);
   }
 
   /**********************************************************************
@@ -456,7 +452,12 @@ class DrawHandler {
   void drawHorizontalSuperpowerAnimationImage(int animationFrameIndex) {
     double imageHeight = 30;
 //     drawImage(horizontalSuperpowerAnimation[animationFrameIndex], 15.0, 90 - imageHeight, 85, imageHeight);
-    drawImage(horizontalSuperpowerAnimation[animationFrameIndex], 15.0 + horizontalSuperpowerXOffset, 90 - imageHeight + horizontalSuperpowerYOffset, 85 + horizontalSuperpowerExtraWidth, imageHeight + horizontalSuperpowerExtraHeight);
+    drawImage(
+        horizontalSuperpowerAnimation[animationFrameIndex],
+        15.0 + horizontalSuperpowerXOffset,
+        83 - imageHeight + horizontalSuperpowerYOffset,
+        100 + horizontalSuperpowerExtraWidth,
+        imageHeight + horizontalSuperpowerExtraHeight);
   }
 //   void playHorizontalSuperpowerAnimation() async {
 //     double x = 50, y = 50, width = 250, height = 250;
@@ -490,10 +491,16 @@ class DrawHandler {
   // Adjust the y coordinate of vertical superpower animation.
   double verticalSuperpowerYOffset = 0;
 
-  void drawVerticalSuperpowerAnimationImage(int animationFrameIndex, int track) {
+  void drawVerticalSuperpowerAnimationImage(
+      int animationFrameIndex, int track) {
     double imageHeight = 60;
 //     drawImage(verticalSuperpowerAnimation[animationFrameIndex], 15.0 + 14 * track, 90 - imageHeight, 14, imageHeight);
-    drawImage(verticalSuperpowerAnimation[animationFrameIndex], 15.0 + 14 * track + verticalSuperpowerXOffset, 90 - imageHeight + verticalSuperpowerYOffset, 14 + verticalSuperpowerExtraWidth, imageHeight + verticalSuperpowerExtraHeight);
+    drawImage(
+        verticalSuperpowerAnimation[animationFrameIndex],
+        4.5 + 14 * track + verticalSuperpowerXOffset,
+        90 - imageHeight + verticalSuperpowerYOffset,
+        34 + verticalSuperpowerExtraWidth,
+        imageHeight + verticalSuperpowerExtraHeight);
   }
 
 //   void playVerticalSuperpowerAnimation(
@@ -677,7 +684,8 @@ class DrawHandler {
   /**********************************************************************
   * Draw an image on the canvas.
   **********************************************************************/
-  void drawImage(ui.Image image, double x, double y, double width, double height) {
+  void drawImage(
+      ui.Image image, double x, double y, double width, double height) {
     if (image == null) {
       return;
     }
