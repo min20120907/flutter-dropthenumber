@@ -3,7 +3,7 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-import 'package:dropthenumber/dropthenumber.dart';
+import 'dart:io';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
@@ -11,27 +11,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sprintf/sprintf.dart';
-import 'block.dart';
-import 'dart:io';
+import 'package:dropthenumber/dropthenumber.dart';
+import 'package:dropthenumber/block.dart';
+import 'package:dropthenumber/superpower_status.dart';
 
 class DrawHandler {
-  /* Variables */
-  // If draw handler is initialized. (Use by tryToInit(), after initialized image and video are loaded.)
-  bool initialized = false;
-  // The screen size, needed by the drawBackground().
-  Size screenSize;
-  // The draw area size. (Background image is not in this limit)
-  Size canvasSize;
-  // The left margin of canvas, prevent the screen stretch. (This is already in absolute coordinates)
-  double canvasXOffset;
-
-  /* Utils */
-  // The canvas that the draw handler want to draw on.
-  Canvas canvas;
-  // Convert the relative x to ablolute x.
-  double toAbsoluteX(double x) => x * canvasSize.width / 100;
-  // Convert the relative y to ablolute y.
-  double toAbsoluteY(double y) => y * canvasSize.height / 100;
+  /**********************************************************************
+  * Settings
+  **********************************************************************/
   // Every block color in different value of block.
   List<Color> blockColors = [
     Color.fromRGBO(255, 0, 0, 1.0),
@@ -48,29 +35,6 @@ class DrawHandler {
     Color.fromRGBO(153, 255, 153, 1.0),
     Color.fromRGBO(194, 194, 214, 1.0)
   ];
-  // Images which will be load later.
-  // Start Page
-  ui.Image startPageBackgroundImage;
-  ui.Image startPageTitleBorderImage;
-  ui.Image startPageButtonBorderImage;
-  ui.Image startPageMusicImage;
-  ui.Image startPageMuteImage;
-  ui.Image startPageVolumeUpImage;
-  ui.Image startPageVolumeDownImage;
-  // Game
-  ui.Image backgroundImage;
-  ui.Image overImage;
-  ui.Image exitImage;
-  ui.Image musicImage;
-  ui.Image muteImage;
-  ui.Image startButtonImage;
-  ui.Image startButtonBorderImage;
-  ui.Image pauseImage;
-  ui.Image playImage;
-  ui.Image horizontalSuperPowerImage;
-  ui.Image verticalSuperPowerImage;
-  ui.Image tmpVertImage;
-  ui.Image homeImage;
 
   /**********************************************************************
   * Constructor
@@ -83,8 +47,21 @@ class DrawHandler {
   }
 
   /**********************************************************************
+  * Convert the relative x to ablolute x.
+  **********************************************************************/
+  double toAbsoluteX(double x) => x * canvasSize.width / 100;
+
+  /**********************************************************************
+  * Convert the relative y to ablolute y.
+  **********************************************************************/
+  double toAbsoluteY(double y) => y * canvasSize.height / 100;
+
+  /**********************************************************************
   * Set the canvas to draw.
   **********************************************************************/
+  // The canvas that the draw handler want to draw on.
+  Canvas canvas;
+
   void setCanvas(Canvas canvas) {
     this.canvas = canvas;
   }
@@ -93,6 +70,13 @@ class DrawHandler {
   * Set the size to draw, that everything will draw in correct relative size.
   * Should called to get the current screen size before every draw method invoke.
   **********************************************************************/
+  // The screen size, needed by the drawBackground().
+  Size screenSize;
+  // The draw area size. (Background image is not in this limit)
+  Size canvasSize;
+  // The left margin of canvas, prevent the screen stretch. (This is already in absolute coordinates)
+  double canvasXOffset;
+
   void setSize(Size screenSize, Size canvasSize, double canvasXOffset) {
     this.screenSize = screenSize;
     this.canvasSize = canvasSize;
@@ -103,10 +87,21 @@ class DrawHandler {
   * Initial the draw handler if it is not initialized.
   * DrawHandler should be initial before the first use.
   **********************************************************************/
+  /* Settings */
+  // Picture count of horizontal superpower Animation
+  static const int horizontalSuperpowerAnimationLength = 15; // full is 215
+  // Picture count of vertical superpower Animation
+  static const int verticalSuperpowerAnimationLength = 15; // full is 67
+
+  /* Variable */
+  // If draw handler is initialized. (Use by tryToInit(), after initialized image and video are loaded.)
+  bool initialized = false;
+
   void tryToInit() {
     if (!initialized) {
       initImages();
-//       initVideos();
+      initHorizontalSuperpowerAnimation(horizontalSuperpowerAnimationLength);
+      initVerticalSuperpowerAnimation(verticalSuperpowerAnimationLength);
       initialized = true;
     }
   }
@@ -115,6 +110,30 @@ class DrawHandler {
   * Initial images like music image, backgroundImage, etc.
   * Remember to add the path to "pubspec.yaml' or the resource may not show up.
   **********************************************************************/
+  /* Image which will be load later */
+  // Start Page
+  ui.Image startPageBackgroundImage;
+  ui.Image startPageTitleBorderImage;
+  ui.Image startPageButtonBorderImage;
+  ui.Image startPageMusicImage;
+  ui.Image startPageMuteImage;
+  ui.Image startPageVolumeUpImage;
+  ui.Image startPageVolumeDownImage;
+  // In Game
+  ui.Image backgroundImage;
+  ui.Image overImage;
+  ui.Image exitImage;
+  ui.Image musicImage;
+  ui.Image muteImage;
+  ui.Image startButtonImage;
+  ui.Image startButtonBorderImage;
+  ui.Image pauseImage;
+  ui.Image playImage;
+  ui.Image horizontalSuperpowerImage;
+  ui.Image verticalSuperpowerImage;
+  ui.Image tmpVertImage;
+  ui.Image homeImage;
+
   void initImages() {
     // Start page
     loadUiImage("assets/image/startPage/background.png")
@@ -134,43 +153,63 @@ class DrawHandler {
     // Game
     loadUiImage("assets/image/background.jpg")
         .then((value) => backgroundImage = value);
-    loadUiImage("assets/image/music.png").then((value) => musicImage = value);
-    loadUiImage("assets/image/mute.png").then((value) => muteImage = value);
-    loadUiImage("assets/image/pause.png").then((value) => pauseImage = value);
-    loadUiImage("assets/image/play.png").then((value) => playImage = value);
-    loadUiImage("assets/image/glow.png")
-        .then((value) => horizontalSuperPowerImage = value);
-    loadUiImage("assets/image/verticalSuperPower.png")
-        .then((value) => verticalSuperPowerImage = value);
+    loadUiImage("assets/image/music.png")
+        .then((value) => musicImage = value);
+    loadUiImage("assets/image/mute.png")
+        .then((value) => muteImage = value);
+    loadUiImage("assets/image/pause.png")
+        .then((value) => pauseImage = value);
+    loadUiImage("assets/image/play.png")
+        .then((value) => playImage = value);
+    loadUiImage("assets/image/horizontalSuperpower.png")
+        .then((value) => horizontalSuperpowerImage = value);
+    loadUiImage("assets/image/verticalSuperpower.png")
+        .then((value) => verticalSuperpowerImage = value);
     loadUiImage("assets/image/startButton.png")
         .then((value) => startButtonImage = value);
     loadUiImage("assets/image/startButtonBorder.png")
         .then((value) => startButtonBorderImage = value);
-    loadUiImage("assets/image/exit.png").then((value) => exitImage = value);
-    loadUiImage("assets/image/home.png").then((value) => homeImage = value);
+    loadUiImage("assets/image/exit.png")
+        .then((value) => exitImage = value);
+    loadUiImage("assets/image/home.png")
+        .then((value) => homeImage = value);
     loadUiImage("assets/image/gameover1.jpg")
         .then((value) => overImage = value);
   }
 
   /**********************************************************************
-  * Initial super power animation video.
-  * The video is combine by lots of (.png) files.
+  * Initial vertical superpower animation.
+  * The animation is combine by lots of (.png) files.
   **********************************************************************/
-//   void initVideos() {
-  // loadUiImage("assets/video/power1/1.png")
-  //     .then((value) => horizontalSuperPowerVideo.add(value));
+  List<ui.Image> horizontalSuperpowerAnimation = [];
 
-  //load glow video
+  void initHorizontalSuperpowerAnimation(int horizontalSuperpowerAnimationLength) {
+    for(int i=0; i<horizontalSuperpowerAnimationLength; i++) {
+      loadUiImage("assets/video/horizontalSuperpower/" + i.toString() + ".png")
+          .then((value) => horizontalSuperpowerAnimation.add(value));
+    }
+  }
 
-  // print(horizontalSuperPowerVideo);
-//   }
+  /**********************************************************************
+  * Initial vertical superpower animation.
+  * The animation is combine by lots of (.png) files.
+  **********************************************************************/
+  List<ui.Image> verticalSuperpowerAnimation = [];
+
+  void initVerticalSuperpowerAnimation(int verticalSuperpowerAnimationLength) {
+    for(int i=0; i<verticalSuperpowerAnimationLength; i++) {
+      loadUiImage("assets/video/verticalSuperpower/" + i.toString() + ".png")
+          .then((value) => verticalSuperpowerAnimation.add(value));
+    }
+  }
 
   /**********************************************************************
   * Draw the screen before the game start.
   * The screen will only show once when the game start.
   **********************************************************************/
   void drawStartPageScreen() {
-    drawFullScreenImage(startPageBackgroundImage);
+    drawFullScreenImage(startPageBackgroundImage); //here!!
+//     drawFullScreenImage(verticalSuperpowerAnimation[0]);
     drawText2('2048 V.2', 50, 3, Colors.white, 60);
     drawText2('START', 52, 30.5, Colors.white, 38);
     drawImage(startPageVolumeUpImage, 87, 80, 12, 8);
@@ -227,8 +266,7 @@ class DrawHandler {
   * The title color are the same as the color of next block rectangle.
   **********************************************************************/
   void drawTitle(int nextBlockValue) {
-    drawText(
-        'Drop The Number', 50, 6.5, getBlockColorByValue(nextBlockValue), 35);
+    drawText('Drop The Number', 50, 6.5, getBlockColorByValue(nextBlockValue), 35);
   }
 
   /**********************************************************************
@@ -255,7 +293,6 @@ class DrawHandler {
   **********************************************************************/
   void drawTime(Duration elapsedTime) {
     if (elapsedTime == null) {
-      // here
       return;
     }
     drawText('TIME:' + getTimeformat(elapsedTime), 64, 15.5, Colors.white, 20);
@@ -334,22 +371,22 @@ class DrawHandler {
   }
 
   /**********************************************************************
-  * Draw horizontal super power button.
+  * Draw horizontal superpower button.
   **********************************************************************/
-  void drawHorizontalSuperPowerButton() {
-    // Horizontal super power image
-    drawImage(horizontalSuperPowerImage, 70, 92, 9, 6);
-    // Horizontal super power border
+  void drawHorizontalSuperpowerButton() {
+    // Horizontal superpower image
+    drawImage(horizontalSuperpowerImage, 70, 92, 9, 6);
+    // Horizontal superpower border
     drawRectStroke(70, 92.5, 9, 5, Colors.white, 3);
   }
 
   /**********************************************************************
-  * Draw vertical super power button.
+  * Draw vertical superpower button.
   **********************************************************************/
-  void drawVerticalSuperPowerButton() {
-    // Vertical super power image
-    drawImage(verticalSuperPowerImage, 81.5, 91.25, 10, 7);
-    // Vertical super power border
+  void drawVerticalSuperpowerButton() {
+    // Vertical superpower image
+    drawImage(verticalSuperpowerImage, 81.5, 91.25, 10, 7);
+    // Vertical superpower border
     drawRectStroke(82, 92.5, 9, 5, Colors.white, 3);
   }
 
@@ -405,57 +442,97 @@ class DrawHandler {
   }
 
   /**********************************************************************
-  * Play vertical super power animation. (flame animation)
+  * Draw a single frame of horizontal superpower animation. (glow animation)
   **********************************************************************/
-  void playVerticalSuperPowerAnimation(
-      int track, List<List<Block>> blocks) async {
-    double a = 5, b = 2, width = 400, height = 600;
-    for (int i = 1; i < 68; i++) {
-      ui.Image tmpVertImg =
-          await loadUiImage("assets/video/glow/" + i.toString() + ".png");
+  /* Settings */
+  // Add extra width to horizontal superpower animation.
+  double horizontalSuperpowerExtraWidth = 20;
+  // Add extra height to horizontal superpower animation.
+  double horizontalSuperpowerExtraHeight = 5;
+  // Adjust the x coordinate of horizontal superpower animation.
+  double horizontalSuperpowerXOffset = -20;
+  // Adjust the y coordinate of horizontal superpower animation.
+  double horizontalSuperpowerYOffset = 0;
 
-      canvas.drawImageRect(
-          tmpVertImage,
-          Rect.fromLTWH(0, 0, tmpVertImage.width.toDouble(),
-              tmpVertImage.height.toDouble()),
-          Rect.fromLTWH(toAbsoluteX(a), toAbsoluteY(b), width, height),
-          Paint());
-      // delayGap();
-    }
-    // drawVideo(verticalSuperPowerVideo, blocks[track][0].x - 5,
-    //     blocks[track][0].y - 50, 300, 300);
+  void drawHorizontalSuperpowerAnimationImage(int animationFrameIndex) {
+    double imageHeight = 30;
+//     drawImage(horizontalSuperpowerAnimation[animationFrameIndex], 15.0, 90 - imageHeight, 85, imageHeight);
+    drawImage(horizontalSuperpowerAnimation[animationFrameIndex], 15.0 + horizontalSuperpowerXOffset, 90 - imageHeight + horizontalSuperpowerYOffset, 85 + horizontalSuperpowerExtraWidth, imageHeight + horizontalSuperpowerExtraHeight);
+  }
+//   void playHorizontalSuperpowerAnimation() async {
+//     double x = 50, y = 50, width = 250, height = 250;
+//     for (int i = 1; i < 100; i++) {
+//       ui.Image tmpHorImg =
+//           await loadUiImage("assets/video/horizontalSuperpower/" + i.toString() + ".png");
+//       canvas.drawImageRect(
+//           tmpHorImg,
+//           Rect.fromLTWH(
+//               0, 0, tmpHorImg.width.toDouble(), tmpHorImg.height.toDouble()),
+//           Rect.fromLTWH(toAbsoluteX(x), toAbsoluteY(y), width, height),
+//           Paint());
+//
+//       /* await delayGap(); */
+//       print("load pic " + i.toString());
+//       print(tmpHorImg.height);
+//       print(tmpHorImg.width);
+//     }
+//   }
+
+  /**********************************************************************
+  * Draw a single frame of vertical superpower animation. (flame animation)
+  **********************************************************************/
+  /* Settings */
+  // Add extra width to vertical superpower animation.
+  double verticalSuperpowerExtraWidth = 20;
+  // Add extra height to vertical superpower animation.
+  double verticalSuperpowerExtraHeight = 0;
+  // Adjust the x coordinate of vertical superpower animation.
+  double verticalSuperpowerXOffset = -10;
+  // Adjust the y coordinate of vertical superpower animation.
+  double verticalSuperpowerYOffset = 0;
+
+  void drawVerticalSuperpowerAnimationImage(int animationFrameIndex, int track) {
+    double imageHeight = 60;
+//     drawImage(verticalSuperpowerAnimation[animationFrameIndex], 15.0 + 14 * track, 90 - imageHeight, 14, imageHeight);
+    drawImage(verticalSuperpowerAnimation[animationFrameIndex], 15.0 + 14 * track + verticalSuperpowerXOffset, 90 - imageHeight + verticalSuperpowerYOffset, 14 + verticalSuperpowerExtraWidth, imageHeight + verticalSuperpowerExtraHeight);//here
+    print("Success");
   }
 
+//   void playVerticalSuperpowerAnimation(
+//       int track, List<List<Block>> blocks) async {
+//     double a = 5, b = 2, width = 400, height = 600;
+//     for (int i = 1; i < 68; i++) {
+//       ui.Image tmpVertImg =
+//           await loadUiImage("assets/video/verticalSuperpower/" + i.toString() + ".png");
+//
+//       canvas.drawImageRect(
+//           tmpVertImage,
+//           Rect.fromLTWH(0, 0, tmpVertImage.width.toDouble(),
+//               tmpVertImage.height.toDouble()),
+//           Rect.fromLTWH(toAbsoluteX(a), toAbsoluteY(b), width, height),
+//           Paint());
+//       /* delayGap(); */
+//     }
+//     /*
+//     drawVideo(verticalSuperpowerVideo, blocks[track][0].x - 5,
+//         blocks[track][0].y - 50, 300, 300);
+//     */
+//   }
+
+  /**********************************************************************
+  * Draw the horizontal cooldown hint overlap the button.
+  **********************************************************************/
   void drawBlockedHorizontalSuperpower() {
     drawText("X", 74.5, 91, Colors.black, 55);
     drawRectStroke(70, 92.5, 9, 5, Colors.black, 3);
   }
 
+  /**********************************************************************
+  * Draw the vertical cooldown hint overlap the button.
+  **********************************************************************/
   void drawBlockedVerticalSuperpower() {
     drawText("X", 86.5, 91, Colors.black, 55);
     drawRectStroke(82, 92.5, 9, 5, Colors.black, 3);
-  }
-
-  /**********************************************************************
-  * Play horizontal super power animation. (puple magic animation)
-  **********************************************************************/
-  void playHorizontalSuperPowerAnimation() async {
-    double x = 50, y = 50, width = 250, height = 250;
-    for (int i = 1; i < 100; i++) {
-      ui.Image tmpHorImg =
-          await loadUiImage("assets/video/glow/" + i.toString() + ".png");
-      canvas.drawImageRect(
-          tmpHorImg,
-          Rect.fromLTWH(
-              0, 0, tmpHorImg.width.toDouble(), tmpHorImg.height.toDouble()),
-          Rect.fromLTWH(toAbsoluteX(x), toAbsoluteY(y), width, height),
-          Paint());
-
-      // await delayGap();
-      print("load pic " + i.toString());
-      print(tmpHorImg.height);
-      print(tmpHorImg.width);
-    }
   }
 
   /**********************************************************************
@@ -602,8 +679,7 @@ class DrawHandler {
   /**********************************************************************
   * Draw an image on the canvas.
   **********************************************************************/
-  void drawImage(
-      ui.Image image, double x, double y, double width, double height) {
+  void drawImage(ui.Image image, double x, double y, double width, double height) {
     if (image == null) {
       return;
     }

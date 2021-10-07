@@ -29,10 +29,8 @@ flutter:
     - assets/image/
     - assets/image/startPage/
     - assets/audio/
-    - assets/video/power1/
-    - assets/video/power2/
-    - assets/video/glow/
-    - assets/video/fire/
+    - assets/video/verticalSuperpower/
+    - assets/video/horizontalSuperpower/
   fonts:
   - family: DancingScript
     fonts:
