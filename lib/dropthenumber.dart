@@ -147,33 +147,36 @@ class DropTheNumber extends Game with TapDetector {
     // The offset of power quantity of 2.
     int POWEROFFSET = 1;
     if (nextBlockValue == null) {
-      nextBlockValue = pow(2, random.nextInt(MAXPOWER) + POWEROFFSET).toInt();
+      if (score >= 500) {
+        print("score is bigger than 500");
+        MAXPOWER = 6; // Temporary set to small number for debug
+        currentTrack = random.nextInt(MAXPOWER);
+        currentBlock =
+            Block(nextBlockValue, (15 + 14 * currentTrack).toDouble(), 30);
+        nextBlockValue = pow(2, random.nextInt(MAXPOWER) + POWEROFFSET).toInt();
+      } else if (score >= 600) {
+        print("score is bigger than 600");
+        MAXPOWER = 7; // Temporary set to small number for debug
+        currentTrack = random.nextInt(MAXPOWER);
+        currentBlock =
+            Block(nextBlockValue, (15 + 14 * currentTrack).toDouble(), 30);
+        nextBlockValue = pow(2, random.nextInt(MAXPOWER) + POWEROFFSET).toInt();
+      } else if (score >= 700) {
+        print("score is bigger than 700");
+        MAXPOWER = 8; // Temporary set to small number for debug
+        currentTrack = random.nextInt(MAXPOWER);
+        currentBlock =
+            Block(nextBlockValue, (15 + 14 * currentTrack).toDouble(), 30);
+        nextBlockValue = pow(2, random.nextInt(MAXPOWER) + POWEROFFSET).toInt();
+      } else {
+        // MAXPOWER = 5;
+        currentTrack = random.nextInt(5);
+        currentBlock =
+            Block(nextBlockValue, (15 + 14 * currentTrack).toDouble(), 30);
+        nextBlockValue = pow(2, random.nextInt(MAXPOWER) + POWEROFFSET).toInt();
+      }
+      // nextBlockValue = pow(2, random.nextInt(MAXPOWER) + POWEROFFSET).toInt();
     }
-    //  else if (score >= 500) {
-    //   MAXPOWER = 6; // Temporary set to small number for debug
-    //   currentTrack = random.nextInt(MAXPOWER);
-    //   currentBlock =
-    //       Block(nextBlockValue, (15 + 14 * currentTrack).toDouble(), 30);
-    //   nextBlockValue = pow(2, random.nextInt(MAXPOWER) + POWEROFFSET).toInt();
-    // } else if (score >= 600) {
-    //   MAXPOWER = 7; // Temporary set to small number for debug
-    //   currentTrack = random.nextInt(MAXPOWER);
-    //   currentBlock =
-    //       Block(nextBlockValue, (15 + 14 * currentTrack).toDouble(), 30);
-    //   nextBlockValue = pow(2, random.nextInt(MAXPOWER) + POWEROFFSET).toInt();
-    // } else if (score >= 700) {
-    //   MAXPOWER = 8; // Temporary set to small number for debug
-    //   currentTrack = random.nextInt(MAXPOWER);
-    //   currentBlock =
-    //       Block(nextBlockValue, (15 + 14 * currentTrack).toDouble(), 30);
-    //   nextBlockValue = pow(2, random.nextInt(MAXPOWER) + POWEROFFSET).toInt();
-    // } else {
-    //   // MAXPOWER = 5;
-    //   currentTrack = random.nextInt(5);
-    //   currentBlock =
-    //       Block(nextBlockValue, (15 + 14 * currentTrack).toDouble(), 30);
-    //   nextBlockValue = pow(2, random.nextInt(MAXPOWER) + POWEROFFSET).toInt();
-    // }
     currentTrack = random.nextInt(5);
     currentBlock =
         Block(nextBlockValue, (15 + 14 * currentTrack).toDouble(), 30);
