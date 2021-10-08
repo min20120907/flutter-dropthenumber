@@ -146,17 +146,20 @@ class DropTheNumber extends Game with TapDetector {
     int MAXPOWER = 5; // Temporary set to small number for debug
     // The offset of power quantity of 2.
     int POWEROFFSET = 1;
-    if (score >= 500) {
-      print("score is bigger than 500");
+    if (score >= 5000) {
+      print("score is bigger than 5000");
       MAXPOWER = 6; // Temporary set to small number for debug
-    } else if (score >= 600) {
-      print("score is bigger than 600");
+    } else if (score >= 10000) {
+      print("score is bigger than 10000");
       MAXPOWER = 7; // Temporary set to small number for debug
-    } else if (score >= 700) {
-      print("score is bigger than 700");
+    } else if (score >= 50000) {
+      print("score is bigger than 50000");
       MAXPOWER = 8; // Temporary set to small number for debug
+    } else if (score >= 100000) {
+      print("score is bigger than 100000");
+      MAXPOWER = 9; // Temporary set to small number for debug
     } else {
-      // MAXPOWER = 5;
+      MAXPOWER = 5;
     }
     // nextBlockValue = pow(2, random.nextInt(MAXPOWER) + POWEROFFSET).toInt();
     currentTrack = random.nextInt(5);
