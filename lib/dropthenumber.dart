@@ -69,7 +69,7 @@ class DropTheNumber extends Game with TapDetector {
 
   //cooldown
   // ignore: non_constant_identifier_names
-  Duration cooldown_period = Duration(seconds: 10);
+  Duration cooldown_period = Duration(seconds: 120);
   // The last time which horizontal superpower clicked
   // ignore: non_constant_identifier_names
   DateTime cooldown_time_hor;
