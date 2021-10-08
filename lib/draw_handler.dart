@@ -205,7 +205,7 @@ class DrawHandler {
   void drawStartPageScreen() {
     drawFullScreenImage(startPageBackgroundImage);
     drawText2('2048 V.2', 50, 3, Colors.white, 60);
-    drawText2('START', 52, 30.5, Colors.white, 38);
+    drawText2('START', 52, 31, Colors.white, 38);
     drawImage(startPageVolumeUpImage, 87, 80, 12, 8);
     drawImage(startPageVolumeDownImage, 87, 90, 12, 8);
     drawImage(startPageButtonBorderImage, 32, 27.5, 40, 22);
@@ -399,9 +399,9 @@ class DrawHandler {
         "Highest Score: " + highestScore.toString(), 50, 45, Colors.white, 40);
     drawText2("Your Score: " + score.toString(), 45, 55, Colors.white, 40);
     drawImage(startPageButtonBorderImage, 18.5, 66, 33, 19);
-    drawText2("Restart", 34.5, 68.5, Colors.white, 33);
+    drawText2("Restart", 34.5, 69, Colors.white, 33);
     drawImage(startPageButtonBorderImage, 50.5, 66, 33, 19);
-    drawText2("Quit", 66, 68.5, Colors.white, 33);
+    drawText2("Quit", 66, 69, Colors.white, 33);
     drawImage(homeImage, 1, 91.5, 12, 8);
   }
 
@@ -707,7 +707,12 @@ class DrawHandler {
     canvas.drawImageRect(
         image,
         Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble()),
-        Rect.fromLTWH(-0.5, -0.5, screenSize.width + 1, screenSize.height + 1), // draw a little bit more to make sure the picture cover whole screen.
+        Rect.fromLTWH(
+            -0.5,
+            -0.5,
+            screenSize.width + 1,
+            screenSize.height +
+                1), // draw a little bit more to make sure the picture cover whole screen.
         Paint());
   }
 }
