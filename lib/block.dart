@@ -1,3 +1,4 @@
+// @dart=2.11
 // Block class storing every blocks stat
 class Block {
   // Value of the block (2, 4, 8, 16...)
