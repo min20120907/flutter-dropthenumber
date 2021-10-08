@@ -60,7 +60,7 @@ class DropTheNumber extends Game with TapDetector {
   // The highest score on the local game.
   int highestScore = 98237; // Temporary set the value for debug
   // The start time point of the game.
-  DateTime startTime = DateTime.now();
+  DateTime startTime;
   // The time elapsed of the game running from the start time.
   Duration elapsedTime = Duration.zero;
   // The time elapsed of the game pause.
@@ -373,6 +373,8 @@ class DropTheNumber extends Game with TapDetector {
     if (!startPageScreenFinished) {
       if (inRange(x, 32, 70) && inRange(y, 29, 37)) {
         startPageScreenFinished = true;
+        // Start game timer.
+        startTime = DateTime.now();
       }
       if (inRange(x, 87, 99) && inRange(y, 80, 88)) {
         if (volume < 1.0) volume += 0.1;
