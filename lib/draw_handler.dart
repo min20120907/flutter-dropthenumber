@@ -707,7 +707,7 @@ class DrawHandler {
     canvas.drawImageRect(
         image,
         Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble()),
-        Rect.fromLTWH(0, 0, screenSize.width, screenSize.height),
+        Rect.fromLTWH(-0.5, -0.5, screenSize.width + 1, screenSize.height + 1), // draw a little bit more to make sure the picture cover whole screen.
         Paint());
   }
 }
