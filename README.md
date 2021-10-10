@@ -2,11 +2,11 @@
 A minigame written in flutter.
 
 ## Supported Platforms
-[.] iOS 3rd party software
-[.] Android APK
-[.] Android AAB
-[.] Android Google Play
-[] Chrome
+- [x] iOS 3rd party software  
+- [x] Android APK  
+- [x] Android AAB  
+- [x] Android Google Play  
+- [ ] Chrome  
 
 ## Game features
 1. The mute buttons appear on the main screen and on the game play screen
