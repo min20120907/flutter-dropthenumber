@@ -15,6 +15,7 @@ import 'package:dropthenumber/draw_handler.dart';
 import 'package:dropthenumber/block.dart';
 import 'package:dropthenumber/merging_status.dart';
 import 'package:dropthenumber/superpower_status.dart';
+import 'package:dropthenumber/data_handler.dart';
 
 class DropTheNumber extends Game with TapDetector {
   /**********************************************************************
@@ -58,7 +59,7 @@ class DropTheNumber extends Game with TapDetector {
   // The current score of the game.
   int score;
   // The highest score on the local game.
-  int highestScore = 98237; // Temporary set the value for debug
+  int highestScore = 0;
   // The start time point of the game.
   DateTime startTime;
   // The time elapsed of the game running from the start time.
@@ -96,6 +97,8 @@ class DropTheNumber extends Game with TapDetector {
   double mergingSpeed = 2;
 
   /* Utils */
+  // Data handler can help to save and read data from file.
+  DataHandler dataHandler = DataHandler();
   // A generator of random values, import from 'dart:math'.
   Random random = Random();
   // Draw handler for helping to draw everything on screen.
@@ -126,7 +129,7 @@ class DropTheNumber extends Game with TapDetector {
   **********************************************************************/
   void resetGame() {
     score = 0;
-    gameOver = false; // debug
+    gameOver = false;
     pause = false;
     pauseElapsedTime = Duration();
     startTime = DateTime.now();
@@ -308,14 +311,10 @@ class DropTheNumber extends Game with TapDetector {
       // Drop block
       if (!dropCurrentBlock()) {
         // Hit solid block, current block cannot be drop any more!
-        if (blocks[currentTrack].length < 6) {
           appendCurrentBlockToTrack();
+        if (!gameOver) {
           merge(currentTrack, blocks[currentTrack].length - 1);
           setupCurrentBlock();
-        } else {
-          // print(blocks[currentTrack].length);
-          print("Game over!"); //debug
-          this.gameOver = true;
         }
       }
     }
@@ -375,6 +374,9 @@ class DropTheNumber extends Game with TapDetector {
         startPageScreenFinished = true;
         // Start game timer.
         startTime = DateTime.now();
+
+        // Get history highest score from file.
+        dataHandler.readHighestScore().then((value) => highestScore = value > highestScore ? value : highestScore);
       }
       if (inRange(x, 87, 99) && inRange(y, 80, 88)) {
         if (volume < 1.0) volume += 0.1;
@@ -819,7 +821,14 @@ class DropTheNumber extends Game with TapDetector {
     currentBlock.y = 87 - blockHeight * (blocks[currentTrack].length + 1);
     // Add current block to blocks array.
     blocks[currentTrack].add(currentBlock);
-    if (blocks[currentTrack].length > 6) this.gameOver = true;
+    if (blocks[currentTrack].length > 6) {
+      gameOver = true;
+      if(score >= highestScore) {
+        highestScore = score;
+        dataHandler.writeHighestScore(highestScore);
+      }
+      return;
+    }
     // do the merge process
     merge(currentTrack, blocks[currentTrack].length - 1);
   }
