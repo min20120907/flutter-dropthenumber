@@ -1,6 +1,13 @@
 # dropthenumber
 A minigame written in flutter.
 
+## Supported Platforms
+[.] iOS 3rd party software
+[.] Android APK
+[.] Android AAB
+[.] Android Google Play
+[] Chrome
+
 ## Game features
 1. The mute buttons appear on the main screen and on the game play screen
 2. The volume adjustment buttons appear on the main screen
