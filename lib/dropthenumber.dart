@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
 import 'package:flame/gestures.dart';
+import 'package:flame/flame_audio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -606,6 +607,7 @@ class DropTheNumber extends Game with TapDetector {
           }
           // Merge done
           else {
+            playBubbleAudio();
             mergingStatus = MergingStatus.none;
             blocks[x][y - 1].v *= 8;
             score += blocks[x][y - 1].v;
@@ -642,6 +644,7 @@ class DropTheNumber extends Game with TapDetector {
           }
           // Merge done
           else {
+            playBubbleAudio();
             mergingStatus = MergingStatus.none;
             blocks[x][y - 1].v *= 4;
             score += blocks[x][y - 1].v;
@@ -676,6 +679,7 @@ class DropTheNumber extends Game with TapDetector {
           }
           // Merge done
           else {
+            playBubbleAudio();
             mergingStatus = MergingStatus.none;
             blocks[x][y - 1].v *= 4;
             score += blocks[x][y - 1].v;
@@ -701,7 +705,9 @@ class DropTheNumber extends Game with TapDetector {
             // Set the value to zero, the drawHandler will not draw these block any more.
             blocks[x - 1][y].v = 0;
             blocks[x + 1][y].v = 0;
+            // Merge done
           } else {
+            playBubbleAudio();
             mergingStatus = MergingStatus.none;
             blocks[x][y].v *= 4;
             score += blocks[x][y].v;
@@ -723,7 +729,9 @@ class DropTheNumber extends Game with TapDetector {
             blocks[x + 1][y].x = blocks[x][y].x;
             // Set the value to zero, the drawHandler will not draw this block any more.
             blocks[x + 1][y].v = 0;
+            // Merge done
           } else {
+            playBubbleAudio();
             mergingStatus = MergingStatus.none;
             blocks[x][y].v *= 2;
             score += blocks[x][y].v;
@@ -744,7 +752,9 @@ class DropTheNumber extends Game with TapDetector {
             blocks[x - 1][y].x = blocks[x][y].x;
             // Set the value to zero, the drawHandler will not draw this block any more.
             blocks[x - 1][y].v = 0;
+            //Merge done
           } else {
+            playBubbleAudio();
             mergingStatus = MergingStatus.none;
             blocks[x][y].v *= 2;
             score += blocks[x][y].v;
@@ -765,7 +775,9 @@ class DropTheNumber extends Game with TapDetector {
             blocks[x][y].y = blocks[x][y - 1].y;
             // Set the value to zero, the drawHandler will not draw this block any more.
             blocks[x][y].v = 0;
+            // Merge done
           } else {
+            playBubbleAudio();
             mergingStatus = MergingStatus.none;
             blocks[x][y - 1].v *= 2;
             score += blocks[x][y - 1].v;
@@ -1037,5 +1049,12 @@ class DropTheNumber extends Game with TapDetector {
         merge(x, i);
       }
     }
+  }
+
+  /**********************************************************************
+  * Randomly play one of a bubble audio.
+  **********************************************************************/
+  void playBubbleAudio() {
+//     FlameAudio.play('bubble' + random.nextInt(5).toString() + '.mp3');
   }
 }
