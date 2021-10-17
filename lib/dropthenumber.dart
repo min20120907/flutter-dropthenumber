@@ -71,7 +71,7 @@ class DropTheNumber extends Game with TapDetector {
 
   //cooldown
   // ignore: non_constant_identifier_names
-  Duration cooldown_period = Duration(seconds: 120);
+  Duration cooldown_period = Duration(seconds: 30);
   // The last time which horizontal superpower clicked
   // ignore: non_constant_identifier_names
   DateTime cooldown_time_hor;
@@ -846,6 +846,7 @@ class DropTheNumber extends Game with TapDetector {
       }
       return;
     }
+    playAppendAudio();
     // do the merge process
     merge(currentTrack, blocks[currentTrack].length - 1);
   }
@@ -1062,6 +1063,15 @@ class DropTheNumber extends Game with TapDetector {
   void playBubbleAudio() {
     if(!mute) {
       Flame.audio.play('bubble' + random.nextInt(4).toString() + '.mp3', volume: volume);
+    }
+  }
+
+  /**********************************************************************
+  * Randomly play one of a append audio.
+  **********************************************************************/
+  void playAppendAudio() {
+    if(!mute) {
+      Flame.audio.play('append' + random.nextInt(4).toString() + '.mp3', volume: volume);
     }
   }
 }
