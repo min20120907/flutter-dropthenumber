@@ -1055,6 +1055,6 @@ class DropTheNumber extends Game with TapDetector {
   * Randomly play one of a bubble audio.
   **********************************************************************/
   void playBubbleAudio() {
-//     FlameAudio.play('bubble' + random.nextInt(4).toString() + '.mp3', volume: volume);
+    Flame.audio.play('bubble' + random.nextInt(4).toString() + '.mp3', volume: volume);
   }
 }
