@@ -351,8 +351,8 @@ class DrawHandler {
   void drawPlayButton() {
     // Play button image
     drawImage(playImage, 11.5, 93.25, 5, 3.5);
-    drawImage(startButtonImage, 30.5, 37.25, 40, 26);
-    drawImage(startButtonBorderImage, 30.5, 37.25, 40, 26);
+    drawImage(startButtonImage, 30.5, 37.25, 40, 24);
+    drawImage(startButtonBorderImage, 30.5, 37.25, 40, 24);
     // Play button border
     drawRectStroke(9, 92.5, 10, 5, Colors.white, 3);
   }
@@ -361,8 +361,8 @@ class DrawHandler {
   * Draw the current score.
   **********************************************************************/
   void drawScore(int score) {
-    drawText('Score: ', 28, 92.5, Colors.white, 27);
-    drawText(score.toString(), 60, 93, Colors.white, 26);
+    drawText('Score: ', 30, 92.5, Colors.white, 27);
+    drawText(score.toString(), 56, 93, Colors.white, 26);
   }
 
   /**********************************************************************
