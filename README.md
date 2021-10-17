@@ -1,6 +1,13 @@
 # dropthenumber
 A minigame written in flutter.
 
+## Supported Platforms
+- [x] iOS 3rd party software  
+- [x] Android APK  
+- [x] Android AAB  
+- [x] Android Google Play  
+- [ ] Chrome  
+
 ## Game features
 1. The mute buttons appear on the main screen and on the game play screen
 2. The volume adjustment buttons appear on the main screen
@@ -13,11 +20,11 @@ A minigame written in flutter.
 
 ## How to run
 1. Generate upload-keystore.jks for application signature. [(flutter document)](https://flutter.dev/docs/deployment/android#create-an-upload-keystore) <br />
-In Linux or Mac: keytool -genkey -v -keystore ~/upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload <br />
-In Wnidows: keytool -genkey -v -keystore c:\Users\<USER_NAME>\upload-keystore.jks -storetype JKS -keyalg RSA -keysize 2048 -validity 10000 -alias upload <br />
+In Linux or Mac: ```keytool -genkey -v -keystore ~/upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload``` <br />
+In Wnidows: ```keytool -genkey -v -keystore c:\Users\<USER_NAME>\upload-keystore.jks -storetype JKS -keyalg RSA -keysize 2048 -validity 10000 -alias upload``` <br />
 
 2. Update the path to your signature file. <br />
-update the storeFile=/home/<USER_NAME>/upload-keystore.jks in <PROJECT_PATH>/android/key.properties <br />
+update the ```storeFile=/home/<USER_NAME>/upload-keystore.jks in <PROJECT_PATH>/android/key.properties``` <br />
 
 3. Run now! For more information please check [flutter document](https://flutter.dev/docs/reference/flutter-cli). <br />
 flutter run
