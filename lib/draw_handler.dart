@@ -122,6 +122,7 @@ class DrawHandler {
   // In Game
   ui.Image backgroundImage;
   ui.Image overImage;
+  ui.Image settingImage;
   ui.Image exitImage;
   ui.Image musicImage;
   ui.Image muteImage;
@@ -155,6 +156,8 @@ class DrawHandler {
         .then((value) => backgroundImage = value);
     loadUiImage("assets/image/music.png").then((value) => musicImage = value);
     loadUiImage("assets/image/mute.png").then((value) => muteImage = value);
+    loadUiImage("assets/image/setting.png")
+        .then((value) => settingImage = value);
     loadUiImage("assets/image/pause.png").then((value) => pauseImage = value);
     loadUiImage("assets/image/play.png").then((value) => playImage = value);
     loadUiImage("assets/image/horizontalSuperpower.png")
@@ -296,15 +299,22 @@ class DrawHandler {
   /**********************************************************************
   * Draw mute button.
   **********************************************************************/
-  void drawMuteButton() {
-    drawImage(muteImage, 80, 15, 7, 4.5);
-  }
+  // void drawMuteButton() {
+  //   drawImage(muteImage, 80, 15, 7, 4.5);
+  // }
 
   /**********************************************************************
   * Draw music button.
   **********************************************************************/
-  void drawMusicButton() {
-    drawImage(musicImage, 80, 15, 7, 4.5);
+  // void drawMusicButton() {
+  //   drawImage(musicImage, 80, 15, 7, 4.5);
+  // }
+
+/**********************************************************************
+  * Draw setting button.
+  **********************************************************************/
+  void drawSettingButton() {
+    drawImage(settingImage, 80, 14.7, 7, 4.5);
   }
 
   /**********************************************************************
