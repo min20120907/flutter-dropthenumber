@@ -608,25 +608,25 @@ class DrawHandler {
     canvas.drawRect(rect, paint);
   }
 
-  void drawRectStroke2(double x, double y, double width, double height,
-      Color color, double strokeWidth) {
-    Rect rect = Rect.fromLTWH(toAbsoluteX(x) + canvasXOffset, toAbsoluteY(y),
-        toAbsoluteX(width), toAbsoluteY(height));
-    Paint paint = Paint()
-      ..color = color
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = strokeWidth;
-    Container(
-      // padding: const EdgeInsets.all(8.0),
-      decoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(width: 16.0, color: Colors.lightBlue.shade50),
-          bottom: BorderSide(width: 16.0, color: Colors.lightBlue.shade900),
-        ),
-      ),
-    );
-    canvas.drawRect(rect, paint);
-  }
+  // void drawRectStroke2(double x, double y, double width, double height,
+  //     Color color, double strokeWidth) {
+  //   Rect rect = Rect.fromLTWH(toAbsoluteX(x) + canvasXOffset, toAbsoluteY(y),
+  //       toAbsoluteX(width), toAbsoluteY(height));
+  //   Paint paint = Paint()
+  //     ..color = color
+  //     ..style = PaintingStyle.stroke
+  //     ..strokeWidth = strokeWidth;
+  //   Container(
+  //     // padding: const EdgeInsets.all(8.0),
+  //     decoration: BoxDecoration(
+  //       border: Border(
+  //         top: BorderSide(width: 16.0, color: Colors.lightBlue.shade50),
+  //         bottom: BorderSide(width: 16.0, color: Colors.lightBlue.shade900),
+  //       ),
+  //     ),
+  //   );
+  //   canvas.drawRect(rect, paint);
+  // }
 
   /**********************************************************************
   * Draw a line on the canvas by the given start point (x1, y1) and end point (x2, y2).
