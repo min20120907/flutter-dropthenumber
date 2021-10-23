@@ -39,6 +39,8 @@ class DropTheNumber extends Game with TapDetector {
   bool volumeDown;
   // If the game is game over, waiting for restart.
   bool gameOver;
+  // If the setting screen is open
+  bool settingScreenIsOpen = false;
   // If the horizontal superpower is clicked
 //   bool superHorBool = false;
   // If the vertical superpower is triggered
@@ -182,7 +184,8 @@ class DropTheNumber extends Game with TapDetector {
     drawHandler.tryToInit();
     drawHandler.setCanvas(canvas);
     drawHandler.setSize(screenSize, canvasSize, canvasXOffset);
-    // Draw start game screen. (It only show once when the game start)
+
+    // Draw start game screen.
     if (!startPageScreenFinished) {
       drawHandler.drawStartPageScreen();
       if (!mute) {
@@ -190,6 +193,10 @@ class DropTheNumber extends Game with TapDetector {
       } else {
         drawHandler.drawStartPageMuteButton();
       }
+    }
+    // Draw game setting screen.
+    else if(settingScreenIsOpen) {
+      drawHandler.drawSettingScreen();
     }
     // Draw game running screen.
     else if (!gameOver) {
@@ -403,12 +410,22 @@ class DropTheNumber extends Game with TapDetector {
       }
     }
 
+    // game setting screen
+    else if(settingScreenIsOpen) {
+      // 89, 3.5, 9, 5
+      if(inRange(x, 89, 98) && inRange(y, 3.5, 8.5)) {
+        print("back button clicked");
+        closeSettingScreen();
+      }
+    }
+
     // Game running
     else if (!gameOver) {
       // Mute button clicked.
       if (inRange(x, 80, 87) && inRange(y, 15, 19.5)) {
         // toggleMute();
         print("setting button clicked");
+        openSettingScreen();
       }
       // Pause button clicked.
       else if (inRange(x, 9, 19) && inRange(y, 92.5, 97.5)) {
@@ -979,6 +996,22 @@ class DropTheNumber extends Game with TapDetector {
             DateTime.now().difference(startTime.add(elapsedTime));
       }
     }
+  }
+
+  /**********************************************************************
+  * Open the setting screen
+  **********************************************************************/
+  void openSettingScreen() {
+    settingScreenIsOpen = true;
+    pause = true;
+  }
+
+  /**********************************************************************
+  * Close the setting screen
+  **********************************************************************/
+  void closeSettingScreen() {
+    settingScreenIsOpen = false;
+    pause = false;
   }
 
   /**********************************************************************

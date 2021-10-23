@@ -135,6 +135,7 @@ class DrawHandler {
   ui.Image verticalSuperpowerImage;
   ui.Image tmpVertImage;
   ui.Image homeImage;
+  ui.Image xImage;
 
   void initImages() {
     // Start page
@@ -173,8 +174,10 @@ class DrawHandler {
     loadUiImage("assets/image/home.png").then((value) => homeImage = value);
     loadUiImage("assets/image/gameover1.jpg")
         .then((value) => overImage = value);
-    loadUiImage("assets/image/background.png")
+    loadUiImage("assets/image/background3.png")
         .then((value) => settingBackgroundImage = value);
+    loadUiImage("assets/image/x.png")
+        .then((value) => xImage = value);
   }
 
   /**********************************************************************
@@ -421,8 +424,10 @@ class DrawHandler {
   /**********************************************************************
   * Draw setting screen.
   **********************************************************************/
-  void drawSettingScreen() { //here
+  void drawSettingScreen() {
     drawFullScreenImage(settingBackgroundImage);
+    drawImage(xImage, 89, 3.5, 9, 5);
+    drawRectStroke(89, 3.5, 9, 5, Colors.black, 3);
   }
 
   /**********************************************************************
@@ -548,7 +553,7 @@ class DrawHandler {
   * Draw the horizontal cooldown hint overlap the button.
   **********************************************************************/
   void drawBlockedHorizontalSuperpower() {
-    drawText("X", 74.5, 91, Colors.black, 55);
+    drawImage(xImage, 70, 92.5, 9, 5);
     drawRectStroke(70, 92.5, 9, 5, Colors.black, 3);
   }
 
@@ -556,7 +561,7 @@ class DrawHandler {
   * Draw the vertical cooldown hint overlap the button.
   **********************************************************************/
   void drawBlockedVerticalSuperpower() {
-    drawText("X", 86.5, 91, Colors.black, 55);
+    drawImage(xImage, 82, 92.5, 9, 5);
     drawRectStroke(82, 92.5, 9, 5, Colors.black, 3);
   }
 
