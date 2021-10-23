@@ -123,6 +123,7 @@ class DrawHandler {
   ui.Image backgroundImage;
   ui.Image overImage;
   ui.Image settingImage;
+  ui.Image settingBackgroundImage;
   ui.Image exitImage;
   ui.Image musicImage;
   ui.Image muteImage;
@@ -172,6 +173,8 @@ class DrawHandler {
     loadUiImage("assets/image/home.png").then((value) => homeImage = value);
     loadUiImage("assets/image/gameover1.jpg")
         .then((value) => overImage = value);
+    loadUiImage("assets/image/background.png")
+        .then((value) => settingBackgroundImage = value);
   }
 
   /**********************************************************************
@@ -419,7 +422,7 @@ class DrawHandler {
   * Draw setting screen.
   **********************************************************************/
   void drawSettingScreen() { //here
-    drawFullScreenImage(overImage);
+    drawFullScreenImage(settingBackgroundImage);
   }
 
   /**********************************************************************
@@ -653,6 +656,10 @@ class DrawHandler {
   * The x and y are coordinate the text center.
   **********************************************************************/
   void drawText(String text, double x, double y, Color color, double fontSize) {
+    // Adjust the font size, make sure the size is not going to huge
+    fontSize /= canvasSize.width > canvasSize.height ? (canvasSize.height / canvasSize.width) : (canvasSize.width / canvasSize.height);
+    fontSize /= 2.5;
+
     TextPainter(
       text: TextSpan(
           text: text, style: TextStyle(color: color, fontSize: fontSize)),
@@ -666,8 +673,11 @@ class DrawHandler {
               toAbsoluteY(y)));
   }
 
-  void drawText2(
-      String text, double x, double y, Color color, double fontSize) {
+  void drawText2(String text, double x, double y, Color color, double fontSize) {
+    // Adjust the font size, make sure the size is not going to huge
+    fontSize /= canvasSize.width > canvasSize.height ? (canvasSize.height / canvasSize.width) : (canvasSize.width / canvasSize.height);
+    fontSize /= 2.5;
+
     TextPainter(
       text: TextSpan(
           text: text,
