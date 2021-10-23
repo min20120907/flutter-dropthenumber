@@ -406,6 +406,13 @@ class DrawHandler {
   }
 
   /**********************************************************************
+  * Draw setting screen.
+  **********************************************************************/
+  void drawSettingScreen() { //here
+    drawFullScreenImage(overImage);
+  }
+
+  /**********************************************************************
   * Format the time from second to minute and second.
   **********************************************************************/
   String getTimeformat(Duration totalSecond) {
