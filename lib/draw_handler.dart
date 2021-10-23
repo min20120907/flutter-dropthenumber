@@ -122,6 +122,7 @@ class DrawHandler {
   // In Game
   ui.Image backgroundImage;
   ui.Image overImage;
+  ui.Image settingImage;
   ui.Image exitImage;
   ui.Image musicImage;
   ui.Image muteImage;
@@ -155,6 +156,8 @@ class DrawHandler {
         .then((value) => backgroundImage = value);
     loadUiImage("assets/image/music.png").then((value) => musicImage = value);
     loadUiImage("assets/image/mute.png").then((value) => muteImage = value);
+    loadUiImage("assets/image/setting.png")
+        .then((value) => settingImage = value);
     loadUiImage("assets/image/pause.png").then((value) => pauseImage = value);
     loadUiImage("assets/image/play.png").then((value) => playImage = value);
     loadUiImage("assets/image/horizontalSuperpower.png")
@@ -296,15 +299,22 @@ class DrawHandler {
   /**********************************************************************
   * Draw mute button.
   **********************************************************************/
-  void drawMuteButton() {
-    drawImage(muteImage, 80, 15, 7, 4.5);
-  }
+  // void drawMuteButton() {
+  //   drawImage(muteImage, 80, 15, 7, 4.5);
+  // }
 
   /**********************************************************************
   * Draw music button.
   **********************************************************************/
-  void drawMusicButton() {
-    drawImage(musicImage, 80, 15, 7, 4.5);
+  // void drawMusicButton() {
+  //   drawImage(musicImage, 80, 15, 7, 4.5);
+  // }
+
+/**********************************************************************
+  * Draw setting button.
+  **********************************************************************/
+  void drawSettingButton() {
+    drawImage(settingImage, 80, 14.7, 7, 4.5);
   }
 
   /**********************************************************************
@@ -605,25 +615,25 @@ class DrawHandler {
     canvas.drawRect(rect, paint);
   }
 
-  void drawRectStroke2(double x, double y, double width, double height,
-      Color color, double strokeWidth) {
-    Rect rect = Rect.fromLTWH(toAbsoluteX(x) + canvasXOffset, toAbsoluteY(y),
-        toAbsoluteX(width), toAbsoluteY(height));
-    Paint paint = Paint()
-      ..color = color
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = strokeWidth;
-    Container(
-      // padding: const EdgeInsets.all(8.0),
-      decoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(width: 16.0, color: Colors.lightBlue.shade50),
-          bottom: BorderSide(width: 16.0, color: Colors.lightBlue.shade900),
-        ),
-      ),
-    );
-    canvas.drawRect(rect, paint);
-  }
+  // void drawRectStroke2(double x, double y, double width, double height,
+  //     Color color, double strokeWidth) {
+  //   Rect rect = Rect.fromLTWH(toAbsoluteX(x) + canvasXOffset, toAbsoluteY(y),
+  //       toAbsoluteX(width), toAbsoluteY(height));
+  //   Paint paint = Paint()
+  //     ..color = color
+  //     ..style = PaintingStyle.stroke
+  //     ..strokeWidth = strokeWidth;
+  //   Container(
+  //     // padding: const EdgeInsets.all(8.0),
+  //     decoration: BoxDecoration(
+  //       border: Border(
+  //         top: BorderSide(width: 16.0, color: Colors.lightBlue.shade50),
+  //         bottom: BorderSide(width: 16.0, color: Colors.lightBlue.shade900),
+  //       ),
+  //     ),
+  //   );
+  //   canvas.drawRect(rect, paint);
+  // }
 
   /**********************************************************************
   * Draw a line on the canvas by the given start point (x1, y1) and end point (x2, y2).

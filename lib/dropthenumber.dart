@@ -199,11 +199,12 @@ class DropTheNumber extends Game with TapDetector {
       drawHandler.drawNextBlockHintText();
       drawHandler.drawNextBlock(nextBlockValue);
       drawHandler.drawTime(elapsedTime);
-      if (!mute) {
-        drawHandler.drawMusicButton();
-      } else {
-        drawHandler.drawMuteButton();
-      }
+      drawHandler.drawSettingButton();
+      // if (!mute) {
+      //   drawHandler.drawMusicButton();
+      // } else {
+      //   drawHandler.drawMuteButton();
+      // }
       drawHandler.drawFiveCross(nextBlockValue);
       drawHandler.drawAllBlocks(blocks);
       drawHandler.drawCurrentBlock(currentBlock);
@@ -312,7 +313,7 @@ class DropTheNumber extends Game with TapDetector {
       // Drop block
       if (!dropCurrentBlock()) {
         // Hit solid block, current block cannot be drop any more!
-          appendCurrentBlockToTrack();
+        appendCurrentBlockToTrack();
         if (!gameOver) {
           merge(currentTrack, blocks[currentTrack].length - 1);
           setupCurrentBlock();
@@ -377,7 +378,8 @@ class DropTheNumber extends Game with TapDetector {
         startTime = DateTime.now();
 
         // Get history highest score from file.
-        dataHandler.readHighestScore().then((value) => highestScore = value > highestScore ? value : highestScore);
+        dataHandler.readHighestScore().then((value) =>
+            highestScore = value > highestScore ? value : highestScore);
       }
       if (inRange(x, 87, 99) && inRange(y, 80, 88)) {
         if (volume < 1.0) volume += 0.1;
@@ -405,7 +407,8 @@ class DropTheNumber extends Game with TapDetector {
     else if (!gameOver) {
       // Mute button clicked.
       if (inRange(x, 80, 87) && inRange(y, 15, 19.5)) {
-        toggleMute();
+        // toggleMute();
+        print("setting button clicked");
       }
       // Pause button clicked.
       else if (inRange(x, 9, 19) && inRange(y, 92.5, 97.5)) {
@@ -711,7 +714,7 @@ class DropTheNumber extends Game with TapDetector {
             blocks[x + 1][y].v = 0;
             playBubbleAudio();
             playBubbleAudio();
-          // Merge done
+            // Merge done
           } else {
             mergingStatus = MergingStatus.none;
             blocks[x][y].v *= 4;
@@ -735,7 +738,7 @@ class DropTheNumber extends Game with TapDetector {
             // Set the value to zero, the drawHandler will not draw this block any more.
             blocks[x + 1][y].v = 0;
             playBubbleAudio();
-          // Merge done
+            // Merge done
           } else {
             mergingStatus = MergingStatus.none;
             blocks[x][y].v *= 2;
@@ -758,7 +761,7 @@ class DropTheNumber extends Game with TapDetector {
             // Set the value to zero, the drawHandler will not draw this block any more.
             blocks[x - 1][y].v = 0;
             playBubbleAudio();
-          //Merge done
+            //Merge done
           } else {
             mergingStatus = MergingStatus.none;
             blocks[x][y].v *= 2;
@@ -781,7 +784,7 @@ class DropTheNumber extends Game with TapDetector {
             // Set the value to zero, the drawHandler will not draw this block any more.
             blocks[x][y].v = 0;
             playBubbleAudio();
-          // Merge done
+            // Merge done
           } else {
             mergingStatus = MergingStatus.none;
             blocks[x][y - 1].v *= 2;
@@ -840,7 +843,7 @@ class DropTheNumber extends Game with TapDetector {
     blocks[currentTrack].add(currentBlock);
     if (blocks[currentTrack].length > 6) {
       gameOver = true;
-      if(score >= highestScore) {
+      if (score >= highestScore) {
         highestScore = score;
         dataHandler.writeHighestScore(highestScore);
       }
@@ -1061,8 +1064,9 @@ class DropTheNumber extends Game with TapDetector {
   * Randomly play one of a bubble audio.
   **********************************************************************/
   void playBubbleAudio() {
-    if(!mute) {
-      Flame.audio.play('bubble' + random.nextInt(4).toString() + '.mp3', volume: volume);
+    if (!mute) {
+      Flame.audio.play('bubble' + random.nextInt(4).toString() + '.mp3',
+          volume: volume);
     }
   }
 
@@ -1070,8 +1074,9 @@ class DropTheNumber extends Game with TapDetector {
   * Randomly play one of a append audio.
   **********************************************************************/
   void playAppendAudio() {
-    if(!mute) {
-      Flame.audio.play('append' + random.nextInt(4).toString() + '.mp3', volume: volume);
+    if (!mute) {
+      Flame.audio.play('append' + random.nextInt(4).toString() + '.mp3',
+          volume: volume);
     }
   }
 }
