@@ -239,6 +239,34 @@ class DrawHandler {
   }
 
   /**********************************************************************
+  * Draw music button on the setting page.
+  **********************************************************************/
+  void drawSettingPageMusicButton() {
+    drawImage(startPageMusicImage, 54, 81.8, 10.5, 6.5);
+  }
+
+  /**********************************************************************
+  * Draw mute button on the start page.
+  **********************************************************************/
+  void drawSettingPageMuteButton() {
+    drawImage(startPageMuteImage, 54, 81.8, 10.5, 6.5);
+  }
+
+  /**********************************************************************
+  * Draw music button on the setting page.
+  **********************************************************************/
+  void drawSettingPageMusicButton2() {
+    drawImage(startPageMusicImage, 54, 89.8, 10.5, 6.5);
+  }
+
+  /**********************************************************************
+  * Draw mute button on the start page.
+  **********************************************************************/
+  void drawSettingPageMuteButton2() {
+    drawImage(startPageMuteImage, 54, 89.8, 10.5, 6.5);
+  }
+
+  /**********************************************************************
   * Draw the game background.
   **********************************************************************/
   void drawBackground() {
@@ -430,14 +458,20 @@ class DrawHandler {
     drawFullScreenImage(settingBackgroundImage);
     // back button
     drawImage(xImage, 87, 3.5, 9, 5);
-    // drawRectStroke(89, 3.5, 9, 5, Colors.black, 3);
 
     // home button
-    drawImage(homeImage, 1, 91.5, 12, 8);
+    drawImage(homeImage, 3, 2, 12, 8);
+
+    // Sound Text
+    drawText2("Game Music:", 31, 82, Colors.black, 40);
+    drawText2("Effect Sound:", 31, 90, Colors.black, 40);
 
     // volume adjust button
-    drawImage(startPageVolumeUpImage, 87, 80, 12, 8);
-    drawImage(startPageVolumeDownImage, 87, 90, 12, 8);
+    drawImage(startPageVolumeUpImage, 67, 81, 14, 8);
+    drawImage(startPageVolumeDownImage, 81, 81, 14, 8);
+
+    drawImage(startPageVolumeUpImage, 67, 89, 14, 8);
+    drawImage(startPageVolumeDownImage, 81, 89, 14, 8);
   }
 
   void drawGameDifficultyText(GameDifficulty gameDifficulty) {

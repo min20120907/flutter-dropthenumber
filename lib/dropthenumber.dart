@@ -237,9 +237,14 @@ class DropTheNumber extends Game with TapDetector {
       drawHandler.drawSettingScreen();
       drawHandler.drawGameDifficultyText(gameDifficulty);
       if (!mute) {
-        drawHandler.drawStartPageMusicButton();
+        drawHandler.drawSettingPageMusicButton();
       } else {
-        drawHandler.drawStartPageMuteButton();
+        drawHandler.drawSettingPageMuteButton();
+      }
+      if (!mute) {
+        drawHandler.drawSettingPageMusicButton2();
+      } else {
+        drawHandler.drawSettingPageMuteButton2();
       }
     }
     // Draw game running screen.
@@ -463,26 +468,43 @@ class DropTheNumber extends Game with TapDetector {
         closeSettingScreen();
       }
       // Home button clicked
-      else if (inRange(x, 2, 11) && inRange(y, 92, 99.5)) {
+      else if (inRange(x, 4, 13) && inRange(y, 3.5, 8.5)) {
         startPageScreenFinished = false;
         settingScreenIsOpen = false;
         resetGame();
         print("home button clicked!"); // debug
       }
-      // Volume down button clicked
-      else if (inRange(x, 87, 99) && inRange(y, 80, 88)) {
+      // Music Volume up button clicked
+      else if (inRange(x, 69, 77) && inRange(y, 82, 88)) {
         if (volume < 1.0) volume += 0.1;
         Flame.bgm.audioPlayer.setVolume(volume);
         print(volume);
       }
-      // Volume down button clicked
-      else if (inRange(x, 87, 99) && inRange(y, 90, 98)) {
+      // Music Volume down button clicked
+      else if (inRange(x, 83, 91) && inRange(y, 82, 88)) {
         if (volume > 0) volume -= 0.1;
         Flame.bgm.audioPlayer.setVolume(volume);
         print(volume);
       }
-      // Mute button clicked
-      else if (inRange(x, 87, 99) && inRange(y, 70, 78)) {
+      // Music Mute button clicked
+      else if (inRange(x, 54, 62) && inRange(y, 82, 87)) {
+        toggleMute();
+      }
+
+      // Effect Volume up button clicked
+      else if (inRange(x, 69, 77) && inRange(y, 90, 95)) {
+        if (volume < 1.0) volume += 0.1;
+        Flame.bgm.audioPlayer.setVolume(volume);
+        print(volume);
+      }
+      // Effect Volume down button clicked
+      else if (inRange(x, 83, 92) && inRange(y, 90, 95)) {
+        if (volume > 0) volume -= 0.1;
+        Flame.bgm.audioPlayer.setVolume(volume);
+        print(volume);
+      }
+      // Effect Mute button clicked
+      else if (inRange(x, 54, 62) && inRange(y, 90, 95)) {
         toggleMute();
       }
       // Difficulty noob button click
