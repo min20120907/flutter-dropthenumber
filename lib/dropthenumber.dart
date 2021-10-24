@@ -55,8 +55,9 @@ class DropTheNumber extends Game with TapDetector {
     GameDifficulty.hard: 1.5,
   };
 
-  // The default volume of the game (can be change by click on the volume adjust button)
+  // The default volume of the game bgm (can be change by click on the volume adjust button)
   static double volume = 0.5;
+  // the volumne for the effects sound
   static double effectVolume = 0.5;
   static bool effectMute = false;
   // The current difficulty of the game
