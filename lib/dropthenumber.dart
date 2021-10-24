@@ -41,15 +41,16 @@ class DropTheNumber extends Game with TapDetector {
 
   // The cooldown of the superpower
   Map<GameDifficulty, Duration> superpowerCooldown = {
-    GameDifficulty.noob: Duration(seconds:10),
-    GameDifficulty.easy: Duration(seconds:20),
-    GameDifficulty.normal: Duration(seconds:30),
-    GameDifficulty.hard: Duration(seconds:30),
+    GameDifficulty.noob: Duration(seconds: 10),
+    GameDifficulty.easy: Duration(seconds: 20),
+    GameDifficulty.normal: Duration(seconds: 30),
+    GameDifficulty.hard: Duration(seconds: 30),
   };
 
   // The default volume of the game (can be change by click on the volume adjust button)
   static double volume = 0.5;
-
+  static double effectVolume = 0.5;
+  static bool effectMute = false;
   // The current difficulty of the game
   // wip: Temporary set to normal, it need to be set to the difficulty that the game leaved previous time.
   GameDifficulty gameDifficulty = GameDifficulty.normal;
@@ -124,7 +125,6 @@ class DropTheNumber extends Game with TapDetector {
   Duration cdh, cdv;
   bool blockedHor = false, blockedVert = false;
 
-
   // Data handler can help to save and read data from file.
   DataHandler dataHandler = DataHandler();
   // A generator of random values, import from 'dart:math'.
@@ -159,7 +159,7 @@ class DropTheNumber extends Game with TapDetector {
     score = 0;
     gameOver = false;
     pause = false;
-    for(List lineOfBlocks in blocks) {
+    for (List lineOfBlocks in blocks) {
       lineOfBlocks.clear();
     }
     setGameDifficulty(gameDifficulty);
@@ -224,7 +224,7 @@ class DropTheNumber extends Game with TapDetector {
       }
     }
     // Draw game setting screen.
-    else if(settingScreenIsOpen) {
+    else if (settingScreenIsOpen) {
       drawHandler.drawSettingScreen();
       drawHandler.drawGameDifficultyText(gameDifficulty);
       if (!mute) {
@@ -262,7 +262,9 @@ class DropTheNumber extends Game with TapDetector {
       cdh = DateTime.now().difference(cooldown_time_hor);
       cdv = DateTime.now().difference(cooldown_time_vert);
       // Horizontal cross while cooldown
-      if (cdh < currentSuperpowerCooldown && cdh != null && !firstHorizontalOccurance) {
+      if (cdh < currentSuperpowerCooldown &&
+          cdh != null &&
+          !firstHorizontalOccurance) {
         blockedHor = true;
         // draw the cross
 
@@ -272,7 +274,9 @@ class DropTheNumber extends Game with TapDetector {
       }
 
       // Vertical cross while cooldown
-      if (cdv < currentSuperpowerCooldown && cdv != null && !firstVerticalOccurance) {
+      if (cdv < currentSuperpowerCooldown &&
+          cdv != null &&
+          !firstVerticalOccurance) {
         blockedVert = true;
 
         // draw the cross
@@ -443,9 +447,9 @@ class DropTheNumber extends Game with TapDetector {
     }
 
     // game setting screen
-    else if(settingScreenIsOpen) {
+    else if (settingScreenIsOpen) {
       // Back button clicked
-      if(inRange(x, 89, 98) && inRange(y, 3.5, 8.5)) {
+      if (inRange(x, 89, 98) && inRange(y, 3.5, 8.5)) {
         print("back button clicked"); // debug
         closeSettingScreen();
       }
@@ -488,7 +492,6 @@ class DropTheNumber extends Game with TapDetector {
       else if (inRange(x, 35, 67) && inRange(y, 68, 75)) {
         setGameDifficulty(GameDifficulty.hard);
       }
-
     }
 
     // Game running
@@ -906,7 +909,8 @@ class DropTheNumber extends Game with TapDetector {
     double currentTrackHighestSolidY =
         87 - blockHeight * blocks[currentTrack].length;
     // The bottom y of current block in the next round.
-    double currentBlockBottomY = currentBlock.y + blockHeight + currentDropSpeed / 60;
+    double currentBlockBottomY =
+        currentBlock.y + blockHeight + currentDropSpeed / 60;
 
     if (currentBlockBottomY < currentTrackHighestSolidY) {
       currentBlock.y += currentDropSpeed / 60;
@@ -1179,7 +1183,7 @@ class DropTheNumber extends Game with TapDetector {
   * Randomly play one of a bubble audio.
   **********************************************************************/
   void playBubbleAudio() {
-    if (!mute) {
+    if (!effectMute) {
       Flame.audio.play('bubble' + random.nextInt(4).toString() + '.mp3',
           volume: volume);
     }
@@ -1189,7 +1193,7 @@ class DropTheNumber extends Game with TapDetector {
   * Randomly play one of a append audio.
   **********************************************************************/
   void playAppendAudio() {
-    if (!mute) {
+    if (!effectMute) {
       Flame.audio.play('append' + random.nextInt(4).toString() + '.mp3',
           volume: volume);
     }
