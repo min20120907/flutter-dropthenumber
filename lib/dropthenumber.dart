@@ -47,6 +47,14 @@ class DropTheNumber extends Game with TapDetector {
     GameDifficulty.hard: Duration(seconds:30),
   };
 
+  // The score multiplier of the game
+  Map<GameDifficulty, double> scoreMultiplier = {
+    GameDifficulty.noob: 0.25,
+    GameDifficulty.easy: 0.5,
+    GameDifficulty.normal: 1,
+    GameDifficulty.hard: 1.5,
+  };
+
   // The default volume of the game (can be change by click on the volume adjust button)
   static double volume = 0.5;
 
@@ -703,7 +711,7 @@ class DropTheNumber extends Game with TapDetector {
           else {
             mergingStatus = MergingStatus.none;
             blocks[x][y - 1].v *= 8;
-            score += blocks[x][y - 1].v;
+            addScore(blocks[x][y - 1].v);
             dropAboveBlocks(x - 1, y);
             dropAboveBlocks(x + 1, y);
             dropAboveBlocks(x, y);
@@ -741,7 +749,7 @@ class DropTheNumber extends Game with TapDetector {
           else {
             mergingStatus = MergingStatus.none;
             blocks[x][y - 1].v *= 4;
-            score += blocks[x][y - 1].v;
+            addScore(blocks[x][y - 1].v);
             dropAboveBlocks(x + 1, y);
             dropAboveBlocks(x, y);
 
@@ -777,7 +785,7 @@ class DropTheNumber extends Game with TapDetector {
           else {
             mergingStatus = MergingStatus.none;
             blocks[x][y - 1].v *= 4;
-            score += blocks[x][y - 1].v;
+            addScore(blocks[x][y - 1].v);
             dropAboveBlocks(x - 1, y);
             dropAboveBlocks(x, y);
 
@@ -806,7 +814,7 @@ class DropTheNumber extends Game with TapDetector {
           } else {
             mergingStatus = MergingStatus.none;
             blocks[x][y].v *= 4;
-            score += blocks[x][y].v;
+            addScore(blocks[x][y].v);
             dropAboveBlocks(x - 1, y);
             dropAboveBlocks(x + 1, y);
 
@@ -830,7 +838,7 @@ class DropTheNumber extends Game with TapDetector {
           } else {
             mergingStatus = MergingStatus.none;
             blocks[x][y].v *= 2;
-            score += blocks[x][y].v;
+            addScore(blocks[x][y].v);
             dropAboveBlocks(x + 1, y);
 
             merge(x, y);
@@ -853,7 +861,7 @@ class DropTheNumber extends Game with TapDetector {
           } else {
             mergingStatus = MergingStatus.none;
             blocks[x][y].v *= 2;
-            score += blocks[x][y].v;
+            addScore(blocks[x][y].v);
             dropAboveBlocks(x - 1, y);
 
             merge(x, y);
@@ -876,7 +884,7 @@ class DropTheNumber extends Game with TapDetector {
           } else {
             mergingStatus = MergingStatus.none;
             blocks[x][y - 1].v *= 2;
-            score += blocks[x][y - 1].v;
+            addScore(blocks[x][y - 1].v);
             dropAboveBlocks(x, y);
 
             merge(x, y);
@@ -1162,6 +1170,14 @@ class DropTheNumber extends Game with TapDetector {
         merge(x, i);
       }
     }
+  }
+
+  /**********************************************************************
+  * Add the score by the given value multiply by scoreMultiplier
+  * of the current game difficulty.
+  **********************************************************************/
+  void addScore(int score) {
+    this.score += (score * scoreMultiplier[gameDifficulty]).round();
   }
 
   /**********************************************************************
