@@ -158,16 +158,12 @@ class DrawHandler {
     // Game
     loadUiImage("assets/image/background.jpg")
         .then((value) => backgroundImage = value);
-    loadUiImage("assets/image/music.png")
-        .then((value) => musicImage = value);
-    loadUiImage("assets/image/mute.png")
-        .then((value) => muteImage = value);
+    loadUiImage("assets/image/music.png").then((value) => musicImage = value);
+    loadUiImage("assets/image/mute.png").then((value) => muteImage = value);
     loadUiImage("assets/image/setting.png")
         .then((value) => settingImage = value);
-    loadUiImage("assets/image/pause.png")
-        .then((value) => pauseImage = value);
-    loadUiImage("assets/image/play.png")
-        .then((value) => playImage = value);
+    loadUiImage("assets/image/pause.png").then((value) => pauseImage = value);
+    loadUiImage("assets/image/play.png").then((value) => playImage = value);
     loadUiImage("assets/image/horizontalSuperpower.png")
         .then((value) => horizontalSuperpowerImage = value);
     loadUiImage("assets/image/verticalSuperpower.png")
@@ -176,18 +172,14 @@ class DrawHandler {
         .then((value) => startButtonImage = value);
     loadUiImage("assets/image/startButtonBorder.png")
         .then((value) => startButtonBorderImage = value);
-    loadUiImage("assets/image/exit.png")
-        .then((value) => exitImage = value);
-    loadUiImage("assets/image/home.png")
-        .then((value) => homeImage = value);
+    loadUiImage("assets/image/exit.png").then((value) => exitImage = value);
+    loadUiImage("assets/image/home.png").then((value) => homeImage = value);
     loadUiImage("assets/image/gameover1.jpg")
         .then((value) => overImage = value);
-    loadUiImage("assets/image/background3.png")
+    loadUiImage("assets/image/setBG.jpg")
         .then((value) => settingBackgroundImage = value);
-    loadUiImage("assets/image/x.png")
-        .then((value) => xImage = value);
-    loadUiImage("assets/image/arrow.png")
-        .then((value) => arrowImage = value);
+    loadUiImage("assets/image/x.png").then((value) => xImage = value);
+    loadUiImage("assets/image/arrow.png").then((value) => arrowImage = value);
   }
 
   /**********************************************************************
@@ -223,12 +215,12 @@ class DrawHandler {
   **********************************************************************/
   void drawStartPageScreen() {
     drawFullScreenImage(startPageBackgroundImage);
-    drawText2('2048 V.2', 50, 3, Colors.white, 60);
-    drawText2('START', 52, 31, Colors.white, 38);
+    drawText2('2048 V.2', 50, 7, Colors.white, 60);
+    drawText2('START', 52, 31.5, Colors.white, 38);
     drawImage(startPageVolumeUpImage, 87, 80, 12, 8);
     drawImage(startPageVolumeDownImage, 87, 90, 12, 8);
     drawImage(startPageButtonBorderImage, 32, 27.5, 40, 22);
-    drawImage(startPageTitleBorderImage, 0, -5.5, 100, 28);
+    drawImage(startPageTitleBorderImage, 0, -2.5, 100, 28);
     drawImage(exitImage, 2, 91.3, 10, 7);
   }
 
@@ -425,9 +417,9 @@ class DrawHandler {
         "Highest Score: " + highestScore.toString(), 50, 45, Colors.white, 40);
     drawText2("Your Score: " + score.toString(), 45, 55, Colors.white, 40);
     drawImage(startPageButtonBorderImage, 18.5, 66, 33, 19);
-    drawText2("Restart", 34.5, 69, Colors.white, 33);
+    drawText2("Restart", 34.5, 69.5, Colors.white, 33);
     drawImage(startPageButtonBorderImage, 50.5, 66, 33, 19);
-    drawText2("Quit", 66, 69, Colors.white, 33);
+    drawText2("Quit", 66, 69.5, Colors.white, 33);
     drawImage(homeImage, 1, 91.5, 12, 8);
   }
 
@@ -437,8 +429,8 @@ class DrawHandler {
   void drawSettingScreen() {
     drawFullScreenImage(settingBackgroundImage);
     // back button
-    drawImage(xImage, 89, 3.5, 9, 5);
-    drawRectStroke(89, 3.5, 9, 5, Colors.black, 3);
+    drawImage(xImage, 87, 3.5, 9, 5);
+    // drawRectStroke(89, 3.5, 9, 5, Colors.black, 3);
 
     // home button
     drawImage(homeImage, 1, 91.5, 12, 8);
@@ -451,46 +443,47 @@ class DrawHandler {
   void drawGameDifficultyText(GameDifficulty gameDifficulty) {
     // Difficulty text
     drawText2("Difficulty", 50, 10, Colors.black, 80);
-    switch(gameDifficulty) {
-      case GameDifficulty.noob: {
-        drawImage(arrowImage, 28, 33, 5, 5);
-        drawText2("Noob", 50, 30, Colors.blue, 70);
-        drawText2("Easy", 50, 42.5, Colors.green, 50);
-        drawText2("Normal", 50, 55, Colors.yellow, 50);
-        drawText2("Hard", 50, 67.5, Colors.red, 50);
+    switch (gameDifficulty) {
+      case GameDifficulty.noob:
+        {
+          drawImage(arrowImage, 28, 32, 5, 5);
+          drawText2("Noob", 50, 30, Colors.blue, 70);
+          drawText2("Easy", 50, 42.5, Colors.green, 50);
+          drawText2("Normal", 50, 55, Colors.yellow, 50);
+          drawText2("Hard", 50, 67.5, Colors.red, 50);
 
-        break;
-      }
-      case GameDifficulty.easy: {
-        drawImage(arrowImage, 28, 45.5, 5, 5);
-        drawText2("Noob", 50, 30, Colors.blue, 50);
-        drawText2("Easy", 50, 42.5, Colors.green, 70);
-        drawText2("Normal", 50, 55, Colors.yellow, 50);
-        drawText2("Hard", 50, 67.5, Colors.red, 50);
+          break;
+        }
+      case GameDifficulty.easy:
+        {
+          drawImage(arrowImage, 28, 45, 5, 5);
+          drawText2("Noob", 50, 30, Colors.blue, 50);
+          drawText2("Easy", 50, 42.5, Colors.green, 70);
+          drawText2("Normal", 50, 55, Colors.yellow, 50);
+          drawText2("Hard", 50, 67.5, Colors.red, 50);
 
+          break;
+        }
+      case GameDifficulty.normal:
+        {
+          drawImage(arrowImage, 21, 57, 5, 5);
+          drawText2("Noob", 50, 30, Colors.blue, 50);
+          drawText2("Easy", 50, 42.5, Colors.green, 50);
+          drawText2("Normal", 50, 55, Colors.yellow, 70);
+          drawText2("Hard", 50, 67.5, Colors.red, 50);
 
-        break;
-      }
-      case GameDifficulty.normal: {
-        drawImage(arrowImage, 21, 58, 5, 5);
-        drawText2("Noob", 50, 30, Colors.blue, 50);
-        drawText2("Easy", 50, 42.5, Colors.green, 50);
-        drawText2("Normal", 50, 55, Colors.yellow, 70);
-        drawText2("Hard", 50, 67.5, Colors.red, 50);
+          break;
+        }
+      case GameDifficulty.hard:
+        {
+          drawImage(arrowImage, 28, 69.5, 5, 5);
+          drawText2("Noob", 50, 30, Colors.blue, 50);
+          drawText2("Easy", 50, 42.5, Colors.green, 50);
+          drawText2("Normal", 50, 55, Colors.yellow, 50);
+          drawText2("Hard", 50, 67.5, Colors.red, 70);
 
-
-        break;
-      }
-      case GameDifficulty.hard: {
-        drawImage(arrowImage, 28, 70.5, 5, 5);
-        drawText2("Noob", 50, 30, Colors.blue, 50);
-        drawText2("Easy", 50, 42.5, Colors.green, 50);
-        drawText2("Normal", 50, 55, Colors.yellow, 50);
-        drawText2("Hard", 50, 67.5, Colors.red, 70);
-
-
-        break;
-      }
+          break;
+        }
     }
   }
 
@@ -726,7 +719,9 @@ class DrawHandler {
   **********************************************************************/
   void drawText(String text, double x, double y, Color color, double fontSize) {
     // Adjust the font size, make sure the size is not going to huge
-    fontSize /= canvasSize.width > canvasSize.height ? (canvasSize.height / canvasSize.width) : (canvasSize.width / canvasSize.height);
+    fontSize /= canvasSize.width > canvasSize.height
+        ? (canvasSize.height / canvasSize.width)
+        : (canvasSize.width / canvasSize.height);
     fontSize /= 2.5;
 
     TextPainter(
@@ -742,9 +737,12 @@ class DrawHandler {
               toAbsoluteY(y)));
   }
 
-  void drawText2(String text, double x, double y, Color color, double fontSize) {
+  void drawText2(
+      String text, double x, double y, Color color, double fontSize) {
     // Adjust the font size, make sure the size is not going to huge
-    fontSize /= canvasSize.width > canvasSize.height ? (canvasSize.height / canvasSize.width) : (canvasSize.width / canvasSize.height);
+    fontSize /= canvasSize.width > canvasSize.height
+        ? (canvasSize.height / canvasSize.width)
+        : (canvasSize.width / canvasSize.height);
     fontSize /= 2.5;
 
     TextPainter(
