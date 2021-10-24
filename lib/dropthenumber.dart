@@ -12,41 +12,73 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sprintf/sprintf.dart';
-import 'package:dropthenumber/draw_handler.dart';
-import 'package:dropthenumber/block.dart';
-import 'package:dropthenumber/merging_status.dart';
-import 'package:dropthenumber/superpower_status.dart';
-import 'package:dropthenumber/data_handler.dart';
+import 'draw_handler.dart';
+import 'block.dart';
+import 'merging_status.dart';
+import 'superpower_status.dart';
+import 'data_handler.dart';
+import 'game_difficulty.dart';
 
 class DropTheNumber extends Game with TapDetector {
   /**********************************************************************
   * Settings
   **********************************************************************/
   // Y dropped for every second. (In percentage)
-  double dropSpeed = 7; // debug
-  /* Variables */
+  Map<GameDifficulty, double> dropSpeed = {
+    GameDifficulty.noob: 2,
+    GameDifficulty.easy: 4,
+    GameDifficulty.normal: 8,
+    GameDifficulty.hard: 20,
+  };
+
+  // Merge animation speed (percentage of the map)
+  Map<GameDifficulty, double> mergingSpeed = {
+    GameDifficulty.noob: 2,
+    GameDifficulty.easy: 2,
+    GameDifficulty.normal: 2,
+    GameDifficulty.hard: 2,
+  };
+
+  // The cooldown of the superpower
+  Map<GameDifficulty, Duration> superpowerCooldown = {
+    GameDifficulty.noob: Duration(seconds:10),
+    GameDifficulty.easy: Duration(seconds:20),
+    GameDifficulty.normal: Duration(seconds:30),
+    GameDifficulty.hard: Duration(seconds:30),
+  };
+
+  // The default volume of the game (can be change by click on the volume adjust button)
+  static double volume = 0.5;
+
+  // The current difficulty of the game
+  // wip: Temporary set to normal, it need to be set to the difficulty that the game leaved previous time.
+  GameDifficulty gameDifficulty = GameDifficulty.normal;
+
+  /**********************************************************************
+  * Variables
+  **********************************************************************/
+  // Y dropped for every second. (In percentage)
+  double currentDropSpeed; // debug
+  // Merge animation speed (percentage of the map)
+  double currentMergingSpeed;
+  // The cooldown of the superpower
+  Duration currentSuperpowerCooldown;
+  // If the start page is showed, it only show once when the game start.
+  bool startPageScreenFinished = false;
+  // If the game is game over, waiting for restart.
+  bool gameOver;
   // Store the screen size, the value will be set in resize() function.
   Size screenSize;
   // Calculated canvas size in the middle of screen.
   Size canvasSize;
   // Left offset of the canvas left.
   double canvasXOffset;
-  // If the start page is showed, it only show once when the game start.
-  bool startPageScreenFinished = false;
   // Check whether the icon is clicked
   bool volumeOn;
   // Check whether the icon is clicked
   bool volumeDown;
-  // If the game is game over, waiting for restart.
-  bool gameOver;
   // If the setting screen is open
   bool settingScreenIsOpen = false;
-  // If the horizontal superpower is clicked
-//   bool superHorBool = false;
-  // If the vertical superpower is triggered
-//   bool superVertBool = false;
-  //
-  static double volume = 0.5;
   // If the game is paused.
   bool pause;
   // If the game is muted.
@@ -71,9 +103,6 @@ class DropTheNumber extends Game with TapDetector {
   Duration pauseElapsedTime = Duration.zero;
   // Get the maximum track among the blocks
 
-  //cooldown
-  // ignore: non_constant_identifier_names
-  Duration cooldown_period = Duration(seconds: 30);
   // The last time which horizontal superpower clicked
   // ignore: non_constant_identifier_names
   DateTime cooldown_time_hor;
@@ -95,11 +124,7 @@ class DropTheNumber extends Game with TapDetector {
   Duration cdh, cdv;
   bool blockedHor = false, blockedVert = false;
 
-  /* Merge animation */
-  // Merge animation speed (percentage of the map)
-  double mergingSpeed = 2;
 
-  /* Utils */
   // Data handler can help to save and read data from file.
   DataHandler dataHandler = DataHandler();
   // A generator of random values, import from 'dart:math'.
@@ -115,7 +140,7 @@ class DropTheNumber extends Game with TapDetector {
       number >= lowerBoundary && number <= upperBoundary;
   Canvas cv;
 
-  //
+  // first occurance of vertical superpower
   bool firstHorizontalOccurance = true;
   // first occurance of vertical superpower
   bool firstVerticalOccurance = true;
@@ -134,6 +159,10 @@ class DropTheNumber extends Game with TapDetector {
     score = 0;
     gameOver = false;
     pause = false;
+    for(List lineOfBlocks in blocks) {
+      lineOfBlocks.clear();
+    }
+    setGameDifficulty(gameDifficulty);
     pauseElapsedTime = Duration();
     startTime = DateTime.now();
     cooldown_time_hor = DateTime.now();
@@ -197,6 +226,12 @@ class DropTheNumber extends Game with TapDetector {
     // Draw game setting screen.
     else if(settingScreenIsOpen) {
       drawHandler.drawSettingScreen();
+      drawHandler.drawGameDifficultyText(gameDifficulty);
+      if (!mute) {
+        drawHandler.drawStartPageMusicButton();
+      } else {
+        drawHandler.drawStartPageMuteButton();
+      }
     }
     // Draw game running screen.
     else if (!gameOver) {
@@ -227,7 +262,7 @@ class DropTheNumber extends Game with TapDetector {
       cdh = DateTime.now().difference(cooldown_time_hor);
       cdv = DateTime.now().difference(cooldown_time_vert);
       // Horizontal cross while cooldown
-      if (cdh < cooldown_period && cdh != null && !firstHorizontalOccurance) {
+      if (cdh < currentSuperpowerCooldown && cdh != null && !firstHorizontalOccurance) {
         blockedHor = true;
         // draw the cross
 
@@ -237,7 +272,7 @@ class DropTheNumber extends Game with TapDetector {
       }
 
       // Vertical cross while cooldown
-      if (cdv < cooldown_period && cdv != null && !firstVerticalOccurance) {
+      if (cdv < currentSuperpowerCooldown && cdv != null && !firstVerticalOccurance) {
         blockedVert = true;
 
         // draw the cross
@@ -401,9 +436,6 @@ class DropTheNumber extends Game with TapDetector {
       if (inRange(x, 87, 99) && inRange(y, 70, 78)) {
         toggleMute();
       }
-      if (inRange(x, 2, 12) && inRange(y, 91.3, 98.3)) {
-        print(x);
-      }
       // main page quit button
       if (inRange(x, 2, 12) && inRange(y, 91, 98)) {
         exit(0);
@@ -412,18 +444,57 @@ class DropTheNumber extends Game with TapDetector {
 
     // game setting screen
     else if(settingScreenIsOpen) {
-      // 89, 3.5, 9, 5
+      // Back button clicked
       if(inRange(x, 89, 98) && inRange(y, 3.5, 8.5)) {
-        print("back button clicked");
+        print("back button clicked"); // debug
         closeSettingScreen();
       }
+      // Home button clicked
+      else if (inRange(x, 2, 11) && inRange(y, 92, 99.5)) {
+        startPageScreenFinished = false;
+        settingScreenIsOpen = false;
+        resetGame();
+        print("home button clicked!"); // debug
+      }
+      // Volume down button clicked
+      else if (inRange(x, 87, 99) && inRange(y, 80, 88)) {
+        if (volume < 1.0) volume += 0.1;
+        Flame.bgm.audioPlayer.setVolume(volume);
+        print(volume);
+      }
+      // Volume down button clicked
+      else if (inRange(x, 87, 99) && inRange(y, 90, 98)) {
+        if (volume > 0) volume -= 0.1;
+        Flame.bgm.audioPlayer.setVolume(volume);
+        print(volume);
+      }
+      // Mute button clicked
+      else if (inRange(x, 87, 99) && inRange(y, 70, 78)) {
+        toggleMute();
+      }
+      // Difficulty noob button click
+      else if (inRange(x, 37, 62) && inRange(y, 31, 38)) {
+        setGameDifficulty(GameDifficulty.noob);
+      }
+      // Difficulty easy button click
+      else if (inRange(x, 36, 67) && inRange(y, 44, 52)) {
+        setGameDifficulty(GameDifficulty.easy);
+      }
+      // Difficulty normal button click
+      else if (inRange(x, 29, 76) && inRange(y, 56, 62)) {
+        setGameDifficulty(GameDifficulty.normal);
+      }
+      // Difficulty hard button click
+      else if (inRange(x, 35, 67) && inRange(y, 68, 75)) {
+        setGameDifficulty(GameDifficulty.hard);
+      }
+
     }
 
     // Game running
     else if (!gameOver) {
-      // Mute button clicked.
+      // Setting button clicked.
       if (inRange(x, 80, 87) && inRange(y, 15, 19.5)) {
-        // toggleMute();
         print("setting button clicked");
         openSettingScreen();
       }
@@ -465,7 +536,7 @@ class DropTheNumber extends Game with TapDetector {
         }
 
         cool_down_hor = DateTime.now().difference(cooldown_time_hor);
-        if (cool_down_hor > cooldown_period) {
+        if (cool_down_hor > currentSuperpowerCooldown) {
           cool_down_hor = Duration.zero;
           cooldown_time_hor = DateTime.now();
           triggerHorizontalSuperpower();
@@ -484,7 +555,7 @@ class DropTheNumber extends Game with TapDetector {
         }
 
         cool_down_vert = DateTime.now().difference(cooldown_time_vert);
-        if (cool_down_vert > cooldown_period) {
+        if (cool_down_vert > currentSuperpowerCooldown) {
           cool_down_vert = Duration.zero;
           cooldown_time_vert = DateTime.now();
           print("Vertical superpower clicked!"); // debug
@@ -607,9 +678,9 @@ class DropTheNumber extends Game with TapDetector {
       case MergingStatus.tShape:
         {
           // Merge step one
-          if (blocks[x - 1][y].x + mergingSpeed < blocks[x][y].x) {
-            blocks[x - 1][y].x += mergingSpeed;
-            blocks[x + 1][y].x -= mergingSpeed;
+          if (blocks[x - 1][y].x + currentMergingSpeed < blocks[x][y].x) {
+            blocks[x - 1][y].x += currentMergingSpeed;
+            blocks[x + 1][y].x -= currentMergingSpeed;
           } else if (blocks[x - 1][y].x != blocks[x][y].x) {
             blocks[x - 1][y].x = blocks[x][y].x;
             blocks[x + 1][y].x = blocks[x][y].x;
@@ -620,8 +691,8 @@ class DropTheNumber extends Game with TapDetector {
             playBubbleAudio();
           }
           // Merge step two
-          else if (blocks[x][y].y + mergingSpeed < blocks[x][y - 1].y) {
-            blocks[x][y].y += mergingSpeed;
+          else if (blocks[x][y].y + currentMergingSpeed < blocks[x][y - 1].y) {
+            blocks[x][y].y += currentMergingSpeed;
           } else if (blocks[x][y].y != blocks[x][y - 1].y) {
             blocks[x][y].y = blocks[x][y - 1].y;
             // Set the value to zero, the drawHandler will not draw this block any more.
@@ -649,8 +720,8 @@ class DropTheNumber extends Game with TapDetector {
       case MergingStatus.gammaShape:
         {
           // Merge step one
-          if (blocks[x + 1][y].x - mergingSpeed > blocks[x][y].x) {
-            blocks[x + 1][y].x -= mergingSpeed;
+          if (blocks[x + 1][y].x - currentMergingSpeed > blocks[x][y].x) {
+            blocks[x + 1][y].x -= currentMergingSpeed;
           } else if (blocks[x + 1][y].x != blocks[x][y].x) {
             blocks[x + 1][y].x = blocks[x][y].x;
             // Set the value to zero, the drawHandler will not draw this block any more.
@@ -658,8 +729,8 @@ class DropTheNumber extends Game with TapDetector {
             playBubbleAudio();
           }
           // Merge step two
-          else if (blocks[x][y].y + mergingSpeed < blocks[x][y - 1].y) {
-            blocks[x][y].y += mergingSpeed;
+          else if (blocks[x][y].y + currentMergingSpeed < blocks[x][y - 1].y) {
+            blocks[x][y].y += currentMergingSpeed;
           } else if (blocks[x][y].y != blocks[x][y - 1].y) {
             blocks[x][y].y = blocks[x][y - 1].y;
             // Set the value to zero, the drawHandler will not draw this block any more.
@@ -685,8 +756,8 @@ class DropTheNumber extends Game with TapDetector {
       case MergingStatus.sevenShape:
         {
           // Merge step one
-          if (blocks[x - 1][y].x + mergingSpeed < blocks[x][y].x) {
-            blocks[x - 1][y].x += mergingSpeed;
+          if (blocks[x - 1][y].x + currentMergingSpeed < blocks[x][y].x) {
+            blocks[x - 1][y].x += currentMergingSpeed;
           } else if (blocks[x - 1][y].x != blocks[x][y].x) {
             blocks[x - 1][y].x = blocks[x][y].x;
             // Set the value to zero, the drawHandler will not draw this block any more.
@@ -694,8 +765,8 @@ class DropTheNumber extends Game with TapDetector {
             playBubbleAudio();
           }
           // Merge step two
-          else if (blocks[x][y].y + mergingSpeed < blocks[x][y - 1].y) {
-            blocks[x][y].y += mergingSpeed;
+          else if (blocks[x][y].y + currentMergingSpeed < blocks[x][y - 1].y) {
+            blocks[x][y].y += currentMergingSpeed;
           } else if (blocks[x][y].y != blocks[x][y - 1].y) {
             blocks[x][y].y = blocks[x][y - 1].y;
             // Set the value to zero, the drawHandler will not draw this block any more.
@@ -720,9 +791,9 @@ class DropTheNumber extends Game with TapDetector {
 
       case MergingStatus.horizontalShape:
         {
-          if (blocks[x - 1][y].x + mergingSpeed < blocks[x][y].x) {
-            blocks[x - 1][y].x += mergingSpeed;
-            blocks[x + 1][y].x -= mergingSpeed;
+          if (blocks[x - 1][y].x + currentMergingSpeed < blocks[x][y].x) {
+            blocks[x - 1][y].x += currentMergingSpeed;
+            blocks[x + 1][y].x -= currentMergingSpeed;
           } else if (blocks[x - 1][y].x != blocks[x][y].x) {
             blocks[x - 1][y].x = blocks[x][y].x;
             blocks[x + 1][y].x = blocks[x][y].x;
@@ -748,8 +819,8 @@ class DropTheNumber extends Game with TapDetector {
 
       case MergingStatus.rightShape:
         {
-          if (blocks[x + 1][y].x - mergingSpeed > blocks[x][y].x) {
-            blocks[x + 1][y].x -= mergingSpeed;
+          if (blocks[x + 1][y].x - currentMergingSpeed > blocks[x][y].x) {
+            blocks[x + 1][y].x -= currentMergingSpeed;
           } else if (blocks[x + 1][y].x != blocks[x][y].x) {
             blocks[x + 1][y].x = blocks[x][y].x;
             // Set the value to zero, the drawHandler will not draw this block any more.
@@ -771,8 +842,8 @@ class DropTheNumber extends Game with TapDetector {
 
       case MergingStatus.leftShape:
         {
-          if (blocks[x - 1][y].x + mergingSpeed < blocks[x][y].x) {
-            blocks[x - 1][y].x += mergingSpeed;
+          if (blocks[x - 1][y].x + currentMergingSpeed < blocks[x][y].x) {
+            blocks[x - 1][y].x += currentMergingSpeed;
           } else if (blocks[x - 1][y].x != blocks[x][y].x) {
             blocks[x - 1][y].x = blocks[x][y].x;
             // Set the value to zero, the drawHandler will not draw this block any more.
@@ -794,8 +865,8 @@ class DropTheNumber extends Game with TapDetector {
 
       case MergingStatus.downShape:
         {
-          if (blocks[x][y].y + mergingSpeed < blocks[x][y - 1].y) {
-            blocks[x][y].y += mergingSpeed;
+          if (blocks[x][y].y + currentMergingSpeed < blocks[x][y - 1].y) {
+            blocks[x][y].y += currentMergingSpeed;
           } else if (blocks[x][y].y != blocks[x][y - 1].y) {
             blocks[x][y].y = blocks[x][y - 1].y;
             // Set the value to zero, the drawHandler will not draw this block any more.
@@ -835,10 +906,10 @@ class DropTheNumber extends Game with TapDetector {
     double currentTrackHighestSolidY =
         87 - blockHeight * blocks[currentTrack].length;
     // The bottom y of current block in the next round.
-    double currentBlockBottomY = currentBlock.y + blockHeight + dropSpeed / 60;
+    double currentBlockBottomY = currentBlock.y + blockHeight + currentDropSpeed / 60;
 
     if (currentBlockBottomY < currentTrackHighestSolidY) {
-      currentBlock.y += dropSpeed / 60;
+      currentBlock.y += currentDropSpeed / 60;
       return true;
     } else {
       currentBlock.y = currentTrackHighestSolidY - blockHeight;
@@ -1091,6 +1162,17 @@ class DropTheNumber extends Game with TapDetector {
         merge(x, i);
       }
     }
+  }
+
+  /**********************************************************************
+  * Set the difficulty of the game
+  * It will change some other value like currentDropSpeed or currentSuperpowerCooldown
+  **********************************************************************/
+  void setGameDifficulty(GameDifficulty gameDifficulty) {
+    this.gameDifficulty = gameDifficulty;
+    currentDropSpeed = dropSpeed[gameDifficulty];
+    currentMergingSpeed = mergingSpeed[gameDifficulty];
+    currentSuperpowerCooldown = superpowerCooldown[gameDifficulty];
   }
 
   /**********************************************************************
