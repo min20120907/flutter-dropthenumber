@@ -12,11 +12,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sprintf/sprintf.dart';
-import 'package:dropthenumber/draw_handler.dart';
-import 'package:dropthenumber/block.dart';
-import 'package:dropthenumber/merging_status.dart';
-import 'package:dropthenumber/superpower_status.dart';
-import 'package:dropthenumber/data_handler.dart';
+import 'draw_handler.dart';
+import 'block.dart';
+import 'merging_status.dart';
+import 'superpower_status.dart';
+import 'data_handler.dart';
+import 'game_difficulty.dart';
 
 class DropTheNumber extends Game with TapDetector {
   /**********************************************************************
@@ -24,29 +25,35 @@ class DropTheNumber extends Game with TapDetector {
   **********************************************************************/
   // Y dropped for every second. (In percentage)
   double dropSpeed = 7; // debug
-  /* Variables */
+  // Merge animation speed (percentage of the map)
+  double mergingSpeed = 2;
+  // The volume of the game
+  static double volume = 0.5;
+  // Game default difficulty (can be change later on the setting page)
+  GameDifficulty gameDifficulty = GameDifficulty.normal;
+  // The cooldown of the superpower
+  // ignore: non_constant_identifier_names
+  Duration cooldown_period = Duration(seconds: 30);
+
+  /**********************************************************************
+  * Variables
+  **********************************************************************/
+  // If the start page is showed, it only show once when the game start.
+  bool startPageScreenFinished = false;
+  // If the game is game over, waiting for restart.
+  bool gameOver;
   // Store the screen size, the value will be set in resize() function.
   Size screenSize;
   // Calculated canvas size in the middle of screen.
   Size canvasSize;
   // Left offset of the canvas left.
   double canvasXOffset;
-  // If the start page is showed, it only show once when the game start.
-  bool startPageScreenFinished = false;
   // Check whether the icon is clicked
   bool volumeOn;
   // Check whether the icon is clicked
   bool volumeDown;
-  // If the game is game over, waiting for restart.
-  bool gameOver;
   // If the setting screen is open
   bool settingScreenIsOpen = false;
-  // If the horizontal superpower is clicked
-//   bool superHorBool = false;
-  // If the vertical superpower is triggered
-//   bool superVertBool = false;
-  //
-  static double volume = 0.5;
   // If the game is paused.
   bool pause;
   // If the game is muted.
@@ -71,9 +78,6 @@ class DropTheNumber extends Game with TapDetector {
   Duration pauseElapsedTime = Duration.zero;
   // Get the maximum track among the blocks
 
-  //cooldown
-  // ignore: non_constant_identifier_names
-  Duration cooldown_period = Duration(seconds: 30);
   // The last time which horizontal superpower clicked
   // ignore: non_constant_identifier_names
   DateTime cooldown_time_hor;
@@ -95,11 +99,7 @@ class DropTheNumber extends Game with TapDetector {
   Duration cdh, cdv;
   bool blockedHor = false, blockedVert = false;
 
-  /* Merge animation */
-  // Merge animation speed (percentage of the map)
-  double mergingSpeed = 2;
 
-  /* Utils */
   // Data handler can help to save and read data from file.
   DataHandler dataHandler = DataHandler();
   // A generator of random values, import from 'dart:math'.
@@ -115,7 +115,7 @@ class DropTheNumber extends Game with TapDetector {
       number >= lowerBoundary && number <= upperBoundary;
   Canvas cv;
 
-  //
+  // first occurance of vertical superpower
   bool firstHorizontalOccurance = true;
   // first occurance of vertical superpower
   bool firstVerticalOccurance = true;
@@ -200,6 +200,7 @@ class DropTheNumber extends Game with TapDetector {
     // Draw game setting screen.
     else if(settingScreenIsOpen) {
       drawHandler.drawSettingScreen();
+      drawHandler.drawGameDifficultyText(gameDifficulty);
       if (!mute) {
         drawHandler.drawStartPageMusicButton();
       } else {
@@ -445,6 +446,23 @@ class DropTheNumber extends Game with TapDetector {
       else if (inRange(x, 87, 99) && inRange(y, 70, 78)) {
         toggleMute();
       }
+      // Difficulty noob button click
+      else if (inRange(x, 37, 62) && inRange(y, 31, 38)) {
+        setGameDifficulty(GameDifficulty.noob);
+      }
+      // Difficulty easy button click
+      else if (inRange(x, 36, 67) && inRange(y, 44, 52)) {
+        setGameDifficulty(GameDifficulty.easy);
+      }
+      // Difficulty normal button click
+      else if (inRange(x, 29, 76) && inRange(y, 56, 62)) {
+        setGameDifficulty(GameDifficulty.normal);
+      }
+      // Difficulty hard button click
+      else if (inRange(x, 35, 67) && inRange(y, 68, 75)) {
+        setGameDifficulty(GameDifficulty.hard);
+      }
+
     }
 
     // Game running
@@ -1116,6 +1134,36 @@ class DropTheNumber extends Game with TapDetector {
       }
       for (int i = y; i < blocks[x].length; i++) {
         merge(x, i);
+      }
+    }
+  }
+
+  /**********************************************************************
+  * Set the difficulty of the game
+  * It will change some other value like dropSpeed or cooldown_period
+  **********************************************************************/
+  void setGameDifficulty(GameDifficulty gameDifficulty) {
+    this.gameDifficulty = gameDifficulty;
+    switch(gameDifficulty) {
+      case GameDifficulty.noob: {
+        //wip: set dropSpeed and cooldown_period
+
+        break;
+      }
+      case GameDifficulty.easy: {
+        //wip: set dropSpeed and cooldown_period
+
+        break;
+      }
+      case GameDifficulty.normal: {
+        //wip: set dropSpeed and cooldown_period
+
+        break;
+      }
+      case GameDifficulty.hard: {
+        //wip: set dropSpeed and cooldown_period
+
+        break;
       }
     }
   }
