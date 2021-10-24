@@ -134,6 +134,9 @@ class DropTheNumber extends Game with TapDetector {
     score = 0;
     gameOver = false;
     pause = false;
+    for(List lineOfBlocks in blocks) {
+      lineOfBlocks.clear();
+    }
     pauseElapsedTime = Duration();
     startTime = DateTime.now();
     cooldown_time_hor = DateTime.now();
@@ -197,6 +200,11 @@ class DropTheNumber extends Game with TapDetector {
     // Draw game setting screen.
     else if(settingScreenIsOpen) {
       drawHandler.drawSettingScreen();
+      if (!mute) {
+        drawHandler.drawStartPageMusicButton();
+      } else {
+        drawHandler.drawStartPageMuteButton();
+      }
     }
     // Draw game running screen.
     else if (!gameOver) {
@@ -401,9 +409,6 @@ class DropTheNumber extends Game with TapDetector {
       if (inRange(x, 87, 99) && inRange(y, 70, 78)) {
         toggleMute();
       }
-      if (inRange(x, 2, 12) && inRange(y, 91.3, 98.3)) {
-        print(x);
-      }
       // main page quit button
       if (inRange(x, 2, 12) && inRange(y, 91, 98)) {
         exit(0);
@@ -412,18 +417,40 @@ class DropTheNumber extends Game with TapDetector {
 
     // game setting screen
     else if(settingScreenIsOpen) {
-      // 89, 3.5, 9, 5
+      // Back button clicked
       if(inRange(x, 89, 98) && inRange(y, 3.5, 8.5)) {
-        print("back button clicked");
+        print("back button clicked"); // debug
         closeSettingScreen();
+      }
+      // Home button clicked
+      else if (inRange(x, 2, 11) && inRange(y, 92, 99.5)) {
+        startPageScreenFinished = false;
+        settingScreenIsOpen = false;
+        resetGame();
+        print("home button clicked!"); // debug
+      }
+      // Volume down button clicked
+      else if (inRange(x, 87, 99) && inRange(y, 80, 88)) {
+        if (volume < 1.0) volume += 0.1;
+        Flame.bgm.audioPlayer.setVolume(volume);
+        print(volume);
+      }
+      // Volume down button clicked
+      else if (inRange(x, 87, 99) && inRange(y, 90, 98)) {
+        if (volume > 0) volume -= 0.1;
+        Flame.bgm.audioPlayer.setVolume(volume);
+        print(volume);
+      }
+      // Mute button clicked
+      else if (inRange(x, 87, 99) && inRange(y, 70, 78)) {
+        toggleMute();
       }
     }
 
     // Game running
     else if (!gameOver) {
-      // Mute button clicked.
+      // Setting button clicked.
       if (inRange(x, 80, 87) && inRange(y, 15, 19.5)) {
-        // toggleMute();
         print("setting button clicked");
         openSettingScreen();
       }

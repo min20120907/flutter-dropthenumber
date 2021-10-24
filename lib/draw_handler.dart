@@ -426,8 +426,17 @@ class DrawHandler {
   **********************************************************************/
   void drawSettingScreen() {
     drawFullScreenImage(settingBackgroundImage);
+    // back button
     drawImage(xImage, 89, 3.5, 9, 5);
     drawRectStroke(89, 3.5, 9, 5, Colors.black, 3);
+
+    // home button
+    drawImage(homeImage, 1, 91.5, 12, 8);
+
+    // volume adjust button
+    drawImage(startPageVolumeUpImage, 87, 80, 12, 8);
+    drawImage(startPageVolumeDownImage, 87, 90, 12, 8);
+
   }
 
   /**********************************************************************
