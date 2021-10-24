@@ -57,9 +57,8 @@ class DropTheNumber extends Game with TapDetector {
 
   // The default volume of the game bgm (can be change by click on the volume adjust button)
   static double volume = 0.5;
-  // the volumne for the effects sound
+  // The default volume of the effect sound (can be change by click on the setting page effect adjust button)
   static double effectVolume = 0.5;
-  static bool effectMute = false;
   // The current difficulty of the game
   // wip: Temporary set to normal, it need to be set to the difficulty that the game leaved previous time.
   GameDifficulty gameDifficulty = GameDifficulty.normal;
@@ -91,8 +90,10 @@ class DropTheNumber extends Game with TapDetector {
   bool settingScreenIsOpen = false;
   // If the game is paused.
   bool pause;
-  // If the game is muted.
-  bool mute = false;
+  // If the bgm is muted.
+  static bool mute = false;
+  // If the effect is muted
+  static bool muteEffect = false;
   // The track using by the dropping block.
   int currentTrack;
   // Store the information of the dropping block.
@@ -241,10 +242,10 @@ class DropTheNumber extends Game with TapDetector {
       } else {
         drawHandler.drawSettingPageMuteButton();
       }
-      if (!mute) {
-        drawHandler.drawSettingPageMusicButton2();
+      if (!muteEffect) {
+        drawHandler.drawSettingPageEffectMusicButton();
       } else {
-        drawHandler.drawSettingPageMuteButton2();
+        drawHandler.drawSettingPageEffectMuteButton();
       }
     }
     // Draw game running screen.
@@ -474,38 +475,36 @@ class DropTheNumber extends Game with TapDetector {
         resetGame();
         print("home button clicked!"); // debug
       }
-      // Music Volume up button clicked
-      else if (inRange(x, 69, 77) && inRange(y, 82, 88)) {
-        if (volume < 1.0) volume += 0.1;
-        Flame.bgm.audioPlayer.setVolume(volume);
-        print(volume);
-      }
       // Music Volume down button clicked
-      else if (inRange(x, 83, 91) && inRange(y, 82, 88)) {
+      else if (inRange(x, 69, 77) && inRange(y, 82, 88)) {
         if (volume > 0) volume -= 0.1;
         Flame.bgm.audioPlayer.setVolume(volume);
-        print(volume);
+        print("bgm volume = ${volume}");
+      }
+      // Music Volume up button clicked
+      else if (inRange(x, 83, 91) && inRange(y, 82, 88)) {
+        if (volume < 1.0) volume += 0.1;
+        Flame.bgm.audioPlayer.setVolume(volume);
+        print("bgm volume = ${volume}");
       }
       // Music Mute button clicked
       else if (inRange(x, 54, 62) && inRange(y, 82, 87)) {
         toggleMute();
       }
 
-      // Effect Volume up button clicked
-      else if (inRange(x, 69, 77) && inRange(y, 90, 95)) {
-        if (volume < 1.0) volume += 0.1;
-        Flame.bgm.audioPlayer.setVolume(volume);
-        print(volume);
-      }
       // Effect Volume down button clicked
+      else if (inRange(x, 69, 77) && inRange(y, 90, 95)) {
+        if (effectVolume > 0) effectVolume -= 0.1;
+        print("effect volume = ${effectVolume}");
+      }
+      // Effect Volume up button clicked
       else if (inRange(x, 83, 92) && inRange(y, 90, 95)) {
-        if (volume > 0) volume -= 0.1;
-        Flame.bgm.audioPlayer.setVolume(volume);
-        print(volume);
+        if (effectVolume < 1.0) effectVolume += 0.1;
+        print("effect volume = ${effectVolume}");
       }
       // Effect Mute button clicked
       else if (inRange(x, 54, 62) && inRange(y, 90, 95)) {
-        toggleMute();
+        toggleMuteEffect();
       }
       // Difficulty noob button click
       else if (inRange(x, 37, 62) && inRange(y, 31, 38)) {
@@ -1121,7 +1120,8 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   /**********************************************************************
-  * Try to toggle the mute the the game is running music.
+  * Toggle mute bgm
+  * If the bgm is running, it will be paused
   **********************************************************************/
   void toggleMute() {
     mute = !mute;
@@ -1131,6 +1131,13 @@ class DropTheNumber extends Game with TapDetector {
     } else {
       Flame.bgm.resume();
     }
+  }
+
+  /**********************************************************************
+  * Toggle mute effect sound
+  **********************************************************************/
+  void toggleMuteEffect() {
+    muteEffect = !muteEffect;
   }
 
   /**********************************************************************
@@ -1222,9 +1229,9 @@ class DropTheNumber extends Game with TapDetector {
   * Randomly play one of a bubble audio.
   **********************************************************************/
   void playBubbleAudio() {
-    if (!effectMute) {
+    if (!muteEffect) {
       Flame.audio.play('bubble' + random.nextInt(4).toString() + '.mp3',
-          volume: volume);
+          volume: effectVolume);
     }
   }
 
@@ -1232,9 +1239,9 @@ class DropTheNumber extends Game with TapDetector {
   * Randomly play one of a append audio.
   **********************************************************************/
   void playAppendAudio() {
-    if (!effectMute) {
+    if (!muteEffect) {
       Flame.audio.play('append' + random.nextInt(4).toString() + '.mp3',
-          volume: volume);
+          volume: effectVolume);
     }
   }
 }

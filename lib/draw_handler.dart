@@ -253,16 +253,16 @@ class DrawHandler {
   }
 
   /**********************************************************************
-  * Draw music button on the setting page.
+  * Draw effect music button on the setting page.
   **********************************************************************/
-  void drawSettingPageMusicButton2() {
+  void drawSettingPageEffectMusicButton() {
     drawImage(startPageMusicImage, 54, 89.8, 10.5, 6.5);
   }
 
   /**********************************************************************
   * Draw mute button on the start page.
   **********************************************************************/
-  void drawSettingPageMuteButton2() {
+  void drawSettingPageEffectMuteButton() {
     drawImage(startPageMuteImage, 54, 89.8, 10.5, 6.5);
   }
 
@@ -467,11 +467,11 @@ class DrawHandler {
     drawText2("Effect Sound:", 31, 90, Colors.black, 40);
 
     // volume adjust button
-    drawImage(startPageVolumeUpImage, 67, 81, 14, 8);
-    drawImage(startPageVolumeDownImage, 81, 81, 14, 8);
+    drawImage(startPageVolumeDownImage, 67, 81, 14, 8);
+    drawImage(startPageVolumeUpImage, 81, 81, 14, 8);
 
-    drawImage(startPageVolumeUpImage, 67, 89, 14, 8);
-    drawImage(startPageVolumeDownImage, 81, 89, 14, 8);
+    drawImage(startPageVolumeDownImage, 67, 89, 14, 8);
+    drawImage(startPageVolumeUpImage, 81, 89, 14, 8);
   }
 
   void drawGameDifficultyText(GameDifficulty gameDifficulty) {
