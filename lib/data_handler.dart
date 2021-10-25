@@ -56,6 +56,25 @@ class DataHandler {
 //   }
 
   /**********************************************************************
+  * Read game difficulty from file.
+  **********************************************************************/
+  GameDifficulty readGameDifficulty() {
+    int gameDifficultyIndex = storage.getInt('gameDifficulty');
+    if(!storage.containsKey('gameDifficulty')) {
+      return GameDifficulty.normal;
+    }
+    return GameDifficulty.values[gameDifficultyIndex];
+  }
+
+  /**********************************************************************
+  * Write game difficulty to file.
+  **********************************************************************/
+  void writeGameDifficulty(GameDifficulty gameDifficulty) {
+    int gameDifficultyIndex = GameDifficulty.values.indexOf(gameDifficulty);
+    storage.setInt('gameDifficulty', gameDifficultyIndex);
+  }
+
+  /**********************************************************************
   * Read bgm mute from file
   **********************************************************************/
   bool readMute() {
@@ -103,7 +122,7 @@ class DataHandler {
   * Write effect mute state to file.
   **********************************************************************/
   void writeEffectMute(bool effectMute) {
-     storage.setBool('effectMute', effectMute);
+    storage.setBool('effectMute', effectMute);
   }
 
   /**********************************************************************
@@ -120,25 +139,6 @@ class DataHandler {
   * Write effect volume to file.
   **********************************************************************/
   void writeEffectVolume(double effectVolume) {
-     storage.setDouble('effectVolume', effectVolume);
-  }
-
-  /**********************************************************************
-  * Read game difficulty from file.
-  **********************************************************************/
-  GameDifficulty readGameDifficulty() {
-    int gameDifficultyIndex = storage.getInt('gameDifficulty');
-    if(!storage.containsKey('gameDifficulty')) {
-      return GameDifficulty.normal;
-    }
-    return GameDifficulty.values[gameDifficultyIndex];
-  }
-
-  /**********************************************************************
-  * Write game difficulty to file.
-  **********************************************************************/
-  void writeGameDifficulty(GameDifficulty gameDifficulty) {
-    int gameDifficultyIndex = GameDifficulty.values.indexOf(gameDifficulty);
-    (storage) => storage.setInt('gameDifficulty', gameDifficultyIndex);
+    storage.setDouble('effectVolume', effectVolume);
   }
 }

@@ -1265,7 +1265,7 @@ class DropTheNumber extends Game with TapDetector {
     }
 
     effectVolume += 0.1;
-    dataHandler.writeVolume(effectVolume);
+    dataHandler.writeEffectVolume(effectVolume);
   }
 
   /**********************************************************************
@@ -1278,7 +1278,7 @@ class DropTheNumber extends Game with TapDetector {
     }
 
     effectVolume -= 0.1;
-    dataHandler.writeVolume(effectVolume);
+    dataHandler.writeEffectVolume(effectVolume);
   }
 
   /**********************************************************************
