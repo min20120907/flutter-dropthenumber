@@ -132,7 +132,7 @@ class DropTheNumber extends Game with TapDetector {
   bool blockedHor = false, blockedVert = false;
 
   // Data handler can help to save and read data from file.
-  DataHandler dataHandler = DataHandler();
+  DataHandler dataHandler;
   // A generator of random values, import from 'dart:math'.
   Random random = Random();
   // Draw handler for helping to draw everything on screen.
@@ -154,21 +154,19 @@ class DropTheNumber extends Game with TapDetector {
   /**********************************************************************
   * Constructor
   **********************************************************************/
-  DropTheNumber() {
-    dataHandler.readHighestScore().then((value) => highestScore = value);
-    dataHandler.readGameDifficulty().then((value) => gameDifficulty = value);
-    dataHandler.readMute().then((value) => {
-      mute = value,
-      if(mute) {
-        Flame.bgm.pause(),
-      },
-    });
-    dataHandler.readVolume().then((value) => {
-      volume = value,
-      Flame.bgm.audioPlayer.setVolume(volume),
-    });
-    dataHandler.readEffectMute().then((value) => effectMute = value);
-    dataHandler.readEffectVolume().then((value) => effectVolume = value);
+  DropTheNumber(DataHandler dataHandler) {
+    this.dataHandler = dataHandler;
+    highestScore = dataHandler.readHighestScore();
+    gameDifficulty = dataHandler.readGameDifficulty();
+    mute = dataHandler.readMute();
+    volume = dataHandler.readVolume();
+    effectMute = dataHandler.readEffectMute();
+    effectVolume = dataHandler.readEffectVolume();
+
+    Flame.bgm.play("edm.mp3", volume: volume);
+    if(mute) {
+      Flame.bgm.pause();
+    }
 
     resetGame();
   }
@@ -450,8 +448,8 @@ class DropTheNumber extends Game with TapDetector {
         startTime = DateTime.now();
 
         // Get history highest score from file.
-        dataHandler.readHighestScore().then((value) =>
-            highestScore = value > highestScore ? value : highestScore);
+//         dataHandler.readHighestScore().then((value) =>
+//             highestScore = value > highestScore ? value : highestScore);
       }
       if (inRange(x, 87, 99) && inRange(y, 80, 88)) {
         upVolume();

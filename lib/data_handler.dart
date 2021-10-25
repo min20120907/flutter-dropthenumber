@@ -7,13 +7,23 @@ import'game_difficulty.dart';
 
 class DataHandler {
   /**********************************************************************
+  * Variable
+  **********************************************************************/
+  SharedPreferences storage;
+
+  /**********************************************************************
+  * Constructor
+  **********************************************************************/
+  DataHandler(SharedPreferences storage) {
+    this.storage = storage;
+  }
+
+  /**********************************************************************
   * Read highest score from file.
   **********************************************************************/
   // Method1
-  Future<int> readHighestScore() async {
-    SharedPreferences storage = await SharedPreferences.getInstance(); // Error! Null check operator used on a null value
+  int readHighestScore() {
     if(!storage.containsKey('highestScore')) {
-      print("three"); //debug!!
       return 0;
     }
     return storage.getInt('highestScore');
@@ -36,7 +46,7 @@ class DataHandler {
   **********************************************************************/
   // Method1
   void writeHighestScore(int highestScore) {
-    SharedPreferences.getInstance().then((storage) => storage.setInt('highestScore', highestScore));
+    storage.setInt('highestScore', highestScore);
   }
 
   // Method2 (Also work)
@@ -48,8 +58,7 @@ class DataHandler {
   /**********************************************************************
   * Read bgm mute from file
   **********************************************************************/
-  Future<bool> readMute() async {
-    SharedPreferences storage = await SharedPreferences.getInstance();
+  bool readMute() {
     if(!storage.containsKey('mute')) {
       return false;
     }
@@ -60,14 +69,13 @@ class DataHandler {
   * Write bgm mute state to file.
   **********************************************************************/
   void writeMute(bool mute) {
-     SharedPreferences.getInstance().then((storage) => storage.setBool('mute', mute));
+     storage.setBool('mute', mute);
   }
 
   /**********************************************************************
   * Read bgm volume from file
   **********************************************************************/
-  Future<double> readVolume() async {
-    SharedPreferences storage = await SharedPreferences.getInstance();
+  double readVolume() {
     if(!storage.containsKey('volume')) {
       return 0.5;
     }
@@ -78,14 +86,13 @@ class DataHandler {
   * Write bgm volume to file.
   **********************************************************************/
   void writeVolume(double volume) {
-     SharedPreferences.getInstance().then((storage) => storage.setDouble('volume', volume));
+     storage.setDouble('volume', volume);
   }
 
   /**********************************************************************
   * Read effect mute from file
   **********************************************************************/
-  Future<bool> readEffectMute() async {
-    SharedPreferences storage = await SharedPreferences.getInstance();
+  bool readEffectMute() {
     if(!storage.containsKey('effectMute')) {
       return false;
     }
@@ -96,14 +103,13 @@ class DataHandler {
   * Write effect mute state to file.
   **********************************************************************/
   void writeEffectMute(bool effectMute) {
-     SharedPreferences.getInstance().then((storage) => storage.setBool('effectMute', effectMute));
+     storage.setBool('effectMute', effectMute);
   }
 
   /**********************************************************************
   * Read effect volume from file.
   **********************************************************************/
-  Future<double> readEffectVolume() async {
-    SharedPreferences storage = await SharedPreferences.getInstance();
+  double readEffectVolume() {
     if(!storage.containsKey('effectVolume')) {
       return 0.5;
     }
@@ -114,15 +120,14 @@ class DataHandler {
   * Write effect volume to file.
   **********************************************************************/
   void writeEffectVolume(double effectVolume) {
-     SharedPreferences.getInstance().then((storage) => storage.setDouble('effectVolume', effectVolume));
+     storage.setDouble('effectVolume', effectVolume);
   }
 
   /**********************************************************************
   * Read game difficulty from file.
   **********************************************************************/
-  Future<GameDifficulty> readGameDifficulty() async {
-    SharedPreferences storage = await SharedPreferences.getInstance();
-    int gameDifficultyIndex = await storage.getInt('gameDifficulty');
+  GameDifficulty readGameDifficulty() {
+    int gameDifficultyIndex = storage.getInt('gameDifficulty');
     if(!storage.containsKey('gameDifficulty')) {
       return GameDifficulty.normal;
     }
@@ -134,6 +139,6 @@ class DataHandler {
   **********************************************************************/
   void writeGameDifficulty(GameDifficulty gameDifficulty) {
     int gameDifficultyIndex = GameDifficulty.values.indexOf(gameDifficulty);
-    SharedPreferences.getInstance().then((storage) => storage.setInt('gameDifficulty', gameDifficultyIndex));
+    (storage) => storage.setInt('gameDifficulty', gameDifficultyIndex);
   }
 }
