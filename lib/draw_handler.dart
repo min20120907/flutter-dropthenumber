@@ -457,10 +457,10 @@ class DrawHandler {
   void drawSettingScreen() {
     drawFullScreenImage(settingBackgroundImage);
     // back button
-    drawImage(xImage, 87, 3.5, 9, 5);
+    drawImage(xImage, 87, 5.5, 9, 5);
 
     // home button
-    drawImage(homeImage, 3, 2, 12, 8);
+    drawImage(homeImage, 3, 4, 12, 8);
 
     // Sound Text
     drawText2("Game Music:", 31, 82, Colors.black, 40);
@@ -835,11 +835,7 @@ class DrawHandler {
     canvas.drawImageRect(
         image,
         Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble()),
-        Rect.fromLTWH(
-            -0.5,
-            -0.5,
-            screenSize.width,
-            screenSize.height),
+        Rect.fromLTWH(-0.5, -0.5, screenSize.width, screenSize.height),
         Paint());
   }
 }
