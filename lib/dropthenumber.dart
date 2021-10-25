@@ -1234,7 +1234,8 @@ class DropTheNumber extends Game with TapDetector {
   * Also update the local storge setting file.
   **********************************************************************/
   void upVolume() {
-    if(volume > 1.0) {
+    if(volume + 0.1 > 0.999) {
+      volume = 1;
       return;
     }
 
@@ -1247,7 +1248,8 @@ class DropTheNumber extends Game with TapDetector {
   * Also update the local storge setting file.
   **********************************************************************/
   void downVolume() {
-    if(volume < 0) {
+    if(volume - 0.1 < 0.001) {
+      volume = 0;
       return;
     }
 
@@ -1260,7 +1262,8 @@ class DropTheNumber extends Game with TapDetector {
   * Also update the local storge setting file.
   **********************************************************************/
   void upEffectVolume() {
-    if(effectVolume > 1.0) {
+    if(effectVolume + 0.1 > 0.999) {
+      effectVolume = 1;
       return;
     }
 
@@ -1273,7 +1276,8 @@ class DropTheNumber extends Game with TapDetector {
   * Also update the local storge setting file.
   **********************************************************************/
   void downEffectVolume() {
-    if(effectVolume < 0) {
+    if(effectVolume - 0.1 < 0.001) {
+      effectVolume = 0;
       return;
     }
 
