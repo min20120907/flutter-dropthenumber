@@ -28,3 +28,5 @@ update the ```storeFile=/home/<USER_NAME>/upload-keystore.jks in <PROJECT_PATH>/
 
 3. Run now! For more information please check [flutter document](https://flutter.dev/docs/reference/flutter-cli). <br />
 flutter run
+4. Build AAB file <br />
+` flutter build appbundle`
