@@ -838,9 +838,8 @@ class DrawHandler {
         Rect.fromLTWH(
             -0.5,
             -0.5,
-            screenSize.width + 1,
-            screenSize.height +
-                1), // draw a little bit more to make sure the picture cover whole screen.
+            screenSize.width,
+            screenSize.height),
         Paint());
   }
 }
