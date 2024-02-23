@@ -35,7 +35,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 33
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -60,7 +60,7 @@ configurations.all {
 }
         applicationId "com.tku.dropthenumber"
         minSdkVersion flutter.minSdkVersion
-        targetSdkVersion 30
+        targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
     }
