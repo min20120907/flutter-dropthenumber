@@ -59,7 +59,7 @@ configurations.all {
     resolutionStrategy { force 'androidx.core:core-ktx:1.6.0' }
 }
         applicationId "com.tku.dropthenumber"
-        minSdkVersion 16
+        minSdkVersion flutter.minSdkVersion
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName

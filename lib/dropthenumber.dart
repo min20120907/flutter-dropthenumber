@@ -1,17 +1,18 @@
-// @dart=2.11
-import 'dart:async';
+// import 'dart:async';
 import 'dart:math';
-import 'dart:typed_data';
-import 'dart:ui' as ui;
+// import 'dart:typed_data';
+// import 'dart:ui' as ui;
 import 'dart:io';
-import 'package:flame/flame.dart';
+import 'package:flame/events.dart';
+// import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
-import 'package:flame/gestures.dart';
-import 'package:flame/flame_audio.dart';
+// import 'package:flame/gestures.dart';
+// import 'package:flame/flame_audio.dart';
+import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+// import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:sprintf/sprintf.dart';
+// import 'package:sprintf/sprintf.dart';
 import 'draw_handler.dart';
 import 'block.dart';
 import 'merging_status.dart';
@@ -67,43 +68,43 @@ class DropTheNumber extends Game with TapDetector {
   * Variables
   **********************************************************************/
   // Y dropped for every second. (In percentage)
-  double currentDropSpeed; // debug
+  double currentDropSpeed = 8; // debug
   // Merge animation speed (percentage of the map)
-  double currentMergingSpeed;
+  double currentMergingSpeed = 2;
   // The cooldown of the superpower
-  Duration currentSuperpowerCooldown;
+  Duration currentSuperpowerCooldown = Duration.zero;
   // If the start page is showed, it only show once when the game start.
   bool startPageScreenFinished = false;
   // If the game is game over, waiting for restart.
-  bool gameOver;
+  bool gameOver = false;
   // Store the screen size, the value will be set in resize() function.
-  Size screenSize;
+  Size screenSize = Size(0.0, 0.0);
   // Calculated canvas size in the middle of screen.
-  Size canvasSize;
+  Size canvasSize_ = Size(0.0, 0.0); // debug!
   // Left offset of the canvas left.
-  double canvasXOffset;
+  double canvasXOffset = 0.0;
   // If the setting screen is open
   bool settingScreenIsOpen = false;
   // If the game is paused.
-  bool pause;
+  bool pause = true;
   // If the bgm is muted.
   bool mute = false;
   // If the effect is muted
   bool effectMute = false;
   // The track using by the dropping block.
-  int currentTrack;
+  int currentTrack = 0;
   // Store the information of the dropping block.
-  Block currentBlock;
+  Block currentBlock = Block(0, 0.0, 0.0);
   // The value of next block.
-  int nextBlockValue;
+  int nextBlockValue = 0;
   // The list which maximum is 5*7 to store all blocks information.
   List<List<Block>> blocks = [[], [], [], [], []];
   // The current score of the game.
-  int score;
+  int score = 0;
   // The highest score on the local game.
   int highestScore = 0;
   // The start time point of the game.
-  DateTime startTime;
+  DateTime startTime = DateTime.now();
   // The time elapsed of the game running from the start time.
   Duration elapsedTime = Duration.zero;
   // The time elapsed of the game pause.
@@ -112,13 +113,13 @@ class DropTheNumber extends Game with TapDetector {
 
   // The last time which horizontal superpower clicked
   // ignore: non_constant_identifier_names
-  DateTime cooldown_time_hor;
+  DateTime cooldown_time_hor = DateTime(0);
   // Horizontal superpower cooldown duration
   // ignore: non_constant_identifier_names
   Duration cool_down_hor = Duration.zero;
   // The last time which vertical superpower clicked
   // ignore: non_constant_identifier_names
-  DateTime cooldown_time_vert;
+  DateTime cooldown_time_vert = DateTime(0);
   // Vertical superpower cooldown duration
   // ignore: non_constant_identifier_names
   Duration cool_down_vert = Duration.zero;
@@ -128,7 +129,7 @@ class DropTheNumber extends Game with TapDetector {
   DateTime startTimeOfPause = DateTime.now();
   // Record the duration of pause phase
   Duration pauseDuration = Duration.zero;
-  Duration cdh, cdv;
+  Duration cdh = Duration.zero, cdv = Duration.zero;
   bool blockedHor = false, blockedVert = false;
 
   // Data handler can help to save and read data from file.
@@ -138,13 +139,13 @@ class DropTheNumber extends Game with TapDetector {
   // Draw handler for helping to draw everything on screen.
   DrawHandler drawHandler = DrawHandler();
   // Convert the absolute x to relative x.
-  double toRelativeX(double x) => (x - canvasXOffset) * 100 / canvasSize.width;
+  double toRelativeX(double x) => (x - canvasXOffset) * 100 / canvasSize_.width;
   // Convert the absolute y to relative y.
-  double toRelativeY(double y) => y * 100 / canvasSize.height;
+  double toRelativeY(double y) => y * 100 / canvasSize_.height;
   // Check if the number is within given lower boundary and upper boundary.
   bool inRange(double number, double lowerBoundary, double upperBoundary) =>
       number >= lowerBoundary && number <= upperBoundary;
-  Canvas cv;
+  // Canvas cv;
 
   // first occurance of vertical superpower
   bool firstHorizontalOccurance = true;
@@ -154,18 +155,18 @@ class DropTheNumber extends Game with TapDetector {
   /**********************************************************************
   * Constructor
   **********************************************************************/
-  DropTheNumber(DataHandler dataHandler) {
-    this.dataHandler = dataHandler;
-    highestScore = dataHandler.readHighestScore();
-    gameDifficulty = dataHandler.readGameDifficulty();
-    mute = dataHandler.readMute();
-    volume = dataHandler.readVolume();
-    effectMute = dataHandler.readEffectMute();
-    effectVolume = dataHandler.readEffectVolume();
+  DropTheNumber(DataHandler dataHandler)
+  :dataHandler = dataHandler,
+  highestScore = dataHandler.readHighestScore(),
+  gameDifficulty = dataHandler.readGameDifficulty(),
+  mute = dataHandler.readMute(),
+  volume = dataHandler.readVolume(),
+  effectMute = dataHandler.readEffectMute(),
+  effectVolume = dataHandler.readEffectVolume() {
 
-    Flame.bgm.play("edm.mp3", volume: volume);
+    FlameAudio.bgm.play("edm.mp3", volume: volume);
     if(mute) {
-      Flame.bgm.pause();
+      FlameAudio.bgm.pause();
     }
 
     resetGame();
@@ -184,8 +185,8 @@ class DropTheNumber extends Game with TapDetector {
     setGameDifficulty(gameDifficulty);
     pauseElapsedTime = Duration();
     startTime = DateTime.now();
-    cooldown_time_hor = DateTime.now();
-    cooldown_time_vert = DateTime.now();
+    cooldown_time_hor = DateTime(0);
+    cooldown_time_vert = DateTime(0);
 
     // Called twice to be sure didn't used the next block value of last round.
     setupCurrentBlock();
@@ -231,7 +232,7 @@ class DropTheNumber extends Game with TapDetector {
   void render(Canvas canvas) {
     drawHandler.tryToInit();
     drawHandler.setCanvas(canvas);
-    drawHandler.setSize(screenSize, canvasSize, canvasXOffset);
+    drawHandler.setSize(screenSize, canvasSize_, canvasXOffset);
 
     // Draw start game screen.
     if (!startPageScreenFinished) {
@@ -286,9 +287,7 @@ class DropTheNumber extends Game with TapDetector {
       cdh = DateTime.now().difference(cooldown_time_hor);
       cdv = DateTime.now().difference(cooldown_time_vert);
       // Horizontal cross while cooldown
-      if (cdh < currentSuperpowerCooldown &&
-          cdh != null &&
-          !firstHorizontalOccurance) {
+      if (cdh < currentSuperpowerCooldown && !firstHorizontalOccurance) {
         blockedHor = true;
         // draw the cross
 
@@ -298,9 +297,7 @@ class DropTheNumber extends Game with TapDetector {
       }
 
       // Vertical cross while cooldown
-      if (cdv < currentSuperpowerCooldown &&
-          cdv != null &&
-          !firstVerticalOccurance) {
+      if (cdv < currentSuperpowerCooldown && !firstVerticalOccurance) {
         blockedVert = true;
 
         // draw the cross
@@ -338,12 +335,8 @@ class DropTheNumber extends Game with TapDetector {
           startTimeOfPause = DateTime.now();
         } else {
           pauseDuration = DateTime.now().difference(startTimeOfPause);
-          if (cooldown_time_hor != null) {
-            cooldown_time_hor.add(pauseDuration);
-          }
-          if (cooldown_time_vert != null) {
-            cooldown_time_vert.add(pauseDuration);
-          }
+          cooldown_time_hor.add(pauseDuration);
+          cooldown_time_vert.add(pauseDuration);
         }
       }
       LastLoopPaused = pause;
@@ -415,14 +408,16 @@ class DropTheNumber extends Game with TapDetector {
   * Override from Game, which is from 'package:flame/game.dart'.
   **********************************************************************/
   @override
-  void resize(Size screenSize) {
+  void onGameResize(Vector2 size) {
+    super.onGameResize(size);
+    Size screenSize = Size(size.x, size.y);
     this.screenSize = screenSize;
     if (screenSize.width > screenSize.height * 2 / 3) {
       // canvasXOffset = (screenSize.width-screenSize.height*2/3)/2;
-      canvasSize = Size(screenSize.height * 2 / 3, screenSize.height);
-      canvasXOffset = (screenSize.width - canvasSize.width) / 2;
+      canvasSize_ = Size(screenSize.height * 2 / 3, screenSize.height);
+      canvasXOffset = (screenSize.width - canvasSize_.width) / 2;
     } else {
-      canvasSize = screenSize;
+      canvasSize_ = screenSize;
       canvasXOffset = 0;
     }
   }
@@ -433,9 +428,9 @@ class DropTheNumber extends Game with TapDetector {
   * Override from Game, which is from 'package:flame/game.dart'.
   **********************************************************************/
   @override
-  void onTapDown(TapDownDetails event) {
-    double x = toRelativeX(event.globalPosition.dx);
-    double y = toRelativeY(event.globalPosition.dy);
+  void onTapDown(TapDownInfo event) {
+    double x = toRelativeX(event.eventPosition.global.x);
+    double y = toRelativeY(event.eventPosition.global.y);
     print("Tap down on (${x}, ${y})");
     // xAxis = event.globalPosition.dx;
     // yAxis = event.globalPosition.dy;
@@ -453,12 +448,12 @@ class DropTheNumber extends Game with TapDetector {
       }
       if (inRange(x, 87, 99) && inRange(y, 80, 88)) {
         upVolume();
-        Flame.bgm.audioPlayer.setVolume(volume);
+        FlameAudio.bgm.audioPlayer.setVolume(volume);
         print(volume);
       }
       if (inRange(x, 87, 99) && inRange(y, 90, 98)) {
         downVolume();
-        Flame.bgm.audioPlayer.setVolume(volume);
+        FlameAudio.bgm.audioPlayer.setVolume(volume);
         print(volume);
       }
       if (inRange(x, 87, 99) && inRange(y, 70, 78)) {
@@ -487,13 +482,13 @@ class DropTheNumber extends Game with TapDetector {
       // Music Volume down button clicked
       else if (inRange(x, 69, 77) && inRange(y, 82, 88)) {
         downVolume();
-        Flame.bgm.audioPlayer.setVolume(volume);
+        FlameAudio.bgm.audioPlayer.setVolume(volume);
         print("bgm volume = ${volume}");
       }
       // Music Volume up button clicked
       else if (inRange(x, 83, 91) && inRange(y, 82, 88)) {
         upVolume();
-        Flame.bgm.audioPlayer.setVolume(volume);
+        FlameAudio.bgm.audioPlayer.setVolume(volume);
         print("bgm volume = ${volume}");
       }
       // Music Mute button clicked
@@ -569,7 +564,7 @@ class DropTheNumber extends Game with TapDetector {
       }
       // Horizontal superpower clicked.
       else if (inRange(x, 70, 79) && inRange(y, 92.5, 97.5)) {
-        if (cooldown_time_hor == null || firstHorizontalOccurance) {
+        if (firstHorizontalOccurance) {
           cooldown_time_hor = DateTime.now();
           triggerHorizontalSuperpower();
           print("Horizontal superpower clicked!"); // debug
@@ -588,7 +583,7 @@ class DropTheNumber extends Game with TapDetector {
       }
       // Vertical superpower clicked.
       else if (inRange(x, 80, 90) && inRange(y, 92.5, 97.5)) {
-        if (cooldown_time_vert == null || firstVerticalOccurance) {
+        if (firstVerticalOccurance) {
           cooldown_time_vert = DateTime.now();
           print("Vertical superpower clicked!"); // debug
           firstVerticalOccurance = false;
@@ -642,7 +637,7 @@ class DropTheNumber extends Game with TapDetector {
   // The superpower animation frame index. (The animation is combine by lots of image)
   int superpowerAnimationFrameIndex = 0;
   // The highest track selected by triggerVerticalSuperpower().
-  int verticalSuperpowerTrack;
+  int verticalSuperpowerTrack = 0;
   // Count the current animation image stop for how many frames.
   int animationImageFrameCounter = 0;
 
@@ -711,7 +706,7 @@ class DropTheNumber extends Game with TapDetector {
   // When it is merging, game logic should stop.
   MergingStatus mergingStatus = MergingStatus.none;
   // The position of merging center block.
-  Point mergingBlock;
+  Point<int> mergingBlock = Point(0, 0);
 
   void runMergingAnimation() {
     int x = mergingBlock.x;
@@ -727,8 +722,8 @@ class DropTheNumber extends Game with TapDetector {
             blocks[x - 1][y].x = blocks[x][y].x;
             blocks[x + 1][y].x = blocks[x][y].x;
             // Set the value to zero, the drawHandler will not draw these block any more.
-            blocks[x - 1][y].v = 0;
-            blocks[x + 1][y].v = 0;
+            blocks[x - 1][y].value = 0;
+            blocks[x + 1][y].value = 0;
             playBubbleAudio();
             playBubbleAudio();
           }
@@ -738,14 +733,14 @@ class DropTheNumber extends Game with TapDetector {
           } else if (blocks[x][y].y != blocks[x][y - 1].y) {
             blocks[x][y].y = blocks[x][y - 1].y;
             // Set the value to zero, the drawHandler will not draw this block any more.
-            blocks[x][y].v = 0;
+            blocks[x][y].value = 0;
             playBubbleAudio();
           }
           // Merge done
           else {
             mergingStatus = MergingStatus.none;
-            blocks[x][y - 1].v *= 8;
-            addScore(blocks[x][y - 1].v);
+            blocks[x][y - 1].value *= 8;
+            addScore(blocks[x][y - 1].value);
             dropAboveBlocks(x - 1, y);
             dropAboveBlocks(x + 1, y);
             dropAboveBlocks(x, y);
@@ -767,7 +762,7 @@ class DropTheNumber extends Game with TapDetector {
           } else if (blocks[x + 1][y].x != blocks[x][y].x) {
             blocks[x + 1][y].x = blocks[x][y].x;
             // Set the value to zero, the drawHandler will not draw this block any more.
-            blocks[x + 1][y].v = 0;
+            blocks[x + 1][y].value = 0;
             playBubbleAudio();
           }
           // Merge step two
@@ -776,14 +771,14 @@ class DropTheNumber extends Game with TapDetector {
           } else if (blocks[x][y].y != blocks[x][y - 1].y) {
             blocks[x][y].y = blocks[x][y - 1].y;
             // Set the value to zero, the drawHandler will not draw this block any more.
-            blocks[x][y].v = 0;
+            blocks[x][y].value = 0;
             playBubbleAudio();
           }
           // Merge done
           else {
             mergingStatus = MergingStatus.none;
-            blocks[x][y - 1].v *= 4;
-            addScore(blocks[x][y - 1].v);
+            blocks[x][y - 1].value *= 4;
+            addScore(blocks[x][y - 1].value);
             dropAboveBlocks(x + 1, y);
             dropAboveBlocks(x, y);
 
@@ -803,7 +798,7 @@ class DropTheNumber extends Game with TapDetector {
           } else if (blocks[x - 1][y].x != blocks[x][y].x) {
             blocks[x - 1][y].x = blocks[x][y].x;
             // Set the value to zero, the drawHandler will not draw this block any more.
-            blocks[x - 1][y].v = 0;
+            blocks[x - 1][y].value = 0;
             playBubbleAudio();
           }
           // Merge step two
@@ -812,14 +807,14 @@ class DropTheNumber extends Game with TapDetector {
           } else if (blocks[x][y].y != blocks[x][y - 1].y) {
             blocks[x][y].y = blocks[x][y - 1].y;
             // Set the value to zero, the drawHandler will not draw this block any more.
-            blocks[x][y].v = 0;
+            blocks[x][y].value = 0;
             playBubbleAudio();
           }
           // Merge done
           else {
             mergingStatus = MergingStatus.none;
-            blocks[x][y - 1].v *= 4;
-            addScore(blocks[x][y - 1].v);
+            blocks[x][y - 1].value *= 4;
+            addScore(blocks[x][y - 1].value);
             dropAboveBlocks(x - 1, y);
             dropAboveBlocks(x, y);
 
@@ -840,15 +835,15 @@ class DropTheNumber extends Game with TapDetector {
             blocks[x - 1][y].x = blocks[x][y].x;
             blocks[x + 1][y].x = blocks[x][y].x;
             // Set the value to zero, the drawHandler will not draw these block any more.
-            blocks[x - 1][y].v = 0;
-            blocks[x + 1][y].v = 0;
+            blocks[x - 1][y].value = 0;
+            blocks[x + 1][y].value = 0;
             playBubbleAudio();
             playBubbleAudio();
             // Merge done
           } else {
             mergingStatus = MergingStatus.none;
-            blocks[x][y].v *= 4;
-            addScore(blocks[x][y].v);
+            blocks[x][y].value *= 4;
+            addScore(blocks[x][y].value);
             dropAboveBlocks(x - 1, y);
             dropAboveBlocks(x + 1, y);
 
@@ -866,13 +861,13 @@ class DropTheNumber extends Game with TapDetector {
           } else if (blocks[x + 1][y].x != blocks[x][y].x) {
             blocks[x + 1][y].x = blocks[x][y].x;
             // Set the value to zero, the drawHandler will not draw this block any more.
-            blocks[x + 1][y].v = 0;
+            blocks[x + 1][y].value = 0;
             playBubbleAudio();
             // Merge done
           } else {
             mergingStatus = MergingStatus.none;
-            blocks[x][y].v *= 2;
-            addScore(blocks[x][y].v);
+            blocks[x][y].value *= 2;
+            addScore(blocks[x][y].value);
             dropAboveBlocks(x + 1, y);
 
             merge(x, y);
@@ -889,13 +884,13 @@ class DropTheNumber extends Game with TapDetector {
           } else if (blocks[x - 1][y].x != blocks[x][y].x) {
             blocks[x - 1][y].x = blocks[x][y].x;
             // Set the value to zero, the drawHandler will not draw this block any more.
-            blocks[x - 1][y].v = 0;
+            blocks[x - 1][y].value = 0;
             playBubbleAudio();
             //Merge done
           } else {
             mergingStatus = MergingStatus.none;
-            blocks[x][y].v *= 2;
-            addScore(blocks[x][y].v);
+            blocks[x][y].value *= 2;
+            addScore(blocks[x][y].value);
             dropAboveBlocks(x - 1, y);
 
             merge(x, y);
@@ -912,13 +907,13 @@ class DropTheNumber extends Game with TapDetector {
           } else if (blocks[x][y].y != blocks[x][y - 1].y) {
             blocks[x][y].y = blocks[x][y - 1].y;
             // Set the value to zero, the drawHandler will not draw this block any more.
-            blocks[x][y].v = 0;
+            blocks[x][y].value = 0;
             playBubbleAudio();
             // Merge done
           } else {
             mergingStatus = MergingStatus.none;
-            blocks[x][y - 1].v *= 2;
-            addScore(blocks[x][y - 1].v);
+            blocks[x][y - 1].value *= 2;
+            addScore(blocks[x][y - 1].value);
             dropAboveBlocks(x, y);
 
             merge(x, y);
@@ -998,9 +993,9 @@ class DropTheNumber extends Game with TapDetector {
       int leftLineY = blocks[x - 1].length - 1;
       int rightLineY = blocks[x + 1].length - 1;
       if (leftLineY >= y && rightLineY >= y) {
-        if (blocks[x][y].v == blocks[x - 1][y].v &&
-            blocks[x][y].v == blocks[x + 1][y].v &&
-            blocks[x][y].v == blocks[x][y - 1].v) {
+        if (blocks[x][y].value == blocks[x - 1][y].value &&
+            blocks[x][y].value == blocks[x + 1][y].value &&
+            blocks[x][y].value == blocks[x][y - 1].value) {
           print("T shape"); // debug
 
           // Animation merge
@@ -1014,8 +1009,8 @@ class DropTheNumber extends Game with TapDetector {
     if (x < 4 && y > 0) {
       int rightLineY = blocks[x + 1].length - 1;
       if (rightLineY >= y) {
-        if (blocks[x][y].v == blocks[x + 1][y].v &&
-            blocks[x][y].v == blocks[x][y - 1].v) {
+        if (blocks[x][y].value == blocks[x + 1][y].value &&
+            blocks[x][y].value == blocks[x][y - 1].value) {
           print("gamma shape"); // debug
 
           // Animation merge
@@ -1029,8 +1024,8 @@ class DropTheNumber extends Game with TapDetector {
     if (x > 0 && y > 0) {
       int leftLineY = blocks[x - 1].length - 1;
       if (leftLineY >= y) {
-        if (blocks[x][y].v == blocks[x - 1][y].v &&
-            blocks[x][y].v == blocks[x][y - 1].v) {
+        if (blocks[x][y].value == blocks[x - 1][y].value &&
+            blocks[x][y].value == blocks[x][y - 1].value) {
           print("seven shape"); // debug
 
           // Animation merge
@@ -1045,8 +1040,8 @@ class DropTheNumber extends Game with TapDetector {
       int leftLineY = blocks[x - 1].length - 1;
       int rightLineY = blocks[x + 1].length - 1;
       if (leftLineY >= y && rightLineY >= y) {
-        if (blocks[x][y].v == blocks[x - 1][y].v &&
-            blocks[x][y].v == blocks[x + 1][y].v) {
+        if (blocks[x][y].value == blocks[x - 1][y].value &&
+            blocks[x][y].value == blocks[x + 1][y].value) {
           print("horizontal shape"); // debug
 
           // Animation merge
@@ -1060,7 +1055,7 @@ class DropTheNumber extends Game with TapDetector {
     if (x < 4) {
       int rightLineY = blocks[x + 1].length - 1;
       if (rightLineY >= y) {
-        if (blocks[x][y].v == blocks[x + 1][y].v) {
+        if (blocks[x][y].value == blocks[x + 1][y].value) {
           print("right shape"); // debug
 
           // Animation merge
@@ -1075,7 +1070,7 @@ class DropTheNumber extends Game with TapDetector {
     if (x > 0) {
       int leftLineY = blocks[x - 1].length - 1;
       if (leftLineY >= y) {
-        if (blocks[x][y].v == blocks[x - 1][y].v) {
+        if (blocks[x][y].value == blocks[x - 1][y].value) {
           print("left shape"); // debug
 
           // Animation merge
@@ -1088,7 +1083,7 @@ class DropTheNumber extends Game with TapDetector {
 
     // Check down
     if (y > 0) {
-      if (blocks[x][y].v == blocks[x][y - 1].v) {
+      if (blocks[x][y].value == blocks[x][y - 1].value) {
         print("down shape"); // debug
 
         // Animation merge
@@ -1137,9 +1132,9 @@ class DropTheNumber extends Game with TapDetector {
     mute = !mute;
 
     if (mute) {
-      Flame.bgm.pause();
+      FlameAudio.bgm.pause();
     } else {
-      Flame.bgm.resume();
+      FlameAudio.bgm.resume();
     }
 
     dataHandler.writeMute(mute);
@@ -1226,7 +1221,7 @@ class DropTheNumber extends Game with TapDetector {
   * of the current game difficulty.
   **********************************************************************/
   void addScore(int score) {
-    this.score += (score * scoreMultiplier[gameDifficulty]).round();
+    this.score += (score * scoreMultiplier[gameDifficulty]!).round();
   }
 
   /**********************************************************************
@@ -1292,9 +1287,9 @@ class DropTheNumber extends Game with TapDetector {
   **********************************************************************/
   void setGameDifficulty(GameDifficulty gameDifficulty) {
     this.gameDifficulty = gameDifficulty;
-    currentDropSpeed = dropSpeed[gameDifficulty];
-    currentMergingSpeed = mergingSpeed[gameDifficulty];
-    currentSuperpowerCooldown = superpowerCooldown[gameDifficulty];
+    currentDropSpeed = dropSpeed[gameDifficulty]!;
+    currentMergingSpeed = mergingSpeed[gameDifficulty]!;
+    currentSuperpowerCooldown = superpowerCooldown[gameDifficulty]!;
 
     dataHandler.writeGameDifficulty(gameDifficulty);
   }
@@ -1304,7 +1299,7 @@ class DropTheNumber extends Game with TapDetector {
   **********************************************************************/
   void playBubbleAudio() {
     if (!effectMute) {
-      Flame.audio.play('bubble' + random.nextInt(4).toString() + '.mp3',
+      FlameAudio.play('bubble' + random.nextInt(4).toString() + '.mp3',
           volume: effectVolume);
     }
   }
@@ -1314,7 +1309,7 @@ class DropTheNumber extends Game with TapDetector {
   **********************************************************************/
   void playAppendAudio() {
     if (!effectMute) {
-      Flame.audio.play('append' + random.nextInt(4).toString() + '.mp3',
+      FlameAudio.play('append' + random.nextInt(4).toString() + '.mp3',
           volume: effectVolume);
     }
   }

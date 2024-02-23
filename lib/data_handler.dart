@@ -1,5 +1,4 @@
-// @dart=2.11
-import 'dart:io';
+// import 'dart:io';
 
 import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:path_provider/path_provider.dart';
@@ -14,8 +13,8 @@ class DataHandler {
   /**********************************************************************
   * Constructor
   **********************************************************************/
-  DataHandler(SharedPreferences storage) {
-    this.storage = storage;
+  DataHandler(SharedPreferences storage)
+  :storage = storage {
   }
 
   /**********************************************************************
@@ -23,10 +22,7 @@ class DataHandler {
   **********************************************************************/
   // Method1
   int readHighestScore() {
-    if(!storage.containsKey('highestScore')) {
-      return 0;
-    }
-    return storage.getInt('highestScore');
+    return storage.getInt('highestScore') ?? 0;
   }
 
   // Method2 (Also work)
@@ -59,8 +55,8 @@ class DataHandler {
   * Read game difficulty from file.
   **********************************************************************/
   GameDifficulty readGameDifficulty() {
-    int gameDifficultyIndex = storage.getInt('gameDifficulty');
-    if(!storage.containsKey('gameDifficulty')) {
+    int? gameDifficultyIndex = storage.getInt('gameDifficulty');
+    if(gameDifficultyIndex == null) {
       return GameDifficulty.normal;
     }
     return GameDifficulty.values[gameDifficultyIndex];
@@ -78,10 +74,7 @@ class DataHandler {
   * Read bgm mute from file
   **********************************************************************/
   bool readMute() {
-    if(!storage.containsKey('mute')) {
-      return false;
-    }
-    return storage.getBool('mute');
+    return storage.getBool('mute') ?? false;
   }
 
   /**********************************************************************
@@ -95,10 +88,7 @@ class DataHandler {
   * Read bgm volume from file
   **********************************************************************/
   double readVolume() {
-    if(!storage.containsKey('volume')) {
-      return 0.5;
-    }
-    return storage.getDouble('volume');
+    return storage.getDouble('volume') ?? 0.5;
   }
 
   /**********************************************************************
@@ -112,10 +102,7 @@ class DataHandler {
   * Read effect mute from file
   **********************************************************************/
   bool readEffectMute() {
-    if(!storage.containsKey('effectMute')) {
-      return false;
-    }
-    return storage.getBool('effectMute');
+    return storage.getBool('effectMute') ?? false;
   }
 
   /**********************************************************************
@@ -129,10 +116,7 @@ class DataHandler {
   * Read effect volume from file.
   **********************************************************************/
   double readEffectVolume() {
-    if(!storage.containsKey('effectVolume')) {
-      return 0.5;
-    }
-    return storage.getDouble('effectVolume');
+    return storage.getDouble('effectVolume') ?? 0.5;
   }
 
   /**********************************************************************

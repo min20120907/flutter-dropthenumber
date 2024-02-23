@@ -1,19 +1,17 @@
-// @dart=2.11
 import 'dart:async';
 import 'dart:math';
-import 'dart:typed_data';
+// import 'dart:typed_data';
 import 'dart:ui' as ui;
-import 'dart:io';
-import 'package:flame/flame.dart';
-import 'package:flame/game.dart';
-import 'package:flame/gestures.dart';
+// import 'dart:io';
+// import 'package:flame/flame.dart';
+// import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
+// import 'package:flutter/widgets.dart';
 import 'package:sprintf/sprintf.dart';
-import 'dropthenumber.dart';
+// import 'dropthenumber.dart';
 import 'block.dart';
-import 'superpower_status.dart';
+// import 'superpower_status.dart';
 import 'game_difficulty.dart';
 
 class DrawHandler {
@@ -61,7 +59,7 @@ class DrawHandler {
   * Set the canvas to draw.
   **********************************************************************/
   // The canvas that the draw handler want to draw on.
-  Canvas canvas;
+  late Canvas canvas;
 
   void setCanvas(Canvas canvas) {
     this.canvas = canvas;
@@ -72,11 +70,11 @@ class DrawHandler {
   * Should called to get the current screen size before every draw method invoke.
   **********************************************************************/
   // The screen size, needed by the drawBackground().
-  Size screenSize;
+  late Size screenSize;
   // The draw area size. (Background image is not in this limit)
-  Size canvasSize;
+  late Size canvasSize;
   // The left margin of canvas, prevent the screen stretch. (This is already in absolute coordinates)
-  double canvasXOffset;
+  late double canvasXOffset;
 
   void setSize(Size screenSize, Size canvasSize, double canvasXOffset) {
     this.screenSize = screenSize;
@@ -113,31 +111,31 @@ class DrawHandler {
   **********************************************************************/
   /* Image which will be load later */
   // Start Page
-  ui.Image startPageBackgroundImage;
-  ui.Image startPageTitleBorderImage;
-  ui.Image startPageButtonBorderImage;
-  ui.Image startPageMusicImage;
-  ui.Image startPageMuteImage;
-  ui.Image startPageVolumeUpImage;
-  ui.Image startPageVolumeDownImage;
+  late ui.Image startPageBackgroundImage;
+  late ui.Image startPageTitleBorderImage;
+  late ui.Image startPageButtonBorderImage;
+  late ui.Image startPageMusicImage;
+  late ui.Image startPageMuteImage;
+  late ui.Image startPageVolumeUpImage;
+  late ui.Image startPageVolumeDownImage;
   // In Game
-  ui.Image backgroundImage;
-  ui.Image overImage;
-  ui.Image settingImage;
-  ui.Image settingBackgroundImage;
-  ui.Image exitImage;
-  ui.Image musicImage;
-  ui.Image muteImage;
-  ui.Image startButtonImage;
-  ui.Image startButtonBorderImage;
-  ui.Image pauseImage;
-  ui.Image playImage;
-  ui.Image horizontalSuperpowerImage;
-  ui.Image verticalSuperpowerImage;
-  ui.Image tmpVertImage;
-  ui.Image homeImage;
-  ui.Image xImage;
-  ui.Image arrowImage;
+  late ui.Image backgroundImage;
+  late ui.Image overImage;
+  late ui.Image settingImage;
+  late ui.Image settingBackgroundImage;
+  late ui.Image exitImage;
+  late ui.Image musicImage;
+  late ui.Image muteImage;
+  late ui.Image startButtonImage;
+  late ui.Image startButtonBorderImage;
+  late ui.Image pauseImage;
+  late ui.Image playImage;
+  late ui.Image horizontalSuperpowerImage;
+  late ui.Image verticalSuperpowerImage;
+  late ui.Image tmpVertImage;
+  late ui.Image homeImage;
+  late ui.Image xImage;
+  late ui.Image arrowImage;
 
   void initImages() {
     // Start page
@@ -317,7 +315,7 @@ class DrawHandler {
     // Draw nextBlock rectangle
     drawRect(40, 14.5, 8, 5, getBlockColorByValue(nextBlockValue));
     // Draw nextBlock border
-    drawRectStroke(40, 14.5, 8, 5, Colors.pink[200], 3);
+    drawRectStroke(40, 14.5, 8, 5, Colors.pink.shade200, 3);
     // Paint nextBlock text
     drawText(nextBlockValue.toString(), 44, 16, Colors.black, 14);
   }
@@ -326,9 +324,6 @@ class DrawHandler {
   * Draw the game elapsed time on the canvas.
   **********************************************************************/
   void drawTime(Duration elapsedTime) {
-    if (elapsedTime == null) {
-      return;
-    }
     drawText('TIME:' + getTimeformat(elapsedTime), 64, 15.5, Colors.white, 20);
   }
 
@@ -437,9 +432,6 @@ class DrawHandler {
   void drawGameOverScreen(int score, int highestScore, Duration elapsedTime) {
     drawFullScreenImage(overImage);
     drawText2("Game Over", 50, 15, Colors.white, 65);
-    if (elapsedTime == null) {
-      elapsedTime = Duration();
-    }
     drawText2("TIME: " + getTimeformat(elapsedTime), 49, 35, Colors.white, 40);
     drawText2(
         "Highest Score: " + highestScore.toString(), 50, 45, Colors.white, 40);
@@ -535,20 +527,20 @@ class DrawHandler {
   **********************************************************************/
   void drawBlock(Block block) {
     // If block value is zero, ignore the block.
-    if (block.v == 0) {
+    if (block.value == 0) {
       return;
     }
     double width = 14;
     double height = 9;
 
     // Draw block color
-    drawRect(block.x, block.y, width, height, getBlockColorByValue(block.v));
+    drawRect(block.x, block.y, width, height, getBlockColorByValue(block.value));
 
     // Draw border
     drawRectStroke(block.x, block.y, width, height, Colors.black, 4);
 
     // Draw block text
-    drawText(block.v.toString(), block.x + width / 2, block.y + height / 2 - 2,
+    drawText(block.value.toString(), block.x + width / 2, block.y + height / 2 - 2,
         Colors.black, 20);
   }
 
@@ -675,7 +667,7 @@ class DrawHandler {
     if (value == 0) {
       return Color.fromRGBO(0, 0, 0, 0.0);
     }
-    return getBlockColorByIndex((log(value) / log(2)).toInt() - 1);
+    return getBlockColorByIndex(log(value) ~/ log(2) - 1);
   }
 
   /**********************************************************************
@@ -814,9 +806,6 @@ class DrawHandler {
   **********************************************************************/
   void drawImage(
       ui.Image image, double x, double y, double width, double height) {
-    if (image == null) {
-      return;
-    }
     canvas.drawImageRect(
         image,
         Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble()),
@@ -829,9 +818,6 @@ class DrawHandler {
   * Draw an full screen image on the canvas.
   **********************************************************************/
   void drawFullScreenImage(ui.Image image) {
-    if (image == null) {
-      return;
-    }
     canvas.drawImageRect(
         image,
         Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble()),
