@@ -140,7 +140,7 @@ class DropTheNumber extends Game with TapDetector {
   /// Override from Game, which is from 'package:flame/game.dart'.
   @override
   void render(Canvas canvas) {
-    drawHandler.tryToInit();
+    drawHandler.init();
     drawHandler.setCanvas(canvas);
     drawHandler.setSize(screenSize, canvasSize_, canvasXOffset);
 

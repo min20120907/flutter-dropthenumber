@@ -82,7 +82,8 @@ class DrawHandler {
   // If draw handler is initialized. (Use by tryToInit(), after initialized image and video are loaded.)
   bool initialized = false;
 
-  void tryToInit() {
+  /// Initialize image and video
+  void init() {
     if (!initialized) {
       initImages();
       initHorizontalSuperpowerAnimation(horizontalSuperpowerAnimationLength);
