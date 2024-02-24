@@ -24,7 +24,7 @@ class DropTheNumber extends Game with TapDetector {
   bool gameInitScreenFinished = false;
   bool gameOver = false;
   bool gamePaused = true;
-  bool muted = false;
+  bool bgmMuted = false;
   bool effectMuted = false;
   int score = 0;
   int highestScore = 0;
@@ -72,29 +72,24 @@ class DropTheNumber extends Game with TapDetector {
   bool inRange(double number, double lowerBoundary, double upperBoundary) =>
       lowerBoundary <= number && number <= upperBoundary;
 
-  /**********************************************************************
-  * Constructor 
-  **********************************************************************/
   DropTheNumber(DataHandler dataHandler)
   :dataHandler = dataHandler,
   highestScore = dataHandler.readHighestScore(),
   gameDifficulty = dataHandler.readGameDifficulty(),
-  muted = dataHandler.readMute(),
+  bgmMuted = dataHandler.readMute(),
   volume = dataHandler.readVolume(),
   effectMuted = dataHandler.readEffectMute(),
   effectVolume = dataHandler.readEffectVolume() {
 
     FlameAudio.bgm.play("edm.mp3", volume: volume);
-    if(muted) {
+    if(bgmMuted) {
       FlameAudio.bgm.pause();
     }
 
     resetGame();
   }
 
-  /**********************************************************************
-  * Reset the game to initial state.
-  **********************************************************************/
+  /// Reset the game to initial state.
   void resetGame() {
     score = 0;
     gameOver = false;
@@ -113,9 +108,7 @@ class DropTheNumber extends Game with TapDetector {
     setupCurrentBlock();
   }
 
-  /**********************************************************************
-  * Random the currentTrack, currentBlock and nextBlock.
-  **********************************************************************/
+  /// Random the currentTrack, currentBlock and nextBlock.
   void setupCurrentBlock() {
     // The max power quantity of 2.
     int MAXPOWER = 5; // Temporary set to small number for debug
@@ -144,10 +137,8 @@ class DropTheNumber extends Game with TapDetector {
     nextBlockValue = pow(2, random.nextInt(MAXPOWER) + POWEROFFSET).toInt();
   }
 
-  /**********************************************************************
-  * Draw the screen on every render call.
-  * Override from Game, which is from 'package:flame/game.dart'.
-  **********************************************************************/
+  /// Draw the screen on every render call.
+  /// Override from Game, which is from 'package:flame/game.dart'.
   @override
   void render(Canvas canvas) {
     drawHandler.tryToInit();
@@ -157,7 +148,7 @@ class DropTheNumber extends Game with TapDetector {
     // Draw start game screen.
     if (!gameInitScreenFinished) {
       drawHandler.drawStartPageScreen();
-      if (!muted) {
+      if (!bgmMuted) {
         drawHandler.drawStartPageMusicButton();
       } else {
         drawHandler.drawStartPageMuteButton();
@@ -167,7 +158,7 @@ class DropTheNumber extends Game with TapDetector {
     else if (settingScreenIsOpen) {
       drawHandler.drawSettingScreen();
       drawHandler.drawGameDifficultyText(gameDifficulty);
-      if (!muted) {
+      if (!bgmMuted) {
         drawHandler.drawSettingPageMusicButton();
       } else {
         drawHandler.drawSettingPageMuteButton();
@@ -244,10 +235,8 @@ class DropTheNumber extends Game with TapDetector {
     }
   }
 
-  /**********************************************************************
-  * Game main loop.
-  * Override from Game, which is from 'package:flame/game.dart'.
-  **********************************************************************/
+  /// Game main loop.
+  /// Override from Game, which is from 'package:flame/game.dart'.
   @override
   void update(double previousLoopTimeConsumed) {
     // Print lag percentage for debugging
@@ -294,10 +283,8 @@ class DropTheNumber extends Game with TapDetector {
     superpowerStatus = SuperpowerStatus.verticalSuperpower;
   }
 
-  /**********************************************************************
-  * Reserve current screen size.
-  * Override from Game, which is from 'package:flame/game.dart'.
-  **********************************************************************/
+  /// Reserve current screen size.
+  /// Override from Game, which is from 'package:flame/game.dart'.
   @override
   void onGameResize(Vector2 size) {
     super.onGameResize(size);
@@ -313,18 +300,14 @@ class DropTheNumber extends Game with TapDetector {
     }
   }
 
-  /**********************************************************************
-  * Print tap position (x,y) in screen ratio.
-  * Range is (0.0, 0.0) to (100.0, 100.0).
-  * Override from Game, which is from 'package:flame/game.dart'.
-  **********************************************************************/
+  /// Print tap position (x,y) in screen ratio.
+  /// Range is (0.0, 0.0) to (100.0, 100.0).
+  /// Override from Game, which is from 'package:flame/game.dart'.
   @override
   void onTapDown(TapDownInfo event) {
     double x = toRelativeX(event.eventPosition.global.x);
     double y = toRelativeY(event.eventPosition.global.y);
     print("Tap down on (${x}, ${y})");
-    // xAxis = event.globalPosition.dx;
-    // yAxis = event.globalPosition.dy;
 
     // Game start
     if (!gameInitScreenFinished) {
@@ -332,10 +315,6 @@ class DropTheNumber extends Game with TapDetector {
         gameInitScreenFinished = true;
         // Start game timer.
         startTime = DateTime.now();
-
-        // Get history highest score from file.
-//         dataHandler.readHighestScore().then((value) =>
-//             highestScore = value > highestScore ? value : highestScore);
       }
       if (inRange(x, 87, 99) && inRange(y, 80, 88)) {
         increaseVolume();
@@ -348,7 +327,7 @@ class DropTheNumber extends Game with TapDetector {
         print(volume);
       }
       if (inRange(x, 87, 99) && inRange(y, 70, 78)) {
-        toggleMute();
+        toggleBgmMute();
       }
       // main page quit button
       if (inRange(x, 2, 12) && inRange(y, 91, 98)) {
@@ -384,7 +363,7 @@ class DropTheNumber extends Game with TapDetector {
       }
       // Music Mute button clicked
       else if (inRange(x, 54, 62) && inRange(y, 82, 87)) {
-        toggleMute();
+        toggleBgmMute();
       }
 
       // Effect Volume down button clicked
@@ -811,10 +790,8 @@ class DropTheNumber extends Game with TapDetector {
     }
   }
 
-  /**********************************************************************
-  * Try to drop the current block, return true if the drop is successed.
-  * If current block is going to touch a solid block, it failed to drop and return false.
-  **********************************************************************/
+  /// Try to drop the current block, return true if the drop is successed.
+  /// If current block is going to touch a solid block, it failed to drop and return false.
   bool dropCurrentBlock() {
     double dropSpeed = getDropSpeed(gameDifficulty);
     // Height of every blocks
@@ -835,9 +812,7 @@ class DropTheNumber extends Game with TapDetector {
     }
   }
 
-  /**********************************************************************
-  * Add current block to solid blocks of current track.
-  **********************************************************************/
+  /// Add current block to solid blocks of current track.
   void appendCurrentBlockToTrack() {
     // Height of every blocks
     double blockHeight = 9;
@@ -860,9 +835,7 @@ class DropTheNumber extends Game with TapDetector {
     merge(currentTrack, blocks[currentTrack].length - 1);
   }
 
-  /**********************************************************************
-  * Merge method
-  **********************************************************************/
+  /// Merge block to position
   void merge(int x, int y) {
     if (x < 0 || x > 5) return;
     if (y < 0 || blocks[x].length - 1 < y) return;
@@ -974,9 +947,7 @@ class DropTheNumber extends Game with TapDetector {
     }
   }
 
-  /**********************************************************************
-  * Try to toggle pause of the game is running.
-  **********************************************************************/
+  /// Toggle pause if the game is running.
   void togglePause() {
     if (isGameRunning()) {
       gamePaused = !gamePaused;
@@ -987,52 +958,36 @@ class DropTheNumber extends Game with TapDetector {
     }
   }
 
-  /**********************************************************************
-  * Open the setting screen
-  **********************************************************************/
+  /// Open the setting screen
   void openSettingScreen() {
     settingScreenIsOpen = true;
     gamePaused = true;
   }
 
-  /**********************************************************************
-  * Close the setting screen
-  **********************************************************************/
+  /// Close the setting screen
   void closeSettingScreen() {
     settingScreenIsOpen = false;
     gamePaused = false;
   }
 
-  /**********************************************************************
-  * Toggle mute bgm.
-  * If the bgm is running, it will be paused.
-  * Also update the local storge setting file.
-  **********************************************************************/
-  void toggleMute() {
-    muted = !muted;
+  void toggleBgmMute() {
+    bgmMuted = !bgmMuted;
 
-    if (muted) {
+    if (bgmMuted) {
       FlameAudio.bgm.pause();
     } else {
       FlameAudio.bgm.resume();
     }
 
-    dataHandler.writeMute(muted);
+    dataHandler.writeMute(bgmMuted);
   }
 
-  /**********************************************************************
-  * Toggle mute effect sound.
-  * Also update the local storge setting file.
-  **********************************************************************/
   void toggleEffectMute() {
     effectMuted = !effectMuted;
 
     dataHandler.writeEffectMute(effectMuted);
   }
 
-  /**********************************************************************
-  * If the game is started and not game over.
-  **********************************************************************/
   bool isGameRunning() {
     if (gameInitScreenFinished && !gameOver) {
       return true;
