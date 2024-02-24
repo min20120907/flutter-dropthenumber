@@ -61,7 +61,6 @@ class DropTheNumber extends Game with TapDetector {
   DateTime startTimeOfPause = DateTime.now();
   // Record the duration of pause phase
   Duration pauseDuration = Duration.zero;
-  Duration cdh = Duration.zero, cdv = Duration.zero;
   bool blockedHor = false, blockedVert = false;
 
   // Data handler can help to save and read data from file.
@@ -216,11 +215,11 @@ class DropTheNumber extends Game with TapDetector {
       } else {
         drawHandler.drawPlayButton();
       }
-      cdh = DateTime.now().difference(horizontalSuperpowerLastUsed);
-      cdv = DateTime.now().difference(verticalSuperpowerLastUsed);
+      Duration horizontalSuperpowerCooldown = DateTime.now().difference(horizontalSuperpowerLastUsed);
+      Duration verticalSuperpowerCooldown = DateTime.now().difference(verticalSuperpowerLastUsed);
       // Horizontal cross while cooldown
       Duration superpowerCooldownTime = getSuperpowerCooldownTime(gameDifficulty);
-      if (cdh < superpowerCooldownTime && !firstHorizontalOccurance) {
+      if (horizontalSuperpowerCooldown < superpowerCooldownTime && !firstHorizontalOccurance) {
         blockedHor = true;
         // draw the cross
 
@@ -230,7 +229,7 @@ class DropTheNumber extends Game with TapDetector {
       }
 
       // Vertical cross while cooldown
-      if (cdv < superpowerCooldownTime && !firstVerticalOccurance) {
+      if (verticalSuperpowerCooldown < superpowerCooldownTime && !firstVerticalOccurance) {
         blockedVert = true;
 
         // draw the cross
