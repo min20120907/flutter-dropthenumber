@@ -20,7 +20,7 @@ class DropTheNumber extends Game with TapDetector {
   double effectVolume = 0.5;
   GameDifficulty gameDifficulty = GameDifficulty.normal;
 
-  bool inHomeScreen = false;
+  bool notInHomeScreen = false;
   bool gameOver = false;
   bool gamePaused = true;
   bool bgmMuted = false;
@@ -145,7 +145,7 @@ class DropTheNumber extends Game with TapDetector {
     drawHandler.setSize(screenSize, canvasSize_, canvasXOffset);
 
     // Draw start game screen.
-    if (!inHomeScreen) {
+    if (!notInHomeScreen) {
       drawHandler.drawHomeScreen();
       if (!bgmMuted) {
         drawHandler.drawHomePageMusicButton();
@@ -305,9 +305,9 @@ class DropTheNumber extends Game with TapDetector {
     print("Tap down on (${x}, ${y})");
 
     // Game start
-    if (!inHomeScreen) {
+    if (!notInHomeScreen) {
       if (inRange(x, 32, 70) && inRange(y, 29, 37)) {
-        inHomeScreen = true;
+        notInHomeScreen = true;
         // Start game timer.
         startTime = DateTime.now();
       }
@@ -339,7 +339,7 @@ class DropTheNumber extends Game with TapDetector {
       }
       // Home button clicked
       else if (inRange(x, 4, 13) && inRange(y, 3.5, 8.5)) {
-        inHomeScreen = false;
+        notInHomeScreen = false;
         settingScreenIsOpen = false;
         resetGame();
         print("home button clicked!"); // debug
@@ -459,13 +459,13 @@ class DropTheNumber extends Game with TapDetector {
         blocks = [[], [], [], [], []];
         resetGame();
       } else if (inRange(x, 53.5, 80.5) && inRange(y, 68.5, 74.5)) {
-        inHomeScreen = false;
+        notInHomeScreen = false;
         print("Quit button clicked!"); // debug
         exit(0); // debug
       } else if (inRange(x, 2, 11) && inRange(y, 92, 99.5)) {
         resetGame();
         blocks = [[], [], [], [], []];
-        inHomeScreen = false;
+        notInHomeScreen = false;
         print("home button clicked!"); // debug
       }
     }
@@ -984,7 +984,7 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   bool isGameRunning() {
-    if (inHomeScreen && !gameOver) {
+    if (notInHomeScreen && !gameOver) {
       return true;
     } else {
       return false;
