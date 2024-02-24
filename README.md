@@ -2,6 +2,8 @@
 
 A minigame written in flutter.
 
+![preview](assets/image/preview.webp)
+
 ## Supported Platforms
 
 - [x] web
