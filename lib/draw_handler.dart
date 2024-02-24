@@ -11,10 +11,7 @@ import 'block.dart';
 import 'game_difficulty.dart';
 
 class DrawHandler {
-  /**********************************************************************
-  * Settings
-  **********************************************************************/
-  // Every block color in different value of block.
+  /// Block colors in different value
   List<Color> blockColors = [
     Color.fromRGBO(255, 0, 0, 1.0),
     Color.fromRGBO(0, 255, 0, 1.0),
@@ -31,9 +28,6 @@ class DrawHandler {
     Color.fromRGBO(194, 194, 214, 1.0)
   ];
 
-  /**********************************************************************
-  * Constructor
-  **********************************************************************/
   DrawHandler() {}
 
   // Frame delay gap function
@@ -41,14 +35,10 @@ class DrawHandler {
     return Future.delayed(Duration(milliseconds: 100));
   }
 
-  /**********************************************************************
-  * Convert the relative x to ablolute x.
-  **********************************************************************/
+  /// Convert the relative x to ablolute x.
   double toAbsoluteX(double x) => x * canvasSize.x / 100;
 
-  /**********************************************************************
-  * Convert the relative y to ablolute y.
-  **********************************************************************/
+  /// Convert the relative y to ablolute y.
   double toAbsoluteY(double y) => y * canvasSize.y / 100;
 
   /**********************************************************************
@@ -214,58 +204,42 @@ class DrawHandler {
     drawImage(exitImage, 2, 91.3, 10, 7);
   }
 
-  /**********************************************************************
-  * Draw music button on the start page.
-  **********************************************************************/
+  /// Draw music button on the start page.
   void drawHomePageMusicButton() {
     drawImage(homePageMusicImage, 89, 71, 8.5, 6.5);
   }
 
-  /**********************************************************************
-  * Draw mute button on the start page.
-  **********************************************************************/
+  /// Draw mute button on the start page.
   void drawHomePageMuteButton() {
     drawImage(homePageMuteImage, 89, 71, 8.5, 6.5);
   }
 
-  /**********************************************************************
-  * Draw music button on the setting page.
-  **********************************************************************/
+  /// Draw music button on the setting page.
   void drawSettingPageMusicButton() {
     drawImage(homePageMusicImage, 54, 81.8, 10.5, 6.5);
   }
 
-  /**********************************************************************
-  * Draw mute button on the start page.
-  **********************************************************************/
+  /// Draw mute button on the start page.
   void drawSettingPageMuteButton() {
     drawImage(homePageMuteImage, 54, 81.8, 10.5, 6.5);
   }
 
-  /**********************************************************************
-  * Draw effect music button on the setting page.
-  **********************************************************************/
+  /// Draw effect music button on the setting page.
   void drawSettingPageEffectMusicButton() {
     drawImage(homePageMusicImage, 54, 89.8, 10.5, 6.5);
   }
 
-  /**********************************************************************
-  * Draw mute button on the start page.
-  **********************************************************************/
+  /// Draw mute button on the start page.
   void drawSettingPageEffectMuteButton() {
     drawImage(homePageMuteImage, 54, 89.8, 10.5, 6.5);
   }
 
-  /**********************************************************************
-  * Draw the game background.
-  **********************************************************************/
+  /// Draw the game background.
   void drawBackground() {
     drawFullScreenImage(backgroundImage);
   }
 
-  /**********************************************************************
-  * Draw all the borders.
-  **********************************************************************/
+  /// Draw all the borders.
   void drawBorders() {
     // Biggest border
     drawRectStroke(10, 5, 80, 85, Colors.white, 10);
@@ -284,25 +258,19 @@ class DrawHandler {
     }
   }
 
-  /**********************************************************************
-  * Draw game title text on the canvas. (The big text on the top)
-  * The title color are the same as the color of next block rectangle.
-  **********************************************************************/
+  /// Draw game title text on the canvas. (The big text on the top)
+  /// The title color are the same as the color of next block rectangle.
   void drawTitle(int nextBlockValue) {
     drawText(
         'Drop The Number', 50, 6.5, getBlockColorByValue(nextBlockValue), 35);
   }
 
-  /**********************************************************************
-  * Draw next block hint on the canvas.
-  **********************************************************************/
+  /// Draw next block hint on the canvas.
   void drawNextBlockHintText() {
     drawText('Next Block >', 25, 15.5, Colors.white, 17);
   }
 
-  /**********************************************************************
-  * Draw "nextBlock" on the canvas.
-  **********************************************************************/
+  /// Draw "nextBlock" on the canvas.
   void drawNextBlock(int nextBlockValue) {
     // Draw nextBlock rectangle
     drawRect(40, 14.5, 8, 5, getBlockColorByValue(nextBlockValue));
@@ -312,37 +280,17 @@ class DrawHandler {
     drawText(nextBlockValue.toString(), 44, 16, Colors.black, 14);
   }
 
-  /**********************************************************************
-  * Draw the game elapsed time on the canvas.
-  **********************************************************************/
+  /// Draw the game elapsed time on the canvas.
   void drawTime(Duration elapsedTime) {
     drawText('TIME:' + getTimeformat(elapsedTime), 64, 15.5, Colors.white, 20);
   }
 
-  /**********************************************************************
-  * Draw mute button.
-  **********************************************************************/
-  // void drawMuteButton() {
-  //   drawImage(muteImage, 80, 15, 7, 4.5);
-  // }
-
-  /**********************************************************************
-  * Draw music button.
-  **********************************************************************/
-  // void drawMusicButton() {
-  //   drawImage(musicImage, 80, 15, 7, 4.5);
-  // }
-
-/**********************************************************************
-  * Draw setting button.
-  **********************************************************************/
+  /// Draw setting button.
   void drawSettingButton() {
     drawImage(settingImage, 80, 14.7, 7, 4.5);
   }
 
-  /**********************************************************************
-  * Draw five cross on the canvas. (On the five track)
-  **********************************************************************/
+  /// Draw five cross on the canvas. (Above the five tracks)
   void drawFiveCross(int nextBlockValue) {
     for (double i = 0; i < 5; i++) {
       drawText(
@@ -350,9 +298,7 @@ class DrawHandler {
     }
   }
 
-  /**********************************************************************
-  * Draw all the blocks from block array to canvas.
-  **********************************************************************/
+  /// Draw all the blocks from block array to canvas.
   void drawAllBlocks(List<List<Block>> blocks) {
     for (List<Block> linesOfBlocksY in blocks) {
       for (Block block in linesOfBlocksY) {
@@ -361,16 +307,12 @@ class DrawHandler {
     }
   }
 
-  /**********************************************************************
-  * Draw current dropping block.
-  **********************************************************************/
+  /// Draw current dropping block.
   void drawCurrentBlock(Block currentBlock) {
     drawBlock(currentBlock);
   }
 
-  /**********************************************************************
-  * Draw pause image.
-  **********************************************************************/
+  /// Draw pause image.
   void drawPauseButton() {
     // Pause button image
     drawImage(pauseImage, 12, 93.5, 4, 3);
@@ -378,9 +320,7 @@ class DrawHandler {
     drawRectStroke(9, 92.5, 10, 5, Colors.white, 3);
   }
 
-  /**********************************************************************
-  * Draw play image.
-  **********************************************************************/
+  /// Draw play image.
   void drawPlayButton() {
     // Play button image
     drawImage(playImage, 11.5, 93.25, 5, 3.5);
@@ -390,17 +330,13 @@ class DrawHandler {
     drawRectStroke(9, 92.5, 10, 5, Colors.white, 3);
   }
 
-  /**********************************************************************
-  * Draw the current score.
-  **********************************************************************/
+  /// Draw the current score.
   void drawScore(int score) {
     drawText('Score: ', 30, 92.5, Colors.white, 27);
     drawText(score.toString(), 56, 93, Colors.white, 26);
   }
 
-  /**********************************************************************
-  * Draw horizontal superpower button.
-  **********************************************************************/
+  /// Draw horizontal superpower button.
   void drawHorizontalSuperpowerButton() {
     // Horizontal superpower image
     drawImage(horizontalSuperpowerImage, 70, 92, 9, 6);
@@ -408,9 +344,7 @@ class DrawHandler {
     drawRectStroke(70, 92.5, 9, 5, Colors.white, 3);
   }
 
-  /**********************************************************************
-  * Draw vertical superpower button.
-  **********************************************************************/
+  /// Draw vertical superpower button.
   void drawVerticalSuperpowerButton() {
     // Vertical superpower image
     drawImage(verticalSuperpowerImage, 81.5, 91.25, 10, 7);
@@ -418,9 +352,7 @@ class DrawHandler {
     drawRectStroke(82, 92.5, 9, 5, Colors.white, 3);
   }
 
-  /**********************************************************************
-  * Draw the game over screen.
-  **********************************************************************/
+  /// Draw the game over screen.
   void drawGameOverScreen(int score, int highestScore, Duration elapsedTime) {
     drawFullScreenImage(overImage);
     drawText2("Game Over", 50, 15, Colors.white, 65);
@@ -435,9 +367,7 @@ class DrawHandler {
     drawImage(homeImage, 1, 91.5, 12, 8);
   }
 
-  /**********************************************************************
-  * Draw setting screen.
-  **********************************************************************/
+  /// Draw setting screen.
   void drawSettingScreen() {
     drawFullScreenImage(settingBackgroundImage);
     // back button
@@ -505,18 +435,14 @@ class DrawHandler {
     }
   }
 
-  /**********************************************************************
-  * Format the time from second to minute and second.
-  **********************************************************************/
+  /// Format the time from second to minute and second.
   String getTimeformat(Duration totalSecond) {
     return sprintf("%02d:%02d",
         [totalSecond.inSeconds ~/ 60, (totalSecond.inSeconds % 60).toInt()]);
   }
 
-  /**********************************************************************
-  * Draw the current dropping block on the canvas.
-  * Block size is (14, 9).
-  **********************************************************************/
+  /// Draw the current dropping block on the canvas.
+  /// Block size is (14, 9).
   void drawBlock(Block block) {
     // If block value is zero, ignore the block.
     if (block.value == 0) {
@@ -539,7 +465,6 @@ class DrawHandler {
   /**********************************************************************
   * Draw a single frame of horizontal superpower animation. (glow animation)
   **********************************************************************/
-  /* Settings */
   // Add extra width to horizontal superpower animation.
   double horizontalSuperpowerExtraWidth = 25;
   // Add extra height to horizontal superpower animation.
@@ -551,7 +476,6 @@ class DrawHandler {
 
   void drawHorizontalSuperpowerAnimationImage(int animationFrameIndex) {
     double imageHeight = 30;
-//     drawImage(horizontalSuperpowerAnimation[animationFrameIndex], 15.0, 90 - imageHeight, 85, imageHeight);
     drawImage(
         horizontalSuperpowerAnimation[animationFrameIndex],
         15.0 + horizontalSuperpowerXOffset,
@@ -559,29 +483,10 @@ class DrawHandler {
         100 + horizontalSuperpowerExtraWidth,
         imageHeight + horizontalSuperpowerExtraHeight);
   }
-//   void playHorizontalSuperpowerAnimation() async {
-//     double x = 50, y = 50, width = 250, height = 250;
-//     for (int i = 1; i < 100; i++) {
-//       ui.Image tmpHorImg =
-//           await loadUiImage("assets/video/horizontalSuperpower/" + i.toString() + ".png");
-//       canvas.drawImageRect(
-//           tmpHorImg,
-//           Rect.fromLTWH(
-//               0, 0, tmpHorImg.width.toDouble(), tmpHorImg.height.toDouble()),
-//           Rect.fromLTWH(toAbsoluteX(x), toAbsoluteY(y), width, height),
-//           Paint());
-//
-//       /* await delayGap(); */
-//       print("load pic " + i.toString());
-//       print(tmpHorImg.height);
-//       print(tmpHorImg.width);
-//     }
-//   }
 
   /**********************************************************************
   * Draw a single frame of vertical superpower animation. (flame animation)
   **********************************************************************/
-  /* Settings */
   // Add extra width to vertical superpower animation.
   double verticalSuperpowerExtraWidth = 40;
   // Add extra height to vertical superpower animation.
@@ -594,7 +499,6 @@ class DrawHandler {
   void drawVerticalSuperpowerAnimationImage(
       int animationFrameIndex, int track) {
     double imageHeight = 60;
-//     drawImage(verticalSuperpowerAnimation[animationFrameIndex], 15.0 + 14 * track, 90 - imageHeight, 14, imageHeight);
     drawImage(
         verticalSuperpowerAnimation[animationFrameIndex],
         4.7 + 14 * track + verticalSuperpowerXOffset,
@@ -603,46 +507,19 @@ class DrawHandler {
         imageHeight + verticalSuperpowerExtraHeight);
   }
 
-//   void playVerticalSuperpowerAnimation(
-//       int track, List<List<Block>> blocks) async {
-//     double a = 5, b = 2, width = 400, height = 600;
-//     for (int i = 1; i < 68; i++) {
-//       ui.Image tmpVertImg =
-//           await loadUiImage("assets/video/verticalSuperpower/" + i.toString() + ".png");
-//
-//       canvas.drawImageRect(
-//           tmpVertImage,
-//           Rect.fromLTWH(0, 0, tmpVertImage.width.toDouble(),
-//               tmpVertImage.height.toDouble()),
-//           Rect.fromLTWH(toAbsoluteX(a), toAbsoluteY(b), width, height),
-//           Paint());
-//       /* delayGap(); */
-//     }
-//     /*
-//     drawVideo(verticalSuperpowerVideo, blocks[track][0].x - 5,
-//         blocks[track][0].y - 50, 300, 300);
-//     */
-//   }
-
-  /**********************************************************************
-  * Draw the horizontal cooldown hint overlap the button.
-  **********************************************************************/
+  /// Draw the horizontal cooldown hint overlap the button.
   void drawBlockedHorizontalSuperpower() {
     drawImage(xImage, 70, 92.5, 9, 5);
     drawRectStroke(70, 92.5, 9, 5, Colors.black, 3);
   }
 
-  /**********************************************************************
-  * Draw the vertical cooldown hint overlap the button.
-  **********************************************************************/
+  /// Draw the vertical cooldown hint overlap the button.
   void drawBlockedVerticalSuperpower() {
     drawImage(xImage, 82, 92.5, 9, 5);
     drawRectStroke(82, 92.5, 9, 5, Colors.black, 3);
   }
 
-  /**********************************************************************
-  * Load an image from the given path.
-  **********************************************************************/
+  /// Load an image from the given path.
   Future<ui.Image> loadUiImage(String imageAssetPath) async {
     final ByteData data = await rootBundle.load(imageAssetPath);
     final Completer<ui.Image> completer = Completer();
@@ -652,9 +529,7 @@ class DrawHandler {
     return completer.future;
   }
 
-  /**********************************************************************
-  * Get block color by given block value.
-  **********************************************************************/
+  /// Get block color by given block value.
   Color getBlockColorByValue(int value) {
     if (value == 0) {
       return Color.fromRGBO(0, 0, 0, 0.0);
@@ -662,18 +537,14 @@ class DrawHandler {
     return getBlockColorByIndex(log(value) ~/ log(2) - 1);
   }
 
-  /**********************************************************************
-  * Get block color by index of blockColors.
-  * If it is out of defined color, it will warp to the beginning.
-  * For example: color1, color2, color3, color1, color2, etc.
-  **********************************************************************/
+  /// Get block color by index of blockColors.
+  /// If it is out of defined color, it will warp to the beginning.
+  /// For example: color1, color2, color3, color1, color2, etc.
   Color getBlockColorByIndex(int index) {
     return blockColors[index % blockColors.length];
   }
 
-  /**********************************************************************
-  * Draw a rectangle on the canvas.
-  **********************************************************************/
+  /// Draw a rectangle on the canvas.
   void drawRect(double x, double y, double width, double height, Color color) {
     Rect rect = Rect.fromLTWH(toAbsoluteX(x) + canvasXOffset, toAbsoluteY(y),
         toAbsoluteX(width), toAbsoluteY(height));
@@ -684,9 +555,7 @@ class DrawHandler {
     canvas.drawRect(rect, paint);
   }
 
-  /**********************************************************************
-  * Draw a rectangle but only stroke on the canvas.
-  **********************************************************************/
+  /// Draw a rectangle but only stroke on the canvas.
   void drawRectStroke(double x, double y, double width, double height,
       Color color, double strokeWidth) {
     Rect rect = Rect.fromLTWH(toAbsoluteX(x) + canvasXOffset, toAbsoluteY(y),
@@ -698,29 +567,7 @@ class DrawHandler {
     canvas.drawRect(rect, paint);
   }
 
-  // void drawRectStroke2(double x, double y, double width, double height,
-  //     Color color, double strokeWidth) {
-  //   Rect rect = Rect.fromLTWH(toAbsoluteX(x) + canvasXOffset, toAbsoluteY(y),
-  //       toAbsoluteX(width), toAbsoluteY(height));
-  //   Paint paint = Paint()
-  //     ..color = color
-  //     ..style = PaintingStyle.stroke
-  //     ..strokeWidth = strokeWidth;
-  //   Container(
-  //     // padding: const EdgeInsets.all(8.0),
-  //     decoration: BoxDecoration(
-  //       border: Border(
-  //         top: BorderSide(width: 16.0, color: Colors.lightBlue.shade50),
-  //         bottom: BorderSide(width: 16.0, color: Colors.lightBlue.shade900),
-  //       ),
-  //     ),
-  //   );
-  //   canvas.drawRect(rect, paint);
-  // }
-
-  /**********************************************************************
-  * Draw a line on the canvas by the given start point (x1, y1) and end point (x2, y2).
-  **********************************************************************/
+  /// Draw a line on the canvas by the given start point (x1, y1) and end point (x2, y2).
   void drawLine(double x1, double y1, double x2, double y2, Color color,
       double strokeWidth) {
     Offset p1 = Offset(toAbsoluteX(x1) + canvasXOffset, toAbsoluteY(y1));
@@ -731,10 +578,8 @@ class DrawHandler {
     canvas.drawLine(p1, p2, paint);
   }
 
-  /**********************************************************************
-  * Draw a text on the canvas.
-  * The x and y are coordinate the text center.
-  **********************************************************************/
+  /// Draw a text on the canvas.
+  /// The x and y are coordinate the text center.
   void drawText(String text, double x, double y, Color color, double fontSize) {
     // Adjust the font size, make sure the size is not going to huge
     fontSize /= canvasSize.x > canvasSize.y
@@ -793,9 +638,7 @@ class DrawHandler {
               toAbsoluteY(y)));
   }
 
-  /**********************************************************************
-  * Draw an image on the canvas.
-  **********************************************************************/
+  /// Draw an image on the canvas.
   void drawImage(
       ui.Image image, double x, double y, double width, double height) {
     canvas.drawImageRect(
@@ -806,9 +649,7 @@ class DrawHandler {
         Paint());
   }
 
-  /**********************************************************************
-  * Draw an full screen image on the canvas.
-  **********************************************************************/
+  /// Draw an full screen image on the canvas.
   void drawFullScreenImage(ui.Image image) {
     canvas.drawImageRect(
         image,
