@@ -96,7 +96,7 @@ class DrawHandler {
   * Remember to add the path to "pubspec.yaml' or the resource may not show up.
   **********************************************************************/
   /* Image which will be load later */
-  // Start Page
+  // Home Page
   late ui.Image homePageBackgroundImage;
   late ui.Image homePageTitleBorderImage;
   late ui.Image homePageButtonBorderImage;
@@ -124,7 +124,7 @@ class DrawHandler {
   late ui.Image arrowImage;
 
   void initImages() {
-    // Start page
+    // Home page
     loadUiImage("assets/image/homePage/background.png")
         .then((value) => homePageBackgroundImage = value);
     loadUiImage("assets/image/homePage/titleBorder.png")
@@ -204,12 +204,12 @@ class DrawHandler {
     drawImage(exitImage, 2, 91.3, 10, 7);
   }
 
-  /// Draw music button on the start page.
+  /// Draw music button on the home page.
   void drawHomePageMusicButton() {
     drawImage(homePageMusicImage, 89, 71, 8.5, 6.5);
   }
 
-  /// Draw mute button on the start page.
+  /// Draw mute button on the home page.
   void drawHomePageMuteButton() {
     drawImage(homePageMuteImage, 89, 71, 8.5, 6.5);
   }
@@ -219,7 +219,7 @@ class DrawHandler {
     drawImage(homePageMusicImage, 54, 81.8, 10.5, 6.5);
   }
 
-  /// Draw mute button on the start page.
+  /// Draw mute button on the home page.
   void drawSettingPageMuteButton() {
     drawImage(homePageMuteImage, 54, 81.8, 10.5, 6.5);
   }
@@ -229,7 +229,7 @@ class DrawHandler {
     drawImage(homePageMusicImage, 54, 89.8, 10.5, 6.5);
   }
 
-  /// Draw mute button on the start page.
+  /// Draw mute button on the home page.
   void drawSettingPageEffectMuteButton() {
     drawImage(homePageMuteImage, 54, 89.8, 10.5, 6.5);
   }
