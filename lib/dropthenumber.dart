@@ -223,7 +223,7 @@ class DropTheNumber extends Game with TapDetector {
             superpowerAnimationFrameIndex);
       } else if (superpowerStatus == SuperpowerStatus.verticalSuperpower) {
         drawHandler.drawVerticalSuperpowerAnimationImage(
-            superpowerAnimationFrameIndex, verticalSuperpowerTrack);
+            superpowerAnimationFrameIndex, verticalSuperpowerApplyingTrack);
       }
 
       // Update time
@@ -282,21 +282,15 @@ class DropTheNumber extends Game with TapDetector {
     }
   }
 
-  /**********************************************************************
-  * Super Horizontal Power
-  **********************************************************************/
-  void triggerHorizontalSuperpower() {
+  void useHorizontalSuperpower() {
     superpowerStatus = SuperpowerStatus.horizontalSuperpower;
   }
 
-  /**********************************************************************
-  * Super Vertical Power
-  **********************************************************************/
-  void triggerVerticalSuperpower() {
+  void useVerticalSuperpower() {
     int highestTrack = getHighestTrack();
     // Used in runSuperpower().
-    verticalSuperpowerTrack = highestTrack;
-    print("highest track is " + highestTrack.toString());
+    verticalSuperpowerApplyingTrack = highestTrack;
+    print("highest track is $highestTrack");
     superpowerStatus = SuperpowerStatus.verticalSuperpower;
   }
 
@@ -467,7 +461,7 @@ class DropTheNumber extends Game with TapDetector {
         if (HorizontalSuperpowerWaitingTime > superpowerCooldownTime) {
           HorizontalSuperpowerWaitingTime = Duration.zero;
           horizontalSuperpowerLastUsed = DateTime.now();
-          triggerHorizontalSuperpower();
+          useHorizontalSuperpower();
           print("Horizontal superpower clicked!"); // debug
           superpowerStatus = SuperpowerStatus.horizontalSuperpower;
         }
@@ -480,7 +474,7 @@ class DropTheNumber extends Game with TapDetector {
           verticalSuperpowerLastUsed = DateTime.now();
           print("Vertical superpower clicked!"); // debug
           superpowerStatus = SuperpowerStatus.verticalSuperpower;
-          triggerVerticalSuperpower();
+          useVerticalSuperpower();
         }
       }
     }
@@ -520,7 +514,7 @@ class DropTheNumber extends Game with TapDetector {
   // The superpower animation frame index. (The animation is combine by lots of image)
   int superpowerAnimationFrameIndex = 0;
   // The highest track selected by triggerVerticalSuperpower().
-  int verticalSuperpowerTrack = 0;
+  int verticalSuperpowerApplyingTrack = 0;
   // Count the current animation image stop for how many frames.
   int animationImageFrameCounter = 0;
 
@@ -567,7 +561,7 @@ class DropTheNumber extends Game with TapDetector {
             superpowerStatus = SuperpowerStatus.none;
             superpowerAnimationFrameIndex = 0;
 
-            blocks[verticalSuperpowerTrack].clear();
+            blocks[verticalSuperpowerApplyingTrack].clear();
           }
           break;
         }
