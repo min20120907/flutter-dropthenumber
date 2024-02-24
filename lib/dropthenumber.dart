@@ -1179,18 +1179,10 @@ class DropTheNumber extends Game with TapDetector {
     }
   }
 
-  /**********************************************************************
-  * Add the score by the given value multiply by scoreMultiplier
-  * of the current game difficulty.
-  **********************************************************************/
   void addScore(int score) {
     this.score += (score * getScoreMultiplier(gameDifficulty)).round();
   }
 
-  /**********************************************************************
-  * Set the volume up.
-  * Also update the local storge setting file.
-  **********************************************************************/
   void increaseVolume() {
     volume += 0.1;
     if(volume > 1.0) {
@@ -1199,10 +1191,6 @@ class DropTheNumber extends Game with TapDetector {
     dataHandler.writeVolume(volume);
   }
 
-  /**********************************************************************
-  * Set the volume down.
-  * Also update the local storge setting file.
-  **********************************************************************/
   void decreaseVolume() {
     volume -= 0.1;
     if(volume < 0) {
@@ -1211,33 +1199,26 @@ class DropTheNumber extends Game with TapDetector {
     dataHandler.writeVolume(volume);
   }
 
-  /**********************************************************************
-  * Set the effect volume up.
-  * Also update the local storge setting file.
-  **********************************************************************/
   void increaseEffectVolume() {
     effectVolume += 0.1;
     if(effectVolume > 1.0) {
       effectVolume = 1.0;
     }
+    playBubbleAudio();
     dataHandler.writeEffectVolume(effectVolume);
   }
 
-  /**********************************************************************
-  * Set the effect volume down.
-  * Also update the local storge setting file.
-  **********************************************************************/
   void decreaseEffectVolume() {
     effectVolume -= 0.1;
     if(effectVolume < 0.0) {
       effectVolume = 0.0;
     }
+    playBubbleAudio();
     dataHandler.writeEffectVolume(effectVolume);
   }
 
   /**********************************************************************
   * Set the difficulty of the game.
-  * It will change some other value like currentDropSpeed or currentSuperpowerCooldow.
   * Also update the local storge setting file.
   **********************************************************************/
   void setGameDifficulty(GameDifficulty gameDifficulty) {
@@ -1247,9 +1228,7 @@ class DropTheNumber extends Game with TapDetector {
     dataHandler.writeGameDifficulty(gameDifficulty);
   }
 
-  /**********************************************************************
-  * Randomly play one of a bubble audio.
-  **********************************************************************/
+  /// Randomly play one of a bubble audio.
   void playBubbleAudio() {
     if (!effectMute) {
       FlameAudio.play('bubble' + random.nextInt(4).toString() + '.mp3',
@@ -1257,9 +1236,7 @@ class DropTheNumber extends Game with TapDetector {
     }
   }
 
-  /**********************************************************************
-  * Randomly play one of a append audio.
-  **********************************************************************/
+  /// Randomly play one of a append audio.
   void playAppendAudio() {
     if (!effectMute) {
       FlameAudio.play('append' + random.nextInt(4).toString() + '.mp3',
