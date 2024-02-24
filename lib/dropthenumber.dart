@@ -1,18 +1,12 @@
-// import 'dart:async';
 import 'dart:math';
-// import 'dart:typed_data';
-// import 'dart:ui' as ui;
 import 'dart:io';
+
 import 'package:flame/events.dart';
-// import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
-// import 'package:flame/gestures.dart';
-// import 'package:flame/flame_audio.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-// import 'package:sprintf/sprintf.dart';
+
 import 'draw_handler.dart';
 import 'block.dart';
 import 'merging_status.dart';

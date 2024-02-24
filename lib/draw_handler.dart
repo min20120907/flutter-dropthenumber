@@ -1,17 +1,12 @@
 import 'dart:async';
 import 'dart:math';
-// import 'dart:typed_data';
 import 'dart:ui' as ui;
-// import 'dart:io';
-// import 'package:flame/flame.dart';
-// import 'package:flame/game.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-// import 'package:flutter/widgets.dart';
 import 'package:sprintf/sprintf.dart';
-// import 'dropthenumber.dart';
+
 import 'block.dart';
-// import 'superpower_status.dart';
 import 'game_difficulty.dart';
 
 class DrawHandler {
