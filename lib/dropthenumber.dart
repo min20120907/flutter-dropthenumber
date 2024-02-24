@@ -146,11 +146,11 @@ class DropTheNumber extends Game with TapDetector {
 
     // Draw start game screen.
     if (!inHomeScreen) {
-      drawHandler.drawStartPageScreen();
+      drawHandler.drawHomeScreen();
       if (!bgmMuted) {
-        drawHandler.drawStartPageMusicButton();
+        drawHandler.drawHomePageMusicButton();
       } else {
-        drawHandler.drawStartPageMuteButton();
+        drawHandler.drawHomePageMuteButton();
       }
     }
     // Draw game setting screen.

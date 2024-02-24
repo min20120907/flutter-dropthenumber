@@ -107,13 +107,13 @@ class DrawHandler {
   **********************************************************************/
   /* Image which will be load later */
   // Start Page
-  late ui.Image startPageBackgroundImage;
-  late ui.Image startPageTitleBorderImage;
-  late ui.Image startPageButtonBorderImage;
-  late ui.Image startPageMusicImage;
-  late ui.Image startPageMuteImage;
-  late ui.Image startPageVolumeUpImage;
-  late ui.Image startPageVolumeDownImage;
+  late ui.Image homePageBackgroundImage;
+  late ui.Image homePageTitleBorderImage;
+  late ui.Image homePageButtonBorderImage;
+  late ui.Image homePageMusicImage;
+  late ui.Image homePageMuteImage;
+  late ui.Image homePageVolumeUpImage;
+  late ui.Image homePageVolumeDownImage;
   // In Game
   late ui.Image backgroundImage;
   late ui.Image overImage;
@@ -135,20 +135,20 @@ class DrawHandler {
 
   void initImages() {
     // Start page
-    loadUiImage("assets/image/startPage/background.png")
-        .then((value) => startPageBackgroundImage = value);
-    loadUiImage("assets/image/startPage/titleBorder.png")
-        .then((value) => startPageTitleBorderImage = value);
-    loadUiImage("assets/image/startPage/buttonBorder.png")
-        .then((value) => startPageButtonBorderImage = value);
-    loadUiImage("assets/image/startPage/music.png")
-        .then((value) => startPageMusicImage = value);
-    loadUiImage("assets/image/startPage/mute.png")
-        .then((value) => startPageMuteImage = value);
-    loadUiImage("assets/image/startPage/volumeUp.png")
-        .then((value) => startPageVolumeUpImage = value);
-    loadUiImage("assets/image/startPage/volumeDown.png")
-        .then((value) => startPageVolumeDownImage = value);
+    loadUiImage("assets/image/homePage/background.png")
+        .then((value) => homePageBackgroundImage = value);
+    loadUiImage("assets/image/homePage/titleBorder.png")
+        .then((value) => homePageTitleBorderImage = value);
+    loadUiImage("assets/image/homePage/buttonBorder.png")
+        .then((value) => homePageButtonBorderImage = value);
+    loadUiImage("assets/image/homePage/music.png")
+        .then((value) => homePageMusicImage = value);
+    loadUiImage("assets/image/homePage/mute.png")
+        .then((value) => homePageMuteImage = value);
+    loadUiImage("assets/image/homePage/volumeUp.png")
+        .then((value) => homePageVolumeUpImage = value);
+    loadUiImage("assets/image/homePage/volumeDown.png")
+        .then((value) => homePageVolumeDownImage = value);
     // Game
     loadUiImage("assets/image/background.jpg")
         .then((value) => backgroundImage = value);
@@ -203,61 +203,57 @@ class DrawHandler {
     }
   }
 
-  /**********************************************************************
-  * Draw the screen before the game start.
-  * The screen will only show once when the game start.
-  **********************************************************************/
-  void drawStartPageScreen() {
-    drawFullScreenImage(startPageBackgroundImage);
+  void drawHomeScreen() {
+    drawFullScreenImage(homePageBackgroundImage);
     drawText2('2048 V.2', 50, 7, Colors.white, 60);
     drawText2('START', 52, 31.5, Colors.white, 38);
-    drawImage(startPageVolumeUpImage, 87, 80, 12, 8);
-    drawImage(startPageVolumeDownImage, 87, 90, 12, 8);
-    drawImage(startPageButtonBorderImage, 32, 27.5, 40, 22);
-    drawImage(startPageTitleBorderImage, 0, -2.5, 100, 28);
+    drawImage(homePageVolumeUpImage, 87, 80, 12, 8);
+    drawImage(homePageVolumeDownImage, 87, 90, 12, 8);
+    drawImage(homePageButtonBorderImage, 32, 27.5, 40, 22);
+    drawImage(homePageTitleBorderImage, 0, -2.5, 100, 28);
     drawImage(exitImage, 2, 91.3, 10, 7);
   }
 
   /**********************************************************************
   * Draw music button on the start page.
   **********************************************************************/
-  void drawStartPageMusicButton() {
-    drawImage(startPageMusicImage, 89, 71, 8.5, 6.5);
+  void drawHomePageMusicButton() {
+    drawImage(homePageMusicImage, 89, 71, 8.5, 6.5);
   }
 
   /**********************************************************************
   * Draw mute button on the start page.
   **********************************************************************/
-  void drawStartPageMuteButton() {
-    drawImage(startPageMuteImage, 89, 71, 8.5, 6.5);
+  void drawHomePageMuteButton() {
+    drawImage(homePageMuteImage, 89, 71, 8.5, 6.5);
   }
 
   /**********************************************************************
   * Draw music button on the setting page.
   **********************************************************************/
   void drawSettingPageMusicButton() {
-    drawImage(startPageMusicImage, 54, 81.8, 10.5, 6.5);
+    drawImage(homePageMusicImage, 54, 81.8, 10.5, 6.5);
   }
 
   /**********************************************************************
   * Draw mute button on the start page.
   **********************************************************************/
   void drawSettingPageMuteButton() {
-    drawImage(startPageMuteImage, 54, 81.8, 10.5, 6.5);
+    drawImage(homePageMuteImage, 54, 81.8, 10.5, 6.5);
   }
 
   /**********************************************************************
   * Draw effect music button on the setting page.
   **********************************************************************/
   void drawSettingPageEffectMusicButton() {
-    drawImage(startPageMusicImage, 54, 89.8, 10.5, 6.5);
+    drawImage(homePageMusicImage, 54, 89.8, 10.5, 6.5);
   }
 
   /**********************************************************************
   * Draw mute button on the start page.
   **********************************************************************/
   void drawSettingPageEffectMuteButton() {
-    drawImage(startPageMuteImage, 54, 89.8, 10.5, 6.5);
+    drawImage(homePageMuteImage, 54, 89.8, 10.5, 6.5);
   }
 
   /**********************************************************************
@@ -432,9 +428,9 @@ class DrawHandler {
     drawText2(
         "Highest Score: " + highestScore.toString(), 50, 45, Colors.white, 40);
     drawText2("Your Score: " + score.toString(), 45, 55, Colors.white, 40);
-    drawImage(startPageButtonBorderImage, 18.5, 66, 33, 19);
+    drawImage(homePageButtonBorderImage, 18.5, 66, 33, 19);
     drawText2("Restart", 34.5, 69.5, Colors.white, 33);
-    drawImage(startPageButtonBorderImage, 50.5, 66, 33, 19);
+    drawImage(homePageButtonBorderImage, 50.5, 66, 33, 19);
     drawText2("Quit", 66, 69.5, Colors.white, 33);
     drawImage(homeImage, 1, 91.5, 12, 8);
   }
@@ -455,11 +451,11 @@ class DrawHandler {
     drawText2("Effect Sound:", 31, 90, Colors.black, 40);
 
     // volume adjust button
-    drawImage(startPageVolumeDownImage, 67, 81, 14, 8);
-    drawImage(startPageVolumeUpImage, 81, 81, 14, 8);
+    drawImage(homePageVolumeDownImage, 67, 81, 14, 8);
+    drawImage(homePageVolumeUpImage, 81, 81, 14, 8);
 
-    drawImage(startPageVolumeDownImage, 67, 89, 14, 8);
-    drawImage(startPageVolumeUpImage, 81, 89, 14, 8);
+    drawImage(homePageVolumeDownImage, 67, 89, 14, 8);
+    drawImage(homePageVolumeUpImage, 81, 89, 14, 8);
   }
 
   void drawGameDifficultyText(GameDifficulty gameDifficulty) {
