@@ -46,27 +46,22 @@ class DropTheNumber extends Game with TapDetector {
   List<List<Block>> blocks = [[], [], [], [], []];
   // The start time point of the game.
   DateTime startTime = DateTime.now();
-  // The time elapsed of the game running from the start time.
+  /// The time elapsed of the game running from the start time.
   Duration elapsedTime = Duration.zero;
-  // The time elapsed of the game pause.
+  /// The time elapsed of the game pause.
   Duration pauseElapsedTime = Duration.zero;
-  // Get the maximum track among the blocks
 
   /// The last time point that horizontal superpower used
   DateTime horizontalSuperpowerLastUsed = DateTime(0);
   /// The last time point that vertical superpower used
   DateTime verticalSuperpowerLastUsed = DateTime(0);
   bool lastLoopPaused = false;
-  // Record the time stamp of pause
+  /// Record the time stamp of pause
   DateTime startTimeOfPause = DateTime.now();
-  // Record the duration of pause phase
-  Duration pauseDuration = Duration.zero;
-  bool blockedHor = false, blockedVert = false;
 
+  Random random = Random();
   // Data handler can help to save and read data from file.
   DataHandler dataHandler;
-  // A generator of random values, import from 'dart:math'.
-  Random random = Random();
   // Draw handler for helping to draw everything on screen.
   DrawHandler drawHandler = DrawHandler();
   // Convert the absolute x to relative x.
@@ -75,16 +70,10 @@ class DropTheNumber extends Game with TapDetector {
   double toRelativeY(double y) => y * 100 / canvasSize_.height;
   // Check if the number is within given lower boundary and upper boundary.
   bool inRange(double number, double lowerBoundary, double upperBoundary) =>
-      number >= lowerBoundary && number <= upperBoundary;
-  // Canvas cv;
-
-  // first occurance of vertical superpower
-  bool firstHorizontalOccurance = true;
-  // first occurance of vertical superpower
-  bool firstVerticalOccurance = true;
+      lowerBoundary <= number && number <= upperBoundary;
 
   /**********************************************************************
-  * Constructor
+  * Constructor 
   **********************************************************************/
   DropTheNumber(DataHandler dataHandler)
   :dataHandler = dataHandler,
@@ -219,29 +208,13 @@ class DropTheNumber extends Game with TapDetector {
       Duration verticalSuperpowerCooldown = DateTime.now().difference(verticalSuperpowerLastUsed);
       // Horizontal cross while cooldown
       Duration superpowerCooldownTime = getSuperpowerCooldownTime(gameDifficulty);
-      if (horizontalSuperpowerCooldown < superpowerCooldownTime && !firstHorizontalOccurance) {
-        blockedHor = true;
-        // draw the cross
-
-      } else if (!gamePaused || firstHorizontalOccurance) {
-        blockedHor = false;
-        firstHorizontalOccurance = false;
+      if (horizontalSuperpowerCooldown < superpowerCooldownTime) {
+        drawHandler.drawBlockedHorizontalSuperpower();
       }
 
       // Vertical cross while cooldown
-      if (verticalSuperpowerCooldown < superpowerCooldownTime && !firstVerticalOccurance) {
-        blockedVert = true;
-
-        // draw the cross
-      } else if (!gamePaused || firstVerticalOccurance) {
-        blockedVert = false;
-        firstVerticalOccurance = false;
-      }
-      if (blockedVert) {
+      if (verticalSuperpowerCooldown < superpowerCooldownTime) {
         drawHandler.drawBlockedVerticalSuperpower();
-      }
-      if (blockedHor) {
-        drawHandler.drawBlockedHorizontalSuperpower();
       }
 
       // draw superpower animation
@@ -258,7 +231,7 @@ class DropTheNumber extends Game with TapDetector {
         if (gamePaused) {
           startTimeOfPause = DateTime.now();
         } else {
-          pauseDuration = DateTime.now().difference(startTimeOfPause);
+          Duration pauseDuration = DateTime.now().difference(startTimeOfPause);
           horizontalSuperpowerLastUsed.add(pauseDuration);
           verticalSuperpowerLastUsed.add(pauseDuration);
         }
@@ -490,14 +463,6 @@ class DropTheNumber extends Game with TapDetector {
       }
       // Horizontal superpower clicked.
       else if (inRange(x, 70, 79) && inRange(y, 92.5, 97.5)) {
-        if (firstHorizontalOccurance) {
-          horizontalSuperpowerLastUsed = DateTime.now();
-          triggerHorizontalSuperpower();
-          print("Horizontal superpower clicked!"); // debug
-          superpowerStatus = SuperpowerStatus.horizontalSuperpower;
-          firstHorizontalOccurance;
-        }
-
         Duration HorizontalSuperpowerWaitingTime = DateTime.now().difference(horizontalSuperpowerLastUsed);
         if (HorizontalSuperpowerWaitingTime > superpowerCooldownTime) {
           HorizontalSuperpowerWaitingTime = Duration.zero;
@@ -509,14 +474,6 @@ class DropTheNumber extends Game with TapDetector {
       }
       // Vertical superpower clicked.
       else if (inRange(x, 80, 90) && inRange(y, 92.5, 97.5)) {
-        if (firstVerticalOccurance) {
-          verticalSuperpowerLastUsed = DateTime.now();
-          print("Vertical superpower clicked!"); // debug
-          firstVerticalOccurance = false;
-          superpowerStatus = SuperpowerStatus.verticalSuperpower;
-          triggerVerticalSuperpower();
-        }
-
         Duration verticalSuperpowerWaitingTime = DateTime.now().difference(verticalSuperpowerLastUsed);
         if (verticalSuperpowerWaitingTime > superpowerCooldownTime) {
           verticalSuperpowerWaitingTime = Duration.zero;
