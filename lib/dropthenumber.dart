@@ -1192,12 +1192,10 @@ class DropTheNumber extends Game with TapDetector {
   * Also update the local storge setting file.
   **********************************************************************/
   void increaseVolume() {
-    if(volume + 0.1 > 0.999) {
-      volume = 1;
-      return;
-    }
-
     volume += 0.1;
+    if(volume > 1.0) {
+      volume = 1.0;
+    }
     dataHandler.writeVolume(volume);
   }
 
@@ -1206,12 +1204,10 @@ class DropTheNumber extends Game with TapDetector {
   * Also update the local storge setting file.
   **********************************************************************/
   void decreaseVolume() {
-    if(volume - 0.1 < 0.001) {
-      volume = 0;
-      return;
-    }
-
     volume -= 0.1;
+    if(volume < 0) {
+      volume = 0.0;
+    }
     dataHandler.writeVolume(volume);
   }
 
