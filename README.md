@@ -27,30 +27,30 @@ A minigame written in flutter.
 
 1. Generate upload-keystore.jks for application signature. [(flutter document)](https://flutter.dev/docs/deployment/android#create-an-upload-keystore)
 
-In Linux or Mac:
+    In Linux or Mac:
 
-```
-keytool -genkey -v -keystore ~/upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload
-```
+    ```
+    keytool -genkey -v -keystore ~/upload-keystore.jks -keyalg RSA -keysize 2048 -validity 10000 -alias upload
+    ```
 
-In Windows:
+    In Windows:
 
-```
-keytool -genkey -v -keystore %userprofile%\upload-keystore.jks -storetype JKS -keyalg RSA -keysize 2048 -validity 10000 -alias upload
-```
+    ```
+    keytool -genkey -v -keystore %userprofile%\upload-keystore.jks -storetype JKS -keyalg RSA -keysize 2048 -validity 10000 -alias upload
+    ```
 
 2. Update the path to your signature file.
 
-Update the `storeFile=/home/<USER_NAME>/upload-keystore.jks` in "android/key.properties"
+    Update the `storeFile=/home/<USER_NAME>/upload-keystore.jks` in "android/key.properties"
 
 3. Run now! For more information please check [flutter document](https://flutter.dev/docs/reference/flutter-cli).
 
-```
-flutter run
-```
+    ```
+    flutter run
+    ```
 
 4. Build AAB file
 
-```
-flutter build appbundle
-```
+    ```
+    flutter build appbundle
+    ```
