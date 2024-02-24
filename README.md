@@ -2,7 +2,7 @@
 
 A minigame written in flutter.
 
-![preview](assets/image/preview.webp)
+<img src="assets/image/preview.webp" width="20%" height="20%">
 
 ## Supported Platforms
 
