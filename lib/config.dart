@@ -1,6 +1,6 @@
 import "package:dropthenumber/game_difficulty.dart";
 
-// Y dropped for every second. (In percentage)
+/// Y dropped for every second. (In percentage)
 double getDropSpeed(GameDifficulty gameDifficulty) {
   switch (gameDifficulty) {
     case GameDifficulty.noob: return 2.0;
@@ -10,11 +10,10 @@ double getDropSpeed(GameDifficulty gameDifficulty) {
   }
 }
 
-// Block merging animation speed (percentage of the map)
+/// Block merging animation speed (percentage of the map)
 double getMergingSpeed(GameDifficulty gameDifficulty) {
   return 2.0;
 }
-
 
 Duration getSuperpowerCooldownTime(GameDifficulty gameDifficulty) {
   switch (gameDifficulty) {
@@ -25,7 +24,7 @@ Duration getSuperpowerCooldownTime(GameDifficulty gameDifficulty) {
   }
 }
 
-// The score multiplier of the game
+/// The score multiplier of the game
 double getScoreMultiplier(GameDifficulty gameDifficulty) {
   switch (gameDifficulty) {
     case GameDifficulty.noob: return 0.25;
