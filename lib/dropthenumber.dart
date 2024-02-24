@@ -75,9 +75,9 @@ class DropTheNumber extends Game with TapDetector {
   :dataHandler = dataHandler,
   highestScore = dataHandler.readHighestScore(),
   gameDifficulty = dataHandler.readGameDifficulty(),
-  bgmMuted = dataHandler.readMute(),
-  volume = dataHandler.readVolume(),
-  effectMuted = dataHandler.readEffectMute(),
+  bgmMuted = dataHandler.readBgmMuted(),
+  volume = dataHandler.readBgmVolume(),
+  effectMuted = dataHandler.readEffectMuted(),
   effectVolume = dataHandler.readEffectVolume() {
 
     FlameAudio.bgm.play("edm.mp3", volume: volume);
@@ -974,7 +974,7 @@ class DropTheNumber extends Game with TapDetector {
       FlameAudio.bgm.resume();
     }
 
-    dataHandler.writeMute(bgmMuted);
+    dataHandler.writeBgmMuted(bgmMuted);
   }
 
   void toggleEffectMute() {
@@ -1055,7 +1055,7 @@ class DropTheNumber extends Game with TapDetector {
     if(volume > 1.0) {
       volume = 1.0;
     }
-    dataHandler.writeVolume(volume);
+    dataHandler.writeBgmVolume(volume);
   }
 
   void decreaseVolume() {
@@ -1063,7 +1063,7 @@ class DropTheNumber extends Game with TapDetector {
     if(volume < 0) {
       volume = 0.0;
     }
-    dataHandler.writeVolume(volume);
+    dataHandler.writeBgmVolume(volume);
   }
 
   void increaseEffectVolume() {

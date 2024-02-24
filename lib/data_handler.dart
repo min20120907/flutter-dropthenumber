@@ -18,10 +18,7 @@ class DataHandler {
   }
 
   GameDifficulty readGameDifficulty() {
-    int? gameDifficultyIndex = storage.getInt('gameDifficulty');
-    if(gameDifficultyIndex == null) {
-      return GameDifficulty.normal;
-    }
+    int gameDifficultyIndex = storage.getInt('gameDifficulty') ?? GameDifficulty.normal.index;
     return GameDifficulty.values[gameDifficultyIndex];
   }
 
@@ -30,28 +27,28 @@ class DataHandler {
     storage.setInt('gameDifficulty', gameDifficultyIndex);
   }
 
-  bool readMute() {
-    return storage.getBool('mute') ?? false;
+  bool readBgmMuted() {
+    return storage.getBool('bgmMuted') ?? false;
   }
 
-  void writeMute(bool mute) {
-     storage.setBool('mute', mute);
+  void writeBgmMuted(bool bgmMuted) {
+     storage.setBool('bgmMuted', bgmMuted);
   }
 
-  double readVolume() {
-    return storage.getDouble('volume') ?? 0.5;
+  double readBgmVolume() {
+    return storage.getDouble('bgmVolume') ?? 0.5;
   }
 
-  void writeVolume(double volume) {
-     storage.setDouble('volume', volume);
+  void writeBgmVolume(double volume) {
+     storage.setDouble('bgmVolume', volume);
   }
 
-  bool readEffectMute() {
-    return storage.getBool('effectMute') ?? false;
+  bool readEffectMuted() {
+    return storage.getBool('effectMuted') ?? false;
   }
 
   void writeEffectMute(bool effectMute) {
-    storage.setBool('effectMute', effectMute);
+    storage.setBool('effectMuted', effectMute);
   }
 
   double readEffectVolume() {
