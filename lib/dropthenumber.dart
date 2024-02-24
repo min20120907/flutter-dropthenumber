@@ -16,35 +16,26 @@ import 'data_handler.dart';
 import 'game_difficulty.dart';
 
 class DropTheNumber extends Game with TapDetector {
-  // The default volume of the game bgm (can be change by click on the volume adjust button)
   double volume = 0.5;
-  // The default volume of the effect sound (can be change by click on the setting page effect adjust button)
   double effectVolume = 0.5;
-  // The current difficulty of the game
-  // wip: Temporary set to normal, it need to be set to the difficulty that the game leaved previous time.
   GameDifficulty gameDifficulty = GameDifficulty.normal;
 
-  /**********************************************************************
-  * Variables
-  **********************************************************************/
-  // If the start page is showed, it only show once when the game start.
-  bool startPageScreenFinished = false;
-  // If the game is game over, waiting for restart.
+  /// Init screen only show once each time the game start
+  bool gameInitScreenFinished = false;
   bool gameOver = false;
+  bool gamePaused = true;
+  bool muted = false;
+  bool effectMuted = false;
+  int score = 0;
+  int highestScore = 0;
   // Store the screen size, the value will be set in resize() function.
   Size screenSize = Size(0.0, 0.0);
   // Calculated canvas size in the middle of screen.
-  Size canvasSize_ = Size(0.0, 0.0); // debug!
-  // Left offset of the canvas left.
+  Size canvasSize_ = Size(0.0, 0.0); // debug! the name is conflict with Game.canvasSize
+  // Left offset of the canvas
   double canvasXOffset = 0.0;
   // If the setting screen is open
   bool settingScreenIsOpen = false;
-  // If the game is paused.
-  bool pause = true;
-  // If the bgm is muted.
-  bool mute = false;
-  // If the effect is muted
-  bool effectMute = false;
   // The track using by the dropping block.
   int currentTrack = 0;
   // Store the information of the dropping block.
@@ -53,10 +44,6 @@ class DropTheNumber extends Game with TapDetector {
   int nextBlockValue = 0;
   // The list which maximum is 5*7 to store all blocks information.
   List<List<Block>> blocks = [[], [], [], [], []];
-  // The current score of the game.
-  int score = 0;
-  // The highest score on the local game.
-  int highestScore = 0;
   // The start time point of the game.
   DateTime startTime = DateTime.now();
   // The time elapsed of the game running from the start time.
@@ -65,20 +52,11 @@ class DropTheNumber extends Game with TapDetector {
   Duration pauseElapsedTime = Duration.zero;
   // Get the maximum track among the blocks
 
-  // The last time which horizontal superpower clicked
-  // ignore: non_constant_identifier_names
-  DateTime cooldown_time_hor = DateTime(0);
-  // Horizontal superpower cooldown duration
-  // ignore: non_constant_identifier_names
-  Duration cool_down_hor = Duration.zero;
-  // The last time which vertical superpower clicked
-  // ignore: non_constant_identifier_names
-  DateTime cooldown_time_vert = DateTime(0);
-  // Vertical superpower cooldown duration
-  // ignore: non_constant_identifier_names
-  Duration cool_down_vert = Duration.zero;
-  // ignore: non_constant_identifier_names
-  bool LastLoopPaused = false;
+  /// The last time point that horizontal superpower used
+  DateTime horizontalSuperpowerLastUsed = DateTime(0);
+  /// The last time point that vertical superpower used
+  DateTime verticalSuperpowerLastUsed = DateTime(0);
+  bool lastLoopPaused = false;
   // Record the time stamp of pause
   DateTime startTimeOfPause = DateTime.now();
   // Record the duration of pause phase
@@ -113,13 +91,13 @@ class DropTheNumber extends Game with TapDetector {
   :dataHandler = dataHandler,
   highestScore = dataHandler.readHighestScore(),
   gameDifficulty = dataHandler.readGameDifficulty(),
-  mute = dataHandler.readMute(),
+  muted = dataHandler.readMute(),
   volume = dataHandler.readVolume(),
-  effectMute = dataHandler.readEffectMute(),
+  effectMuted = dataHandler.readEffectMute(),
   effectVolume = dataHandler.readEffectVolume() {
 
     FlameAudio.bgm.play("edm.mp3", volume: volume);
-    if(mute) {
+    if(muted) {
       FlameAudio.bgm.pause();
     }
 
@@ -132,15 +110,15 @@ class DropTheNumber extends Game with TapDetector {
   void resetGame() {
     score = 0;
     gameOver = false;
-    pause = false;
+    gamePaused = false;
     for (List lineOfBlocks in blocks) {
       lineOfBlocks.clear();
     }
     setGameDifficulty(gameDifficulty);
     pauseElapsedTime = Duration();
     startTime = DateTime.now();
-    cooldown_time_hor = DateTime(0);
-    cooldown_time_vert = DateTime(0);
+    horizontalSuperpowerLastUsed = DateTime(0);
+    verticalSuperpowerLastUsed = DateTime(0);
 
     // Called twice to be sure didn't used the next block value of last round.
     setupCurrentBlock();
@@ -189,9 +167,9 @@ class DropTheNumber extends Game with TapDetector {
     drawHandler.setSize(screenSize, canvasSize_, canvasXOffset);
 
     // Draw start game screen.
-    if (!startPageScreenFinished) {
+    if (!gameInitScreenFinished) {
       drawHandler.drawStartPageScreen();
-      if (!mute) {
+      if (!muted) {
         drawHandler.drawStartPageMusicButton();
       } else {
         drawHandler.drawStartPageMuteButton();
@@ -201,12 +179,12 @@ class DropTheNumber extends Game with TapDetector {
     else if (settingScreenIsOpen) {
       drawHandler.drawSettingScreen();
       drawHandler.drawGameDifficultyText(gameDifficulty);
-      if (!mute) {
+      if (!muted) {
         drawHandler.drawSettingPageMusicButton();
       } else {
         drawHandler.drawSettingPageMuteButton();
       }
-      if (!effectMute) {
+      if (!effectMuted) {
         drawHandler.drawSettingPageEffectMusicButton();
       } else {
         drawHandler.drawSettingPageEffectMuteButton();
@@ -233,20 +211,20 @@ class DropTheNumber extends Game with TapDetector {
       drawHandler.drawScore(score);
       drawHandler.drawVerticalSuperpowerButton();
       drawHandler.drawHorizontalSuperpowerButton();
-      if (!pause) {
+      if (!gamePaused) {
         drawHandler.drawPauseButton();
       } else {
         drawHandler.drawPlayButton();
       }
-      cdh = DateTime.now().difference(cooldown_time_hor);
-      cdv = DateTime.now().difference(cooldown_time_vert);
+      cdh = DateTime.now().difference(horizontalSuperpowerLastUsed);
+      cdv = DateTime.now().difference(verticalSuperpowerLastUsed);
       // Horizontal cross while cooldown
       Duration superpowerCooldownTime = getSuperpowerCooldownTime(gameDifficulty);
       if (cdh < superpowerCooldownTime && !firstHorizontalOccurance) {
         blockedHor = true;
         // draw the cross
 
-      } else if (!pause || firstHorizontalOccurance) {
+      } else if (!gamePaused || firstHorizontalOccurance) {
         blockedHor = false;
         firstHorizontalOccurance = false;
       }
@@ -256,7 +234,7 @@ class DropTheNumber extends Game with TapDetector {
         blockedVert = true;
 
         // draw the cross
-      } else if (!pause || firstVerticalOccurance) {
+      } else if (!gamePaused || firstVerticalOccurance) {
         blockedVert = false;
         firstVerticalOccurance = false;
       }
@@ -276,25 +254,17 @@ class DropTheNumber extends Game with TapDetector {
             superpowerAnimationFrameIndex, verticalSuperpowerTrack);
       }
 
-//       if (superHorBool) {
-//         superHorBool = false;
-//         return;
-//       }
-//       if (superVertBool) {
-//         superVertBool = false;
-//         return;
-//       }
       // Update time
-      if (LastLoopPaused != pause) {
-        if (pause) {
+      if (lastLoopPaused != gamePaused) {
+        if (gamePaused) {
           startTimeOfPause = DateTime.now();
         } else {
           pauseDuration = DateTime.now().difference(startTimeOfPause);
-          cooldown_time_hor.add(pauseDuration);
-          cooldown_time_vert.add(pauseDuration);
+          horizontalSuperpowerLastUsed.add(pauseDuration);
+          verticalSuperpowerLastUsed.add(pauseDuration);
         }
       }
-      LastLoopPaused = pause;
+      lastLoopPaused = gamePaused;
     }
     // Draw game over screen.
     else {
@@ -312,7 +282,7 @@ class DropTheNumber extends Game with TapDetector {
     // int lagPercentage = ((previousLoopTimeConsumed*60-1) * 100).toInt();
     // print("Lag: " + (lagPercentage).toString() + "%");
 
-    if (!pause && isGameRunning()) {
+    if (!gamePaused && isGameRunning()) {
       // Update game time.
       elapsedTime = DateTime.now().difference(startTime) - pauseElapsedTime;
 
@@ -391,9 +361,9 @@ class DropTheNumber extends Game with TapDetector {
     // yAxis = event.globalPosition.dy;
 
     // Game start
-    if (!startPageScreenFinished) {
+    if (!gameInitScreenFinished) {
       if (inRange(x, 32, 70) && inRange(y, 29, 37)) {
-        startPageScreenFinished = true;
+        gameInitScreenFinished = true;
         // Start game timer.
         startTime = DateTime.now();
 
@@ -429,7 +399,7 @@ class DropTheNumber extends Game with TapDetector {
       }
       // Home button clicked
       else if (inRange(x, 4, 13) && inRange(y, 3.5, 8.5)) {
-        startPageScreenFinished = false;
+        gameInitScreenFinished = false;
         settingScreenIsOpen = false;
         resetGame();
         print("home button clicked!"); // debug
@@ -495,11 +465,11 @@ class DropTheNumber extends Game with TapDetector {
       // Pause button clicked.
       else if (inRange(x, 9, 19) && inRange(y, 92.5, 97.5)) {
         togglePause();
-      } else if (pause && inRange(x, 37, 63) && inRange(y, 42, 58)) {
+      } else if (gamePaused && inRange(x, 37, 63) && inRange(y, 42, 58)) {
         togglePause();
       }
       // If it is paused, ignore the click.
-      else if (pause) {
+      else if (gamePaused) {
         return;
       }
       // If it is merging, ignore the click.
@@ -522,17 +492,17 @@ class DropTheNumber extends Game with TapDetector {
       // Horizontal superpower clicked.
       else if (inRange(x, 70, 79) && inRange(y, 92.5, 97.5)) {
         if (firstHorizontalOccurance) {
-          cooldown_time_hor = DateTime.now();
+          horizontalSuperpowerLastUsed = DateTime.now();
           triggerHorizontalSuperpower();
           print("Horizontal superpower clicked!"); // debug
           superpowerStatus = SuperpowerStatus.horizontalSuperpower;
           firstHorizontalOccurance;
         }
 
-        cool_down_hor = DateTime.now().difference(cooldown_time_hor);
-        if (cool_down_hor > superpowerCooldownTime) {
-          cool_down_hor = Duration.zero;
-          cooldown_time_hor = DateTime.now();
+        Duration HorizontalSuperpowerWaitingTime = DateTime.now().difference(horizontalSuperpowerLastUsed);
+        if (HorizontalSuperpowerWaitingTime > superpowerCooldownTime) {
+          HorizontalSuperpowerWaitingTime = Duration.zero;
+          horizontalSuperpowerLastUsed = DateTime.now();
           triggerHorizontalSuperpower();
           print("Horizontal superpower clicked!"); // debug
           superpowerStatus = SuperpowerStatus.horizontalSuperpower;
@@ -541,17 +511,17 @@ class DropTheNumber extends Game with TapDetector {
       // Vertical superpower clicked.
       else if (inRange(x, 80, 90) && inRange(y, 92.5, 97.5)) {
         if (firstVerticalOccurance) {
-          cooldown_time_vert = DateTime.now();
+          verticalSuperpowerLastUsed = DateTime.now();
           print("Vertical superpower clicked!"); // debug
           firstVerticalOccurance = false;
           superpowerStatus = SuperpowerStatus.verticalSuperpower;
           triggerVerticalSuperpower();
         }
 
-        cool_down_vert = DateTime.now().difference(cooldown_time_vert);
-        if (cool_down_vert > superpowerCooldownTime) {
-          cool_down_vert = Duration.zero;
-          cooldown_time_vert = DateTime.now();
+        Duration verticalSuperpowerWaitingTime = DateTime.now().difference(verticalSuperpowerLastUsed);
+        if (verticalSuperpowerWaitingTime > superpowerCooldownTime) {
+          verticalSuperpowerWaitingTime = Duration.zero;
+          verticalSuperpowerLastUsed = DateTime.now();
           print("Vertical superpower clicked!"); // debug
           superpowerStatus = SuperpowerStatus.verticalSuperpower;
           triggerVerticalSuperpower();
@@ -565,13 +535,13 @@ class DropTheNumber extends Game with TapDetector {
         blocks = [[], [], [], [], []];
         resetGame();
       } else if (inRange(x, 53.5, 80.5) && inRange(y, 68.5, 74.5)) {
-        startPageScreenFinished = false;
+        gameInitScreenFinished = false;
         print("Quit button clicked!"); // debug
         exit(0); // debug
       } else if (inRange(x, 2, 11) && inRange(y, 92, 99.5)) {
         resetGame();
         blocks = [[], [], [], [], []];
-        startPageScreenFinished = false;
+        gameInitScreenFinished = false;
         print("home button clicked!"); // debug
       }
     }
@@ -1059,8 +1029,8 @@ class DropTheNumber extends Game with TapDetector {
   **********************************************************************/
   void togglePause() {
     if (isGameRunning()) {
-      pause = !pause;
-      if (!pause) {
+      gamePaused = !gamePaused;
+      if (!gamePaused) {
         pauseElapsedTime =
             DateTime.now().difference(startTime.add(elapsedTime));
       }
@@ -1072,7 +1042,7 @@ class DropTheNumber extends Game with TapDetector {
   **********************************************************************/
   void openSettingScreen() {
     settingScreenIsOpen = true;
-    pause = true;
+    gamePaused = true;
   }
 
   /**********************************************************************
@@ -1080,7 +1050,7 @@ class DropTheNumber extends Game with TapDetector {
   **********************************************************************/
   void closeSettingScreen() {
     settingScreenIsOpen = false;
-    pause = false;
+    gamePaused = false;
   }
 
   /**********************************************************************
@@ -1089,15 +1059,15 @@ class DropTheNumber extends Game with TapDetector {
   * Also update the local storge setting file.
   **********************************************************************/
   void toggleMute() {
-    mute = !mute;
+    muted = !muted;
 
-    if (mute) {
+    if (muted) {
       FlameAudio.bgm.pause();
     } else {
       FlameAudio.bgm.resume();
     }
 
-    dataHandler.writeMute(mute);
+    dataHandler.writeMute(muted);
   }
 
   /**********************************************************************
@@ -1105,16 +1075,16 @@ class DropTheNumber extends Game with TapDetector {
   * Also update the local storge setting file.
   **********************************************************************/
   void toggleEffectMute() {
-    effectMute = !effectMute;
+    effectMuted = !effectMuted;
 
-    dataHandler.writeEffectMute(effectMute);
+    dataHandler.writeEffectMute(effectMuted);
   }
 
   /**********************************************************************
   * If the game is started and not game over.
   **********************************************************************/
   bool isGameRunning() {
-    if (startPageScreenFinished && !gameOver) {
+    if (gameInitScreenFinished && !gameOver) {
       return true;
     } else {
       return false;
@@ -1221,7 +1191,7 @@ class DropTheNumber extends Game with TapDetector {
 
   /// Randomly play one of a bubble audio.
   void playBubbleAudio() {
-    if (!effectMute) {
+    if (!effectMuted) {
       FlameAudio.play('bubble' + random.nextInt(4).toString() + '.mp3',
           volume: effectVolume);
     }
@@ -1229,7 +1199,7 @@ class DropTheNumber extends Game with TapDetector {
 
   /// Randomly play one of a append audio.
   void playAppendAudio() {
-    if (!effectMute) {
+    if (!effectMuted) {
       FlameAudio.play('append' + random.nextInt(4).toString() + '.mp3',
           volume: effectVolume);
     }
