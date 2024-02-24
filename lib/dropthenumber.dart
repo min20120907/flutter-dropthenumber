@@ -27,12 +27,6 @@ class DropTheNumber extends Game with TapDetector {
   /**********************************************************************
   * Variables
   **********************************************************************/
-  // Y dropped for every second. (In percentage)
-  // double currentDropSpeed = 8; // debug
-  // Merge animation speed (percentage of the map)
-  // double currentMergingSpeed = 2;
-  // The cooldown of the superpower
-  // Duration superpowerCooldownTime = Duration.zero;
   // If the start page is showed, it only show once when the game start.
   bool startPageScreenFinished = false;
   // If the game is game over, waiting for restart.
