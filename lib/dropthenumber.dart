@@ -407,12 +407,12 @@ class DropTheNumber extends Game with TapDetector {
 //             highestScore = value > highestScore ? value : highestScore);
       }
       if (inRange(x, 87, 99) && inRange(y, 80, 88)) {
-        upVolume();
+        increaseVolume();
         FlameAudio.bgm.audioPlayer.setVolume(volume);
         print(volume);
       }
       if (inRange(x, 87, 99) && inRange(y, 90, 98)) {
-        downVolume();
+        decreaseVolume();
         FlameAudio.bgm.audioPlayer.setVolume(volume);
         print(volume);
       }
@@ -441,13 +441,13 @@ class DropTheNumber extends Game with TapDetector {
       }
       // Music Volume down button clicked
       else if (inRange(x, 69, 77) && inRange(y, 82, 88)) {
-        downVolume();
+        decreaseVolume();
         FlameAudio.bgm.audioPlayer.setVolume(volume);
         print("bgm volume = ${volume}");
       }
       // Music Volume up button clicked
       else if (inRange(x, 83, 91) && inRange(y, 82, 88)) {
-        upVolume();
+        increaseVolume();
         FlameAudio.bgm.audioPlayer.setVolume(volume);
         print("bgm volume = ${volume}");
       }
@@ -1191,7 +1191,7 @@ class DropTheNumber extends Game with TapDetector {
   * Set the volume up.
   * Also update the local storge setting file.
   **********************************************************************/
-  void upVolume() {
+  void increaseVolume() {
     if(volume + 0.1 > 0.999) {
       volume = 1;
       return;
@@ -1205,7 +1205,7 @@ class DropTheNumber extends Game with TapDetector {
   * Set the volume down.
   * Also update the local storge setting file.
   **********************************************************************/
-  void downVolume() {
+  void decreaseVolume() {
     if(volume - 0.1 < 0.001) {
       volume = 0;
       return;
