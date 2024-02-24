@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:ui' as ui;
 
+import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sprintf/sprintf.dart';
@@ -43,12 +44,12 @@ class DrawHandler {
   /**********************************************************************
   * Convert the relative x to ablolute x.
   **********************************************************************/
-  double toAbsoluteX(double x) => x * canvasSize.width / 100;
+  double toAbsoluteX(double x) => x * canvasSize.x / 100;
 
   /**********************************************************************
   * Convert the relative y to ablolute y.
   **********************************************************************/
-  double toAbsoluteY(double y) => y * canvasSize.height / 100;
+  double toAbsoluteY(double y) => y * canvasSize.y / 100;
 
   /**********************************************************************
   * Set the canvas to draw.
@@ -65,13 +66,13 @@ class DrawHandler {
   * Should called to get the current screen size before every draw method invoke.
   **********************************************************************/
   // The screen size, needed by the drawBackground().
-  late Size screenSize;
+  late Vector2 screenSize;
   // The draw area size. (Background image is not in this limit)
-  late Size canvasSize;
+  late Vector2 canvasSize;
   // The left margin of canvas, prevent the screen stretch. (This is already in absolute coordinates)
   late double canvasXOffset;
 
-  void setSize(Size screenSize, Size canvasSize, double canvasXOffset) {
+  void setSize(Vector2 screenSize, Vector2 canvasSize, double canvasXOffset) {
     this.screenSize = screenSize;
     this.canvasSize = canvasSize;
     this.canvasXOffset = canvasXOffset;
@@ -740,9 +741,9 @@ class DrawHandler {
   **********************************************************************/
   void drawText(String text, double x, double y, Color color, double fontSize) {
     // Adjust the font size, make sure the size is not going to huge
-    fontSize /= canvasSize.width > canvasSize.height
-        ? (canvasSize.height / canvasSize.width)
-        : (canvasSize.width / canvasSize.height);
+    fontSize /= canvasSize.x > canvasSize.y
+        ? (canvasSize.y / canvasSize.x)
+        : (canvasSize.x / canvasSize.y);
     fontSize /= 2.5;
 
     TextPainter(
@@ -751,19 +752,19 @@ class DrawHandler {
       textDirection: TextDirection.ltr,
       textAlign: TextAlign.center,
     )
-      ..layout(minWidth: canvasSize.width, maxWidth: canvasSize.width)
+      ..layout(minWidth: canvasSize.x, maxWidth: canvasSize.x)
       ..paint(
           canvas,
-          Offset(toAbsoluteX(x) - (canvasSize.width / 2) + canvasXOffset,
+          Offset(toAbsoluteX(x) - (canvasSize.x / 2) + canvasXOffset,
               toAbsoluteY(y)));
   }
 
   void drawText2(
       String text, double x, double y, Color color, double fontSize) {
     // Adjust the font size, make sure the size is not going to huge
-    fontSize /= canvasSize.width > canvasSize.height
-        ? (canvasSize.height / canvasSize.width)
-        : (canvasSize.width / canvasSize.height);
+    fontSize /= canvasSize.x > canvasSize.y
+        ? (canvasSize.y / canvasSize.x)
+        : (canvasSize.x / canvasSize.y);
     fontSize /= 2.5;
 
     TextPainter(
@@ -789,10 +790,10 @@ class DrawHandler {
       textDirection: TextDirection.ltr,
       textAlign: TextAlign.center,
     )
-      ..layout(minWidth: canvasSize.width, maxWidth: canvasSize.width)
+      ..layout(minWidth: canvasSize.x, maxWidth: canvasSize.x)
       ..paint(
           canvas,
-          Offset(toAbsoluteX(x) - (canvasSize.width / 2) + canvasXOffset,
+          Offset(toAbsoluteX(x) - (canvasSize.x / 2) + canvasXOffset,
               toAbsoluteY(y)));
   }
 
@@ -816,7 +817,7 @@ class DrawHandler {
     canvas.drawImageRect(
         image,
         Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble()),
-        Rect.fromLTWH(-0.5, -0.5, screenSize.width, screenSize.height),
+        Rect.fromLTWH(-0.5, -0.5, screenSize.x, screenSize.y),
         Paint());
   }
 }

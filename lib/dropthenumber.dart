@@ -29,9 +29,9 @@ class DropTheNumber extends Game with TapDetector {
   int score = 0;
   int highestScore = 0;
   // Store the screen size, the value will be set in resize() function.
-  Size screenSize = Size(0.0, 0.0);
+  Vector2 screenSize = Vector2(0.0, 0.0);
   // Calculated canvas size in the middle of screen.
-  Size canvasSize_ = Size(0.0, 0.0); // debug! the name is conflict with Game.canvasSize
+  Vector2 canvasSize_ = Vector2(0.0, 0.0); // debug! the name is conflict with Game.canvasSize
   // Left offset of the canvas
   double canvasXOffset = 0.0;
   // If the setting screen is open
@@ -65,9 +65,9 @@ class DropTheNumber extends Game with TapDetector {
   // Draw handler for helping to draw everything on screen.
   DrawHandler drawHandler = DrawHandler();
   // Convert the absolute x to relative x.
-  double toRelativeX(double x) => (x - canvasXOffset) * 100 / canvasSize_.width;
+  double toRelativeX(double x) => (x - canvasXOffset) * 100 / canvasSize_.x;
   // Convert the absolute y to relative y.
-  double toRelativeY(double y) => y * 100 / canvasSize_.height;
+  double toRelativeY(double y) => y * 100 / canvasSize_.y;
   // Check if the number is within given lower boundary and upper boundary.
   bool inRange(double number, double lowerBoundary, double upperBoundary) =>
       lowerBoundary <= number && number <= upperBoundary;
@@ -301,12 +301,12 @@ class DropTheNumber extends Game with TapDetector {
   @override
   void onGameResize(Vector2 size) {
     super.onGameResize(size);
-    Size screenSize = Size(size.x, size.y);
+    Vector2 screenSize = size;
     this.screenSize = screenSize;
-    if (screenSize.width > screenSize.height * 2 / 3) {
+    if (screenSize.x > screenSize.y * 2 / 3) {
       // canvasXOffset = (screenSize.width-screenSize.height*2/3)/2;
-      canvasSize_ = Size(screenSize.height * 2 / 3, screenSize.height);
-      canvasXOffset = (screenSize.width - canvasSize_.width) / 2;
+      canvasSize_ = Vector2(screenSize.y * 2 / 3, screenSize.y);
+      canvasXOffset = (screenSize.x - canvasSize_.x) / 2;
     } else {
       canvasSize_ = screenSize;
       canvasXOffset = 0;
