@@ -458,12 +458,12 @@ class DropTheNumber extends Game with TapDetector {
 
       // Effect Volume down button clicked
       else if (inRange(x, 69, 77) && inRange(y, 90, 95)) {
-        downEffectVolume();
+        decreaseEffectVolume();
         print("effect volume = ${effectVolume}");
       }
       // Effect Volume up button clicked
       else if (inRange(x, 83, 92) && inRange(y, 90, 95)) {
-        upEffectVolume();
+        increaseEffectVolume();
         print("effect volume = ${effectVolume}");
       }
       // Effect Mute button clicked
@@ -1215,13 +1215,11 @@ class DropTheNumber extends Game with TapDetector {
   * Set the effect volume up.
   * Also update the local storge setting file.
   **********************************************************************/
-  void upEffectVolume() {
-    if(effectVolume + 0.1 > 0.999) {
-      effectVolume = 1;
-      return;
-    }
-
+  void increaseEffectVolume() {
     effectVolume += 0.1;
+    if(effectVolume > 1.0) {
+      effectVolume = 1.0;
+    }
     dataHandler.writeEffectVolume(effectVolume);
   }
 
@@ -1229,13 +1227,11 @@ class DropTheNumber extends Game with TapDetector {
   * Set the effect volume down.
   * Also update the local storge setting file.
   **********************************************************************/
-  void downEffectVolume() {
-    if(effectVolume - 0.1 < 0.001) {
-      effectVolume = 0;
-      return;
-    }
-
+  void decreaseEffectVolume() {
     effectVolume -= 0.1;
+    if(effectVolume < 0.0) {
+      effectVolume = 0.0;
+    }
     dataHandler.writeEffectVolume(effectVolume);
   }
 
