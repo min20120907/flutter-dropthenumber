@@ -177,11 +177,7 @@ class DropTheNumber extends Game with TapDetector {
       drawHandler.drawNextBlock(nextBlockValue);
       drawHandler.drawTime(elapsedTime);
       drawHandler.drawSettingButton();
-      // if (!mute) {
-      //   drawHandler.drawMusicButton();
-      // } else {
-      //   drawHandler.drawMuteButton();
-      // }
+      
       drawHandler.drawFiveCross(nextBlockValue);
       drawHandler.drawAllBlocks(blocks);
       drawHandler.drawCurrentBlock(currentBlock);
