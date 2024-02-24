@@ -16,7 +16,7 @@ double getMergingSpeed(GameDifficulty gameDifficulty) {
 }
 
 
-Duration getSuperpowerCooldown(GameDifficulty gameDifficulty) {
+Duration getSuperpowerCooldownTime(GameDifficulty gameDifficulty) {
   switch (gameDifficulty) {
     case GameDifficulty.noob: return Duration(seconds: 10);
     case GameDifficulty.easy: return Duration(seconds: 20);

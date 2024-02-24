@@ -32,7 +32,7 @@ class DropTheNumber extends Game with TapDetector {
   // Merge animation speed (percentage of the map)
   // double currentMergingSpeed = 2;
   // The cooldown of the superpower
-  Duration currentSuperpowerCooldown = Duration.zero;
+  // Duration superpowerCooldownTime = Duration.zero;
   // If the start page is showed, it only show once when the game start.
   bool startPageScreenFinished = false;
   // If the game is game over, waiting for restart.
@@ -247,7 +247,8 @@ class DropTheNumber extends Game with TapDetector {
       cdh = DateTime.now().difference(cooldown_time_hor);
       cdv = DateTime.now().difference(cooldown_time_vert);
       // Horizontal cross while cooldown
-      if (cdh < currentSuperpowerCooldown && !firstHorizontalOccurance) {
+      Duration superpowerCooldownTime = getSuperpowerCooldownTime(gameDifficulty);
+      if (cdh < superpowerCooldownTime && !firstHorizontalOccurance) {
         blockedHor = true;
         // draw the cross
 
@@ -257,7 +258,7 @@ class DropTheNumber extends Game with TapDetector {
       }
 
       // Vertical cross while cooldown
-      if (cdv < currentSuperpowerCooldown && !firstVerticalOccurance) {
+      if (cdv < superpowerCooldownTime && !firstVerticalOccurance) {
         blockedVert = true;
 
         // draw the cross
@@ -490,6 +491,8 @@ class DropTheNumber extends Game with TapDetector {
 
     // Game running
     else if (!gameOver) {
+      Duration superpowerCooldownTime = getSuperpowerCooldownTime(gameDifficulty);
+
       // Setting button clicked.
       if (inRange(x, 80, 87) && inRange(y, 15, 19.5)) {
         print("setting button clicked");
@@ -533,7 +536,7 @@ class DropTheNumber extends Game with TapDetector {
         }
 
         cool_down_hor = DateTime.now().difference(cooldown_time_hor);
-        if (cool_down_hor > currentSuperpowerCooldown) {
+        if (cool_down_hor > superpowerCooldownTime) {
           cool_down_hor = Duration.zero;
           cooldown_time_hor = DateTime.now();
           triggerHorizontalSuperpower();
@@ -552,7 +555,7 @@ class DropTheNumber extends Game with TapDetector {
         }
 
         cool_down_vert = DateTime.now().difference(cooldown_time_vert);
-        if (cool_down_vert > currentSuperpowerCooldown) {
+        if (cool_down_vert > superpowerCooldownTime) {
           cool_down_vert = Duration.zero;
           cooldown_time_vert = DateTime.now();
           print("Vertical superpower clicked!"); // debug
@@ -1217,14 +1220,8 @@ class DropTheNumber extends Game with TapDetector {
     dataHandler.writeEffectVolume(effectVolume);
   }
 
-  /**********************************************************************
-  * Set the difficulty of the game.
-  * Also update the local storge setting file.
-  **********************************************************************/
   void setGameDifficulty(GameDifficulty gameDifficulty) {
     this.gameDifficulty = gameDifficulty;
-    currentSuperpowerCooldown = getSuperpowerCooldown(gameDifficulty);
-
     dataHandler.writeGameDifficulty(gameDifficulty);
   }
 
