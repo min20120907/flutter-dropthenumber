@@ -20,8 +20,7 @@ class DropTheNumber extends Game with TapDetector {
   double effectVolume = 0.5;
   GameDifficulty gameDifficulty = GameDifficulty.normal;
 
-  /// Init screen only show once each time the game start
-  bool gameInitScreenFinished = false;
+  bool inHomeScreen = false;
   bool gameOver = false;
   bool gamePaused = true;
   bool bgmMuted = false;
@@ -146,7 +145,7 @@ class DropTheNumber extends Game with TapDetector {
     drawHandler.setSize(screenSize, canvasSize_, canvasXOffset);
 
     // Draw start game screen.
-    if (!gameInitScreenFinished) {
+    if (!inHomeScreen) {
       drawHandler.drawStartPageScreen();
       if (!bgmMuted) {
         drawHandler.drawStartPageMusicButton();
@@ -310,9 +309,9 @@ class DropTheNumber extends Game with TapDetector {
     print("Tap down on (${x}, ${y})");
 
     // Game start
-    if (!gameInitScreenFinished) {
+    if (!inHomeScreen) {
       if (inRange(x, 32, 70) && inRange(y, 29, 37)) {
-        gameInitScreenFinished = true;
+        inHomeScreen = true;
         // Start game timer.
         startTime = DateTime.now();
       }
@@ -344,7 +343,7 @@ class DropTheNumber extends Game with TapDetector {
       }
       // Home button clicked
       else if (inRange(x, 4, 13) && inRange(y, 3.5, 8.5)) {
-        gameInitScreenFinished = false;
+        inHomeScreen = false;
         settingScreenIsOpen = false;
         resetGame();
         print("home button clicked!"); // debug
@@ -464,13 +463,13 @@ class DropTheNumber extends Game with TapDetector {
         blocks = [[], [], [], [], []];
         resetGame();
       } else if (inRange(x, 53.5, 80.5) && inRange(y, 68.5, 74.5)) {
-        gameInitScreenFinished = false;
+        inHomeScreen = false;
         print("Quit button clicked!"); // debug
         exit(0); // debug
       } else if (inRange(x, 2, 11) && inRange(y, 92, 99.5)) {
         resetGame();
         blocks = [[], [], [], [], []];
-        gameInitScreenFinished = false;
+        inHomeScreen = false;
         print("home button clicked!"); // debug
       }
     }
@@ -989,7 +988,7 @@ class DropTheNumber extends Game with TapDetector {
   }
 
   bool isGameRunning() {
-    if (gameInitScreenFinished && !gameOver) {
+    if (inHomeScreen && !gameOver) {
       return true;
     } else {
       return false;
